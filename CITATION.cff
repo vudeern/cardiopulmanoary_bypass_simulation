@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite this software if you use the benchmark or its synthetic outputs."
+title: "Perfusion Sentinel: A Cardiopulmonary Bypass Fault-Testing Laboratory"
+authors:
+  - family-names: Varanasi
+    given-names: Udeern
+version: 1.0.0
+date-released: 2026-10-30
+type: software
+license: MIT
+repository-code: "https://github.com/vudeern/cardiopulmanoary_bypass_simulation"
+url: "https://vudeern.github.io/perfusion-sentinel/"
+keywords:
+  - cardiopulmonary bypass
+  - simulation
+  - sensor faults
+  - perfusion
+  - reproducible research

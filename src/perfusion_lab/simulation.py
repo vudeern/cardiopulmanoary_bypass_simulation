@@ -1,0 +1,84 @@
+"""Orchestration separates plant truth, measurements, belief and decisions."""
+from dataclasses import asdict
+import math
+import numpy as np
+from .model import Patient, Plant, Scenario, SCENARIOS, delivery
+from .sensing import Sensors, Twin
+from .control import Controller
+
+
+def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=2.,
+             target=280., patient=None, lab_period=180.):
+    """Return aligned step-end truth and step-start information/action logs.
+
+    All metrics integrate actual step-average pump delivery. No ground-truth
+    value is supplied to the observer except the explicitly modeled lab channel.
+    A row's measured/estimated quantities are from time-dt; its truth is at time.
+    """
+    if isinstance(scenario, str):
+        if scenario not in SCENARIOS:
+            raise ValueError(f'Unknown scenario {scenario}')
+        scenario = SCENARIOS[scenario]
+    if not isinstance(scenario, Scenario):
+        raise ValueError('scenario must be a known name or a Scenario')
+    if not all(math.isfinite(x) and x>0 for x in (duration, dt, target, lab_period)):
+        raise ValueError('duration, dt, target and lab_period must be finite and positive')
+    if dt>5. or not math.isclose(duration/dt, round(duration/dt), abs_tol=1e-9):
+        raise ValueError('Use dt <= 5 seconds and a duration divisible by dt')
+    p = patient if patient is not None else Patient.sampled(seed)
+    plant = Plant(p)
+    if scenario.dilution >= p.hb:
+        raise ValueError('Scenario dilution must leave positive hemoglobin')
+    sensors = Sensors(seed+10000, lab_period=lab_period)
+    twin = Twin(p.hb, calibrate=policy!='no_calibration')
+    controller = Controller(policy, p.bsa, dt, target)
+    state = dict(flow=plant.flow, reservoir=plant.reservoir, pressure=plant.pressure)
+    rows = []
+    for k in range(round(duration/dt)):
+        t = k*dt
+        inputs = scenario.inputs(t, duration)
+        hb = p.hb-inputs['hb_loss']
+        obs = sensors.observe(t, state, hb, inputs)
+        belief = twin.update(obs)
+        decision = controller.decide(obs, belief)
+        state = plant.step(decision.command, inputs['drainage'], dt)
+        do2 = delivery(state['flow'], hb, inputs['sao2'], p.bsa)
+        demand = p.demand37 * p.q10**((inputs['temperature']-37.)/10.)
+        # Physiologic debt proxy differs from an area below a fixed GDP target.
+        # The 0.6 extraction ceiling is a synthetic assumption, not an AKI model.
+        unmet = max(0., demand-.60*do2)
+        measured_hb = obs.hb_inline if obs.hb_inline is not None else belief.hb
+        rows.append(dict(time=t+dt, observation_time=t, **state, hb=hb,
+                         hb_estimate=belief.hb, hb_lower=belief.hb_lower,
+                         hb_upper=belief.hb_upper,
+                         hb_inline=obs.hb_inline, sao2=inputs['sao2'],
+                         temperature=inputs['temperature'], command=decision.command,
+                         do2=do2, measured_do2=delivery(obs.flow, measured_hb, obs.sao2, p.bsa),
+                         demand=demand, unmet_demand=unmet,
+                         fault=belief.fault, stale=belief.stale,
+                         infeasible=decision.infeasible,
+                         reference_age=belief.reference_age,
+                         hb_covered=belief.hb_lower<=hb<=belief.hb_upper))
+    values = lambda key: np.array([r[key] for r in rows], dtype=float)
+    true_low = values('do2')<target
+    # False reassurance compares a start-of-step monitor to its ensuing interval;
+    # this includes genuine monitoring lag and is labeled as such in the docs.
+    reassurance = true_low & (values('measured_do2')>=target)
+    metrics = dict(deficit_auc=float(np.maximum(0., target-values('do2')).sum()*dt/60.),
+                   below_target_s=float(true_low.sum()*dt),
+                   false_reassurance_s=float(reassurance.sum()*dt),
+                   false_reassurance_margin_s=float((reassurance & (values('do2')<target-5.)).sum()*dt),
+                   concealed_deficit_auc=float((np.maximum(0.,target-values('do2'))*reassurance).sum()*dt/60.),
+                   unmet_demand_auc=float(values('unmet_demand').sum()*dt/60.),
+                   low_reservoir_s=float((values('reservoir')<.25).sum()*dt),
+                   empty_request_s=float(values('empty_request').sum()*dt),
+                   high_pressure_s=float((values('pressure')>95).sum()*dt),
+                   infeasible_s=float(values('infeasible').sum()*dt),
+                   hb_bound_coverage=float(values('hb_covered').mean()),
+                   minimum_reservoir=float(values('reservoir').min()),
+                   flow_variation=float(np.abs(np.diff(values('command'))).sum()),
+                   mean_flow=float(values('flow').mean()))
+    return dict(scenario=scenario.name, scenario_parameters=asdict(scenario),
+                policy=policy, seed=seed, dt=dt, lab_period=lab_period,
+                duration=duration, target=target, patient=asdict(p), metrics=metrics,
+                rows=rows)
