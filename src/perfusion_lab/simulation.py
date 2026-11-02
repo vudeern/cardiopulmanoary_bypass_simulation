@@ -8,7 +8,8 @@ from .control import Controller
 
 
 def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=2.,
-             target=280., patient=None, lab_period=180., controller_options=None):
+             target=280., patient=None, lab_period=180., controller_options=None,
+             plant_options=None):
     """Return aligned step-end truth and step-start information/action logs.
 
     All metrics integrate actual step-average pump delivery. No ground-truth
@@ -26,7 +27,12 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
     if dt>5. or not math.isclose(duration/dt, round(duration/dt), abs_tol=1e-9):
         raise ValueError('Use dt <= 5 seconds and a duration divisible by dt')
     p = patient if patient is not None else Patient.sampled(seed)
-    plant = Plant(p)
+    plant_options = dict(plant_options or {})
+    if plant_options:
+        from .stress import StressPlant
+        plant = StressPlant(p, **plant_options)
+    else:
+        plant = Plant(p)
     if scenario.dilution >= p.hb:
         raise ValueError('Scenario dilution must leave positive hemoglobin')
     sensors = Sensors(seed+10000, lab_period=lab_period)
@@ -50,6 +56,9 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         unmet = max(0., demand-.60*do2)
         measured_hb = obs.hb_inline if obs.hb_inline is not None else belief.hb
         rows.append(dict(time=t+dt, observation_time=t, **state, hb=hb,
+                         observed_flow=obs.flow, observed_reservoir=obs.reservoir,
+                         injected_level_bias=inputs['reservoir_bias'],
+                         injected_flow_bias=inputs.get('flow_bias',0.),
                          hb_estimate=belief.hb, hb_lower=belief.hb_lower,
                          hb_upper=belief.hb_upper,
                          hb_inline=obs.hb_inline, sao2=inputs['sao2'],
@@ -85,6 +94,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
     return dict(scenario=scenario.name, scenario_parameters=asdict(scenario),
                 policy=policy, controller_options=controller_options,
                 seed=seed, dt=dt, lab_period=lab_period,
+                plant_model=type(plant).__name__, plant_options=plant_options,
                 duration=duration, target=target, patient=asdict(p), metrics=metrics,
                 rows=rows)
 

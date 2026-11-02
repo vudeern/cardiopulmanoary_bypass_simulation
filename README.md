@@ -12,6 +12,14 @@ Perfusion Sentinel brings these interactions into one inspectable experiment: a 
 
 **This is an uncalibrated, synthetic research prototype. It does not control medical equipment, recommend treatment, predict organ injury, or reproduce a LivaNova product. There is no LivaNova affiliation or endorsement.**
 
+## New in v1.3: the guard fails outside its original assumptions
+
+A **4,320-run frozen-policy stress study** crosses nine sensing conditions with five plant regimes. On the reference plant, gradual drift and a startup level offset produce **88.83 s** and **100.25 s** mean reservoir exposure without level alarms. Every guarded run in one altered-drainage cell raises a level flag despite no injected sensor fault.
+
+Across the equal-weight stress grid, the fixed reserve reduces exposure (7.13 versus 65.30 s) but increases oxygen deficit (285.65 versus 117.10 mL O₂/m²). These are different outcomes; neither method is a general solution. The new dynamics are declared engineering assumptions, not external physiological validation.
+
+[Complete failure analysis and all 45 cells](docs/ROBUSTNESS.md) · [Frozen protocol](results/robustness/protocol.json) · [All 4,320 outcomes](results/robustness/metrics.csv)
+
 ## New in v1.2: challenge the guard against simpler protection
 
 A 31-setting search compares the frozen guard with two simple modifications of original Sentinel: an always-on reserve margin and a fixed flow cap. Selection uses separate tuning seeds. A boundary-limited 2,240-run pilot is retained; the expanded final study uses 3,192 runs and untouched tuning, evaluation and stress-map seeds.

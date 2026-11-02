@@ -115,3 +115,7 @@ Simulation rows add `level_fault` (latched discontinuity flag), `level_bias_esti
 ## v1.2 conservative comparison
 
 `results/conservative-comparison/` contains a tuning-only candidate CSV, the complete 3,192-run CSV, protocol, frozen selection, environment, and final aggregate JSON. `experiment` identifies tuning/evaluation/map; `variant` identifies the complete policy configuration and `family` groups reserve/cap/original/guarded. The protocol maps variants to policy and options. `controller_options` in single-run exports records reserve margins in L and flow caps in L/min/m². Pooled intervals resample patient seeds after within-seed scenario averaging. `results/conservative-pilot/` is the separate 2,240-run exploratory archive. See [CONSERVATIVE_COMPARISON.md](CONSERVATIVE_COMPARISON.md).
+
+## v1.3 stress data
+
+Simulation rows now log `observed_flow`, `observed_reservoir`, `injected_level_bias` and `injected_flow_bias`. Injection values are truth logs for scoring, never inputs to the controller. `plant_options` and `plant_model` are exported separately from controller options. Stress CSV fields identify sensor/plant cells and alarm timing; blank `first_alarm_s` means no flag. `level_alarm_ever` is any latched level flag, not correct fault isolation. In no-level-fault cases, flags are false attribution by construction. See [ROBUSTNESS.md](ROBUSTNESS.md).

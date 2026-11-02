@@ -54,3 +54,7 @@ Controllers in the benchmark receive identical synthetic patient parameters only
 ## November 2, 2026 follow-up: test whether detection adds value
 
 The v1.2 [conservative comparator study](CONSERVATIVE_COMPARISON.md) challenges the guard against an always-on reserve and a fixed flow cap, with tuning/evaluation separation and complete negative findings. Its pooled improvement does not establish scientific novelty: the reserve wins on the targeted sensor fault itself, scenario weights are artificial, and the plant structure remains shared. The next evidence gap is comparison against stronger conditional baselines under drift, flow-sensor faults and plant mismatch, followed by external measurement validation.
+
+## Frozen-policy falsification under unfamiliar assumptions
+
+The v1.3 [robustness study](ROBUSTNESS.md) preserves all v1.2 settings and exposes failures under drift, initial offsets, flow errors and altered dynamics. Its contribution at this stage is a transparent failure benchmark and a clearer sensing requirement. It does not establish novelty. A future observer must assess measurement credibility; extra references must be tested with their own errors and made available fairly to comparators. This stress grid becomes development data if used for redesign, so later claims require fresh conditions and eventual external measurements.

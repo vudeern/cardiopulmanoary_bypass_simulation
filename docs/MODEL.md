@@ -217,3 +217,7 @@ Only `sentinel_guarded` changes level processing. The observer checks whether me
 ## v1.2 conservative comparator options
 
 Original `sentinel` optionally accepts a nonnegative `reserve_margin` (L), subtracted from measured reservoir level before the forecast, or a positive `flow_cap_index` (L/min/m²), converted to a patient-size-specific command cap. A newly active cap is approached at the common slew limit. Neither option changes the observer or supplies hidden truth. Defaults preserve existing numerical outputs. These are simple modifications to Sentinel, not reproductions of published controllers. See [CONSERVATIVE_COMPARISON.md](CONSERVATIVE_COMPARISON.md).
+
+## v1.3 optional stress plant
+
+`StressScenario` creates persistent steps, gradual drift, initial offsets, flow bias and larger noise without giving hidden parameters to the observer. `StressPlant` changes actuator response, optionally adds first-order drainage lag and pressure-dependent venous resistance, or deliberately violates the drainage cap. A separate regime varies venous compliance and resistance. Neutral alternative settings reproduce the original plant exactly; the default path and all 42 original replay metric sets are regression checked. These are illustrative assumption changes, not a calibrated improvement in physiological fidelity. See [ROBUSTNESS.md](ROBUSTNESS.md).

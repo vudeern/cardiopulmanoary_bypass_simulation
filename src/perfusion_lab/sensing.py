@@ -6,7 +6,7 @@ import numpy as np
 @dataclass(frozen=True)
 class Observation:
     time: float
-    flow: float                 # L/min; assumes independent unbiased flow sensor
+    flow: float                 # L/min; observer assumes unbiased, stress cases can violate this
     reservoir: float            # L
     pressure: float             # mmHg
     hb_inline: float | None     # g/dL; missing is explicit, never zero
@@ -30,8 +30,8 @@ class Sensors:
             lab = float(hb + .10*noise[5])
             self.next_lab += self.lab_period
         inline = None if inputs['dropout'] else float(hb+inputs['hb_bias']+.07*noise[3])
-        return Observation(t, max(0., state['flow']+.015*noise[0]),
-                           max(0., state['reservoir']+.003*noise[1]+inputs['reservoir_bias']),
+        return Observation(t, max(0., state['flow']+.015*noise[0]*inputs.get('flow_noise_scale',1.)+inputs.get('flow_bias',0.)),
+                           max(0., state['reservoir']+.003*noise[1]*inputs.get('level_noise_scale',1.)+inputs['reservoir_bias']),
                            state['pressure']+.25*noise[2], inline,
                            float(np.clip(inputs['sao2']+.001*noise[4], .5, 1)),
                            inputs['temperature'], lab)

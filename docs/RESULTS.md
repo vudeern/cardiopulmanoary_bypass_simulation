@@ -72,3 +72,7 @@ The original cohort results above remain unchanged. The replay benchmark now add
 ## v1.2 conservative comparator study
 
 The six-policy replay benchmark above remains unchanged. A separate 31-candidate study selects conservative baselines on tuning data before evaluation. See [CONSERVATIVE_COMPARISON.md](CONSERVATIVE_COMPARISON.md) for final cohort and stress-map results, the targeted-scenario reversal, scenario weighting, pilot history and remaining limitations.
+
+## v1.3 frozen-policy stress study
+
+The original and conservative studies remain unchanged. [ROBUSTNESS.md](ROBUSTNESS.md) reports 45 new sensing/dynamics cells, including drift/initial-offset blind spots, flow errors and false attribution of real dynamics to level faults. The previous zero-depletion finding does not generalize to this wider grid.

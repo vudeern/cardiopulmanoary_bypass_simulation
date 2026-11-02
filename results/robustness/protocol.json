@@ -1,0 +1,176 @@
+{
+  "version": "1.3.0",
+  "seeds": [
+    8000,
+    8001,
+    8002,
+    8003,
+    8004,
+    8005,
+    8006,
+    8007,
+    8008,
+    8009,
+    8010,
+    8011,
+    8012,
+    8013,
+    8014,
+    8015,
+    8016,
+    8017,
+    8018,
+    8019,
+    8020,
+    8021,
+    8022,
+    8023
+  ],
+  "variants": [
+    {
+      "id": "original",
+      "family": "original",
+      "policy": "sentinel",
+      "options": {}
+    },
+    {
+      "id": "guarded",
+      "family": "guarded",
+      "policy": "sentinel_guarded",
+      "options": {}
+    },
+    {
+      "id": "reserve_0.40",
+      "family": "reserve",
+      "policy": "sentinel",
+      "options": {
+        "reserve_margin": 0.4
+      },
+      "matched_tuning_budget": true
+    },
+    {
+      "id": "cap_2.4",
+      "family": "flow_cap",
+      "policy": "sentinel",
+      "options": {
+        "flow_cap_index": 2.4
+      },
+      "matched_tuning_budget": true
+    }
+  ],
+  "settings_source": "results/conservative-comparison/summary.json",
+  "settings_source_sha256": "5c8826529262b88dd03e2b6d1ded7258a8bb1121d2cb60775f9b3a3b56b30522",
+  "sensor_cases": {
+    "clean": {
+      "level_profile": "none"
+    },
+    "step": {
+      "level_profile": "step",
+      "reservoir_bias": 0.4
+    },
+    "drift": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.4
+    },
+    "initial": {
+      "level_profile": "initial",
+      "reservoir_bias": 0.4
+    },
+    "small_step": {
+      "level_profile": "step",
+      "reservoir_bias": 0.1
+    },
+    "flow_high": {
+      "level_profile": "none",
+      "flow_bias": 0.75
+    },
+    "flow_low": {
+      "level_profile": "none",
+      "flow_bias": -0.75
+    },
+    "drift_flow": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.4,
+      "flow_bias": 0.75
+    },
+    "noisy": {
+      "level_profile": "none",
+      "noise_scale": 10.0
+    }
+  },
+  "plant_cases": {
+    "reference": {},
+    "slow_pump": {
+      "actuator_tau": 8.0
+    },
+    "lagged_nonlinear": {
+      "drainage_tau": 12.0,
+      "venous_nonlinearity": 0.04
+    },
+    "cap_violation": {
+      "max_drainage": 9.0
+    },
+    "varied_storage": {}
+  },
+  "duration": 1200.0,
+  "dt": 2.0,
+  "target": 280.0,
+  "event_start_fraction": [
+    0.25,
+    0.5
+  ],
+  "event_duration_fraction": [
+    0.15,
+    0.25
+  ],
+  "event_timing_seed_offset": 25000,
+  "storage_seed_offset": 30000,
+  "varied_storage": {
+    "venous_compliance_L_mmHg": [
+      0.09,
+      0.15
+    ],
+    "venous_resistance_mmHg_min_L": [
+      0.7,
+      1.1
+    ]
+  },
+  "drift_duration_fraction": 0.25,
+  "level_faults_persist": true,
+  "common_challenge": {
+    "dilution": 1.8,
+    "drainage": 0.45
+  },
+  "total_runs": 4320,
+  "cells": 45,
+  "patients_per_cell": 24,
+  "primary_metrics": [
+    "low_reservoir_s",
+    "deficit_auc"
+  ],
+  "diagnostic": "level_alarm_ever is any latched level flag; it is not proof of correct fault identification. No level fault is injected in clean/flow_high/flow_low/noisy cases.",
+  "bootstrap": {
+    "repetitions": 2000,
+    "seed": 2026,
+    "unit": "paired patient seed; pooled cells averaged within seed"
+  },
+  "replay_cells": [
+    "clean__reference",
+    "drift__reference",
+    "initial__reference",
+    "flow_high__reference",
+    "step__slow_pump",
+    "clean__cap_violation"
+  ],
+  "replay_seed": 8000,
+  "no_tuning": true,
+  "weighting": "Equal weight per synthetic cell; not clinical prevalence",
+  "scope": "Internal structural-assumption stress tests, not external validation",
+  "limitations": [
+    "All new plant and fault magnitudes are engineering assumptions.",
+    "Altered drainage and pump response are not clinical calibration.",
+    "Fixed baseline settings are carried from v1.2, not retuned to this grid.",
+    "No noisy independent redundant level reference is added.",
+    "No scientific novelty or commercial readiness established."
+  ]
+}
