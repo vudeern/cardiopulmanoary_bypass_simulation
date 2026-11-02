@@ -12,6 +12,16 @@ Perfusion Sentinel brings these interactions into one inspectable experiment: a 
 
 **This is an uncalibrated, synthetic research prototype. It does not control medical equipment, recommend treatment, predict organ injury, or reproduce a LivaNova product. There is no LivaNova affiliation or endorsement.**
 
+## v1.5 review package: mechanism, stronger baselines and a manuscript
+
+The update adds a **working manuscript**, a focused prior-art/evidence audit, and a reduced-model result: **V* = V_min + margin − residual level offset − horizon × flow bias / 60**. Correcting level alone does not remove the flow-bias term. Independent scalar checks cover 160 cases; the added flow-independent PI/threshold baselines satisfy exact physical-output invariance in 384 final sensor-only counterfactual pairs.
+
+A new frozen comparison uses **2,464 development + 4,032 final runs** and stronger simple comparators. PI lowers primary-group deficit (716.95 versus 795.36 mL O₂/m²) and pressure exposure, but increases low-reservoir exposure (5.49 versus 0.38 s). **The predeclared joint PI criterion is not met.** These are synthetic engineering results, not a clinical solution.
+
+[Working manuscript](docs/PAPER_DRAFT.md) · [Derivation](docs/THEORY.md) · [Literature/evidence audit](docs/LITERATURE_AUDIT.md) · [Readiness boundary](docs/SUBMISSION_READINESS.md) · [All 6,496 new runs](results/submission-study/metrics.csv)
+
+Published aggregate ranges were checked for plausibility; raw external reservoir dynamics were not obtained or used for validation. The manuscript is **unsubmitted and not certified publishable**. Independent domain review, a defensible novelty assessment and appropriate external evidence remain unresolved.
+
 ## v1.4 research result: useful reference information; no demonstrated age-based advantage
 
 An **8,568-run study** separates development selection from final evaluation with new seeds, magnitudes, timings and dynamics. With a good simulated level reference, simple timestamp-matched correction plus a **0.20 L margin** improves the sample means relative to the fixed **0.40 L reserve**: reservoir exposure **120.02 → 75.44 s**, empty requests **9.78 → 0.07 s**, and oxygen deficit **404.06 → 389.29 mL O₂/m²**. This additional contrast is descriptive and was added after final results; it is not the predeclared primary test.

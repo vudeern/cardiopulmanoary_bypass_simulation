@@ -62,3 +62,7 @@ The v1.3 [robustness study](ROBUSTNESS.md) preserves all v1.2 settings and expos
 ## Reference information versus algorithmic contribution
 
 The v1.4 [reference study](REFERENCE_RESULT.md) distinguishes added measurement information from extra algorithmic complexity. The age-based method does not meet its predeclared joint criterion against a development-tuned simple correction. A separately labelled descriptive contrast favors the simple reference package over the fixed reserve under the good simulated channel. This supports a bounded engineering direction, not scientific priority: independent level measurements and calibration are already established concepts. Hardware credibility, the shared flow/drainage observer, stronger conditional alternatives and external validation remain open. No clinical, publication or commercial readiness claim follows from the synthetic results.
+
+## v1.5 prior-art audit and manuscript scope
+
+A [focused literature audit](LITERATURE_AUDIT.md) confirms that reservoir/flow control, predictive depletion warnings, independent level sensing and general fault-tolerant tank control are prior art. The candidate contribution is a transparent mechanism-and-benchmark analysis, not a new PI algorithm or a certified medical controller. The [working manuscript](PAPER_DRAFT.md) and [readiness record](SUBMISSION_READINESS.md) explicitly leave scientific priority, domain review, external validation and venue suitability unresolved.

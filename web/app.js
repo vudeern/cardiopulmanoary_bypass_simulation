@@ -12,7 +12,7 @@ const descriptions = {
   unmodeled_level_bias: 'A +0.40 L reservoir measurement bias accompanies poor drainage and hemodilution. Original Sentinel trusts this reading. Guarded Sentinel detects implausible level steps and applies an offset estimate plus a reserve margin; compare its reservoir and oxygen-delivery tradeoff.'
 };
 let timer = null;
-function dataset() { return $('experiment').value==='reference'?REFERENCE_STUDY:$('experiment').value==='robustness'?ROBUSTNESS:$('experiment').value==='comparison'?COMPARISON:PERFUSION; }
+function dataset() { return $('experiment').value==='submission'?SUBMISSION_STUDY:$('experiment').value==='reference'?REFERENCE_STUDY:$('experiment').value==='robustness'?ROBUSTNESS:$('experiment').value==='comparison'?COMPARISON:PERFUSION; }
 function run() { return dataset().runs[$('scenario').value+'/'+$('policy').value]; }
 const originalLabels = {
   sentinel_guarded:'Guarded Sentinel · level-step correction',

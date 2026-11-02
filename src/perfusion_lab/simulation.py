@@ -10,7 +10,7 @@ from .control import Controller
 def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=2.,
              target=280., patient=None, lab_period=180., controller_options=None,
              plant_options=None,level_mode='ignore',level_reference_options=None,
-             level_observer_options=None):
+             level_observer_options=None,controller_kind='forecast'):
     """Return aligned step-end truth and step-start information/action logs.
 
     All metrics integrate actual step-average pump delivery. No ground-truth
@@ -39,7 +39,12 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
     sensors = Sensors(seed+10000, lab_period=lab_period)
     twin = Twin(p.hb, calibrate=policy!='no_calibration', guard_level=policy=='sentinel_guarded')
     controller_options = dict(controller_options or {})
-    controller = Controller(policy, p.bsa, dt, target, **controller_options)
+    if controller_kind=='forecast':
+        controller = Controller(policy, p.bsa, dt, target, **controller_options)
+    else:
+        if policy!='sentinel':raise ValueError('Feedback baselines use sentinel Hb observation')
+        from .feedback import LevelFeedback
+        controller=LevelFeedback(controller_kind,p.bsa,dt,target,**controller_options)
     if level_mode not in ('ignore','hold','bounded'):
         raise ValueError('Unknown level reference mode')
     if level_mode!='ignore' and policy!='sentinel':
@@ -113,6 +118,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
     metrics['level_fault_s'] = float(values('level_fault').sum()*dt)
     return dict(scenario=scenario.name, scenario_parameters=asdict(scenario),
                 policy=policy, controller_options=controller_options,
+                controller_kind=controller_kind,
                 seed=seed, dt=dt, lab_period=lab_period,
                 plant_model=type(plant).__name__, plant_options=plant_options,
                 level_mode=level_mode,level_reference_options=level_reference_options,

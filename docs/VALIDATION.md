@@ -1,12 +1,12 @@
 # Verification record and practical limits
 
-Release 1.4.0; v1.0 baseline checks retained below. The checks below verify software behavior and numerical properties,
+Release 1.5.0; v1.0 baseline checks retained below. The checks below verify software behavior and numerical properties,
 not accuracy for a patient or a medical device. The release environment is recorded
 in `results/environment.json`.
 
 ## Completed local checks
 
-- **52 Python unit tests pass.** Independent hand calculations check oxygen units;
+- **59 Python unit tests pass.** Independent hand calculations check oxygen units;
   volume conservation is checked under aggressive alternating pump/drainage
   requests; zero-input pressure decay and steady-state flow/pressure are checked
   against analytic values. A fixed-policy refinement test checks convergence of
@@ -19,7 +19,7 @@ in `results/environment.json`.
   retained in the metric CSVs. Artifact checks independently recalculate all 140
   main paired mean differences; the extension validator checks 112 additional paired intervals and all 49 new map cells and check bounds, local links and SVG parseability.
 - **JavaScript syntax and DOM-contract checks pass.** The actual replay and UI
-  code execute against a dependency-free mock DOM over all 124 views across four explicitly labelled datasets, beginning/
+  code execute against a dependency-free mock DOM over all 136 views across five explicitly labelled datasets, beginning/
   middle/end positions, playback, reset and calculator inputs. Generated chart
   coordinates are finite and expected controls/IDs exist.
 - **Release ZIP is checked** for extractability, required source/docs/web files,
@@ -33,6 +33,7 @@ python -m unittest discover -s tests -v
 python -m perfusion_lab.cli run --scenario compound --out /tmp/perfusion-check
 node --check web/app.js
 node tests/web_contract.cjs
+python examples/validate_submission_study.py
 python examples/validate_reference_study.py
 python examples/validate_robustness_study.py
 python examples/validate_conservative_study.py
@@ -75,3 +76,7 @@ Nine new tests cover exact neutral-plant equivalence, all 42 frozen original rep
 ## v1.4 reference-study verification
 
 Ten new tests check acquisition/delivery causality, timestamp matching, analytic age allowances, explicit unknown/stale response, paired random draws under dropout, common-mode contamination, ignored-reference invariance, invalid inputs and the primary decision rule. The reference-study validator checks all 8,568 unique records, development-only margin selection, the frozen selection hash, 126 final cell means, all 168 grouped paired intervals, the failed/passed primary verdict, and the separately labelled post-result descriptive contrast. It independently reruns all 30 new replays and confirms paired reference delivery counts. The DOM contract now covers all 124 views; full browser rendering remains unverified.
+
+## v1.5 mechanism and stronger-baseline checks
+
+Seven new tests check closed-loop and controller-level flow-bias invariance, common command/slew limits, pressure slowdown, invalid configuration and hand-calculated reduced-model equilibria. The analysis verifies 160 independent scalar cases, 6,496 unique stronger-baseline runs, development-only selection, 84 final cell means, all 60 grouped paired intervals, 384 exact sensor-only counterfactual pairs and 12 independently rerun replays. The published-range check is explicitly not external validation. Manuscript/readiness files retain the failed primary result and unresolved evidence gaps. The web contract now covers 136 views.

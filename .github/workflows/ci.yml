@@ -26,3 +26,4 @@ jobs:
       - run: python examples/validate_conservative_study.py
       - run: python examples/validate_robustness_study.py
       - run: python examples/validate_reference_study.py
+      - run: python examples/validate_submission_study.py

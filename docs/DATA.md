@@ -123,3 +123,7 @@ Simulation rows now log `observed_flow`, `observed_reservoir`, `injected_level_b
 ## v1.4 reference-study data
 
 `results/reference-study/` contains 1,008 development and 7,560 evaluation rows, the protocol, selection, frozen methods, per-seed parameters, means and primary machine-readable verdict. `secondary-contrast.json` is explicitly a descriptive comparison added after final results, separate from the primary hypothesis. Simulation rows log delivered reference value/acquisition time, causal corrected level/lower estimate, acquisition age and an unknown flag. `level_reference_unknown_s` is only meaningful for reference-aware methods; ignored channels record zero by convention. All methods still simulate and log paired reference acquisitions. See [REFERENCE_RESULT.md](REFERENCE_RESULT.md).
+
+## v1.5 stronger baselines and mechanism audit
+
+`controller_kind` distinguishes original forecast, level PI and threshold control. Existing default benchmark metrics are regression checked. `results/submission-study/` records 2,464 development and 4,032 final rows, candidate configuration selection, paired intervals, per-seed parameters and explicit readiness status. `results/mechanism-audit/` contains the independent scalar recurrence checks, nominal-range samples and published aggregate-range provenance. No raw clinical/bench reservoir trajectory was used. See [PAPER_DRAFT.md](PAPER_DRAFT.md) and [THEORY.md](THEORY.md).

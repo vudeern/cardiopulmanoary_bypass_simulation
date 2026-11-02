@@ -80,3 +80,7 @@ The original and conservative studies remain unchanged. [ROBUSTNESS.md](ROBUSTNE
 ## v1.4 explicit research answer
 
 [REFERENCE_RESULT.md](REFERENCE_RESULT.md) separates the broader reference-package comparison from the predeclared age-based-method test. The latter fails its joint protection/oxygen criterion. An additional descriptive contrast finds lower sample means for simple reference correction versus the fixed reserve under the good simulated channel. Biased, missing and common-mode reference failures remain in the record.
+
+## v1.5 mechanism-grounded stronger comparison
+
+The [working manuscript](PAPER_DRAFT.md) reports a reduced-model bias-transmission mechanism and a new 6,496-run study. PI reduces oxygen deficit but adds low-reservoir exposure, failing the declared joint criterion. All adverse outcomes and stronger baseline settings are retained. The [evidence audit](LITERATURE_AUDIT.md) distinguishes published-range plausibility from external dynamic validation.

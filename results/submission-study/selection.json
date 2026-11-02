@@ -1,0 +1,217 @@
+{
+  "candidate_means": {
+    "forecast_0.0": {
+      "low_reservoir_s": 83.80357142857143,
+      "empty_request_s": 31.696428571428573,
+      "deficit_auc": 174.7473693086797,
+      "high_pressure_s": 61.892857142857146,
+      "mean_flow": 4.85965781147008,
+      "flow_variation": 34.4642857142857
+    },
+    "forecast_0.1": {
+      "low_reservoir_s": 57.05357142857143,
+      "empty_request_s": 12.303571428571429,
+      "deficit_auc": 226.0111127284911,
+      "high_pressure_s": 60.82142857142857,
+      "mean_flow": 4.80428837625192,
+      "flow_variation": 36.35714285714285
+    },
+    "forecast_0.2": {
+      "low_reservoir_s": 49.30357142857143,
+      "empty_request_s": 0.0,
+      "deficit_auc": 296.469517675148,
+      "high_pressure_s": 59.089285714285715,
+      "mean_flow": 4.735841009789136,
+      "flow_variation": 37.53214285714285
+    },
+    "forecast_0.3": {
+      "low_reservoir_s": 24.017857142857142,
+      "empty_request_s": 0.0,
+      "deficit_auc": 374.7997173016768,
+      "high_pressure_s": 57.160714285714285,
+      "mean_flow": 4.660516562996072,
+      "flow_variation": 39.04107142857141
+    },
+    "forecast_0.4": {
+      "low_reservoir_s": 4.964285714285714,
+      "empty_request_s": 0.0,
+      "deficit_auc": 458.9435807914354,
+      "high_pressure_s": 54.80357142857143,
+      "mean_flow": 4.578172235852272,
+      "flow_variation": 41.546428571428564
+    },
+    "forecast_0.5": {
+      "low_reservoir_s": 0.17857142857142858,
+      "empty_request_s": 0.0,
+      "deficit_auc": 556.3511415735105,
+      "high_pressure_s": 52.75,
+      "mean_flow": 4.480330612007905,
+      "flow_variation": 44.533035714285695
+    },
+    "pi_0.4_2.0_0.02": {
+      "low_reservoir_s": 19.125,
+      "empty_request_s": 0.0,
+      "deficit_auc": 391.6621602664828,
+      "high_pressure_s": 0.0,
+      "mean_flow": 4.611089438770003,
+      "flow_variation": 20.930574034911217
+    },
+    "pi_0.4_2.0_0.08": {
+      "low_reservoir_s": 9.892857142857142,
+      "empty_request_s": 0.0,
+      "deficit_auc": 363.66100686156307,
+      "high_pressure_s": 0.0,
+      "mean_flow": 4.6507908072639,
+      "flow_variation": 36.3165007906855
+    },
+    "pi_0.4_4.0_0.02": {
+      "low_reservoir_s": 5.464285714285714,
+      "empty_request_s": 0.0,
+      "deficit_auc": 469.67912055468616,
+      "high_pressure_s": 0.0,
+      "mean_flow": 4.535019952115013,
+      "flow_variation": 29.181784360916588
+    },
+    "pi_0.4_4.0_0.08": {
+      "low_reservoir_s": 1.8214285714285714,
+      "empty_request_s": 0.0,
+      "deficit_auc": 395.7086000041171,
+      "high_pressure_s": 0.21428571428571427,
+      "mean_flow": 4.619951827581802,
+      "flow_variation": 42.63225009110465
+    },
+    "pi_0.4_8.0_0.02": {
+      "low_reservoir_s": 5.107142857142857,
+      "empty_request_s": 0.0,
+      "deficit_auc": 544.059171634748,
+      "high_pressure_s": 0.25,
+      "mean_flow": 4.462176093804721,
+      "flow_variation": 40.30318775846016
+    },
+    "pi_0.4_8.0_0.08": {
+      "low_reservoir_s": 4.464285714285714,
+      "empty_request_s": 0.0,
+      "deficit_auc": 433.0041670972246,
+      "high_pressure_s": 0.19642857142857142,
+      "mean_flow": 4.5828497155112,
+      "flow_variation": 50.96512694355629
+    },
+    "pi_0.6_2.0_0.02": {
+      "low_reservoir_s": 9.232142857142858,
+      "empty_request_s": 0.0,
+      "deficit_auc": 496.87467547151675,
+      "high_pressure_s": 0.0,
+      "mean_flow": 4.493570303721817,
+      "flow_variation": 17.526250210391268
+    },
+    "pi_0.6_2.0_0.08": {
+      "low_reservoir_s": 4.285714285714286,
+      "empty_request_s": 0.0,
+      "deficit_auc": 528.6956215742118,
+      "high_pressure_s": 0.0,
+      "mean_flow": 4.492129354749606,
+      "flow_variation": 29.617012300342004
+    },
+    "pi_0.6_4.0_0.02": {
+      "low_reservoir_s": 0.9821428571428571,
+      "empty_request_s": 0.0,
+      "deficit_auc": 558.3917161436295,
+      "high_pressure_s": 0.0,
+      "mean_flow": 4.435490676718763,
+      "flow_variation": 26.49812530480222
+    },
+    "pi_0.6_4.0_0.08": {
+      "low_reservoir_s": 0.9642857142857143,
+      "empty_request_s": 0.0,
+      "deficit_auc": 542.2120635664876,
+      "high_pressure_s": 0.0,
+      "mean_flow": 4.477024132962424,
+      "flow_variation": 36.02151382128501
+    },
+    "pi_0.6_8.0_0.02": {
+      "low_reservoir_s": 0.7142857142857143,
+      "empty_request_s": 0.0,
+      "deficit_auc": 645.1405814596263,
+      "high_pressure_s": 0.10714285714285714,
+      "mean_flow": 4.350209755588542,
+      "flow_variation": 39.01936095169083
+    },
+    "pi_0.6_8.0_0.08": {
+      "low_reservoir_s": 0.5,
+      "empty_request_s": 0.0,
+      "deficit_auc": 553.3211137039709,
+      "high_pressure_s": 0.0,
+      "mean_flow": 4.462313554184203,
+      "flow_variation": 44.769567167857225
+    },
+    "threshold_0.4": {
+      "low_reservoir_s": 26.464285714285715,
+      "empty_request_s": 0.21428571428571427,
+      "deficit_auc": 377.8936715868318,
+      "high_pressure_s": 21.178571428571427,
+      "mean_flow": 4.651529917778441,
+      "flow_variation": 86.67180660148844
+    },
+    "threshold_0.6": {
+      "low_reservoir_s": 3.9285714285714284,
+      "empty_request_s": 0.03571428571428571,
+      "deficit_auc": 555.0581373494982,
+      "high_pressure_s": 19.196428571428573,
+      "mean_flow": 4.487653993901729,
+      "flow_variation": 90.88327277244107
+    },
+    "threshold_0.8": {
+      "low_reservoir_s": 0.9285714285714286,
+      "empty_request_s": 0.0,
+      "deficit_auc": 734.3217919724676,
+      "high_pressure_s": 19.607142857142858,
+      "mean_flow": 4.314969076139596,
+      "flow_variation": 95.97167186124652
+    },
+    "threshold_1.0": {
+      "low_reservoir_s": 0.3392857142857143,
+      "empty_request_s": 0.0,
+      "deficit_auc": 1469.3666643063734,
+      "high_pressure_s": 0.3392857142857143,
+      "mean_flow": 3.5377884583620847,
+      "flow_variation": 147.7220801263605
+    }
+  },
+  "selected": [
+    {
+      "id": "forecast",
+      "family": "forecast",
+      "kind": "forecast",
+      "label": "Forecast +0.5 L",
+      "options": {
+        "reserve_margin": 0.5
+      },
+      "eligible_development_budget": true,
+      "candidate_id": "forecast_0.5"
+    },
+    {
+      "id": "pi",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.6 L",
+      "options": {
+        "target_level": 0.6,
+        "kp": 4.0,
+        "ki": 0.08
+      },
+      "eligible_development_budget": true,
+      "candidate_id": "pi_0.6_4.0_0.08"
+    },
+    {
+      "id": "threshold",
+      "family": "threshold",
+      "kind": "threshold",
+      "label": "Threshold slowdown \u00b7 0.8 L",
+      "options": {
+        "threshold": 0.8
+      },
+      "eligible_development_budget": true,
+      "candidate_id": "threshold_0.8"
+    }
+  ]
+}

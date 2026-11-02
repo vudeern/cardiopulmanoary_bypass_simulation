@@ -1,0 +1,21 @@
+{
+  "status": "review_draft_not_certified_publishable",
+  "version": "1.5.0",
+  "completed": [
+    "Focused prior-art/evidence audit",
+    "Reduced-model derivation and 160 independent scalar checks",
+    "Stronger reference-aware PI/threshold baselines and 384 exact flow-bias-invariant pairs",
+    "Frozen development selection and 4032 final runs with 16 paired virtual patients",
+    "Primary joint criterion reported without changing it after failure",
+    "Working manuscript and reproducible analysis"
+  ],
+  "unresolved": [
+    "Independent expert review of equations, model, code and application relevance",
+    "Scientific-priority/novelty assessment beyond the focused search",
+    "Raw reservoir bench/time-series or other fit-for-purpose independent model validation",
+    "Venue-specific scope, reporting and author declarations"
+  ],
+  "external_validation_completed": false,
+  "submission_made": false,
+  "publication_acceptance_established": false
+}

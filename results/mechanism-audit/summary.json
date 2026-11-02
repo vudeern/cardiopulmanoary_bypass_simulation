@@ -1,0 +1,77 @@
+{
+  "scalar_cases": 160,
+  "maximum_error_L": 8.659739592076221e-15,
+  "identifiability_counterexamples": [
+    {
+      "delta": -0.5,
+      "system_a": {
+        "qv": 4.0,
+        "qa": 4.5,
+        "bias": 0.3
+      },
+      "system_b": {
+        "qv": 3.5,
+        "qa": 4.0,
+        "bias": 0.8
+      },
+      "measured_flow": 4.8,
+      "volume_rate_L_s": -0.008333333333333333
+    },
+    {
+      "delta": 0.5,
+      "system_a": {
+        "qv": 4.0,
+        "qa": 4.5,
+        "bias": 0.3
+      },
+      "system_b": {
+        "qv": 4.5,
+        "qa": 5.0,
+        "bias": -0.2
+      },
+      "measured_flow": 4.8,
+      "volume_rate_L_s": -0.008333333333333333
+    },
+    {
+      "delta": 1.0,
+      "system_a": {
+        "qv": 4.0,
+        "qa": 4.5,
+        "bias": 0.3
+      },
+      "system_b": {
+        "qv": 5.0,
+        "qa": 5.5,
+        "bias": -0.7
+      },
+      "measured_flow": 4.8,
+      "volume_rate_L_s": -0.008333333333333333
+    }
+  ],
+  "published_range_source": {
+    "title": "Orpheus CPB simulator validation study",
+    "authors": "Searles, Darling and Riley",
+    "year": 2021,
+    "doi": "10.1182/ject-53-263",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8717731/",
+    "map_reported_low_limit_mean": 54.0,
+    "map_reported_high_limit_mean": 82.0,
+    "flow_index_reported_mean": 2.34,
+    "flow_index_reported_sd": 0.35,
+    "interpretation": "Survey-derived mean operating limits; not a distributional confidence interval or external time-series validation"
+  },
+  "nominal_sample": {
+    "n": 200,
+    "fixed_index": 2.4,
+    "pressure_min": 42.73658988619187,
+    "pressure_max": 88.49515348078059,
+    "fraction_in_mean_limit_band": 0.74
+  },
+  "external_validation_completed": false,
+  "limits": [
+    "Reduced active-constraint idealization excludes actuator lag, clipping, pressure/oxygen constraints, noise and delayed differentiation.",
+    "Negative mathematical equilibria are infeasible physical requests, not simulated negative blood volumes.",
+    "Published-range concordance does not validate reservoir dynamics or clinical outcomes.",
+    "Algebraic non-identifiability assumes unmeasured/unconstrained drainage and no trusted calibrated actuator model."
+  ]
+}
