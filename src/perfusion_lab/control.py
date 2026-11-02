@@ -8,7 +8,7 @@ from dataclasses import dataclass
 import numpy as np
 from .model import delivery
 
-POLICIES = ('fixed', 'reactive', 'sentinel', 'no_calibration', 'no_lookahead')
+POLICIES = ('fixed', 'reactive', 'sentinel', 'no_calibration', 'no_lookahead', 'sentinel_guarded')
 
 
 @dataclass(frozen=True)
@@ -43,7 +43,9 @@ class Controller:
             q = self.candidates
             predicted = delivery(q, belief.hb_lower, obs.sao2, self.bsa)
             horizon = 20.  # s; a held-flow, local linear look-ahead
-            predicted_reservoir = obs.reservoir + (belief.venous_flow-q)*horizon/60.
+            level = (belief.reservoir_lower if self.policy == 'sentinel_guarded'
+                     and belief.reservoir_lower is not None else obs.reservoir)
+            predicted_reservoir = level + (belief.venous_flow-q)*horizon/60.
             # Deliberately approximate effective resistance from current pressure.
             resistance = obs.pressure/max(obs.flow, .5)
             pressure = q*resistance
@@ -62,3 +64,4 @@ class Controller:
                 result = Decision(float(low), True, delivery(low, belief.hb_lower, obs.sao2, self.bsa))
         self.previous = result.command
         return result
+

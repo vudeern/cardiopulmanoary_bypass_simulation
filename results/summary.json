@@ -10,7 +10,8 @@
       "reactive",
       "sentinel",
       "no_calibration",
-      "no_lookahead"
+      "no_lookahead",
+      "sentinel_guarded"
     ],
     "scenarios": [
       "nominal",
@@ -186,6 +187,46 @@
       "n": 24
     },
     {
+      "scenario": "nominal",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "deficit_auc",
+      "mean": -6.8590640030073216,
+      "low": -7.331566190608164,
+      "high": -6.400256079716977,
+      "n": 24
+    },
+    {
+      "scenario": "nominal",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "low_reservoir_s",
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n": 24
+    },
+    {
+      "scenario": "nominal",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "false_reassurance_s",
+      "mean": -268.5,
+      "low": -277.8333333333333,
+      "high": -258.9979166666667,
+      "n": 24
+    },
+    {
+      "scenario": "nominal",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "mean_flow",
+      "mean": 0.1828935228981933,
+      "low": 0.17037297459460293,
+      "high": 0.1959490900338217,
+      "n": 24
+    },
+    {
       "scenario": "hemodilution",
       "policy": "fixed",
       "baseline": "reactive",
@@ -338,6 +379,46 @@
     {
       "scenario": "hemodilution",
       "policy": "no_lookahead",
+      "baseline": "reactive",
+      "metric": "mean_flow",
+      "mean": 0.21432312592482042,
+      "low": 0.17315471257498288,
+      "high": 0.25188625786566093,
+      "n": 24
+    },
+    {
+      "scenario": "hemodilution",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "deficit_auc",
+      "mean": -6.114493930532294,
+      "low": -13.47253336164648,
+      "high": 7.845365542543434,
+      "n": 24
+    },
+    {
+      "scenario": "hemodilution",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "low_reservoir_s",
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n": 24
+    },
+    {
+      "scenario": "hemodilution",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "false_reassurance_s",
+      "mean": -250.16666666666666,
+      "low": -261.5833333333333,
+      "high": -239.16666666666666,
+      "n": 24
+    },
+    {
+      "scenario": "hemodilution",
+      "policy": "sentinel_guarded",
       "baseline": "reactive",
       "metric": "mean_flow",
       "mean": 0.21432312592482042,
@@ -506,6 +587,46 @@
       "n": 24
     },
     {
+      "scenario": "hb_bias",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "deficit_auc",
+      "mean": -711.9997442686148,
+      "low": -727.6237861723747,
+      "high": -695.9562597402211,
+      "n": 24
+    },
+    {
+      "scenario": "hb_bias",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "low_reservoir_s",
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n": 24
+    },
+    {
+      "scenario": "hb_bias",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "false_reassurance_s",
+      "mean": -314.0,
+      "low": -351.0,
+      "high": -253.3291666666667,
+      "n": 24
+    },
+    {
+      "scenario": "hb_bias",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "mean_flow",
+      "mean": 0.8427864454306458,
+      "low": 0.7891284362402529,
+      "high": 0.8927746502947314,
+      "n": 24
+    },
+    {
       "scenario": "venous_obstruction",
       "policy": "fixed",
       "baseline": "reactive",
@@ -666,6 +787,46 @@
       "n": 24
     },
     {
+      "scenario": "venous_obstruction",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "deficit_auc",
+      "mean": -4.034340845180683,
+      "low": -5.8598898996936075,
+      "high": -1.718142743222736,
+      "n": 24
+    },
+    {
+      "scenario": "venous_obstruction",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "low_reservoir_s",
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n": 24
+    },
+    {
+      "scenario": "venous_obstruction",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "false_reassurance_s",
+      "mean": -265.3333333333333,
+      "low": -274.1666666666667,
+      "high": -256.5833333333333,
+      "n": 24
+    },
+    {
+      "scenario": "venous_obstruction",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "mean_flow",
+      "mean": 0.17546991178708224,
+      "low": 0.16448469947043012,
+      "high": 0.18657278662756455,
+      "n": 24
+    },
+    {
       "scenario": "oxygenator_loss",
       "policy": "fixed",
       "baseline": "reactive",
@@ -818,6 +979,46 @@
     {
       "scenario": "oxygenator_loss",
       "policy": "no_lookahead",
+      "baseline": "reactive",
+      "metric": "mean_flow",
+      "mean": 0.19277634928762014,
+      "low": 0.17692166819333227,
+      "high": 0.20949579284453124,
+      "n": 24
+    },
+    {
+      "scenario": "oxygenator_loss",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "deficit_auc",
+      "mean": -10.307657759639158,
+      "low": -10.755143501895656,
+      "high": -9.859707704713042,
+      "n": 24
+    },
+    {
+      "scenario": "oxygenator_loss",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "low_reservoir_s",
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n": 24
+    },
+    {
+      "scenario": "oxygenator_loss",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "false_reassurance_s",
+      "mean": -258.25,
+      "low": -270.0854166666667,
+      "high": -246.41458333333333,
+      "n": 24
+    },
+    {
+      "scenario": "oxygenator_loss",
+      "policy": "sentinel_guarded",
       "baseline": "reactive",
       "metric": "mean_flow",
       "mean": 0.19277634928762014,
@@ -986,6 +1187,46 @@
       "n": 24
     },
     {
+      "scenario": "compound",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "deficit_auc",
+      "mean": -519.690544427561,
+      "low": -540.4115466717464,
+      "high": -495.4106221872302,
+      "n": 24
+    },
+    {
+      "scenario": "compound",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "low_reservoir_s",
+      "mean": -24.0,
+      "low": -39.3375,
+      "high": -9.5,
+      "n": 24
+    },
+    {
+      "scenario": "compound",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "false_reassurance_s",
+      "mean": -128.66666666666666,
+      "low": -201.67291666666665,
+      "high": -44.0604166666668,
+      "n": 24
+    },
+    {
+      "scenario": "compound",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "mean_flow",
+      "mean": 0.6637401413911708,
+      "low": 0.6186953304692274,
+      "high": 0.7051456215718762,
+      "n": 24
+    },
+    {
       "scenario": "unmodeled_level_bias",
       "policy": "fixed",
       "baseline": "reactive",
@@ -1143,6 +1384,46 @@
       "mean": 0.2146537984390806,
       "low": 0.18617264163183633,
       "high": 0.23974130971795413,
+      "n": 24
+    },
+    {
+      "scenario": "unmodeled_level_bias",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "deficit_auc",
+      "mean": 126.88424744665679,
+      "low": 92.09831703620783,
+      "high": 160.5254327664775,
+      "n": 24
+    },
+    {
+      "scenario": "unmodeled_level_bias",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "low_reservoir_s",
+      "mean": -139.58333333333334,
+      "low": -176.33541666666667,
+      "high": -99.31666666666675,
+      "n": 24
+    },
+    {
+      "scenario": "unmodeled_level_bias",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "false_reassurance_s",
+      "mean": -248.91666666666666,
+      "low": -258.66875000000005,
+      "high": -239.0,
+      "n": 24
+    },
+    {
+      "scenario": "unmodeled_level_bias",
+      "policy": "sentinel_guarded",
+      "baseline": "reactive",
+      "metric": "mean_flow",
+      "mean": 0.04492752174173433,
+      "low": 0.0018316082365185716,
+      "high": 0.08695982175321623,
       "n": 24
     }
   ]

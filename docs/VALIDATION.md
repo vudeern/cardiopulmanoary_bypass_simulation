@@ -1,25 +1,25 @@
 # Verification record and practical limits
 
-Release 1.0.0. The checks below verify software behavior and numerical properties,
+Release 1.1.0; v1.0 baseline checks retained below. The checks below verify software behavior and numerical properties,
 not accuracy for a patient or a medical device. The release environment is recorded
 in `results/environment.json`.
 
 ## Completed local checks
 
-- **18 Python unit tests pass.** Independent hand calculations check oxygen units;
+- **26 Python unit tests pass.** Independent hand calculations check oxygen units;
   volume conservation is checked under aggressive alternating pump/drainage
   requests; zero-input pressure decay and steady-state flow/pressure are checked
   against analytic values. A fixed-policy refinement test checks convergence of
   the explicit reservoir transient. Invalid inputs and custom reference schedules
   are exercised. Identifiability, dropout, policy slew limits, paired noise,
-  bootstrap behavior and the 35 scenario-policy combinations are also checked.
+  bootstrap behavior and the 42 scenario-policy combinations are also checked.
 - **Editable package installation succeeds.** The Python module CLI and installed
   console entrypoint export a compound trajectory and finite metrics.
-- **840 main runs and 392 failure-map runs complete.** All recorded runs are
-  retained in the metric CSVs. Artifact checks independently recalculate all 112
-  paired mean differences and check bounds, local links and SVG parseability.
+- **1,008 main runs, 392 original failure-map runs and 1,092 guard-study runs complete.** All recorded runs are
+  retained in the metric CSVs. Artifact checks independently recalculate all 140
+  main paired mean differences; the extension validator checks 112 additional paired intervals and all 49 new map cells and check bounds, local links and SVG parseability.
 - **JavaScript syntax and DOM-contract checks pass.** The actual replay and UI
-  code execute against a dependency-free mock DOM over all 35 views, beginning/
+  code execute against a dependency-free mock DOM over all 42 views, beginning/
   middle/end positions, playback, reset and calculator inputs. Generated chart
   coordinates are finite and expected controls/IDs exist.
 - **Release ZIP is checked** for extractability, required source/docs/web files,
@@ -33,6 +33,7 @@ python -m unittest discover -s tests -v
 python -m perfusion_lab.cli run --scenario compound --out /tmp/perfusion-check
 node --check web/app.js
 node tests/web_contract.cjs
+python examples/validate_level_guard.py
 python examples/validate_artifacts.py
 ```
 
@@ -58,3 +59,4 @@ formal safety proof, stochastic interval calibration or clinical deployment
 qualification has been completed. The model shares structure with the predictive
 policy; real plant mismatch could change the findings. Positive and negative
 results remain conditional on the documented synthetic distributions and faults.
+

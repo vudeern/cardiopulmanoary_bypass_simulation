@@ -63,3 +63,8 @@ Unmodeled level bias: Sentinel averages more low-reservoir time and more empty-r
 Hb bounds are not calibrated intervals: empirical coverage falls during bias and compound faults. False reassurance remains substantial after correction because inline monitoring itself remains biased and the reference is intermittent.
 
 Fixed flow has zero nominal deficit in this sampler but uses more average flow than reactive. The benchmark does not measure hemolysis, neurological injury, renal injury, clinical workload, or clinical benefit.
+
+
+## v1.1 guard extension
+
+The original cohort results above remain unchanged. The replay benchmark now adds a sixth policy, `sentinel_guarded`, for 1,008 main records and 140 paired comparisons. A separate 1,092-run study on fresh seeds evaluates the level-step guard. See [LEVEL_GUARD.md](LEVEL_GUARD.md) for every scenario mean, the oxygen-delivery tradeoff, stress-map failures and reproduction commands.

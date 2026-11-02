@@ -9,7 +9,7 @@ const descriptions = {
   venous_obstruction: 'Venous drainage falls to 46% of its unobstructed value from minutes 9.6–13.4. Trying to preserve delivery with higher pump flow can drain the reservoir.',
   oxygenator_loss: 'Arterial saturation declines by 0.16. This is a scripted gas-exchange perturbation, not a model of any commercial oxygenator.',
   compound: 'Hemodilution, positive Hb bias, transient drainage restriction and saturation loss overlap. The inline Hb channel also drops out from minutes 8–11.4.',
-  unmodeled_level_bias: 'A +0.40 L reservoir measurement bias accompanies poor drainage and hemodilution. The observer assumes accurate level sensing: this scenario challenges that assumption.'
+  unmodeled_level_bias: 'A +0.40 L reservoir measurement bias accompanies poor drainage and hemodilution. Original Sentinel trusts this reading. Guarded Sentinel detects implausible level steps and applies an offset estimate plus a reserve margin; compare its reservoir and oxygen-delivery tradeoff.'
 };
 let timer = null;
 function run() { return PERFUSION.runs[$('scenario').value+'/'+$('policy').value]; }
@@ -46,6 +46,7 @@ function render(){
   if(r.reservoir[i]<.25) messages.push('Reservoir below experimental floor');
   if(r.infeasible[i]) messages.push('Predictive constraints infeasible: fallback active');
   if(r.fault[i]) messages.push('Hb bias or stale inline channel flagged');
+  if(r.level_fault[i]) messages.push('Level discontinuity flagged: offset correction and reserve margin latched');
   $('status').textContent=messages.length?messages.join(' · '):'No current experimental threshold violation or Hb fault flag.';
   $('status').className='status'+(messages.length?' warning':'');
 }
@@ -75,3 +76,4 @@ function calculate(){
 }
 $('hb').addEventListener('input',calculate);$('flow').addEventListener('input',calculate);
 select();calculate();
+

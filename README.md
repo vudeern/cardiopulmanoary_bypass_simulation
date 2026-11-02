@@ -8,9 +8,17 @@
 
 A higher pump flow can improve oxygen delivery. It can also empty a venous reservoir when drainage is restricted. Meanwhile, a biased hemoglobin measurement can make the monitor report adequate delivery when the simulated patient is receiving less.
 
-Perfusion Sentinel brings these interactions into one inspectable experiment: a coupled circulation model, injected sensing faults, an intermittent-reference observer, five competing control strategies, paired virtual-patient experiments, and a deliberate failure outside the observer's assumptions.
+Perfusion Sentinel brings these interactions into one inspectable experiment: a coupled circulation model, injected sensing faults, an intermittent-reference observer, six competing control strategies, paired virtual-patient experiments, and a deliberate failure outside the observer's assumptions.
 
 **This is an uncalibrated, synthetic research prototype. It does not control medical equipment, recommend treatment, predict organ injury, or reproduce a LivaNova product. There is no LivaNova affiliation or endorsement.**
+
+## New in v1.1: investigate and mitigate the level-sensor failure
+
+The new **Guarded Sentinel** policy detects reservoir-level discontinuities that violate a declared mass-balance envelope, corrects the inferred offset, and applies a reserve margin. Original Sentinel and its negative findings remain available.
+
+In **24 fresh synthetic patients**, the +0.40 L sensor-bias scenario falls from **79.33 s to 0 s** mean time below the reservoir floor. **Oxygen-delivery deficit increases from 0.90 to 58.22 mL O₂/m².** The 49-cell stress map still contains failures at +0.10 L bias. This is a measured tradeoff, not a clinical safety claim.
+
+[Full extension report and limitations](docs/LEVEL_GUARD.md) · [1,092 extension records](results/level-guard/metrics.csv) · [Recorded protocol](results/level-guard/protocol.json)
 
 ## Why this project exists
 
@@ -70,9 +78,12 @@ python examples/make_figures.py
 python examples/failure_map.py
 python examples/plot_failure_map.py
 python examples/validate_artifacts.py
+python examples/level_guard_study.py
+python examples/plot_level_guard.py
+python examples/validate_level_guard.py
 ```
 
-The main benchmark runs **24 patients × 7 scenarios × 5 strategies = 840 simulations**. Each experiment spans 20 simulated minutes at 2-second intervals. The failure map adds **392 runs**, for **1,232 recorded simulations** in the release.
+The main benchmark runs **24 patients × 7 scenarios × 6 strategies = 1,008 simulations**. Each experiment spans 20 simulated minutes at 2-second intervals. The failure map adds **392 runs**, and the new guard study adds **1,092 runs**, for **2,492 recorded simulations** in v1.1. The original v1.0 experiments contained 1,232 runs; those baseline results are preserved.
 
 Runtime depends on the machine; there is no GPU requirement. The benchmark writes a large, regenerable `results/trajectories.json` for the replay exporter. It is intentionally excluded from source control and the release ZIP; the committed compact replay, every per-run metric, and the complete reproduction code are included.
 
@@ -102,6 +113,7 @@ The source is small enough to audit. Equations, units, parameter distributions a
 | `fixed` | Holds a flow index of 2.4 L/min/m² |
 | `reactive` | Adjusts flow from the current monitor's oxygen-delivery error |
 | `sentinel` | Uses a lower Hb stress bound, pressure screening and reservoir forecasting |
+| `sentinel_guarded` | Adds causal level-step detection, inferred offset correction and a latched reserve margin |
 | `no_calibration` | Predictive policy without reference-based inline Hb bias correction |
 | `no_lookahead` | Predictive policy without its reservoir forecast constraint |
 
@@ -119,7 +131,7 @@ All strategies share the same command range and slew-rate limits. Pressure and r
 
 The timings are proportional to experiment duration; the independent Hb reference arrives every 180 seconds. Fault magnitudes are engineering stress assumptions, **not measured clinical rates**.
 
-## What the recorded results show
+## What the original cohort results show
 
 ![Compound-disturbance benchmark](docs/benchmark.svg)
 
@@ -127,7 +139,7 @@ For the compound disturbance, the mean delivery-deficit area is **617.94 mL O₂
 
 The ablations explain the tradeoff: without Hb calibration, mean compound deficit area is 520.79. Without the reservoir forecast, it is 82.03, but mean low-reservoir time rises to 66.5 seconds. Reducing an oxygen-deficit score alone can conceal a reservoir problem.
 
-**A result against Sentinel:** under unmodeled level bias, its mean low-reservoir time is 149.92 seconds versus 139.58 for reactive; empty-reservoir requests total 40.08 versus 14.75 seconds. Its oxygen metric still improves. This is precisely why the benchmark reports several failure measures.
+**A result against Sentinel:** under unmodeled level bias, its mean low-reservoir time is 149.92 seconds versus 139.58 for reactive; empty-reservoir requests total 40.08 versus 14.75 seconds. Its oxygen metric still improves. This is precisely why the benchmark reports several failure measures. The v1.1 guard extension investigates this failure on fresh seeds and reports both reduced depletion and worse oxygen deficit in [LEVEL_GUARD.md](docs/LEVEL_GUARD.md).
 
 The engineering Hb bounds cover only about 83% of compound samples. They are not 95% confidence intervals. A clinical benefit or general safety claim cannot be inferred from these experiments.
 
@@ -189,3 +201,4 @@ There is no basis here for clinical deployment. The project is useful as a trans
 ## License and citation
 
 MIT for the original code and synthetic outputs; third-party papers and trademarks retain their own rights. See [LICENSE](LICENSE), [CITATION.cff](CITATION.cff), and [CONTRIBUTING.md](CONTRIBUTING.md). The repository name preserves the spelling supplied for the project; the package and display name are **Perfusion Sentinel**.
+

@@ -106,3 +106,8 @@ identify the grid cell. Per-run metrics have the definitions above.
 `failure-map-summary.json` contains each grid cell's mean low-reservoir duration
 for reactive and Sentinel and their difference. These four-seed means are an
 exploratory map, with no claim of a precise transition boundary or clinical safety.
+
+
+## v1.1 level-step guard fields
+
+Simulation rows add `level_fault` (latched discontinuity flag), `level_bias_estimate` (inferred signed level offset, L) and `reservoir_lower` (corrected level minus the post-alarm 0.08 L allowance, clipped at zero; null for original policies). `level_fault_s` is the integrated latched-flag duration, not detection latency or confirmed-fault duration. `fault` remains the separate Hb flag. Extension CSVs add `experiment`, `level_bias_L` and `drainage`; see [LEVEL_GUARD.md](LEVEL_GUARD.md) for cohort definitions.

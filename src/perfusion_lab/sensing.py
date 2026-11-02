@@ -46,6 +46,9 @@ class Belief:
     fault: bool
     stale: bool
     reference_age: float
+    reservoir_lower: float | None = None
+    level_fault: bool = False
+    level_bias: float = 0.
 
 
 class Twin:
@@ -55,9 +58,10 @@ class Twin:
     The width uses a .002 g/dL/s allowance for unresolved bias drift and a
     .25 g/dL base allowance. Neither is a guaranteed bound on Gaussian noise or
     rapid faults; the benchmark tests empirical coverage rather than asserting
-    a probabilistic safety guarantee. Level sensor bias is deliberately unmodeled.
+    a probabilistic safety guarantee. Level bias is unmodeled in original policies;
+    the optional guard tests a causal step-fault hypothesis only.
     """
-    def __init__(self, initial_hb: float, calibrate: bool = True):
+    def __init__(self, initial_hb: float, calibrate: bool = True, guard_level: bool = False):
         self.hb = initial_hb
         self.bias = 0.
         self.last_reference = 0.
@@ -65,6 +69,32 @@ class Twin:
         self.previous = None
         self.calibrate = calibrate
         self.qv = 4.5
+        self.guard_level = guard_level
+        self.level_bias = 0.
+        self.level_fault = False
+        self.previous_level = None
+
+    def _level(self, obs):
+        """Causal step-fault hypothesis; no true reservoir or fault magnitude.
+
+        Assume drainage in [0, 7.5] L/min (the plant's declared cap),
+        independent unbiased flow sensing and 0.03 L noise/model allowance.
+        A discontinuity outside that mass-balance envelope is assigned to the
+        level channel. Estimate its size from the previous drainage estimate.
+        The extra 0.08 L allowance after detection is an engineering margin,
+        not a probabilistic bound. Initial offsets and slow drift are unobservable.
+        """
+        if self.guard_level and self.previous is not None:
+            dt = obs.time-self.previous.time
+            if dt > 0:
+                delta = obs.reservoir-self.previous.reservoir
+                lower = -obs.flow*dt/60.-.03
+                upper = (7.5-obs.flow)*dt/60.+.03
+                if delta < lower or delta > upper:
+                    expected = (self.qv-obs.flow)*dt/60.
+                    self.level_bias += delta-expected
+                    self.level_fault = True
+        return obs.reservoir-self.level_bias if self.guard_level else obs.reservoir
 
     def update(self, obs: Observation) -> Belief:
         if obs.hb_lab is not None:
@@ -80,14 +110,19 @@ class Twin:
         stale = obs.time-self.last_inline > 10.
         width = .25 + .002*age + (.004*(obs.time-self.last_inline) if stale else 0.)
         self.hb = float(np.clip(self.hb, 2., 20.))
+        level = self._level(obs)
         if self.previous is not None:
             dt = obs.time-self.previous.time
             if dt > 0:
                 # Mass balance estimates drainage using only past observations.
-                raw = obs.flow + (obs.reservoir-self.previous.reservoir)*60./dt
+                raw = obs.flow + (level-self.previous_level)*60./dt
                 self.qv = .5*self.qv + .5*float(np.clip(raw, 0., 8.))
         else:
             self.qv = obs.flow
         self.previous = obs
+        self.previous_level = level
         return Belief(self.hb, max(2., self.hb-width), min(20., self.hb+width),
-                      self.qv, abs(self.bias)>.6 or stale, stale, age)
+                      self.qv, abs(self.bias)>.6 or stale, stale, age,
+                      max(0., level-(.08 if self.level_fault else 0.)) if self.guard_level else None,
+                      self.level_fault, self.level_bias)
+

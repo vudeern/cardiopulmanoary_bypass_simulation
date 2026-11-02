@@ -208,3 +208,8 @@ All five strategies use the same plant, and the predictive model shares some
 algebra with that plant, which favors model-matched policies. External model-form
 validation, matched control effort, full threshold sensitivity and realistic
 reference delays remain future work.
+
+
+## v1.1 optional level-step guard
+
+Only `sentinel_guarded` changes level processing. The observer checks whether measured ΔV lies within [−Q Δt/60 − 0.03, (7.5 − Q) Δt/60 + 0.03] L. An out-of-envelope increment is assigned to a sensor step, estimated as ΔV − (previous inferred drainage − current measured flow) Δt/60. The accumulated offset is subtracted before drainage estimation. After detection the forecast also subtracts a latched 0.08 L reserve allowance. This detector assumes independent unbiased flow and a 7.5 L/min drainage cap; it cannot generally separate physiological/model errors from sensor faults. Initial bias and slow drift are unidentifiable. See [LEVEL_GUARD.md](LEVEL_GUARD.md) for the full method, tradeoffs and remaining failures.

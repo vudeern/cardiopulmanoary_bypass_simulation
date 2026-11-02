@@ -62,7 +62,7 @@ class Scenario:
     drainage: float = 1.0           # fraction of unobstructed venous return
     saturation_loss: float = 0.0    # eventual arterial saturation decrement
     dropout: bool = False
-    reservoir_bias: float = 0.0     # L; deliberately outside twin fault model
+    reservoir_bias: float = 0.0     # L; outside original twin fault model
 
     def __post_init__(self):
         numeric = (self.dilution, self.hb_bias, self.drainage,
@@ -141,3 +141,4 @@ class Plant:
         return dict(flow=actual_flow, qv=qv, reservoir=self.reservoir,
                     pressure=self.pressure, empty_request=requested>actual_flow+1e-9,
                     patient_volume=self.p.volume-self.reservoir)
+

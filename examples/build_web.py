@@ -11,7 +11,8 @@ root=Path(__file__).resolve().parents[1]
 trajectories=json.loads((root/'results/trajectories.json').read_text())
 summary=json.loads((root/'results/summary.json').read_text())
 keys={'t':'time','do2':'do2','monitor':'measured_do2','reservoir':'reservoir',
-      'pressure':'pressure','infeasible':'infeasible','fault':'fault'}
+      'pressure':'pressure','infeasible':'infeasible','fault':'fault',
+      'level_fault':'level_fault'}
 runs={}
 for name,result in trajectories.items():
     indices=sorted(set(range(0,len(result['rows']),3))|{len(result['rows'])-1})
@@ -30,3 +31,4 @@ for scenario in summary['protocol']['scenarios']:
         '/* Generated synthetic replay. */\nObject.assign(PERFUSION.runs,'+
         json.dumps(subset,separators=(',',':'))+');\n')
 print(f'Exported {len(runs)} representative trajectories.')
+

@@ -30,7 +30,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
     if scenario.dilution >= p.hb:
         raise ValueError('Scenario dilution must leave positive hemoglobin')
     sensors = Sensors(seed+10000, lab_period=lab_period)
-    twin = Twin(p.hb, calibrate=policy!='no_calibration')
+    twin = Twin(p.hb, calibrate=policy!='no_calibration', guard_level=policy=='sentinel_guarded')
     controller = Controller(policy, p.bsa, dt, target)
     state = dict(flow=plant.flow, reservoir=plant.reservoir, pressure=plant.pressure)
     rows = []
@@ -56,6 +56,8 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                          do2=do2, measured_do2=delivery(obs.flow, measured_hb, obs.sao2, p.bsa),
                          demand=demand, unmet_demand=unmet,
                          fault=belief.fault, stale=belief.stale,
+                         level_fault=belief.level_fault, level_bias_estimate=belief.level_bias,
+                         reservoir_lower=belief.reservoir_lower,
                          infeasible=decision.infeasible,
                          reference_age=belief.reference_age,
                          hb_covered=belief.hb_lower<=hb<=belief.hb_upper))
@@ -78,7 +80,9 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                    minimum_reservoir=float(values('reservoir').min()),
                    flow_variation=float(np.abs(np.diff(values('command'))).sum()),
                    mean_flow=float(values('flow').mean()))
+    metrics['level_fault_s'] = float(values('level_fault').sum()*dt)
     return dict(scenario=scenario.name, scenario_parameters=asdict(scenario),
                 policy=policy, seed=seed, dt=dt, lab_period=lab_period,
                 duration=duration, target=target, patient=asdict(p), metrics=metrics,
                 rows=rows)
+
