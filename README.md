@@ -12,6 +12,14 @@ Perfusion Sentinel brings these interactions into one inspectable experiment: a 
 
 **This is an uncalibrated, synthetic research prototype. It does not control medical equipment, recommend treatment, predict organ injury, or reproduce a LivaNova product. There is no LivaNova affiliation or endorsement.**
 
+## v1.4 research result: useful reference information; no demonstrated age-based advantage
+
+An **8,568-run study** separates development selection from final evaluation with new seeds, magnitudes, timings and dynamics. With a good simulated level reference, simple timestamp-matched correction plus a **0.20 L margin** improves the sample means relative to the fixed **0.40 L reserve**: reservoir exposure **120.02 → 75.44 s**, empty requests **9.78 → 0.07 s**, and oxygen deficit **404.06 → 389.29 mL O₂/m²**. This additional contrast is descriptive and was added after final results; it is not the predeclared primary test.
+
+**The age-based credibility method failed its primary joint criterion.** It lowers deficit further (342.11 versus 389.29), but has more reservoir exposure (79.65 versus 75.44 s) and empty requests (32.31 versus 0.07 s). It therefore does not demonstrate lower oxygen cost at comparable protection. Delayed, missing, biased and common-mode references remain explicit counterexamples to broad claims.
+
+[Read the question, answer and paired intervals](docs/REFERENCE_RESULT.md) · [Primary verdict](results/reference-study/summary.json) · [Descriptive contrast](results/reference-study/secondary-contrast.json) · [All 8,568 outcomes](results/reference-study/metrics.csv)
+
 ## New in v1.3: the guard fails outside its original assumptions
 
 A **4,320-run frozen-policy stress study** crosses nine sensing conditions with five plant regimes. On the reference plant, gradual drift and a startup level offset produce **88.83 s** and **100.25 s** mean reservoir exposure without level alarms. Every guarded run in one altered-drainage cell raises a level flag despite no injected sensor fault.

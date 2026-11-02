@@ -119,3 +119,7 @@ Simulation rows add `level_fault` (latched discontinuity flag), `level_bias_esti
 ## v1.3 stress data
 
 Simulation rows now log `observed_flow`, `observed_reservoir`, `injected_level_bias` and `injected_flow_bias`. Injection values are truth logs for scoring, never inputs to the controller. `plant_options` and `plant_model` are exported separately from controller options. Stress CSV fields identify sensor/plant cells and alarm timing; blank `first_alarm_s` means no flag. `level_alarm_ever` is any latched level flag, not correct fault isolation. In no-level-fault cases, flags are false attribution by construction. See [ROBUSTNESS.md](ROBUSTNESS.md).
+
+## v1.4 reference-study data
+
+`results/reference-study/` contains 1,008 development and 7,560 evaluation rows, the protocol, selection, frozen methods, per-seed parameters, means and primary machine-readable verdict. `secondary-contrast.json` is explicitly a descriptive comparison added after final results, separate from the primary hypothesis. Simulation rows log delivered reference value/acquisition time, causal corrected level/lower estimate, acquisition age and an unknown flag. `level_reference_unknown_s` is only meaningful for reference-aware methods; ignored channels record zero by convention. All methods still simulate and log paired reference acquisitions. See [REFERENCE_RESULT.md](REFERENCE_RESULT.md).

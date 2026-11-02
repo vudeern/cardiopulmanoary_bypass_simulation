@@ -76,3 +76,7 @@ The six-policy replay benchmark above remains unchanged. A separate 31-candidate
 ## v1.3 frozen-policy stress study
 
 The original and conservative studies remain unchanged. [ROBUSTNESS.md](ROBUSTNESS.md) reports 45 new sensing/dynamics cells, including drift/initial-offset blind spots, flow errors and false attribution of real dynamics to level faults. The previous zero-depletion finding does not generalize to this wider grid.
+
+## v1.4 explicit research answer
+
+[REFERENCE_RESULT.md](REFERENCE_RESULT.md) separates the broader reference-package comparison from the predeclared age-based-method test. The latter fails its joint protection/oxygen criterion. An additional descriptive contrast finds lower sample means for simple reference correction versus the fixed reserve under the good simulated channel. Biased, missing and common-mode reference failures remain in the record.

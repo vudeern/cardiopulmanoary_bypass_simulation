@@ -58,3 +58,7 @@ The v1.2 [conservative comparator study](CONSERVATIVE_COMPARISON.md) challenges 
 ## Frozen-policy falsification under unfamiliar assumptions
 
 The v1.3 [robustness study](ROBUSTNESS.md) preserves all v1.2 settings and exposes failures under drift, initial offsets, flow errors and altered dynamics. Its contribution at this stage is a transparent failure benchmark and a clearer sensing requirement. It does not establish novelty. A future observer must assess measurement credibility; extra references must be tested with their own errors and made available fairly to comparators. This stress grid becomes development data if used for redesign, so later claims require fresh conditions and eventual external measurements.
+
+## Reference information versus algorithmic contribution
+
+The v1.4 [reference study](REFERENCE_RESULT.md) distinguishes added measurement information from extra algorithmic complexity. The age-based method does not meet its predeclared joint criterion against a development-tuned simple correction. A separately labelled descriptive contrast favors the simple reference package over the fixed reserve under the good simulated channel. This supports a bounded engineering direction, not scientific priority: independent level measurements and calibration are already established concepts. Hardware credibility, the shared flow/drainage observer, stronger conditional alternatives and external validation remain open. No clinical, publication or commercial readiness claim follows from the synthetic results.

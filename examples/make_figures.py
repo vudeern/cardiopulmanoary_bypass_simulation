@@ -55,6 +55,6 @@ lines+=['','## Interpret the failures', '',
 'Unmodeled level bias: Sentinel averages more low-reservoir time and more empty-reservoir requests than reactive despite its better oxygen-delivery metric. An apparently favorable oxygen score can conceal another failure. This invalidates a global safety claim.', '',
 'Hb bounds are not calibrated intervals: empirical coverage falls during bias and compound faults. False reassurance remains substantial after correction because inline monitoring itself remains biased and the reference is intermittent.', '',
 'Fixed flow has zero nominal deficit in this sampler but uses more average flow than reactive. The benchmark does not measure hemolysis, neurological injury, renal injury, clinical workload, or clinical benefit.']
-lines += ['', '## Follow-up studies', '', '[Level-step guard](LEVEL_GUARD.md) · [Conservative comparator study](CONSERVATIVE_COMPARISON.md) · [Robustness study](ROBUSTNESS.md)', '']
+lines += ['', '## Follow-up studies', '', '[Level-step guard](LEVEL_GUARD.md) · [Conservative comparator study](CONSERVATIVE_COMPARISON.md) · [Robustness study](ROBUSTNESS.md) · [Reference research result](REFERENCE_RESULT.md)', '']
 (ROOT/'docs/RESULTS.md').write_text('\n'.join(lines)+'\n')
 print('Wrote figures and complete result tables.')

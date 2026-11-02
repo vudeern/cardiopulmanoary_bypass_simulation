@@ -12,7 +12,7 @@ const descriptions = {
   unmodeled_level_bias: 'A +0.40 L reservoir measurement bias accompanies poor drainage and hemodilution. Original Sentinel trusts this reading. Guarded Sentinel detects implausible level steps and applies an offset estimate plus a reserve margin; compare its reservoir and oxygen-delivery tradeoff.'
 };
 let timer = null;
-function dataset() { return $('experiment').value==='robustness'?ROBUSTNESS:$('experiment').value==='comparison'?COMPARISON:PERFUSION; }
+function dataset() { return $('experiment').value==='reference'?REFERENCE_STUDY:$('experiment').value==='robustness'?ROBUSTNESS:$('experiment').value==='comparison'?COMPARISON:PERFUSION; }
 function run() { return dataset().runs[$('scenario').value+'/'+$('policy').value]; }
 const originalLabels = {
   sentinel_guarded:'Guarded Sentinel · level-step correction',
@@ -24,20 +24,20 @@ function switchExperiment(){
   const comparison=$('experiment').value!=='original';
   const source=dataset();
   const options=comparison?source.variants.map(v=>{
-    const label=v.family==='reserve'?`Always reserve ${v.options.reserve_margin.toFixed(2)} L`:
+    const label=v.label||(v.family==='reserve'?`Always reserve ${v.options.reserve_margin.toFixed(2)} L`:
       v.family==='flow_cap'?`Flow cap ${v.options.flow_cap_index.toFixed(1)} L/min/m²`:
-      v.id==='guarded'?'Guarded Sentinel':'Original Sentinel';
+      v.id==='guarded'?'Guarded Sentinel':'Original Sentinel');
     return [v.id,label];
   }):Object.entries(originalLabels);
   const previousScenario=$('scenario').value;
   $('scenario').innerHTML=source.protocol.scenarios.map(value=>`<option value="${value}">${source.labels?.[value]||value.replaceAll('_',' ')}</option>`).join('');
   $('scenario').value=source.protocol.scenarios.includes(previousScenario)?previousScenario:source.protocol.scenarios[0];
   $('policy').innerHTML=options.map(([value,label])=>`<option value="${value}">${label}</option>`).join('');
-  $('policy').value=comparison?'guarded':'sentinel';
+  $('policy').value=source.protocol.default_policy||(comparison?'guarded':'sentinel');
   $('seed-note').textContent=`Representative virtual patient · Seed ${dataset().protocol.start_seed} · 20-minute experiment`;
-  $('cohort-label').textContent=$('experiment').value==='robustness'?'FROZEN-POLICY STRESS TEST / 24 PAIRED VIRTUAL PATIENTS':comparison?'FINAL EVALUATION / 24 PAIRED VIRTUAL PATIENTS':'ORIGINAL COHORT / 24 VIRTUAL PATIENTS';
+  $('cohort-label').textContent=`${$('experiment').value==='reference'?'REFERENCE TEST':$('experiment').value==='robustness'?'FROZEN-POLICY STRESS TEST':comparison?'FINAL EVALUATION':'ORIGINAL COHORT'} / ${source.protocol.n} PAIRED VIRTUAL PATIENTS`;
   $('cohort-note').textContent=comparison?
-    'Difference = selected strategy − Guarded Sentinel. Settings were selected on separate tuning seeds. Synthetic bootstrap intervals; no clinical benefit established.':
+    `Difference = selected strategy − ${source.protocol.baseline_label||'Guarded Sentinel'}. Settings were selected on separate development seeds. Synthetic bootstrap intervals; no clinical benefit established.`:
     'Difference = selected strategy − reactive. Bootstrap intervals describe the synthetic sampler, not clinical benefit.';
   select();
 }
@@ -74,7 +74,7 @@ function render(){
   const upperLevel=Math.max(...r.reservoir,...(r.level_sensor||[]),...(hasLower?r.level_lower:[]));
   chart('reservoir-chart',levels,Math.max(1.5,Math.ceil(upperLevel*2)/2),.25,'L',i);
   $('reservoir-legend').textContent=r.level_sensor?
-    (hasLower?'True · sensed · guarded lower estimate':'True · sensed'):'Volume (L)';
+    (hasLower?'True · sensed · control lower estimate':'True · sensed'):'Volume (L)';
   const messages=[];
   if(r.do2[i]<280) messages.push('True delivery below the experimental target');
   if(r.do2[i]<280&&r.monitor[i]>=280) messages.push('Monitor currently suggests adequate delivery');
@@ -92,7 +92,7 @@ function select(){
   $('run-metrics').innerHTML=`<div><strong>${m.deficit_auc.toFixed(0)}</strong><span>Delivery deficit AUC<br>mL O₂/m²</span></div><div><strong>${m.low_reservoir_s.toFixed(0)} s</strong><span>Below reservoir floor</span></div><div><strong>${m.false_reassurance_s.toFixed(0)} s</strong><span>False reassurance¹</span></div>`;
   const comparison=$('experiment').value!=='original';
   const c=dataset().comparisons.find(c=>c.scenario===$('scenario').value&&(comparison?c.variant:c.policy)===$('policy').value&&c.metric==='deficit_auc');
-  const reference=comparison?'Guarded Sentinel':'Reactive';
+  const reference=dataset().protocol.baseline_label||(comparison?'Guarded Sentinel':'Reactive');
   $('cohort').textContent=c?`Delivery deficit AUC difference: ${c.mean.toFixed(1)} mL O₂/m² (95% paired bootstrap interval ${c.low.toFixed(1)} to ${c.high.toFixed(1)}). Negative values favor the selected strategy for this metric.`:`${reference} is the reference strategy. Select another strategy to inspect its paired difference in delivery deficit AUC.`;
   render();
 }

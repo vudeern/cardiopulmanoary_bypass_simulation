@@ -1,0 +1,46 @@
+[
+  {
+    "id": "original",
+    "label": "Original \u00b7 ignores level reference",
+    "family": "reference",
+    "level_mode": "ignore",
+    "policy": "sentinel",
+    "options": {}
+  },
+  {
+    "id": "reserve",
+    "label": "Fixed reserve +0.40 L \u00b7 ignores reference",
+    "family": "reference",
+    "level_mode": "ignore",
+    "policy": "sentinel",
+    "options": {
+      "reserve_margin": 0.4
+    }
+  },
+  {
+    "id": "old_guard",
+    "label": "Step guard \u00b7 ignores reference",
+    "family": "reference",
+    "level_mode": "ignore",
+    "policy": "sentinel_guarded",
+    "options": {}
+  },
+  {
+    "id": "simple_reference",
+    "label": "Simple reference +0.20 L",
+    "family": "reference",
+    "level_mode": "hold",
+    "policy": "sentinel",
+    "options": {
+      "reserve_margin": 0.2
+    }
+  },
+  {
+    "id": "bounded_reference",
+    "label": "Age-based reference bound",
+    "family": "reference",
+    "level_mode": "bounded",
+    "policy": "sentinel",
+    "options": {}
+  }
+]

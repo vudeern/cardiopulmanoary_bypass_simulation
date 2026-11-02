@@ -17,18 +17,20 @@ elements.hb.value='9';elements.flow.value='4.5';
 let tick;
 const context=vm.createContext({document:{getElementById(id){assert(elements[id],'Missing element '+id);return elements[id];}},
   setInterval(fn){tick=fn;return 1;},clearInterval(){tick=null;},console});
-for(const match of html.matchAll(/<script src="((?:data|comparison|robustness)[^"/]*\.js)"/g))
+for(const match of html.matchAll(/<script src="((?:data|comparison|robustness|reference)[^"/]*\.js)"/g))
   vm.runInContext(fs.readFileSync(path.join(root,'web',match[1]),'utf8'),context);
 vm.runInContext(fs.readFileSync(path.join(root,'web/app.js'),'utf8'),context);
 const data=vm.runInContext('PERFUSION',context);
 const comparison=vm.runInContext('COMPARISON',context);
 const robustness=vm.runInContext('ROBUSTNESS',context);
+const reference=vm.runInContext('REFERENCE_STUDY',context);
 assert.equal(Object.keys(data.runs).length,42);
 assert.equal(Object.keys(comparison.runs).length,28);
 assert.equal(Object.keys(robustness.runs).length,24);
+assert.equal(Object.keys(reference.runs).length,30);
 assert(html.includes('value="sentinel_guarded"'));
 assert(html.includes('id="level-guard"'));
-for(const [experiment,source] of [['original',data],['comparison',comparison],['robustness',robustness]]){
+for(const [experiment,source] of [['original',data],['comparison',comparison],['robustness',robustness],['reference',reference]]){
 elements.experiment.value=experiment;elements.experiment.handlers.change();
 assert(elements['seed-note'].textContent.includes(String(source.protocol.start_seed)));
 for(const [name,run] of Object.entries(source.runs)){
@@ -59,5 +61,5 @@ elements.play.handlers.click();assert.equal(tick,null);
 elements.reset.handlers.click();assert.equal(+elements.time.value,0);
 elements.hb.value='10';elements.flow.value='5';elements.hb.handlers.input();
 assert.equal(+elements['calc-do2'].textContent,Math.round(10*5*(1.34*10*.98+.0031*150)/1.85));
-console.log('PASS: 94 scenario/policy views, cohort/scenario switching, timeline, chart coordinates, play/pause/reset, calculator and DOM IDs.');
+console.log('PASS: 124 scenario/policy views, cohort/scenario switching, timeline, chart coordinates, play/pause/reset, calculator and DOM IDs.');
 

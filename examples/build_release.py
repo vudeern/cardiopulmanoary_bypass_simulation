@@ -4,7 +4,7 @@ from pathlib import Path
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
-OUTPUT=ROOT.parent/'perfusion-sentinel-v1.3.0.zip'
+OUTPUT=ROOT.parent/'perfusion-sentinel-v1.4.0.zip'
 EXCLUDED={'.git','.venv','__pycache__','build','dist'}
 
 
@@ -25,7 +25,7 @@ def main():
     paths.append(ROOT/'SHA256SUMS')
     with zipfile.ZipFile(OUTPUT,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
         for p in paths:
-            info=zipfile.ZipInfo('perfusion-sentinel-v1.3.0/'+p.relative_to(ROOT).as_posix(),date_time=(2026,10,30,0,0,0))
+            info=zipfile.ZipInfo('perfusion-sentinel-v1.4.0/'+p.relative_to(ROOT).as_posix(),date_time=(2026,10,30,0,0,0))
             info.compress_type=zipfile.ZIP_DEFLATED
             info.external_attr=0o100644<<16
             archive.writestr(info,p.read_bytes())

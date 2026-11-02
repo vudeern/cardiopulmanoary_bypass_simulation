@@ -1,5 +1,5 @@
 """Orchestration separates plant truth, measurements, belief and decisions."""
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import math
 import numpy as np
 from .model import Patient, Plant, Scenario, SCENARIOS, delivery
@@ -9,7 +9,8 @@ from .control import Controller
 
 def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=2.,
              target=280., patient=None, lab_period=180., controller_options=None,
-             plant_options=None):
+             plant_options=None,level_mode='ignore',level_reference_options=None,
+             level_observer_options=None):
     """Return aligned step-end truth and step-start information/action logs.
 
     All metrics integrate actual step-average pump delivery. No ground-truth
@@ -39,6 +40,16 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
     twin = Twin(p.hb, calibrate=policy!='no_calibration', guard_level=policy=='sentinel_guarded')
     controller_options = dict(controller_options or {})
     controller = Controller(policy, p.bsa, dt, target, **controller_options)
+    if level_mode not in ('ignore','hold','bounded'):
+        raise ValueError('Unknown level reference mode')
+    if level_mode!='ignore' and policy!='sentinel':
+        raise ValueError('Reference-aware methods use original sentinel as the common controller')
+    reference_sensor=reference_filter=None
+    if level_reference_options is not None or level_mode!='ignore':
+        from .reference import LevelReferences,ReferenceLevel
+        reference_sensor=LevelReferences(seed+50000,**dict(level_reference_options or {}))
+        if level_mode!='ignore':
+            reference_filter=ReferenceLevel(level_mode,**dict(level_observer_options or {}))
     state = dict(flow=plant.flow, reservoir=plant.reservoir, pressure=plant.pressure)
     rows = []
     for k in range(round(duration/dt)):
@@ -46,8 +57,11 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         inputs = scenario.inputs(t, duration)
         hb = p.hb-inputs['hb_loss']
         obs = sensors.observe(t, state, hb, inputs)
+        samples=reference_sensor.observe(t,state['reservoir'],inputs['reservoir_bias']) if reference_sensor else []
+        reference_level=reference_filter.update(obs,samples) if reference_filter else None
         belief = twin.update(obs)
-        decision = controller.decide(obs, belief)
+        control_obs=replace(obs,reservoir=reference_level['lower']) if reference_level else obs
+        decision = controller.decide(control_obs, belief)
         state = plant.step(decision.command, inputs['drainage'], dt)
         do2 = delivery(state['flow'], hb, inputs['sao2'], p.bsa)
         demand = p.demand37 * p.q10**((inputs['temperature']-37.)/10.)
@@ -59,6 +73,12 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                          observed_flow=obs.flow, observed_reservoir=obs.reservoir,
                          injected_level_bias=inputs['reservoir_bias'],
                          injected_flow_bias=inputs.get('flow_bias',0.),
+                         level_reference=samples[-1].value if samples else None,
+                         level_reference_acquired=samples[-1].acquired if samples else None,
+                         level_reference_estimate=reference_level['estimate'] if reference_level else None,
+                         level_reference_lower=reference_level['lower'] if reference_level else None,
+                         level_reference_age=reference_level['age'] if reference_level else None,
+                         level_reference_unknown=reference_level['unknown'] if reference_level else None,
                          hb_estimate=belief.hb, hb_lower=belief.hb_lower,
                          hb_upper=belief.hb_upper,
                          hb_inline=obs.hb_inline, sao2=inputs['sao2'],
@@ -95,6 +115,8 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                 policy=policy, controller_options=controller_options,
                 seed=seed, dt=dt, lab_period=lab_period,
                 plant_model=type(plant).__name__, plant_options=plant_options,
+                level_mode=level_mode,level_reference_options=level_reference_options,
+                level_observer_options=level_observer_options,
                 duration=duration, target=target, patient=asdict(p), metrics=metrics,
                 rows=rows)
 
