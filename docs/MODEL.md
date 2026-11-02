@@ -213,3 +213,7 @@ reference delays remain future work.
 ## v1.1 optional level-step guard
 
 Only `sentinel_guarded` changes level processing. The observer checks whether measured ΔV lies within [−Q Δt/60 − 0.03, (7.5 − Q) Δt/60 + 0.03] L. An out-of-envelope increment is assigned to a sensor step, estimated as ΔV − (previous inferred drainage − current measured flow) Δt/60. The accumulated offset is subtracted before drainage estimation. After detection the forecast also subtracts a latched 0.08 L reserve allowance. This detector assumes independent unbiased flow and a 7.5 L/min drainage cap; it cannot generally separate physiological/model errors from sensor faults. Initial bias and slow drift are unidentifiable. See [LEVEL_GUARD.md](LEVEL_GUARD.md) for the full method, tradeoffs and remaining failures.
+
+## v1.2 conservative comparator options
+
+Original `sentinel` optionally accepts a nonnegative `reserve_margin` (L), subtracted from measured reservoir level before the forecast, or a positive `flow_cap_index` (L/min/m²), converted to a patient-size-specific command cap. A newly active cap is approached at the common slew limit. Neither option changes the observer or supplies hidden truth. Defaults preserve existing numerical outputs. These are simple modifications to Sentinel, not reproductions of published controllers. See [CONSERVATIVE_COMPARISON.md](CONSERVATIVE_COMPARISON.md).

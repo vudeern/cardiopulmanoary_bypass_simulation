@@ -12,6 +12,14 @@ Perfusion Sentinel brings these interactions into one inspectable experiment: a 
 
 **This is an uncalibrated, synthetic research prototype. It does not control medical equipment, recommend treatment, predict organ injury, or reproduce a LivaNova product. There is no LivaNova affiliation or endorsement.**
 
+## New in v1.2: challenge the guard against simpler protection
+
+A 31-setting search compares the frozen guard with two simple modifications of original Sentinel: an always-on reserve margin and a fixed flow cap. Selection uses separate tuning seeds. A boundary-limited 2,240-run pilot is retained; the expanded final study uses 3,192 runs and untouched tuning, evaluation and stress-map seeds.
+
+Across seven equally weighted synthetic scenarios and 24 evaluation patients, guarded mean oxygen deficit is **32.88** versus **88.82 mL O₂/m²** for the selected **+0.40 L reserve**, with zero measured reservoir depletion for both. **The reserve is better on the targeted sensor-bias scenario itself** (53.55 versus 101.43). The selected flow cap does not preserve its tuning depletion match on evaluation. These findings depend on the scenario mix and the current model.
+
+[Full comparison, methods and negative results](docs/CONSERVATIVE_COMPARISON.md) · [Locked tuning selection](results/conservative-comparison/selection.json) · [All 3,192 final-study outcomes](results/conservative-comparison/metrics.csv)
+
 ## New in v1.1: investigate and mitigate the level-sensor failure
 
 The new **Guarded Sentinel** policy detects reservoir-level discontinuities that violate a declared mass-balance envelope, corrects the inferred offset, and applies a reserve margin. Original Sentinel and its negative findings remain available.

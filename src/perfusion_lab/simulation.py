@@ -8,7 +8,7 @@ from .control import Controller
 
 
 def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=2.,
-             target=280., patient=None, lab_period=180.):
+             target=280., patient=None, lab_period=180., controller_options=None):
     """Return aligned step-end truth and step-start information/action logs.
 
     All metrics integrate actual step-average pump delivery. No ground-truth
@@ -31,7 +31,8 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         raise ValueError('Scenario dilution must leave positive hemoglobin')
     sensors = Sensors(seed+10000, lab_period=lab_period)
     twin = Twin(p.hb, calibrate=policy!='no_calibration', guard_level=policy=='sentinel_guarded')
-    controller = Controller(policy, p.bsa, dt, target)
+    controller_options = dict(controller_options or {})
+    controller = Controller(policy, p.bsa, dt, target, **controller_options)
     state = dict(flow=plant.flow, reservoir=plant.reservoir, pressure=plant.pressure)
     rows = []
     for k in range(round(duration/dt)):
@@ -82,7 +83,8 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                    mean_flow=float(values('flow').mean()))
     metrics['level_fault_s'] = float(values('level_fault').sum()*dt)
     return dict(scenario=scenario.name, scenario_parameters=asdict(scenario),
-                policy=policy, seed=seed, dt=dt, lab_period=lab_period,
+                policy=policy, controller_options=controller_options,
+                seed=seed, dt=dt, lab_period=lab_period,
                 duration=duration, target=target, patient=asdict(p), metrics=metrics,
                 rows=rows)
 

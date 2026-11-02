@@ -16,6 +16,8 @@ def main():
     run.add_argument('--scenario', choices=SCENARIOS, default='compound')
     run.add_argument('--policy', choices=POLICIES, default='sentinel')
     run.add_argument('--seed', type=int, default=100)
+    run.add_argument('--reserve-margin', type=float, default=0., help='Sentinel comparator reserve margin in L')
+    run.add_argument('--flow-cap-index', type=float, default=None, help='Sentinel comparator cap in L/min/m²')
     bench = sub.add_parser('benchmark', help='Run the paired scenario-policy grid')
     bench.add_argument('--patients', type=int, default=24)
     bench.add_argument('--start-seed', type=int, default=100)
@@ -27,7 +29,9 @@ def main():
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     if args.command=='run':
-        result = simulate(args.scenario, args.policy, args.seed, args.duration, args.dt, args.target)
+        options = dict(reserve_margin=args.reserve_margin, flow_cap_index=args.flow_cap_index)
+        result = simulate(args.scenario, args.policy, args.seed, args.duration, args.dt, args.target,
+                          controller_options=options)
         (args.out/'run.json').write_text(json.dumps(result, indent=2)+'\n')
         with (args.out/'run.csv').open('w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=list(result['rows'][0]), lineterminator='\n')

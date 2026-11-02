@@ -111,3 +111,7 @@ exploratory map, with no claim of a precise transition boundary or clinical safe
 ## v1.1 level-step guard fields
 
 Simulation rows add `level_fault` (latched discontinuity flag), `level_bias_estimate` (inferred signed level offset, L) and `reservoir_lower` (corrected level minus the post-alarm 0.08 L allowance, clipped at zero; null for original policies). `level_fault_s` is the integrated latched-flag duration, not detection latency or confirmed-fault duration. `fault` remains the separate Hb flag. Extension CSVs add `experiment`, `level_bias_L` and `drainage`; see [LEVEL_GUARD.md](LEVEL_GUARD.md) for cohort definitions.
+
+## v1.2 conservative comparison
+
+`results/conservative-comparison/` contains a tuning-only candidate CSV, the complete 3,192-run CSV, protocol, frozen selection, environment, and final aggregate JSON. `experiment` identifies tuning/evaluation/map; `variant` identifies the complete policy configuration and `family` groups reserve/cap/original/guarded. The protocol maps variants to policy and options. `controller_options` in single-run exports records reserve margins in L and flow caps in L/min/m². Pooled intervals resample patient seeds after within-seed scenario averaging. `results/conservative-pilot/` is the separate 2,240-run exploratory archive. See [CONSERVATIVE_COMPARISON.md](CONSERVATIVE_COMPARISON.md).

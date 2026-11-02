@@ -1,12 +1,12 @@
 # Verification record and practical limits
 
-Release 1.1.0; v1.0 baseline checks retained below. The checks below verify software behavior and numerical properties,
+Release 1.2.0; v1.0 baseline checks retained below. The checks below verify software behavior and numerical properties,
 not accuracy for a patient or a medical device. The release environment is recorded
 in `results/environment.json`.
 
 ## Completed local checks
 
-- **26 Python unit tests pass.** Independent hand calculations check oxygen units;
+- **33 Python unit tests pass.** Independent hand calculations check oxygen units;
   volume conservation is checked under aggressive alternating pump/drainage
   requests; zero-input pressure decay and steady-state flow/pressure are checked
   against analytic values. A fixed-policy refinement test checks convergence of
@@ -19,7 +19,7 @@ in `results/environment.json`.
   retained in the metric CSVs. Artifact checks independently recalculate all 140
   main paired mean differences; the extension validator checks 112 additional paired intervals and all 49 new map cells and check bounds, local links and SVG parseability.
 - **JavaScript syntax and DOM-contract checks pass.** The actual replay and UI
-  code execute against a dependency-free mock DOM over all 42 views, beginning/
+  code execute against a dependency-free mock DOM over all 70 views across two explicitly labelled cohorts, beginning/
   middle/end positions, playback, reset and calculator inputs. Generated chart
   coordinates are finite and expected controls/IDs exist.
 - **Release ZIP is checked** for extractability, required source/docs/web files,
@@ -33,6 +33,7 @@ python -m unittest discover -s tests -v
 python -m perfusion_lab.cli run --scenario compound --out /tmp/perfusion-check
 node --check web/app.js
 node tests/web_contract.cjs
+python examples/validate_conservative_study.py
 python examples/validate_level_guard.py
 python examples/validate_artifacts.py
 ```
@@ -60,3 +61,7 @@ qualification has been completed. The model shares structure with the predictive
 policy; real plant mismatch could change the findings. Positive and negative
 results remain conditional on the documented synthetic distributions and faults.
 
+
+## v1.2 conservative comparison checks
+
+The new validator independently recomputes tuning-only selection from all candidates, all 192 final paired intervals using patient blocks, 49 complete map cells, all reported means and 28 new replay metric sets. It checks disjoint seeds and all 3,192 final records. The 2,240-run pilot is archived separately and excluded from final estimates. The 70-view DOM check verifies cohort switches, policy resets, timeline reset and playback cancellation. These remain numerical/DOM checks, not full browser rendering.

@@ -12,7 +12,31 @@ const descriptions = {
   unmodeled_level_bias: 'A +0.40 L reservoir measurement bias accompanies poor drainage and hemodilution. Original Sentinel trusts this reading. Guarded Sentinel detects implausible level steps and applies an offset estimate plus a reserve margin; compare its reservoir and oxygen-delivery tradeoff.'
 };
 let timer = null;
-function run() { return PERFUSION.runs[$('scenario').value+'/'+$('policy').value]; }
+function dataset() { return $('experiment').value==='comparison'?COMPARISON:PERFUSION; }
+function run() { return dataset().runs[$('scenario').value+'/'+$('policy').value]; }
+const originalLabels = {
+  sentinel_guarded:'Guarded Sentinel · level-step correction',
+  sentinel:'Sentinel · bounded predictive', reactive:'Reactive oxygen delivery',
+  fixed:'Fixed indexed flow', no_calibration:'Ablation · no Hb calibration',
+  no_lookahead:'Ablation · no reservoir look-ahead'
+};
+function switchExperiment(){
+  const comparison=$('experiment').value==='comparison';
+  const options=comparison?COMPARISON.variants.map(v=>{
+    const label=v.family==='reserve'?`Always reserve ${v.options.reserve_margin.toFixed(2)} L`:
+      v.family==='flow_cap'?`Flow cap ${v.options.flow_cap_index.toFixed(1)} L/min/m²`:
+      v.id==='guarded'?'Guarded Sentinel':'Original Sentinel';
+    return [v.id,label];
+  }):Object.entries(originalLabels);
+  $('policy').innerHTML=options.map(([value,label])=>`<option value="${value}">${label}</option>`).join('');
+  $('policy').value=comparison?'guarded':'sentinel';
+  $('seed-note').textContent=`Representative virtual patient · Seed ${dataset().protocol.start_seed} · 20-minute experiment`;
+  $('cohort-label').textContent=comparison?'FINAL EVALUATION / 24 PAIRED VIRTUAL PATIENTS':'ORIGINAL COHORT / 24 VIRTUAL PATIENTS';
+  $('cohort-note').textContent=comparison?
+    'Difference = selected strategy − Guarded Sentinel. Settings were selected on separate tuning seeds. Synthetic bootstrap intervals; no clinical benefit established.':
+    'Difference = selected strategy − reactive. Bootstrap intervals describe the synthetic sampler, not clinical benefit.';
+  select();
+}
 function point() { const r=run(); return Math.min(+$('time').value,r.t.length-1); }
 function clock(seconds) { return String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(Math.round(seconds%60)).padStart(2,'0'); }
 function chart(id, series, maxY, threshold, yLabel, index) {
@@ -55,8 +79,10 @@ function select(){
   $('scenario-description').textContent=descriptions[$('scenario').value];
   const m=run().metrics;
   $('run-metrics').innerHTML=`<div><strong>${m.deficit_auc.toFixed(0)}</strong><span>Delivery deficit AUC<br>mL O₂/m²</span></div><div><strong>${m.low_reservoir_s.toFixed(0)} s</strong><span>Below reservoir floor</span></div><div><strong>${m.false_reassurance_s.toFixed(0)} s</strong><span>False reassurance¹</span></div>`;
-  const c=PERFUSION.comparisons.find(c=>c.scenario===$('scenario').value&&c.policy===$('policy').value&&c.metric==='deficit_auc');
-  $('cohort').textContent=c?`Delivery deficit AUC difference: ${c.mean.toFixed(1)} mL O₂/m² (95% paired bootstrap interval ${c.low.toFixed(1)} to ${c.high.toFixed(1)}). Negative values favor the selected strategy for this metric.`:'Reactive is the reference strategy. Select another strategy to inspect its paired difference in delivery deficit AUC.';
+  const comparison=$('experiment').value==='comparison';
+  const c=dataset().comparisons.find(c=>c.scenario===$('scenario').value&&(comparison?c.variant:c.policy)===$('policy').value&&c.metric==='deficit_auc');
+  const reference=comparison?'Guarded Sentinel':'Reactive';
+  $('cohort').textContent=c?`Delivery deficit AUC difference: ${c.mean.toFixed(1)} mL O₂/m² (95% paired bootstrap interval ${c.low.toFixed(1)} to ${c.high.toFixed(1)}). Negative values favor the selected strategy for this metric.`:`${reference} is the reference strategy. Select another strategy to inspect its paired difference in delivery deficit AUC.`;
   render();
 }
 function pause(){ clearInterval(timer);timer=null;$('play').textContent='▶ Play'; }
@@ -69,11 +95,12 @@ $('play').addEventListener('click',()=>{
 $('reset').addEventListener('click',()=>{pause();$('time').value=0;render();});
 $('time').addEventListener('input',()=>{pause();render();});
 $('scenario').addEventListener('change',select);$('policy').addEventListener('change',select);
+$('experiment').addEventListener('change',switchExperiment);
 function calculate(){
   const hb=+$('hb').value, flow=+$('flow').value;
   $('hb-value').textContent=hb.toFixed(1)+' g/dL';$('flow-value').textContent=flow.toFixed(1)+' L/min';
   $('calc-do2').textContent=(10*flow*(1.34*hb*.98+.0031*150)/1.85).toFixed(0);
 }
 $('hb').addEventListener('input',calculate);$('flow').addEventListener('input',calculate);
-select();calculate();
+switchExperiment();calculate();
 
