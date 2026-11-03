@@ -10,7 +10,8 @@ from .control import Controller
 def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=2.,
              target=280., patient=None, lab_period=180., controller_options=None,
              plant_options=None,level_mode='ignore',level_reference_options=None,
-             level_observer_options=None,controller_kind='forecast',venous_measurement=None):
+             level_observer_options=None,controller_kind='forecast',venous_measurement=None,
+             reference_fault_options=None,calibration_options=None,reference_guard_options=None):
     """Return aligned step-end truth and step-start information/action logs.
 
     All metrics integrate actual step-average pump delivery. No ground-truth
@@ -47,7 +48,12 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
             raise ValueError('Invalid venous measurement settings')
     if controller_kind=='published_adapted' and venous_measurement is None:
         raise ValueError('Published adaptation requires an explicit venous measurement channel')
-    if controller_kind=='selective':
+    if controller_kind in ('integrity_hybrid','integrity_pi'):
+        if policy!='sentinel' or venous_measurement is None:
+            raise ValueError('Integrity controllers require common observer and venous sensor')
+        from .integrity import IntegrityController
+        controller=IntegrityController('hybrid' if controller_kind=='integrity_hybrid' else 'pi',p.bsa,dt,target,**controller_options)
+    elif controller_kind=='selective':
         if policy!='sentinel' or venous_measurement is None:
             raise ValueError('Selective PI requires common observer and explicit venous sensor')
         from .selective import SelectiveController
@@ -77,15 +83,26 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         if policy!='sentinel':raise ValueError('Feedback baselines use sentinel Hb observation')
         from .feedback import LevelFeedback
         controller=LevelFeedback(controller_kind,p.bsa,dt,target,**controller_options)
-    if level_mode not in ('ignore','hold','bounded'):
+    if level_mode not in ('ignore','hold','bounded','screened','calibration_only'):
         raise ValueError('Unknown level reference mode')
     if level_mode!='ignore' and policy!='sentinel':
         raise ValueError('Reference-aware methods use original sentinel as the common controller')
-    reference_sensor=reference_filter=None
+    reference_sensor=reference_filter=calibration_sensor=reference_guard=None
+    if level_mode in ('screened','calibration_only'):
+        if venous_measurement is None:raise ValueError('Screened reference modes require a venous sensor')
+        from .integrity import ReferenceGuard
+        reference_guard=ReferenceGuard(2.4*p.bsa,dt,**dict(reference_guard_options or {}))
+    if calibration_options is not None:
+        from .integrity import FaultyReferences
+        calibration_sensor=FaultyReferences(seed+110000,**dict(calibration_options))
     if level_reference_options is not None or level_mode!='ignore':
         from .reference import LevelReferences,ReferenceLevel
-        reference_sensor=LevelReferences(seed+50000,**dict(level_reference_options or {}))
-        if level_mode!='ignore':
+        if reference_fault_options is None:
+            reference_sensor=LevelReferences(seed+50000,**dict(level_reference_options or {}))
+        else:
+            from .integrity import FaultyReferences
+            reference_sensor=FaultyReferences(seed+50000,**dict(level_reference_options or {}),**dict(reference_fault_options))
+        if level_mode not in ('ignore','screened','calibration_only'):
             reference_filter=ReferenceLevel(level_mode,**dict(level_observer_options or {}))
     state = dict(flow=plant.flow, reservoir=plant.reservoir, pressure=plant.pressure)
     venous_rng=np.random.default_rng(seed+70000)
@@ -96,7 +113,10 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         hb = p.hb-inputs['hb_loss']
         obs = sensors.observe(t, state, hb, inputs)
         samples=reference_sensor.observe(t,state['reservoir'],inputs['reservoir_bias']) if reference_sensor else []
-        reference_level=reference_filter.update(obs,samples) if reference_filter else None
+        calibration_samples=calibration_sensor.observe(t,state['reservoir'],inputs['reservoir_bias']) if calibration_sensor else []
+        if reference_guard is not None:
+            reference_level=reference_guard.update(obs,samples if level_mode=='screened' else [],calibration_samples)
+        else:reference_level=reference_filter.update(obs,samples) if reference_filter else None
         belief = twin.update(obs)
         measured_venous=None
         if venous_measurement is not None:
@@ -112,7 +132,9 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
             control_obs=replace(control_obs,level_reference_age=reference_level['age'] if reference_level else None,
                 level_reference_bias=reference_level['bias'] if reference_level else 0.)
         if controller_kind in ('selective','continuity'):controller.observe_references(samples)
+        if controller_kind in ('integrity_hybrid','integrity_pi'):controller.set_reference_state(reference_level)
         decision = controller.decide(control_obs, belief)
+        if reference_guard is not None:reference_guard.advance(decision.command,measured_venous)
         state = plant.step(decision.command, inputs['drainage'], dt)
         do2 = delivery(state['flow'], hb, inputs['sao2'], p.bsa)
         demand = p.demand37 * p.q10**((inputs['temperature']-37.)/10.)
@@ -143,7 +165,18 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                          infeasible=decision.infeasible,
                          reference_age=belief.reference_age,
                          hb_covered=belief.hb_lower<=hb<=belief.hb_upper))
-        if controller_kind in ('braking','continuity','selective'):rows[-1].update(controller.last_debug)
+        if controller_kind in ('braking','continuity','selective','integrity_hybrid','integrity_pi'):rows[-1].update(controller.last_debug)
+        if reference_guard is not None:
+            events=[]
+            for event in reference_level['events']:
+                label=getattr(reference_sensor,'labels',{}).get(round(event['acquired'],9),0.)
+                events.append({**event,'injected_bias_for_analysis':label})
+            rows[-1].update(calibration_value=calibration_samples[-1].value if calibration_samples else None,
+                calibration_acquired=calibration_samples[-1].acquired if calibration_samples else None,
+                calibration_delivered=calibration_samples[-1].delivered if calibration_samples else None,
+                reference_events=events,reference_quarantined=reference_level['quarantined'],
+                reference_uncertainty=reference_level['uncertainty'],calibration_age=reference_level['calibration_age'],
+                calibration_count=reference_level['calibration_count'],recovery_supported=reference_level['supported'])
     values = lambda key: np.array([r[key] for r in rows], dtype=float)
     true_low = values('do2')<target
     # False reassurance compares a start-of-step monitor to its ensuing interval;
@@ -164,6 +197,13 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                    flow_variation=float(np.abs(np.diff(values('command'))).sum()),
                    mean_flow=float(values('flow').mean()))
     metrics['level_fault_s'] = float(values('level_fault').sum()*dt)
+    if reference_guard is not None:
+        events=[e for r in rows for e in r['reference_events']]
+        bad=[e for e in events if abs(e['injected_bias_for_analysis'])>.04]
+        good=[e for e in events if abs(e['injected_bias_for_analysis'])<=.04]
+        metrics.update(reference_bad_total=len(bad),reference_bad_rejected=sum(not e['accepted'] for e in bad),
+            reference_good_total=len(good),reference_good_rejected=sum(not e['accepted'] for e in good),
+            quarantine_s=sum(r['reference_quarantined'] for r in rows)*dt)
     return dict(scenario=scenario.name, scenario_parameters=asdict(scenario),
                 policy=policy, controller_options=controller_options,
                 controller_kind=controller_kind,venous_measurement=venous_measurement,

@@ -273,3 +273,16 @@ The predictive recommendation is the greatest rate-limited command consistent wi
 PI anti-windup and the nominal pump integral both track the final applied command. A zero weight reproduces the PI command at the controller's current state; disabling the override for an entire run reproduces the corresponding PI experiment exactly. Returning to PI after intervention does not imply the physical trajectory becomes identical to a run that never intervened.
 
 The prediction is not a hard constraint on a partly blended action. Its violation is explicitly flagged when the override is active. Fading an override can retain a small contribution after eligibility is lost. Shared measurement bias, stale references and model mismatch can still cause depletion or unnecessary slowing. The previous orchestration source is retained at `data/continuity-history/frozen-v1.10/simulation.py` to validate old frozen hashes while numerical regressions run on current code.
+
+
+## Reference-integrity experiment
+
+`FaultyReferences` injects faults on the sensing side only. Routine noise uses seed+50000; independent calibration uses seed+110000, distinct from the seed+90000 virtual-patient sampler. Bias labels are joined to decisions only after controller actions for offline classification. The new optional simulation arguments are `reference_fault_options`, `calibration_options` and `reference_guard_options`; default behavior and prior numerical experiments remain unchanged.
+
+`ReferenceGuard` buffers each routine sample for up to 8 seconds after arrival to allow a same-acquisition calibration audit. A pair is compared before the routine value changes the inline correction. Without a pair, acceptance requires consistency with the latest calibration and raw inline history, and, after two calibrations, a mass-balance prediction. The pump model is nominal 2 s; consecutive independent calibrations fit a bounded venous-sensor offset. Rejection quarantines the routine source and restores independent calibration correction. A clean paired audit is required to clear quarantine. A distinct calibration acquisition count prevents duplicates from creating support.
+
+The current corrected inline estimate subtracts `base_uncertainty + drift_allowance * correction_age` to produce an engineering lower estimate. Before any calibration it uses an explicit 0.3 L extra allowance and remains unsupported; this is not an identifiable or guaranteed bound. Both matched controllers use this same observer design. The hybrid requires two calibrations, recent calibration and an unquarantined source before adding flow; otherwise even a fading override cannot exceed its PI recommendation. A partly blended action is not a hard stopping guarantee.
+
+The calibration-only PI uses this observer with no routine samples and a fixed declared uncertainty design, then development-selected PI gains. Screening disabled accepts routine samples despite test failures, with the same channels and guard allowances. This ablation isolates reference acceptance. Corrupting both channels can yield false agreement; noise being independent does not imply faults are independent.
+
+The v1.11 orchestration source remains at `data/selective-history/frozen-v1.11/simulation.py`; old protocol hashes are verified against that source while old numerical replays run through current orchestration.

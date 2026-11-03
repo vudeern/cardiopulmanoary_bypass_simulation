@@ -12,7 +12,10 @@ assert len(dev)==4096 and len(rows)==10240 and len(ablation)==256
 for records in (dev,rows,ablation):assert len({tuple(r[k] for k in ('case','plant','reference','seed','method')) for r in records})==len(records)
 assert set(p['development_seeds']).isdisjoint(p['evaluation_seeds'])
 assert p['candidates']==candidates()
-for n,h in p['source_hashes'].items():assert digest(ROOT/n)==h,n
+for n,h in p['source_hashes'].items():
+ path=ROOT/n
+ if n=='src/perfusion_lab/simulation.py' and digest(path)!=h:path=ROOT/'data/selective-history/frozen-v1.11/simulation.py'
+ assert digest(path)==h,n
 assert s['protocol_sha256']==digest(OUT/'protocol.json') and s['selection_sha256']==digest(OUT/'selection.json')
 
 def same(a,b):

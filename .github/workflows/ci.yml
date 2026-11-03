@@ -42,3 +42,5 @@ jobs:
       - run: python examples/validate_selective_study.py
       - run: python examples/build_selective_web.py --check
       - run: python examples/selective_capacity.py --check
+      - run: python examples/validate_integrity_study.py
+      - run: python examples/build_integrity_web.py --check

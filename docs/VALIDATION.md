@@ -26,6 +26,8 @@ python examples/diagnose_continuity.py --check
 python examples/validate_selective_study.py
 python examples/build_selective_web.py --check
 python examples/selective_capacity.py --check
+python examples/validate_integrity_study.py
+python examples/build_integrity_web.py --check
 ```
 
 Physics tests check mass conservation, actuator response, pressure decay, oxygen units and numerical refinement. Sensor/observer tests check causal timing, missing measurements, bias correction and explicit uncertainty assumptions. The frozen original replay cases detect changes to existing numerical behavior.
@@ -53,3 +55,6 @@ The post-evaluation mechanism audit aligns estimates with step-start physical tr
 
 
 Selective PI tests require exact PI-equivalent output when disabled or never anchored twice, correct reference timing, duplicate handling, bounded weight changes, integral tracking, propagation with the final applied command, pressure recovery screening and component direction. The frozen audit independently rebuilds both families' development selection, the two component arms, both baseline comparisons, every final cell and paired interval, all 30 displayed traces, the two archived pilots and the published table. The capacity check is an arithmetic screen, not dynamic feasibility validation.
+
+
+Reference-integrity tests check startup-bias screening before correction, rejection of a reference jump, healthy-sample false rejection under inline drift, shared-corruption non-detection, acquisition-time uncertainty growth, duplicate/future reference handling, quarantine recovery, suppression of upward override during fade, calibration-only input parity and the screening-disabled ablation. The independent audit rebuilds common guard selection and calibration-only PI selection, all 168 cells, paired intervals and the engineering criterion, decision classifications, all 24 displayed traces and the retained development pilot.

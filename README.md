@@ -6,7 +6,30 @@ A work-in-progress cardiopulmonary bypass simulation by Udeern Varanasi.
 
 The project explores how sensing errors, oxygen delivery and limited venous return affect pump control. It uses an uncalibrated adult-like synthetic circuit. It does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation.
 
-## Current design: PI with a selective predictive override
+## Current experiment: screening biased references
+
+The new `screened` reference mode evaluates routine samples **before** either PI or the predictive override uses them. It waits briefly for a same-acquisition independent calibration, tests unpaired samples against calibrated inline history and (after two calibrations) mass balance, quarantines inconsistent routine references, and restores the most recent independent calibration correction. A widening engineering uncertainty range defines the level supplied to both matched controllers. Quarantine and absent/stale calibration prevent upward predictive overrides, including during fade-out.
+
+Independent calibration is an additional **simulated measurement channel**, with noise, delay and explicit failure regimes. It is not truth supplied to the controller, a hardware validation, or a solution from the original sensors alone. A startup bias shared by both channels can still be unidentifiable. The reference sensor can have startup positive/negative bias, a step, a ramp, shared inline drift or a transient spike. Calibration can be healthy, absent, biased or corrupted with the same fault.
+
+```bash
+python examples/integrity_study.py --stage develop
+python examples/integrity_study.py --stage evaluate
+python examples/validate_integrity_study.py
+python examples/build_integrity_web.py
+```
+
+The fresh evaluation shows a **conditional protection gain with a large oxygen cost**. Under healthy independent calibration and nonclean reference-fault profiles, screened hybrid low-reservoir time is 0.58 versus 30.44 s with screening disabled (paired difference −29.85 s, 95% interval −32.32 to −26.48); empty requests fall from 2.51 s to zero. Oxygen-deficit AUC rises from 506.39 to 850.55 mL O₂/m². Calibration-only PI reaches 544.76 with 1.19 s low-reservoir time. The full engineering criterion fails: the extra reservoir exposure versus matched screened PI has an upper interval of 1.28 s, beyond the +1 s margin, and the oxygen cost versus calibration-only PI exceeds the +5 AUC margin.
+
+With healthy calibration, the hybrid rejects 3382/3600 bias-labelled routine samples (93.9%) and 0/3120 healthy-bias samples. These are observed synthetic classifications, not clinical sensitivity/specificity. With missing calibration it rejects all routine samples, healthy and biased. Shared corruption reduces biased-sample rejection to 47/3600 (1.3%) and leaves 27.12 s mean low-reservoir exposure. Biased calibration causes rejection of every healthy-bias routine sample. This work does not solve common-mode bias or establish overall superiority.
+
+Eight guard configurations are compared using both hybrid and matched PI; the chosen guard is common to those controllers. A calibration-only PI receives the same independent measurements and has 16 gain/setpoint candidates. The screening-disabled ablation uses the same hybrid, guard allowances and measurement channels, but accepts routine samples. Its purpose is to isolate screening, not to represent an established clinical device. Missing calibration is retained in development as a stress test; selection is based on good calibration. One earlier development-only run is preserved with exact source snapshots after separating the calibration RNG from the patient-parameter RNG.
+
+The frozen engineering criterion requires less biased-reference reservoir exposure than the screening-disabled arm, plus bounded extra reservoir/pressure exposure and oxygen deficit versus both screened PI and calibration-only PI, under healthy calibration. Biased and missing calibration and shared corruption remain secondary. Rejected bias-labelled samples must always be reported alongside rejected healthy samples; rejecting everything is not evidence of useful detection. The chosen development setting narrowly misses the 1 s mean low-reservoir eligibility target (1.04 s) and is explicitly marked ineligible.
+
+All reference decision logs and comparison outputs are machine-readable under `results/integrity-study/`. No clinical replacement, scientific novelty or guaranteed error bound is established. Paper drafts remain excluded.
+
+## Previous design: PI with a selective predictive override
 
 The `selective` controller keeps SIMC PI as its foundation. A predictive override requires two delivered reference acquisitions, sufficiently recent information and agreement between the reference-anchored mass balance and corrected inline level. Its weight changes gradually. The PI integral and pump estimate track the **actual applied command**, so fading the override returns to PI without an integral discontinuity. A recovery override cannot add flow at measured pressure ≥85 mmHg; the common pressure slowdown remains 90 mmHg.
 
