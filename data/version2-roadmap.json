@@ -11,12 +11,16 @@
     {
       "id": 1,
       "name": "Freeze and package final v1",
-      "status": "assets_prepared_publication_requires_successful_ci"
+      "status": "completed",
+      "release_url": "https://github.com/vudeern/cardiopulmanoary_bypass_simulation/releases/tag/v1.14.0",
+      "tag_commit": "ace6a9fed2f9084b5fda95e9e1113af7a3d93dca",
+      "published_assets": 7,
+      "source_archive_sha256": "0df90992148aff5fdedef6aead5016914191c16177c51ec7ba1dc1a910eadcca"
     },
     {
       "id": 2,
       "name": "Measurement-only API and simulation adapter",
-      "status": "exact_v114_parity",
+      "status": "completed_exact_v114_parity",
       "artifact": "results/runtime-parity/summary.json"
     },
     {
