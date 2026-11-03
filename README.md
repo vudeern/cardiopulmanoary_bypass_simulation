@@ -6,7 +6,28 @@ A work-in-progress cardiopulmonary bypass simulation by Udeern Varanasi.
 
 The project explores how sensing errors, oxygen delivery and limited venous return affect pump control. It uses an uncalibrated adult-like synthetic circuit. It does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation.
 
-## Current work: audit the slowdowns before changing the controller
+## Version history
+
+Versions are listed newest first. Each snapshot preserves the code and documentation recorded at that version; historical material may differ from the current project.
+
+| Version | Update | Snapshot |
+| --- | --- | --- |
+| v1.13 (current) | Slowdown audit and truth-informed physical benchmarks | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cbb683484999ab73a79bf0fc368d682e8878ae7) |
+| v1.12 | Reference screening, quarantine and independent calibration | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ed16fcf9056d41c2ffd1eca7fe1149515780ccaf) |
+| v1.11 | PI foundation with a selective predictive override | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/fe9c3cbab35d089a0af90ffdc6f9fae7b003ca07) |
+| v1.10 | Reference continuity between level measurements | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/1e84727d9e064d4fca93c8e33f34cf2c98b9e917) |
+| v1.9 | Predictive braking reserve | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/571f14652b7e800b57dac1a854c2a6592bdcd22c) |
+| v1.8 | Verified free SIMC PI reference and matched comparison | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cce084e35f6e031e67057be5bc9360cfe513ee1) |
+| v1.7 | Source-traced controller workbench; premature paper files removed | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61ae1677b29fe93422e75c7cec5e0a27335c5f33) |
+| v1.6 | Published-patient oxygen replay with provenance and limitations | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/03983990687231edd2879241c03ccb3aec3af872) |
+| v1.5 | Bias-mechanism analysis and flow-independent baselines | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/52fc56e705cba0c23233e260a042ad65a295f3f4) |
+| v1.4 | Timestamped independent level-reference comparison | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/397f505a84270ed430254e99f778151f8718178c) |
+| v1.3 | Sensor drift, flow errors and unfamiliar plant dynamics | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/20b974392bc05c5ae91b71b400f8c2985a7ecfa1) |
+| v1.2 | Comparison with tuned conservative baselines | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/85a1c5862af79374a5e50c7273039c08c72b81af) |
+| v1.1 | Causal reservoir level-step guard and paired evaluation | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61b74983f1681e5e80be3a24a6df9707793098fe) |
+| v1.0 | Initial simulation, paired benchmark and failure analysis | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/31414235c2587595a2f3c0e7e7b60b5a0632eff2) |
+
+## v1.13 — Audit the slowdowns before changing the controller (current)
 
 This is a **post-result diagnostic**, not a new sensor-based controller or fresh performance validation. Every deployed controller source hash is unchanged. The audit reuses the v1.12 patients and scenarios, compares the hybrid and both PI references, forks identical decision states, and runs two diagnostic closed-loop ablations: removing the uncertainty interval and supplying exact current reservoir volume. Unsafe ablation outcomes remain failures.
 
@@ -28,7 +49,7 @@ Of 38,742 observed slowdown decisions, 27,793 (71.7%) have at least one higher-f
 
 The first audit output used a continuous residual-flow approximation. It is explicitly superseded in `data/slowdown-audit/tail-correction/`; the final audit was rerun with the exact discrete trapezoidal geometric tail and a regression test for the counterexample. No controller tuning or case selection followed this correction. No paper drafts or prose result documents are generated.
 
-## Previous experiment: screening biased references
+## v1.12 — Screening biased references
 
 The new `screened` reference mode evaluates routine samples **before** either PI or the predictive override uses them. It waits briefly for a same-acquisition independent calibration, tests unpaired samples against calibrated inline history and (after two calibrations) mass balance, quarantines inconsistent routine references, and restores the most recent independent calibration correction. A widening engineering uncertainty range defines the level supplied to both matched controllers. Quarantine and absent/stale calibration prevent upward predictive overrides, including during fade-out.
 
@@ -51,7 +72,7 @@ The frozen engineering criterion requires less biased-reference reservoir exposu
 
 All reference decision logs and comparison outputs are machine-readable under `results/integrity-study/`. No clinical replacement, scientific novelty or guaranteed error bound is established. Paper drafts remain excluded.
 
-## Previous design: PI with a selective predictive override
+## v1.11 — PI with a selective predictive override
 
 The `selective` controller keeps SIMC PI as its foundation. A predictive override requires two delivered reference acquisitions, sufficiently recent information and agreement between the reference-anchored mass balance and corrected inline level. Its weight changes gradually. The PI integral and pump estimate track the **actual applied command**, so fading the override returns to PI without an integral discontinuity. A recovery override cannot add flow at measured pressure ≥85 mmHg; the common pressure slowdown remains 90 mmHg.
 
@@ -75,7 +96,7 @@ The frozen joint criterion compares the hybrid separately with **both** the deve
 
 An offline steady-state capacity screen reports when a fixed oxygen target exceeds sustainable model capacity at the declared volume/pressure limits. Stored reservoir volume and pressure transients can bridge short intervals, so this screen is neither a finite-horizon impossibility proof nor a dynamic optimal controller. It never relaxes the controller success criterion.
 
-## Previous design: continuity between level references
+## v1.10 — Continuity between level references
 
 The `continuity` controller integrates measured venous inflow minus a nominal first-order pump-flow estimate. Delivered level references anchor this balance **at their acquisition time**, so a delayed sample corrects the past before propagation to the present. Consecutive reference volumes fit a venous-sensor offset (clipped to ±2 L/min); the controller does not receive the actual offset, future drainage or true pump lag. A braking reserve uses the command-history actuator interval and the estimated inflow. A linearly growing model-error allowance replaces the old abrupt 180-second loss-of-reference shutdown.
 
@@ -94,7 +115,7 @@ The final revision gives each family 16 candidates on the same development grid,
 
 The co-primary test requires reservoir/pressure protection and less oxygen deficit versus the retuned SIMC PI reference **separately in both good-reference and delayed/lost-reference groups**, with in-range plants. Biased references, no references at all and an out-of-range pump lag remain secondary stress tests. The v1.9 braking controller stays as a fixed context arm. A separately specified 2,048-run sensitivity retains the previous fast PI settings (`tau_c=1.5`, level target 0.45 L); it never replaces the frozen primary test. All failures remain in the machine-readable logs under `results/continuity-study/`.
 
-## Previous design: predictive braking reserve
+## v1.9 — Predictive braking reserve
 
 The new `braking` controller reserves volume for the pump's response lag and rate-limited slowdown. It tracks an interval of actuator flow from command history, cross-checks measured venous flow against past inline-level changes, and adjusts its level allowance using observed reference-bias trends. These engineering allowances are not calibrated uncertainty bounds or guarantees about future drainage.
 
@@ -113,7 +134,7 @@ Raw outputs are in `results/braking-study/`. Two superseded development-only des
 
 The controller flags infeasible stopping requests and absent/stale level information; it never receives the injected fault magnitude or true future inflow. A constant lag within 1–10 seconds, adequate level/error allowances and an inflow lower estimate that remains valid are conditional assumptions. A past slope alone cannot guarantee future venous return. Clinical protection and scientific novelty are not established by these simulations.
 
-## Previous comparison: verified free SIMC PI reference
+## v1.8 — Verified free SIMC PI reference
 
 The reproducible reference is [Skogestad's SIMC PI method](https://www.mic-journal.no/PDF/2004/MIC-2004-2-2.pdf), with [free author notes and corrections](https://skoge.folk.ntnu.no/publications/2003/tuningPID/README.html). This is an established **general process-control method**, applied here as a reservoir override. It is not a clinical CPB controller or commercial medical device.
 
