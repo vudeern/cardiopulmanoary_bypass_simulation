@@ -27,3 +27,4 @@ jobs:
       - run: python examples/validate_robustness_study.py
       - run: python examples/validate_reference_study.py
       - run: python examples/validate_submission_study.py
+      - run: python examples/published_patient_replay.py --check

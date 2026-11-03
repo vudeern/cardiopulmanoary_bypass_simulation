@@ -80,3 +80,7 @@ Ten new tests check acquisition/delivery causality, timestamp matching, analytic
 ## v1.5 mechanism and stronger-baseline checks
 
 Seven new tests check closed-loop and controller-level flow-bias invariance, common command/slew limits, pressure slowdown, invalid configuration and hand-calculated reduced-model equilibria. The analysis verifies 160 independent scalar cases, 6,496 unique stronger-baseline runs, development-only selection, 84 final cell means, all 60 grouped paired intervals, 384 exact sensor-only counterfactual pairs and 12 independently rerun replays. The published-range check is explicitly not external validation. Manuscript/readiness files retain the failed primary result and unresolved evidence gaps. The web contract now covers 136 views.
+
+## Published-patient oxygen replay update
+
+The v1.6 [patient replay](PATIENT_REPLAY.md) uses five public case-report observations. It checks oxygen arithmetic with actual inputs and explicit unmeasured-saturation assumptions. It supplies no raw reservoir series, fitted patient dynamics, held-out prediction or controller validation; those gaps above remain open. Reproduce and verify with `python examples/published_patient_replay.py --check`.

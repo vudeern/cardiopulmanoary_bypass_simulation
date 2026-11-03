@@ -16,9 +16,10 @@ def oxygen_content(hb: float, sao2: float, pao2: float = 150.0) -> float:
     return 1.34 * hb * sao2 + 0.0031 * pao2
 
 
-def delivery(flow: float, hb: float, sao2: float, bsa: float) -> float:
+def delivery(flow: float, hb: float, sao2: float, bsa: float,
+             pao2: float = 150.0) -> float:
     """Indexed DO2 [mL O2/min/m²]; 10 converts L to dL."""
-    return 10.0 * flow * oxygen_content(hb, sao2) / bsa
+    return 10.0 * flow * oxygen_content(hb, sao2, pao2) / bsa
 
 
 @dataclass(frozen=True)

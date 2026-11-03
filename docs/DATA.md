@@ -127,3 +127,7 @@ Simulation rows now log `observed_flow`, `observed_reservoir`, `injected_level_b
 ## v1.5 stronger baselines and mechanism audit
 
 `controller_kind` distinguishes original forecast, level PI and threshold control. Existing default benchmark metrics are regression checked. `results/submission-study/` records 2,464 development and 4,032 final rows, candidate configuration selection, paired intervals, per-seed parameters and explicit readiness status. `results/mechanism-audit/` contains the independent scalar recurrence checks, nominal-range samples and published aggregate-range provenance. No raw clinical/bench reservoir trajectory was used. See [PAPER_DRAFT.md](PAPER_DRAFT.md) and [THEORY.md](THEORY.md).
+
+## Published-patient oxygen replay update
+
+The v1.6 [patient replay](PATIENT_REPLAY.md) uses five public case-report observations. It checks oxygen arithmetic with actual inputs and explicit unmeasured-saturation assumptions. It supplies no raw reservoir series, fitted patient dynamics, held-out prediction or controller validation; those gaps above remain open. Reproduce and verify with `python examples/published_patient_replay.py --check`.

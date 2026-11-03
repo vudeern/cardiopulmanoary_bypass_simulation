@@ -12,6 +12,19 @@ Perfusion Sentinel brings these interactions into one inspectable experiment: a 
 
 **This is an uncalibrated, synthetic research prototype. It does not control medical equipment, recommend treatment, predict organ injury, or reproduce a LivaNova product. There is no LivaNova affiliation or endorsement.**
 
+## v1.6: first published-patient oxygen replay
+
+A real published bypass case now supplies **five timed flow, Hb and PaO2 observations**. The replay uses the reported BSA, preserves missing arterial saturation, and shows explicitly assumed saturation sensitivity endpoints. It audits fixed-PaO2 and equation-coefficient differences without fitting or inventing a continuous trajectory.
+
+**This partially addresses patient-based modeling:** it is an oxygen-equation replay, not a patient-specific reservoir simulation or held-out dynamic validation. Suitable synchronized reservoir/pump-command patient data were not located in the scoped search. Existing controller studies remain synthetic.
+
+[Patient replay and source audit](docs/PATIENT_REPLAY.md) · [Recorded inputs](data/published-case/observations.csv) · [Provenance](data/published-case/provenance.json) · [Machine-readable evidence status](results/published-case/replay.json)
+
+```bash
+python examples/published_patient_replay.py
+python examples/published_patient_replay.py --check
+```
+
 ## v1.5 review package: mechanism, stronger baselines and a manuscript
 
 The update adds a **working manuscript**, a focused prior-art/evidence audit, and a reduced-model result: **V* = V_min + margin − residual level offset − horizon × flow bias / 60**. Correcting level alone does not remove the flow-bias term. Independent scalar checks cover 160 cases; the added flow-independent PI/threshold baselines satisfy exact physical-output invariance in 384 final sensor-only counterfactual pairs.

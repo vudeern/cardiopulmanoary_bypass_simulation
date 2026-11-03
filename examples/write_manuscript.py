@@ -129,7 +129,7 @@ In the stated reduced model, residual level error and flow bias transmit additiv
 
 ## Ethics, assistance and author declarations
 
-No patient records, human/animal experiments or medical-equipment control were used. No ethics-waiver determination is claimed. ChatGPT/Codex assisted software, study-script and manuscript drafting; an independently recorded exact model version is unavailable. The human author must verify the equations, implementation, analysis, citations and declarations before submission. Funding, competing interests and final author/affiliation details remain for author confirmation. No external domain review or author submission approval has been recorded.
+The controller benchmark uses synthetic data; no new human/animal experiments or medical-equipment control were performed. A separate [published-patient oxygen replay](PATIENT_REPLAY.md) uses five numerical observations from a public case report (Hunter et al., 2013; PMID 24303600). It does not fit patient dynamics, measure reservoir response or validate the controller conclusions. No ethics-waiver determination is claimed. ChatGPT/Codex assisted software, study-script and manuscript drafting; an independently recorded exact model version is unavailable. The human author must verify the equations, implementation, analysis, citations and declarations before submission. Funding, competing interests and final author/affiliation details remain for author confirmation. No external domain review or author submission approval has been recorded.
 
 ## References
 
@@ -165,6 +165,9 @@ The absence of physical validation does not make every idealized simulation pape
 
 Files: [working manuscript](PAPER_DRAFT.md), [theory](THEORY.md), [literature audit](LITERATURE_AUDIT.md), [machine-readable readiness](../results/submission-study/readiness.json).
 ''')
+patient_note='''\n## Published-patient oxygen replay update\n\nThe v1.6 [patient replay](PATIENT_REPLAY.md) uses five public case-report observations. It checks oxygen arithmetic with actual inputs and explicit unmeasured-saturation assumptions. It supplies no raw reservoir series, fitted patient dynamics, held-out prediction or controller validation; those gaps above remain open. Reproduce and verify with `python examples/published_patient_replay.py --check`.\n'''
+path=ROOT/'docs/SUBMISSION_READINESS.md'
+path.write_text(path.read_text()+patient_note)
 header='<section class="failure-section" id="manuscript" aria-labelledby="manuscript-heading">'
 html=header+f'''<p class="eyebrow">08 / MECHANISM AND MANUSCRIPT</p><h2 id="manuscript-heading">Explain the failure. Test stronger baselines.</h2>
 <p>The review draft now connects an analytic bias mechanism with 6,496 new runs and reference-aware PI/threshold comparisons. In a reduced active-constraint model, equilibrium is V* = V_min + margin − level offset − horizon × flow bias / 60. Correct level alone does not remove a biased-flow forecast error.</p>

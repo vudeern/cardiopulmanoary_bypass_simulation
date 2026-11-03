@@ -1,0 +1,16 @@
+{
+  "case_id": "hunter-2013-table1",
+  "citation": "Hunter KT II, Lopez AR, Yun KL. Emergent Cardiopulmonary Bypass for a 180 Kilogram Patient: Support with a Single Oxygenator. J Extra Corpor Technol. 2013;45(3):178–182. PMID:24303600.",
+  "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4557537/",
+  "publisher_pdf": "https://ject.edpsciences.org/articles/ject/pdf/2013/03/ject-45-178.pdf",
+  "source_locations": {"observations": "Table 1", "bsa": "Description, first paragraph", "source_equation": "Figure 2, publisher PDF indexed text"},
+  "retrieved_utc": "2026-11-03",
+  "bsa_m2": 2.73,
+  "extraction": "Manual transcription of selected numerical facts from the public article, checked against Table 1. Time in minutes converted to seconds. No chart digitization or raw monitor export.",
+  "rights": "Article copyright AMSECT 2013. Selected numerical facts only; article prose, images and full tables are not redistributed. Repository MIT license applies to our code, not the source article.",
+  "saturation_status": "Arterial saturation is not supplied in Table 1. Mixed venous saturation is a different variable and is deliberately not substituted.",
+  "missing_for_dynamic_validation": ["synchronized pump commands", "reservoir volume", "venous return", "time-resolved fluid additions, vent return and ultrafiltration", "arterial pressure trajectory", "actuator response"],
+  "source_coefficients": {"hb_capacity_ml_g": 1.36, "dissolved_ml_dl_mmhg": 0.0032},
+  "assumed_saturation_sensitivity": [0.98, 1.0],
+  "sensitivity_status": "Chosen arithmetic sensitivity endpoints, not measured saturation, confidence limits, or guaranteed physiologic bounds."
+}
