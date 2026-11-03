@@ -1,79 +1,29 @@
 # Perfusion Sentinel
 
-A work-in-progress cardiopulmonary bypass simulation by Udeern Varanasi.
+A cardiopulmonary bypass simulation and controller research project by Udeern Varanasi.
 
 [Interactive replay](https://vudeern.github.io/perfusion-sentinel/) · [Portfolio](https://vudeern.github.io/projects.html) · [Model](docs/MODEL.md) · [Data dictionary](docs/DATA.md) · [Checks](docs/VALIDATION.md)
 
-The project explores how sensing errors, oxygen delivery and limited venous return affect pump control. It uses an uncalibrated adult-like synthetic circuit. It does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation.
+## Goal, project and motivation
 
-## Version history
+Perfusion Sentinel investigates whether a controller can maintain oxygen delivery while protecting reservoir volume when measurements are biased, delayed or missing and venous return is limited. Pumping more can improve oxygen delivery, but it can also drain the reservoir faster than blood returns. The motivation is to understand and improve that tradeoff when the controller has imperfect information.
 
-Versions are listed newest first. The current entry follows `main`; earlier entries link to frozen code snapshots. Historical material may differ from the current project.
+The repository combines a synthetic circuit, simulated sensors, causal state estimation, a PI baseline and a predictive controller, with paired experiments and replayable results. The goal is to demonstrate a reproducible improvement over an equally informed PI comparator within explicit simulation assumptions. The longer-term goal is to reuse the controller interface in a separately tested bench pump/reservoir prototype.
 
-| Version | Update | Snapshot |
-| --- | --- | --- |
-| v2.0-rc.1 (current) | Measurement-only controller API, exact v1 parity and final-v1 packaging | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
-| v1.14 | Final v1: calibration-constrained model bank and discrete reserve | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ace6a9fed2f9084b5fda95e9e1113af7a3d93dca) |
-| v1.13 | Slowdown audit and truth-informed physical benchmarks | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cbb683484999ab73a79bf0fc368d682e8878ae7) |
-| v1.12 | Reference screening, quarantine and independent calibration | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ed16fcf9056d41c2ffd1eca7fe1149515780ccaf) |
-| v1.11 | PI foundation with a selective predictive override | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/fe9c3cbab35d089a0af90ffdc6f9fae7b003ca07) |
-| v1.10 | Reference continuity between level measurements | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/1e84727d9e064d4fca93c8e33f34cf2c98b9e917) |
-| v1.9 | Predictive braking reserve | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/571f14652b7e800b57dac1a854c2a6592bdcd22c) |
-| v1.8 | Verified free SIMC PI reference and matched comparison | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cce084e35f6e031e67057be5bc9360cfe513ee1) |
-| v1.7 | Source-traced controller workbench; premature paper files removed | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61ae1677b29fe93422e75c7cec5e0a27335c5f33) |
-| v1.6 | Published-patient oxygen replay with provenance and limitations | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/03983990687231edd2879241c03ccb3aec3af872) |
-| v1.5 | Bias-mechanism analysis and flow-independent baselines | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/52fc56e705cba0c23233e260a042ad65a295f3f4) |
-| v1.4 | Timestamped independent level-reference comparison | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/397f505a84270ed430254e99f778151f8718178c) |
-| v1.3 | Sensor drift, flow errors and unfamiliar plant dynamics | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/20b974392bc05c5ae91b71b400f8c2985a7ecfa1) |
-| v1.2 | Comparison with tuned conservative baselines | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/85a1c5862af79374a5e50c7273039c08c72b81af) |
-| v1.1 | Causal reservoir level-step guard and paired evaluation | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61b74983f1681e5e80be3a24a6df9707793098fe) |
-| v1.0 | Initial simulation, paired benchmark and failure analysis | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/31414235c2587595a2f3c0e7e7b60b5a0632eff2) |
+The circuit is adult-like and uncalibrated. The code does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation, clinical validation or established overall controller superiority.
 
-## Road to v2.0
+## Current released version
 
-The next development line is **v2.0 release candidates** at the owner’s request. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); each iteration reports [current progress](results/model-bank-study/version2-progress.json).
+**v1.14.0 is the latest published stable release and the final v1 snapshot.** [Download the release](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/releases/tag/v1.14.0) for the frozen source ZIP, Python wheel, source distribution, example configuration, reproduction guide, manifest and checksums.
 
-- At least **10% lower mean oxygen-deficit AUC** than the strongest development-eligible PI comparator with the same inputs and limits; the paired 95% interval must support improvement. Determine the comparator on development data, not after final results.
-- **Zero empty-reservoir requests** in primary evaluation and mean low-reservoir time **≤1 s per 10-minute run** in each primary regime. Upper paired extra exposure must be ≤1 s low/empty and ≤5 s high pressure.
-- Pass separately for **normal sensing, routine-reference bias and routine-reference outages**, within the declared independent-calibration assumptions.
-- Confirm the frozen design on **two distinct fresh cohorts of at least 32 virtual patients each**, retain all failures, and pass source/artifact checks on both supported Python versions.
-- Publish missing/biased/shared-corruption calibration failures and the fallback behavior. An unidentifiable shared absolute bias is not solved by labelling a release v2.0.
-
-The original evidence policy is retained unchanged for historical hash verification; [version2-roadmap.json](data/version2-roadmap.json) records the new release-candidate numbering and exact remaining phases.
-
-The present 16-patient evaluation is exploratory and cannot qualify for v2.0, even if some metrics pass. The synthetic parameter distribution and reused circuit model are not a validated clinical population.
-
-## v2.0-rc.1 — Controller interface and frozen v1 package (current)
-
-This release candidate starts the v2 development line. **Controller behavior is unchanged from v1.14; the performance milestone has not passed.** Exact parity on 24 paired 10-minute runs covers hybrid, matched PI and single-model configurations, including missing, biased and shared calibration. Every trajectory field and metric matches. This reuses old cases and is an interface regression check, not a new confirmation cohort. The check and source hashes are in [runtime parity](results/runtime-parity/summary.json).
-
-`ControllerRuntime` accepts a `MeasurementFrame` containing the current `Observation`, measured venous flow and already-delivered timestamped level samples. It returns a bounded requested setpoint, a validity interval and explicit unsupported/conflict/quarantine/infeasibility statuses. It receives no plant object, true reservoir volume, injected fault labels, future inputs or random seed. The caller must acknowledge the setpoint actually applied before sending another frame; both the observer mass balance and PI tracking use that acknowledgement. Invalid values, future/unmatched samples and missing/duplicate frames are rejected before input state changes. Rejected input produces no new command; a future adapter must implement an independent watchdog and stop path.
-
-```python
-from perfusion_lab.runtime import ControllerRuntime, MeasurementFrame
-from perfusion_lab.sensing import Observation
-
-runtime = ControllerRuntime(bsa=1.85, initial_hb=9.0, dt=1.0)
-# Illustrative measured values in the documented units, not patient settings.
-obs = Observation(0.0, 4.44, 0.85, 60.0, 9.0, 0.98, 37.0, 9.0)
-output = runtime.observe(MeasurementFrame(obs, venous_flow=4.44))
-# Simulation acknowledges the requested setpoint. A device adapter must instead
-# acknowledge the actual accepted setpoint and own independent fault handling.
-runtime.acknowledge(observation_time=0.0, applied_command=output.decision.command)
-```
-
-The simulation adapter is `perfusion_lab.runtime_simulation.simulate_runtime`. Frozen v1 controller and simulation modules remain intact. The interface is fixed-step Python with histories that grow with run length; timing, bounded memory, device drivers and physical stopping remain future work. It is a foundation for a bench prototype, not equipment-ready software.
-
-```bash
-python examples/validate_runtime.py --check
-python examples/check_versions.py
-```
+V1 ends with a calibration-constrained pump-model bank and a conditional discrete braking reserve. Under routine-reference bias with healthy independent calibration, it reduced oxygen-deficit AUC by **33.6%** versus the previous hybrid and mean reservoir-volume error from **44.35 to 24.98 mL**. It had zero empty requests in primary testing. **The complete PI comparison still failed:** reservoir-protection requirements were not consistently met, and biased/shared calibration could still cause depletion and empty requests. V1 demonstrates a useful simulation foundation and scoped gains; overall superiority remains unestablished.
 
 **Final v1 is v1.14.0**, pinned to `ace6a9fed2f9084b5fda95e9e1113af7a3d93dca`. The [v1 maintenance branch](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/release/v1) preserves that same commit. The [release page](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/releases/tag/v1.14.0) provides a full frozen source ZIP, Python wheel/sdist, example configuration, reproduction instructions, manifest and checksums. The wheel installs Python modules and the original CLI; full study reproduction uses the source ZIP. Packaging verifies the frozen 398-file snapshot and never rewrites its results. The publication workflow runs only after successful source CI and never moves an existing tag or overwrites a published release. Paper drafts remain excluded.
 
-Next: develop the estimator/reserve on 32 development patients, tune an equally informed PI comparator, freeze settings and analysis, then run two untouched 32-patient confirmation cohorts. Oxygen, reservoir and pressure gates remain unchanged. Confirmation has not started; there are **0/2 qualifying cohorts**. The final step is stable v2.0.0 only if those gates pass, followed by simulated I/O and a separately tested bench-only prototype.
+<details>
+<summary>Detailed v1.14 methods, results and reproduction commands</summary>
 
-## v1.14 — Calibration-constrained model bank
+### v1.14 — Calibration-constrained model bank
 
 The new causal observer propagates a generic bank of 1, 2, 4, 8 and 12 s pump models using applied commands and measured venous inflow. The last four delivered independent calibrations fit a mass-balance intercept and venous-offset slope. Calibration error allowances, fit residuals, extrapolation weights and model-error growth define an engineering volume interval across retained models. No true reservoir volume, true pump lag or future disturbance enters the controller.
 
@@ -97,7 +47,145 @@ The full criterion fails. Relative to matched model-bank PI, oxygen deficit impr
 
 The new harness preserves the established timing and physiology pipeline and is tested for exact parity when using the old factories. Previous controller/orchestration files remain unchanged so frozen historical experiments remain reproducible. The study uses 4,096 development runs and 15,360 evaluation runs with fresh patient/noise seeds and pump responses different from development. Scenario families and the synthetic model remain reused. All failures and secondary calibration-corruption regimes remain in the logs; no paper drafts are generated.
 
-## v1.13 — Audit the slowdowns before changing the controller
+</details>
+
+## Current progress
+
+The `main` branch is **v2.0-rc.1**, an unreleased development candidate for v2.0. The v1 freeze/package and controller-interface phases are complete. Estimator/reserve development is next; confirmation has not started, with **0/2 qualifying cohorts**. The [roadmap](data/version2-roadmap.json) records the phases and reserved cohorts.
+
+### v2.0-rc.1 — Controller interface and frozen v1 package (current)
+
+This release candidate starts the v2 development line. **Controller behavior is unchanged from v1.14; the performance milestone has not passed.** Exact parity on 24 paired 10-minute runs covers hybrid, matched PI and single-model configurations, including missing, biased and shared calibration. Every trajectory field and metric matches. This reuses old cases and is an interface regression check, not a new confirmation cohort. The check and source hashes are in [runtime parity](results/runtime-parity/summary.json).
+
+`ControllerRuntime` accepts a `MeasurementFrame` containing the current `Observation`, measured venous flow and already-delivered timestamped level samples. It returns a bounded requested setpoint, a validity interval and explicit unsupported/conflict/quarantine/infeasibility statuses. It receives no plant object, true reservoir volume, injected fault labels, future inputs or random seed. The caller must acknowledge the setpoint actually applied before sending another frame; both the observer mass balance and PI tracking use that acknowledgement. Invalid values, future/unmatched samples and missing/duplicate frames are rejected before input state changes. Rejected input produces no new command; a future adapter must implement an independent watchdog and stop path.
+
+The simulation adapter is `perfusion_lab.runtime_simulation.simulate_runtime`. Frozen v1 controller and simulation modules remain intact. The interface is fixed-step Python with histories that grow with run length; timing, bounded memory, device drivers and physical stopping remain future work. It is a foundation for a bench prototype, not equipment-ready software.
+
+## Next steps
+
+1. Develop and compare estimator/reserve changes on **32 development virtual patients**, keeping every candidate and failure. Improve estimation and conditional reserve design together, testing the effect of each margin.
+2. Tune a PI comparator independently using the same measurement channels and actuator limits. Select eligibility and settings on development data.
+3. Freeze the candidate, comparator, source hashes, settings and analysis before confirmation.
+4. Evaluate the same frozen design on **two untouched cohorts of at least 32 patients each**. Pass normal sensing, routine-reference bias and routine-reference outage regimes separately. Retain failures; revised designs need new unseen confirmation cohorts.
+5. Publish stable **v2.0.0 only after all evidence and reproduction gates pass**.
+6. Then develop simulated I/O and a separately tested bench-only pump/reservoir prototype, including bounded memory, measured timing, an independent watchdog and a physical stop path.
+
+### Requirements for stable v2.0.0
+
+The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); each iteration reports [current progress](results/model-bank-study/version2-progress.json).
+
+- At least **10% lower mean oxygen-deficit AUC** than the strongest development-eligible PI comparator with the same inputs and limits; the paired 95% interval must support improvement. Determine the comparator on development data, not after final results.
+- **Zero empty-reservoir requests** in primary evaluation and mean low-reservoir time **≤1 s per 10-minute run** in each primary regime. Upper paired extra exposure must be ≤1 s low/empty and ≤5 s high pressure.
+- Pass separately for **normal sensing, routine-reference bias and routine-reference outages**, within the declared independent-calibration assumptions.
+- Confirm the frozen design on **two distinct fresh cohorts of at least 32 virtual patients each**, retain all failures, and pass source/artifact checks on both supported Python versions.
+- Publish missing/biased/shared-corruption calibration failures and the fallback behavior. An unidentifiable shared absolute bias is not solved by labelling a release v2.0.
+
+The original evidence policy is retained unchanged for historical hash verification; [version2-roadmap.json](data/version2-roadmap.json) records the new release-candidate numbering and exact remaining phases.
+
+The present 16-patient evaluation is exploratory and cannot qualify for v2.0, even if some metrics pass. The synthetic parameter distribution and reused circuit model are not a validated clinical population.
+
+## How to use the repository
+
+### Choose a version and install
+
+Use the [v1.14.0 release source ZIP](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/releases/tag/v1.14.0) for frozen v1 reproduction. Use `main` for current v2 development. The wheel installs Python modules and the original CLI; full studies, datasets and viewer assets require the source repository or full source ZIP.
+
+With Python **3.10 or 3.12**, clone the repository and install the free audit dependencies in a virtual environment:
+
+```bash
+git clone https://github.com/vudeern/cardiopulmanoary_bypass_simulation.git
+cd cardiopulmanoary_bypass_simulation
+python -m venv .venv
+# macOS/Linux:
+source .venv/bin/activate
+# Windows PowerShell: .venv\Scripts\Activate.ps1
+python -m pip install -e ".[audit]"
+```
+
+### Run a simulation and check the results
+
+The CLI commands below run the original scenario/policy experiments. The current model-bank controller uses its dedicated study runner (in the v1.14 details above) or the current interface example below.
+
+```bash
+perfusion-lab run --scenario compound --policy sentinel --out /tmp/perfusion-run
+perfusion-lab benchmark --out /tmp/perfusion-benchmark
+python examples/published_patient_replay.py
+python -m unittest discover -s tests
+node tests/web_contract.cjs
+```
+
+Use `perfusion-lab --help` for the existing command interface. Earlier experiments and raw logs remain reproducible. Existing PI/threshold policies are project baselines, not faithful implementations of a commercial or published controller. `web/` replays precomputed Python output; it does not run a second physiology engine.
+
+The public-case input file contains five observations transcribed from [Hunter et al., 2013](https://pmc.ncbi.nlm.nih.gov/articles/PMC4557537/). [Provenance](data/published-case/provenance.json) preserves missing arterial saturation and source attribution. This is an oxygen-equation replay only; no patient reservoir dynamics are fitted or validated.
+
+### Use the current controller interface
+
+This example is for the `main` development version; the frozen v1 package predates `ControllerRuntime`.
+
+```python
+from perfusion_lab.runtime import ControllerRuntime, MeasurementFrame
+from perfusion_lab.sensing import Observation
+
+runtime = ControllerRuntime(bsa=1.85, initial_hb=9.0, dt=1.0)
+# Illustrative measured values in the documented units, not patient settings.
+obs = Observation(0.0, 4.44, 0.85, 60.0, 9.0, 0.98, 37.0, 9.0)
+output = runtime.observe(MeasurementFrame(obs, venous_flow=4.44))
+# Simulation acknowledges the requested setpoint. A device adapter must instead
+# acknowledge the actual accepted setpoint and own independent fault handling.
+runtime.acknowledge(observation_time=0.0, applied_command=output.decision.command)
+```
+
+```bash
+python examples/validate_runtime.py --check
+python examples/check_versions.py
+```
+
+### Repository layout
+
+- `src/perfusion_lab/`: plant, sensors, observer and controller code.
+- `tests/`: physics, information, controller and replay contracts.
+- `data/`: source provenance and reference implementation mapping.
+- `results/`: reproducible raw experiment logs and machine summaries.
+- `examples/`: runners, optional engineering plots and artifact checks.
+- `docs/`: model, data dictionary and validation instructions.
+- `web/`: interactive replay and work-in-progress project page.
+
+Paper drafts, abstracts, result write-ups and publication-readiness documents are removed while development continues. Their generators are removed as well. Optional plotting tools write to `results/figures/`, not `docs/`. Historical experiments are development evidence, not clinical validation or final publication claims.
+
+Code is MIT licensed. Source articles and externally published numerical facts retain their own attribution and rights; the software license does not relicense them.
+
+### Version history
+
+<details>
+<summary>All labelled versions and frozen snapshots</summary>
+
+Versions are listed newest first. The current entry follows `main`; earlier entries link to frozen code snapshots. Historical material may differ from the current project.
+
+| Version | Update | Snapshot |
+| --- | --- | --- |
+| v2.0-rc.1 (current) | Measurement-only controller API, exact v1 parity and final-v1 packaging | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v1.14 | Final v1: calibration-constrained model bank and discrete reserve | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ace6a9fed2f9084b5fda95e9e1113af7a3d93dca) |
+| v1.13 | Slowdown audit and truth-informed physical benchmarks | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cbb683484999ab73a79bf0fc368d682e8878ae7) |
+| v1.12 | Reference screening, quarantine and independent calibration | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ed16fcf9056d41c2ffd1eca7fe1149515780ccaf) |
+| v1.11 | PI foundation with a selective predictive override | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/fe9c3cbab35d089a0af90ffdc6f9fae7b003ca07) |
+| v1.10 | Reference continuity between level measurements | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/1e84727d9e064d4fca93c8e33f34cf2c98b9e917) |
+| v1.9 | Predictive braking reserve | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/571f14652b7e800b57dac1a854c2a6592bdcd22c) |
+| v1.8 | Verified free SIMC PI reference and matched comparison | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cce084e35f6e031e67057be5bc9360cfe513ee1) |
+| v1.7 | Source-traced controller workbench; premature paper files removed | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61ae1677b29fe93422e75c7cec5e0a27335c5f33) |
+| v1.6 | Published-patient oxygen replay with provenance and limitations | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/03983990687231edd2879241c03ccb3aec3af872) |
+| v1.5 | Bias-mechanism analysis and flow-independent baselines | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/52fc56e705cba0c23233e260a042ad65a295f3f4) |
+| v1.4 | Timestamped independent level-reference comparison | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/397f505a84270ed430254e99f778151f8718178c) |
+| v1.3 | Sensor drift, flow errors and unfamiliar plant dynamics | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/20b974392bc05c5ae91b71b400f8c2985a7ecfa1) |
+| v1.2 | Comparison with tuned conservative baselines | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/85a1c5862af79374a5e50c7273039c08c72b81af) |
+| v1.1 | Causal reservoir level-step guard and paired evaluation | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61b74983f1681e5e80be3a24a6df9707793098fe) |
+| v1.0 | Initial simulation, paired benchmark and failure analysis | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/31414235c2587595a2f3c0e7e7b60b5a0632eff2) |
+
+</details>
+
+<details>
+<summary>Earlier methods, findings and reproduction notes (v1.8–v1.13)</summary>
+
+### v1.13 — Audit the slowdowns before changing the controller
 
 This is a **post-result diagnostic**, not a new sensor-based controller or fresh performance validation. Every deployed controller source hash is unchanged. The audit reuses the v1.12 patients and scenarios, compares the hybrid and both PI references, forks identical decision states, and runs two diagnostic closed-loop ablations: removing the uncertainty interval and supplying exact current reservoir volume. Unsafe ablation outcomes remain failures.
 
@@ -119,7 +207,7 @@ Of 38,742 observed slowdown decisions, 27,793 (71.7%) have at least one higher-f
 
 The first audit output used a continuous residual-flow approximation. It is explicitly superseded in `data/slowdown-audit/tail-correction/`; the final audit was rerun with the exact discrete trapezoidal geometric tail and a regression test for the counterexample. No controller tuning or case selection followed this correction. No paper drafts or prose result documents are generated.
 
-## v1.12 — Screening biased references
+### v1.12 — Screening biased references
 
 The new `screened` reference mode evaluates routine samples **before** either PI or the predictive override uses them. It waits briefly for a same-acquisition independent calibration, tests unpaired samples against calibrated inline history and (after two calibrations) mass balance, quarantines inconsistent routine references, and restores the most recent independent calibration correction. A widening engineering uncertainty range defines the level supplied to both matched controllers. Quarantine and absent/stale calibration prevent upward predictive overrides, including during fade-out.
 
@@ -142,7 +230,7 @@ The frozen engineering criterion requires less biased-reference reservoir exposu
 
 All reference decision logs and comparison outputs are machine-readable under `results/integrity-study/`. No clinical replacement, scientific novelty or guaranteed error bound is established. Paper drafts remain excluded.
 
-## v1.11 — PI with a selective predictive override
+### v1.11 — PI with a selective predictive override
 
 The `selective` controller keeps SIMC PI as its foundation. A predictive override requires two delivered reference acquisitions, sufficiently recent information and agreement between the reference-anchored mass balance and corrected inline level. Its weight changes gradually. The PI integral and pump estimate track the **actual applied command**, so fading the override returns to PI without an integral discontinuity. A recovery override cannot add flow at measured pressure ≥85 mmHg; the common pressure slowdown remains 90 mmHg.
 
@@ -166,7 +254,7 @@ The frozen joint criterion compares the hybrid separately with **both** the deve
 
 An offline steady-state capacity screen reports when a fixed oxygen target exceeds sustainable model capacity at the declared volume/pressure limits. Stored reservoir volume and pressure transients can bridge short intervals, so this screen is neither a finite-horizon impossibility proof nor a dynamic optimal controller. It never relaxes the controller success criterion.
 
-## v1.10 — Continuity between level references
+### v1.10 — Continuity between level references
 
 The `continuity` controller integrates measured venous inflow minus a nominal first-order pump-flow estimate. Delivered level references anchor this balance **at their acquisition time**, so a delayed sample corrects the past before propagation to the present. Consecutive reference volumes fit a venous-sensor offset (clipped to ±2 L/min); the controller does not receive the actual offset, future drainage or true pump lag. A braking reserve uses the command-history actuator interval and the estimated inflow. A linearly growing model-error allowance replaces the old abrupt 180-second loss-of-reference shutdown.
 
@@ -185,7 +273,7 @@ The final revision gives each family 16 candidates on the same development grid,
 
 The co-primary test requires reservoir/pressure protection and less oxygen deficit versus the retuned SIMC PI reference **separately in both good-reference and delayed/lost-reference groups**, with in-range plants. Biased references, no references at all and an out-of-range pump lag remain secondary stress tests. The v1.9 braking controller stays as a fixed context arm. A separately specified 2,048-run sensitivity retains the previous fast PI settings (`tau_c=1.5`, level target 0.45 L); it never replaces the frozen primary test. All failures remain in the machine-readable logs under `results/continuity-study/`.
 
-## v1.9 — Predictive braking reserve
+### v1.9 — Predictive braking reserve
 
 The new `braking` controller reserves volume for the pump's response lag and rate-limited slowdown. It tracks an interval of actuator flow from command history, cross-checks measured venous flow against past inline-level changes, and adjusts its level allowance using observed reference-bias trends. These engineering allowances are not calibrated uncertainty bounds or guarantees about future drainage.
 
@@ -204,7 +292,7 @@ Raw outputs are in `results/braking-study/`. Two superseded development-only des
 
 The controller flags infeasible stopping requests and absent/stale level information; it never receives the injected fault magnitude or true future inflow. A constant lag within 1–10 seconds, adequate level/error allowances and an inflow lower estimate that remains valid are conditional assumptions. A past slope alone cannot guarantee future venous return. Clinical protection and scientific novelty are not established by these simulations.
 
-## v1.8 — Verified free SIMC PI reference
+### v1.8 — Verified free SIMC PI reference
 
 The reproducible reference is [Skogestad's SIMC PI method](https://www.mic-journal.no/PDF/2004/MIC-2004-2-2.pdf), with [free author notes and corrections](https://skoge.folk.ntnu.no/publications/2003/tuningPID/README.html). This is an established **general process-control method**, applied here as a reservoir override. It is not a clinical CPB controller or commercial medical device.
 
@@ -227,30 +315,4 @@ Working outputs remain CSV/JSON under `results/simc-verification/` and `results/
 
 The earlier [Takahashi bypass-controller workbench](data/controller-reference/reproduction.json) remains explicitly incomplete. It is not the verified primary comparator. Its exploratory runner and logs are retained for continuity; they must not be presented as the authors' reproduced controller.
 
-## Run the existing experiments
-
-```bash
-perfusion-lab run --scenario compound --policy sentinel --out /tmp/perfusion-run
-perfusion-lab benchmark --out /tmp/perfusion-benchmark
-python examples/published_patient_replay.py
-python -m unittest discover -s tests
-node tests/web_contract.cjs
-```
-
-Use `perfusion-lab --help` for the existing command interface. Earlier experiments and raw logs remain reproducible. Existing PI/threshold policies are project baselines, not faithful implementations of a commercial or published controller. `web/` replays precomputed Python output; it does not run a second physiology engine.
-
-The public-case input file contains five observations transcribed from [Hunter et al., 2013](https://pmc.ncbi.nlm.nih.gov/articles/PMC4557537/). [Provenance](data/published-case/provenance.json) preserves missing arterial saturation and source attribution. This is an oxygen-equation replay only; no patient reservoir dynamics are fitted or validated.
-
-## Repository
-
-- `src/perfusion_lab/`: plant, sensors, observer and controller code.
-- `tests/`: physics, information, controller and replay contracts.
-- `data/`: source provenance and reference implementation mapping.
-- `results/`: reproducible raw experiment logs and machine summaries.
-- `examples/`: runners, optional engineering plots and artifact checks.
-- `docs/`: model, data dictionary and validation instructions.
-- `web/`: interactive replay and work-in-progress project page.
-
-Paper drafts, abstracts, result write-ups and publication-readiness documents are removed while development continues. Their generators are removed as well. Optional plotting tools write to `results/figures/`, not `docs/`. Historical experiments are development evidence, not clinical validation or final publication claims.
-
-Code is MIT licensed. Source articles and externally published numerical facts retain their own attribution and rights; the software license does not relicense them.
+</details>

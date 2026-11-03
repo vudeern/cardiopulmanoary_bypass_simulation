@@ -13,7 +13,7 @@ label = f'v{major}.{minor}'+(f'-rc.{rc}' if rc else '')
 readme = (ROOT/'README.md').read_text()
 assert len(re.findall(r'^\| v\d+\.\d+(?:-rc\.\d+)? \(current\) \|',readme,re.M)) == 1
 assert f'| {label} (current) |' in readme
-assert re.search(r'^## '+re.escape(label)+r' .*\(current\)',readme,re.M)
+assert re.search(r'^#{2,3} '+re.escape(label)+r' .*\(current\)',readme,re.M)
 labels = set(re.findall(r'^\| (v\d+\.\d+(?:-rc\.\d+)?)(?: \(current\))? \|',readme,re.M))
 # Preserve every v1 iteration even after the v2 development line starts.
 for i in range(15 if major >= 2 else minor+1): assert f'v1.{i}' in labels
