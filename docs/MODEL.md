@@ -253,3 +253,12 @@ Current actuator-flow bounds propagate from known initial command and command hi
 The reference-bias trend sets an engineering drift allowance above an explicit minimum. The controller subtracts base error plus drift allowance times acquisition age from corrected level. With missing/stale information or insufficient braking reserve it requests the fastest permitted slowdown and records infeasibility. It still cannot exceed common command and slew limits, so depletion remains possible. These uncertainty choices are not probability statements.
 
 The v1.8 simulator source used for the previous general-PI protocol is retained in `data/simc-reference/frozen-v1.8/`. Its recorded hash is checked there if the current simulator has changed. Prior replay metrics are independently rerun with the current implementation to check that the interface extension did not alter old behavior.
+
+
+## Reference-continuity design
+
+The raw mass-balance integral at each decision time is `I[k+1] = I[k] + dt/60 * (measured_qv[k] - (qhat[k]+qhat[k+1])/2)`. The first-order nominal command response propagates `qhat`. Delivered samples `(ta, Va)` anchor `Va + I[t] - I[ta] - bq*(t-ta)/60`; consecutive reference acquisitions estimate `bq = 60 * (I[ta]-I[tprev] - (Va-Vprev)) / (ta-tprev)`, clipped to ±2 L/min. Reference acquisition history is required; future or unmatched samples are rejected. Before anchoring, the corrected inline level is a flagged fallback.
+
+The level used in the stopping constraint subtracts `base_allowance + age_allowance * reference_age` from this estimate. There is no hard age cutoff. A rate-limited reserve still uses the 1–10 s actuator interval and the same common oxygen and pressure constraints. The nominal model used by the estimator is a separately tuned approximation, not a supplied true plant parameter. Past venous bias fits need not remain valid. This replacement trades the old age-triggered slowdown for possible integrated model/sensor error; it is not a safety guarantee. The never-reference and biased-reference tests challenge identifiability directly.
+
+The v1.9 orchestration source is retained at `data/braking-history/frozen-v1.9/simulation.py` to verify its frozen hash while running old replay regressions through current orchestration. The previous controller implementations and numerical outputs are preserved.

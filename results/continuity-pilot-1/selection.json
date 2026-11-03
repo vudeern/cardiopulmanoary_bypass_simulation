@@ -1,0 +1,288 @@
+{
+  "continuity": {
+    "method": {
+      "id": "continuity_0.2_0.06_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.2,
+        "base_allowance": 0.06,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    "matched_development_budget": false,
+    "means": {
+      "continuity_0.05_0.02_2.0": {
+        "deficit_auc": 12.084280855090638,
+        "low_reservoir_s": 1.6875,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.361010837242702,
+        "mean_flow": 3.8495828753577186
+      },
+      "continuity_0.05_0.02_4.0": {
+        "deficit_auc": 11.007958665613236,
+        "low_reservoir_s": 2.9375,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.152559950983836,
+        "mean_flow": 3.85129308881829
+      },
+      "continuity_0.05_0.02_6.0": {
+        "deficit_auc": 10.439118420821183,
+        "low_reservoir_s": 3.0416666666666665,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 20.880890046083667,
+        "mean_flow": 3.8523740790559486
+      },
+      "continuity_0.05_0.02_8.0": {
+        "deficit_auc": 10.526987537092145,
+        "low_reservoir_s": 3.3854166666666665,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 20.80243231863211,
+        "mean_flow": 3.8521602109943145
+      },
+      "continuity_0.05_0.06_2.0": {
+        "deficit_auc": 14.056509629813627,
+        "low_reservoir_s": 1.6875,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.72467724814994,
+        "mean_flow": 3.845877818272003
+      },
+      "continuity_0.05_0.06_4.0": {
+        "deficit_auc": 12.627356579113822,
+        "low_reservoir_s": 1.6979166666666667,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.461337655107812,
+        "mean_flow": 3.8481434640395373
+      },
+      "continuity_0.05_0.06_6.0": {
+        "deficit_auc": 11.768810781828359,
+        "low_reservoir_s": 2.9583333333333335,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.175060127625308,
+        "mean_flow": 3.849677331946181
+      },
+      "continuity_0.05_0.06_8.0": {
+        "deficit_auc": 11.766123889867806,
+        "low_reservoir_s": 3.0416666666666665,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.014234861294955,
+        "mean_flow": 3.849596411546822
+      },
+      "continuity_0.2_0.02_2.0": {
+        "deficit_auc": 13.39551399340838,
+        "low_reservoir_s": 1.6770833333333333,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.232324365019053,
+        "mean_flow": 3.8472180175374846
+      },
+      "continuity_0.2_0.02_4.0": {
+        "deficit_auc": 12.099482420397315,
+        "low_reservoir_s": 1.7604166666666667,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.102003995202832,
+        "mean_flow": 3.8492369072027337
+      },
+      "continuity_0.2_0.02_6.0": {
+        "deficit_auc": 11.32349326977297,
+        "low_reservoir_s": 2.9583333333333335,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 20.896006638014565,
+        "mean_flow": 3.850696996266111
+      },
+      "continuity_0.2_0.02_8.0": {
+        "deficit_auc": 11.168680513587212,
+        "low_reservoir_s": 3.0416666666666665,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 20.79161432162837,
+        "mean_flow": 3.8509178548936034
+      },
+      "continuity_0.2_0.06_2.0": {
+        "deficit_auc": 15.611611749672095,
+        "low_reservoir_s": 1.625,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.797015056865046,
+        "mean_flow": 3.8418296262143703
+      },
+      "continuity_0.2_0.06_4.0": {
+        "deficit_auc": 14.05652792862931,
+        "low_reservoir_s": 1.6875,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.56444891962768,
+        "mean_flow": 3.8445855588114424
+      },
+      "continuity_0.2_0.06_6.0": {
+        "deficit_auc": 12.893923893763755,
+        "low_reservoir_s": 2.7708333333333335,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.360566677718413,
+        "mean_flow": 3.8464400718084195
+      },
+      "continuity_0.2_0.06_8.0": {
+        "deficit_auc": 12.91812885856016,
+        "low_reservoir_s": 2.9895833333333335,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.163374904371132,
+        "mean_flow": 3.846600419317225
+      }
+    }
+  },
+  "simc": {
+    "method": {
+      "id": "simc_20.0_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.35
+      }
+    },
+    "matched_development_budget": true,
+    "means": {
+      "simc_1.5_0.35": {
+        "deficit_auc": 9.4700743178813,
+        "low_reservoir_s": 3.6145833333333335,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.23410247248116,
+        "mean_flow": 3.8523110937871774
+      },
+      "simc_1.5_0.45": {
+        "deficit_auc": 15.699584722003479,
+        "low_reservoir_s": 2.1145833333333335,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 22.2548326654212,
+        "mean_flow": 3.838666187086823
+      },
+      "simc_1.5_0.55": {
+        "deficit_auc": 31.075476119990242,
+        "low_reservoir_s": 1.4895833333333333,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 23.402078498159245,
+        "mean_flow": 3.8120829229723685
+      },
+      "simc_1.5_0.65": {
+        "deficit_auc": 57.17335712909906,
+        "low_reservoir_s": 0.4375,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 23.908081319994853,
+        "mean_flow": 3.775199771044182
+      },
+      "simc_5.0_0.35": {
+        "deficit_auc": 12.683123266634075,
+        "low_reservoir_s": 3.5625,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 20.825360481477592,
+        "mean_flow": 3.845593826750026
+      },
+      "simc_5.0_0.45": {
+        "deficit_auc": 21.045996843656685,
+        "low_reservoir_s": 1.7291666666666667,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.140610176048273,
+        "mean_flow": 3.8295593761126856
+      },
+      "simc_5.0_0.55": {
+        "deficit_auc": 37.1300469211787,
+        "low_reservoir_s": 1.1458333333333333,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.398913075554365,
+        "mean_flow": 3.8031297327577067
+      },
+      "simc_5.0_0.65": {
+        "deficit_auc": 61.03645644401937,
+        "low_reservoir_s": 0.07291666666666667,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 21.557797706861695,
+        "mean_flow": 3.769380612365014
+      },
+      "simc_10.0_0.35": {
+        "deficit_auc": 20.150379277752563,
+        "low_reservoir_s": 2.21875,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 19.469869930649093,
+        "mean_flow": 3.8309151856338755
+      },
+      "simc_10.0_0.45": {
+        "deficit_auc": 30.108458761291814,
+        "low_reservoir_s": 1.2708333333333333,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 19.128449577908178,
+        "mean_flow": 3.8132444843136706
+      },
+      "simc_10.0_0.55": {
+        "deficit_auc": 45.822124392496114,
+        "low_reservoir_s": 0.5416666666666666,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 18.619658095510285,
+        "mean_flow": 3.7883296952030094
+      },
+      "simc_10.0_0.65": {
+        "deficit_auc": 66.06367969957562,
+        "low_reservoir_s": 0.0,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 17.84735152199954,
+        "mean_flow": 3.758436067666777
+      },
+      "simc_20.0_0.35": {
+        "deficit_auc": 31.369123975348188,
+        "low_reservoir_s": 0.71875,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 13.384525112307038,
+        "mean_flow": 3.8032692416801734
+      },
+      "simc_20.0_0.45": {
+        "deficit_auc": 41.04528738427204,
+        "low_reservoir_s": 0.010416666666666666,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 12.699185190597575,
+        "mean_flow": 3.7871687455752934
+      },
+      "simc_20.0_0.55": {
+        "deficit_auc": 53.080009387243734,
+        "low_reservoir_s": 0.0,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 11.993646395767643,
+        "mean_flow": 3.768288409224543
+      },
+      "simc_20.0_0.65": {
+        "deficit_auc": 65.80335924226895,
+        "low_reservoir_s": 0.0,
+        "empty_request_s": 0.0,
+        "high_pressure_s": 0.0,
+        "flow_variation": 11.21131039415386,
+        "mean_flow": 3.747982261220263
+      }
+    }
+  }
+}

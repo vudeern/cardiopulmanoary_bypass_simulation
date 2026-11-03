@@ -19,6 +19,10 @@ python examples/validate_simc_tight.py
 python examples/build_simc_web.py --check
 python examples/validate_braking_study.py
 python examples/build_braking_web.py --check
+python examples/validate_continuity_study.py
+python examples/build_continuity_web.py --check
+python examples/continuity_reference_check.py --check
+python examples/diagnose_continuity.py --check
 ```
 
 Physics tests check mass conservation, actuator response, pressure decay, oxygen units and numerical refinement. Sensor/observer tests check causal timing, missing measurements, bias correction and explicit uncertainty assumptions. The frozen original replay cases detect changes to existing numerical behavior.
@@ -38,3 +42,8 @@ The verified general-reference check reproduces the published PI gains and five 
 The new benchmark validator independently checks all candidate budgets, seed partitions, selection, final cells and patient-block intervals, and recomputes the joint criterion. It reruns every stored replay and timestep-sensitivity case and checks source/configuration hashes. It does not certify physiological validity, optimal tuning or scientific novelty.
 
 Braking tests check the reserve's units and independent numerical upper estimate, command-history actuator intervals, reference-bias trend handling, missing information, common actuator limits and independence from unused arterial-flow measurements. The study validator independently checks both retained development pilots, archived source hashes, final selection and source freeze, every final cell, paired intervals, the criterion and all stored replays. None of these checks supplies a clinical safety proof.
+
+
+Continuity tests check delayed acquisition-time anchoring, venous-offset identification against an independently advanced matched plant, long-outage integration, inline-drift independence after anchoring, flagged absence of any anchor, causal reference validation, common constraints and unused arterial-flow invariance. Matched-model arithmetic is not a bound on mismatch; the frozen study tests mismatched plants and unidentifiable references explicitly. Its audit independently rebuilds selection, every cell, paired intervals, both co-primary criteria and every displayed replay. Half-step runs are numerical-refinement smoke checks, not convergence validation or a retuning gate.
+
+The post-evaluation mechanism audit aligns estimates with step-start physical truth in four selected cells. It is labelled diagnostic, does not alter selection or success criteria, and retains signed/absolute estimate error and venous-offset error per virtual patient.

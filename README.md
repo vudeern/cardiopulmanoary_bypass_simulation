@@ -6,7 +6,26 @@ A work-in-progress cardiopulmonary bypass simulation by Udeern Varanasi.
 
 The project explores how sensing errors, oxygen delivery and limited venous return affect pump control. It uses an uncalibrated adult-like synthetic circuit. It does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation.
 
-## Current design: predictive braking reserve
+## Current design: continuity between level references
+
+The `continuity` controller integrates measured venous inflow minus a nominal first-order pump-flow estimate. Delivered level references anchor this balance **at their acquisition time**, so a delayed sample corrects the past before propagation to the present. Consecutive reference volumes fit a venous-sensor offset (clipped to ±2 L/min); the controller does not receive the actual offset, future drainage or true pump lag. A braking reserve uses the command-history actuator interval and the estimated inflow. A linearly growing model-error allowance replaces the old abrupt 180-second loss-of-reference shutdown.
+
+This is a model-dependent engineering estimate. An incorrect pump model or changing venous-sensor bias can accumulate volume error during an outage. A biased reference anchors the estimate incorrectly. Before any reference arrives, the method uses the inline level and explicitly flags that it is unanchored; this fallback is not guaranteed to be protective.
+
+```bash
+python examples/continuity_study.py --stage develop
+python examples/continuity_study.py --stage evaluate
+python examples/validate_continuity_study.py
+python examples/build_continuity_web.py
+```
+
+The fresh evaluation **does not demonstrate the joint goal**. With good references, mean oxygen-deficit AUC is 154.35 versus 137.08 mL O₂/m² for PI, while low-reservoir time is 0.74 versus 30.85 s. The protection criterion passes, but oxygen does not. During outages, AUC is 307.89 versus 122.49 and low-reservoir time 30.93 versus 39.46 s; both the oxygen and protection criteria fail (the paired upper interval for extra empty requests is 1.64 s, beyond the 1 s limit). Relative to v1.9 braking on the same fresh cases, outage AUC improves from 2061.44 to 307.89, but low-reservoir time rises from 2.89 to 30.93 s. The fixed-prior-PI sensitivity also retains higher oxygen deficit for continuity. This version reduces the old shutdown penalty without solving the oxygen/protection tradeoff. A post-evaluation audit (`examples/diagnose_continuity.py`) identifies large volume-estimation errors in selected outage cells: one delivered reference cannot identify a constant venous-flow offset, and integrating it can overestimate the reservoir. Its truth-aligned logs are diagnostic only; no tuning follows the final evaluation.
+
+The final revision gives each family 16 candidates on the same development grid, including reference outages. One earlier development-only grid is retained in `results/continuity-pilot-1/` with source snapshots in `data/continuity-history/`. No final evaluation was run for that attempt. Architecture design is informed by the previous studies; challenge families are reused. Fresh patient and noise seeds test the frozen design, not an independently validated physiological model.
+
+The co-primary test requires reservoir/pressure protection and less oxygen deficit versus the retuned SIMC PI reference **separately in both good-reference and delayed/lost-reference groups**, with in-range plants. Biased references, no references at all and an out-of-range pump lag remain secondary stress tests. The v1.9 braking controller stays as a fixed context arm. A separately specified 2,048-run sensitivity retains the previous fast PI settings (`tau_c=1.5`, level target 0.45 L); it never replaces the frozen primary test. All failures remain in the machine-readable logs under `results/continuity-study/`.
+
+## Previous design: predictive braking reserve
 
 The new `braking` controller reserves volume for the pump's response lag and rate-limited slowdown. It tracks an interval of actuator flow from command history, cross-checks measured venous flow against past inline-level changes, and adjusts its level allowance using observed reference-bias trends. These engineering allowances are not calibrated uncertainty bounds or guarantees about future drainage.
 

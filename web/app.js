@@ -12,7 +12,7 @@ const descriptions = {
   unmodeled_level_bias: 'A +0.40 L reservoir measurement bias accompanies poor drainage and hemodilution. Original Sentinel trusts this reading. Guarded Sentinel detects implausible level steps and applies an offset estimate plus a reserve margin; compare its reservoir and oxygen-delivery tradeoff.'
 };
 let timer = null;
-function dataset() { return $('experiment').value==='braking'?BRAKING_STUDY:$('experiment').value==='verified'?VERIFIED_STUDY:$('experiment').value==='submission'?SUBMISSION_STUDY:$('experiment').value==='reference'?REFERENCE_STUDY:$('experiment').value==='robustness'?ROBUSTNESS:$('experiment').value==='comparison'?COMPARISON:PERFUSION; }
+function dataset() { return $('experiment').value==='continuity'?CONTINUITY_STUDY:$('experiment').value==='braking'?BRAKING_STUDY:$('experiment').value==='verified'?VERIFIED_STUDY:$('experiment').value==='submission'?SUBMISSION_STUDY:$('experiment').value==='reference'?REFERENCE_STUDY:$('experiment').value==='robustness'?ROBUSTNESS:$('experiment').value==='comparison'?COMPARISON:PERFUSION; }
 function run() { return dataset().runs[$('scenario').value+'/'+$('policy').value]; }
 const originalLabels = {
   sentinel_guarded:'Guarded Sentinel · level-step correction',
@@ -36,7 +36,7 @@ function switchExperiment(){
   $('policy').value=source.protocol.default_policy||(comparison?'guarded':'sentinel');
   $('seed-note').textContent=`Representative virtual patient · Seed ${source.protocol.start_seed} · ${(source.protocol.duration||1200)/60}-minute experiment`;
   $('timing-note').textContent=`Observations and decisions come from the start of each ${source.protocol.dt||2}-second interval; physical truth is at interval end. Display traces keep every third interval plus the last sample. Metrics use full resolution. The browser replays Python output.`;
-  $('cohort-label').textContent=`${$('experiment').value==='braking'?'FROZEN BRAKING COMPARISON':$('experiment').value==='verified'?'FROZEN GENERAL-PI COMPARISON':$('experiment').value==='reference'?'REFERENCE TEST':$('experiment').value==='robustness'?'FROZEN-POLICY STRESS TEST':comparison?'FINAL EVALUATION':'ORIGINAL COHORT'} / ${source.protocol.n} PAIRED VIRTUAL PATIENTS`;
+  $('cohort-label').textContent=`${$('experiment').value==='continuity'?'FROZEN CONTINUITY COMPARISON':$('experiment').value==='braking'?'FROZEN BRAKING COMPARISON':$('experiment').value==='verified'?'FROZEN GENERAL-PI COMPARISON':$('experiment').value==='reference'?'REFERENCE TEST':$('experiment').value==='robustness'?'FROZEN-POLICY STRESS TEST':comparison?'FINAL EVALUATION':'ORIGINAL COHORT'} / ${source.protocol.n} PAIRED VIRTUAL PATIENTS`;
   $('cohort-note').textContent=comparison?
     `Difference = selected strategy − ${source.protocol.baseline_label||'Guarded Sentinel'}. Settings were selected on separate development seeds. Synthetic bootstrap intervals; no clinical benefit established.`:
     'Difference = selected strategy − reactive. Bootstrap intervals describe the synthetic sampler, not clinical benefit.';

@@ -66,3 +66,12 @@ The separate `canonical-protocol.json`, `canonical-metrics.csv` and `canonical-s
 New controller-only row fields are `braking_volume` and `braking_budget` (L), `control_level_lower` (L), `inflow_lower` and `balance_inflow_lower` (L/min), `actuator_flow_upper` (L/min), `estimated_drift_rate` (L/s), `braking_feasible` and `level_information_unknown`. A null balance estimate means insufficient past samples. Reference age and the estimated reference bias are causal observation metadata; injected bias and future truth are never passed to the controller.
 
 The primary comparison uses good references and three specified in-range actuator regimes. The 12-second lag plant and delayed/missing or biased references are explicit secondary stress groups. All groups remain visible; engineering tolerances are not clinical safety margins.
+
+
+## Continuity engineering logs
+
+`results/continuity-study/` contains a frozen protocol, development selection, full per-run metrics, cell/group means, paired patient-block intervals and representative traces. The final-development grid has 3,072 runs; fresh evaluation has 6,144 runs (16 virtual patients × 8 faults × 4 plants × 4 reference regimes × 3 controllers). A separate 3,072-run development-only grid remains under `results/continuity-pilot-1/`; it is not a final evaluation.
+
+New debug fields are `balance_level_estimate` [L], `balance_reference_age` [s or null before anchoring], and `venous_bias_estimate` [L/min]. These are estimates, not injected truth. The common `control_level_lower` is an engineering lower estimate, not a calibrated confidence bound. `level_information_unknown` flags no delivered anchor. The stopping constraint's existing debug fields retain the same units as v1.9.
+
+The co-primary good-reference and delayed/lost-reference groups exclude the 12 s actuator, outside the design interval. The combined primary summary pools those two groups equally. Biased and never-delivered references, and all out-of-range lag cells, remain in explicitly labelled secondary groups, some of which overlap. Paired bootstrap intervals resample virtual patients as blocks; they do not represent a clinical population.

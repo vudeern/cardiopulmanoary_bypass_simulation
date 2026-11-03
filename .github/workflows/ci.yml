@@ -35,3 +35,7 @@ jobs:
       - run: python examples/validate_simc_tight.py
       - run: python examples/validate_braking_study.py
       - run: python examples/build_braking_web.py --check
+      - run: python examples/validate_continuity_study.py
+      - run: python examples/build_continuity_web.py --check
+      - run: python examples/continuity_reference_check.py --check
+      - run: python examples/diagnose_continuity.py --check

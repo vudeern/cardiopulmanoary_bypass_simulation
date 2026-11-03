@@ -1,0 +1,497 @@
+{
+  "development_seeds": [
+    27000,
+    27001,
+    27002,
+    27003
+  ],
+  "evaluation_seeds": [
+    28000,
+    28001,
+    28002,
+    28003,
+    28004,
+    28005,
+    28006,
+    28007,
+    28008,
+    28009,
+    28010,
+    28011,
+    28012,
+    28013,
+    28014,
+    28015
+  ],
+  "duration_s": 600.0,
+  "dt_s": 1.0,
+  "candidates": [
+    {
+      "id": "continuity_0.1_0.08_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.1,
+        "base_allowance": 0.08,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.1_0.08_6.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.1,
+        "base_allowance": 0.08,
+        "nominal_tau": 6.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.1_0.12_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.1,
+        "base_allowance": 0.12,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.1_0.12_6.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.1,
+        "base_allowance": 0.12,
+        "nominal_tau": 6.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.1_0.16_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.1,
+        "base_allowance": 0.16,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.1_0.16_6.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.1,
+        "base_allowance": 0.16,
+        "nominal_tau": 6.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.1_0.2_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.1,
+        "base_allowance": 0.2,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.1_0.2_6.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.1,
+        "base_allowance": 0.2,
+        "nominal_tau": 6.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.3_0.08_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.3,
+        "base_allowance": 0.08,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.3_0.08_6.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.3,
+        "base_allowance": 0.08,
+        "nominal_tau": 6.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.3_0.12_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.3,
+        "base_allowance": 0.12,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.3_0.12_6.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.3,
+        "base_allowance": 0.12,
+        "nominal_tau": 6.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.3_0.16_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.3,
+        "base_allowance": 0.16,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.3_0.16_6.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.3,
+        "base_allowance": 0.16,
+        "nominal_tau": 6.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.3_0.2_2.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.3,
+        "base_allowance": 0.2,
+        "nominal_tau": 2.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "continuity_0.3_0.2_6.0",
+      "family": "continuity",
+      "kind": "continuity",
+      "options": {
+        "venous_allowance": 0.3,
+        "base_allowance": 0.2,
+        "nominal_tau": 6.0,
+        "age_allowance": 0.0001
+      }
+    },
+    {
+      "id": "simc_1.5_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.35
+      }
+    },
+    {
+      "id": "simc_1.5_0.45",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.45
+      }
+    },
+    {
+      "id": "simc_1.5_0.55",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.55
+      }
+    },
+    {
+      "id": "simc_1.5_0.65",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.65
+      }
+    },
+    {
+      "id": "simc_5.0_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.35
+      }
+    },
+    {
+      "id": "simc_5.0_0.45",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.45
+      }
+    },
+    {
+      "id": "simc_5.0_0.55",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.55
+      }
+    },
+    {
+      "id": "simc_5.0_0.65",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.65
+      }
+    },
+    {
+      "id": "simc_10.0_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 10.0,
+        "target_level": 0.35
+      }
+    },
+    {
+      "id": "simc_10.0_0.45",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 10.0,
+        "target_level": 0.45
+      }
+    },
+    {
+      "id": "simc_10.0_0.55",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 10.0,
+        "target_level": 0.55
+      }
+    },
+    {
+      "id": "simc_10.0_0.65",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 10.0,
+        "target_level": 0.65
+      }
+    },
+    {
+      "id": "simc_20.0_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.35
+      }
+    },
+    {
+      "id": "simc_20.0_0.45",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.45
+      }
+    },
+    {
+      "id": "simc_20.0_0.55",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.55
+      }
+    },
+    {
+      "id": "simc_20.0_0.65",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.65
+      }
+    }
+  ],
+  "development_cases": {
+    "clean": {},
+    "drainage": {
+      "drainage": 0.4,
+      "event_start": 0.3,
+      "event_end": 0.7
+    },
+    "drift": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.4,
+      "drift_duration": 0.25
+    },
+    "initial": {
+      "level_profile": "initial",
+      "reservoir_bias": 0.4
+    },
+    "venous_bias": {
+      "venous_bias": 0.5
+    },
+    "combined": {
+      "drainage": 0.4,
+      "level_profile": "ramp",
+      "reservoir_bias": 0.4,
+      "drift_duration": 0.25,
+      "venous_bias": 0.5,
+      "flow_bias": 0.9,
+      "hb_bias": 1.8,
+      "dilution": 1.8,
+      "noise_scale": 2.0
+    }
+  },
+  "final_cases": {
+    "clean": {},
+    "drainage": {
+      "drainage": 0.3,
+      "event_start": 0.28,
+      "event_end": 0.75
+    },
+    "drift": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.6,
+      "drift_duration": 0.22
+    },
+    "initial": {
+      "level_profile": "initial",
+      "reservoir_bias": 0.6
+    },
+    "venous_bias": {
+      "venous_bias": 0.75
+    },
+    "arterial_bias": {
+      "flow_bias": 1.3
+    },
+    "combined": {
+      "drainage": 0.3,
+      "event_start": 0.28,
+      "event_end": 0.75,
+      "level_profile": "ramp",
+      "reservoir_bias": 0.6,
+      "drift_duration": 0.22,
+      "venous_bias": 0.75,
+      "flow_bias": 1.3,
+      "hb_bias": 2.4,
+      "dilution": 2.4,
+      "noise_scale": 4.0,
+      "dropout": true
+    },
+    "negative_venous_bias": {
+      "venous_bias": -0.75
+    }
+  },
+  "development_plants": {
+    "nominal": {},
+    "slow": {
+      "actuator_tau": 6.0
+    }
+  },
+  "final_plants": {
+    "nominal": {},
+    "slow": {
+      "actuator_tau": 8.0
+    },
+    "lagged": {
+      "actuator_tau": 5.0,
+      "drainage_tau": 20.0,
+      "venous_nonlinearity": 0.08
+    },
+    "outside_lag_bound": {
+      "actuator_tau": 12.0
+    }
+  },
+  "references": {
+    "good": {
+      "period": 60.0,
+      "delay": 4.0,
+      "noise_sd": 0.01
+    },
+    "delayed_loss": {
+      "period": 75.0,
+      "delay": 25.0,
+      "noise_sd": 0.02,
+      "dropout_prob": 0.2,
+      "outage_start": 120.0,
+      "outage_end": 540.0
+    },
+    "biased": {
+      "period": 60.0,
+      "delay": 4.0,
+      "noise_sd": 0.02,
+      "bias": 0.18
+    },
+    "never": {
+      "period": 60.0,
+      "delay": 4.0,
+      "noise_sd": 0.01,
+      "dropout_prob": 1.0
+    }
+  },
+  "replay_cells": [
+    "clean__nominal__good",
+    "drainage__slow__good",
+    "venous_bias__nominal__good",
+    "combined__lagged__good",
+    "combined__lagged__delayed_loss",
+    "initial__outside_lag_bound__biased"
+  ],
+  "development_references": [
+    "good",
+    "delayed_loss"
+  ],
+  "primary_scope": "Two co-primary groups: good and delayed_loss references, nominal/slow/lagged plants. Biased/never references and tau12 are secondary.",
+  "primary": "Continuity minus SIMC in EACH co-primary group: upper paired CI <=1s low reservoir, <=1s empty requests, <=5s high pressure, and oxygen deficit upper CI <0. Joint success requires both groups.",
+  "selection": "16 candidates/family, same 3072-run development budget; lowest mean deficit with mean low/empty <=1s and pressure <=5s, else lexicographic low/empty/pressure/deficit; mark unmatched.",
+  "assumptions": "Reference-acquisition-anchored integration, nominal first-order pump model, venous bias fitted from consecutive references and bounded to +/-2 L/min. Residual model error allowance grows linearly with reference age. None is a guaranteed statistical bound. Constant bias in references and no reference at all can invalidate the estimate.",
+  "shared": "Same sensor/reference channels, common Hb observer, oxygen cap, pressure slowdown90, flow0..7 and slew.15. The continuity method directly buffers the same delivered reference samples; PI uses their held inline correction.",
+  "context": "v1.9 braking settings retained as fixed context; not retuned. Previous evaluation informed this architecture and scenario families are reused; only final patient/noise seeds are fresh. This is not independent clinical/model validation.",
+  "source_hashes": {
+    "src/perfusion_lab/continuity.py": "d632c4377e14b78334e6a6efbbad3f10fd2a47adf819663d3f55196c821d612c",
+    "src/perfusion_lab/braking.py": "60759c0cdc7c11477d6ee3e1e309339f84855c89ef594c80e7a67163fa1cfca6",
+    "src/perfusion_lab/simulation.py": "53de402eaf02b8287a95076466beeb7c7e7c44f9c775eb1f29ab76a952355403",
+    "src/perfusion_lab/sensing.py": "8fba9eb4ca37e689acc69c3ec487674a8d2c877d78ce25684b69f5d64699563b",
+    "src/perfusion_lab/reference.py": "dc9d314a0e77ee02951fe4f35d851a52cab29bb9751649becdc59c48f4a78a4e",
+    "src/perfusion_lab/simc.py": "efa8b877156b2a3b22c07e4aabbeb59e9d51e3207ca5ed6584ecfcffcd615d0b",
+    "src/perfusion_lab/stress.py": "4315e23b7e1eb76252457a5df00ca962de4cc4852eb0164ee1edd9d0b4a460fd",
+    "src/perfusion_lab/model.py": "0e86f4f172dd103c484698bbea48597673384e637ffdd05342a8c0489aa82662",
+    "examples/continuity_study.py": "1cf72484f4016b96675d58837c514a60c1de2f07d105d6388dde4257beae8e69"
+  }
+}
