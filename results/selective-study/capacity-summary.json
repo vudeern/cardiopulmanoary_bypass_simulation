@@ -1,0 +1,9 @@
+{
+  "status": "offline_steady_state_capacity_screen",
+  "rows": 512,
+  "mean_capacity_below_target_s": 100.177734375,
+  "fraction_cells_with_any_capacity_shortfall": 0.2734375,
+  "finite_horizon_feasibility_proved": false,
+  "controller_oracle": false,
+  "primary_criterion_changed": false
+}

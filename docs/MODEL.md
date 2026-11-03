@@ -262,3 +262,14 @@ The raw mass-balance integral at each decision time is `I[k+1] = I[k] + dt/60 * 
 The level used in the stopping constraint subtracts `base_allowance + age_allowance * reference_age` from this estimate. There is no hard age cutoff. A rate-limited reserve still uses the 1–10 s actuator interval and the same common oxygen and pressure constraints. The nominal model used by the estimator is a separately tuned approximation, not a supplied true plant parameter. Past venous bias fits need not remain valid. This replacement trades the old age-triggered slowdown for possible integrated model/sensor error; it is not a safety guarantee. The never-reference and biased-reference tests challenge identifiability directly.
 
 The v1.9 orchestration source is retained at `data/braking-history/frozen-v1.9/simulation.py` to verify its frozen hash while running old replay regressions through current orchestration. The previous controller implementations and numerical outputs are preserved.
+
+
+## Selective PI upgrade experiment
+
+The foundation is the existing SIMC PI reservoir override and common oxygen-demand/pressure/actuator shell. The predictive estimate uses acquisition-anchored mass balance, a nominal 2 s pump response and consecutive-reference venous-offset fits. The gate requires at least two distinct acquisitions, age below the selected maximum, and absolute disagreement with corrected inline level below a selected allowance. It checks consistency, not identifiability or statistical confidence.
+
+The predictive recommendation is the greatest rate-limited command consistent with the conditional braking calculation. The applied action is `u_PI + weight * (u_predictive - u_PI)`, constrained by the same pump limits. Weight changes by at most `dt / 10 s` per decision. In braking-only mode the recommendation cannot exceed PI; in recovery-only mode it cannot fall below PI. Recovery adds no flow at measured pressure ≥85 mmHg. This extra recovery screen does not alter the PI comparator's common 90 mmHg slowdown.
+
+PI anti-windup and the nominal pump integral both track the final applied command. A zero weight reproduces the PI command at the controller's current state; disabling the override for an entire run reproduces the corresponding PI experiment exactly. Returning to PI after intervention does not imply the physical trajectory becomes identical to a run that never intervened.
+
+The prediction is not a hard constraint on a partly blended action. Its violation is explicitly flagged when the override is active. Fading an override can retain a small contribution after eligibility is lost. Shared measurement bias, stale references and model mismatch can still cause depletion or unnecessary slowing. The previous orchestration source is retained at `data/continuity-history/frozen-v1.10/simulation.py` to validate old frozen hashes while numerical regressions run on current code.

@@ -39,3 +39,6 @@ jobs:
       - run: python examples/build_continuity_web.py --check
       - run: python examples/continuity_reference_check.py --check
       - run: python examples/diagnose_continuity.py --check
+      - run: python examples/validate_selective_study.py
+      - run: python examples/build_selective_web.py --check
+      - run: python examples/selective_capacity.py --check

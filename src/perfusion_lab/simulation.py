@@ -47,7 +47,12 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
             raise ValueError('Invalid venous measurement settings')
     if controller_kind=='published_adapted' and venous_measurement is None:
         raise ValueError('Published adaptation requires an explicit venous measurement channel')
-    if controller_kind=='continuity':
+    if controller_kind=='selective':
+        if policy!='sentinel' or venous_measurement is None:
+            raise ValueError('Selective PI requires common observer and explicit venous sensor')
+        from .selective import SelectiveController
+        controller=SelectiveController(p.bsa,dt,target,**controller_options)
+    elif controller_kind=='continuity':
         if policy!='sentinel' or venous_measurement is None:
             raise ValueError('Continuity controller requires common observer and venous sensor')
         from .continuity import ContinuityController
@@ -106,7 +111,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         if reference_level is not None:
             control_obs=replace(control_obs,level_reference_age=reference_level['age'] if reference_level else None,
                 level_reference_bias=reference_level['bias'] if reference_level else 0.)
-        if controller_kind=='continuity':controller.observe_references(samples)
+        if controller_kind in ('selective','continuity'):controller.observe_references(samples)
         decision = controller.decide(control_obs, belief)
         state = plant.step(decision.command, inputs['drainage'], dt)
         do2 = delivery(state['flow'], hb, inputs['sao2'], p.bsa)
@@ -138,7 +143,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                          infeasible=decision.infeasible,
                          reference_age=belief.reference_age,
                          hb_covered=belief.hb_lower<=hb<=belief.hb_upper))
-        if controller_kind in ('braking','continuity'):rows[-1].update(controller.last_debug)
+        if controller_kind in ('braking','continuity','selective'):rows[-1].update(controller.last_debug)
     values = lambda key: np.array([r[key] for r in rows], dtype=float)
     true_low = values('do2')<target
     # False reassurance compares a start-of-step monitor to its ensuing interval;

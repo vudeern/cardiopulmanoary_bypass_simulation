@@ -23,6 +23,9 @@ python examples/validate_continuity_study.py
 python examples/build_continuity_web.py --check
 python examples/continuity_reference_check.py --check
 python examples/diagnose_continuity.py --check
+python examples/validate_selective_study.py
+python examples/build_selective_web.py --check
+python examples/selective_capacity.py --check
 ```
 
 Physics tests check mass conservation, actuator response, pressure decay, oxygen units and numerical refinement. Sensor/observer tests check causal timing, missing measurements, bias correction and explicit uncertainty assumptions. The frozen original replay cases detect changes to existing numerical behavior.
@@ -47,3 +50,6 @@ Braking tests check the reserve's units and independent numerical upper estimate
 Continuity tests check delayed acquisition-time anchoring, venous-offset identification against an independently advanced matched plant, long-outage integration, inline-drift independence after anchoring, flagged absence of any anchor, causal reference validation, common constraints and unused arterial-flow invariance. Matched-model arithmetic is not a bound on mismatch; the frozen study tests mismatched plants and unidentifiable references explicitly. Its audit independently rebuilds selection, every cell, paired intervals, both co-primary criteria and every displayed replay. Half-step runs are numerical-refinement smoke checks, not convergence validation or a retuning gate.
 
 The post-evaluation mechanism audit aligns estimates with step-start physical truth in four selected cells. It is labelled diagnostic, does not alter selection or success criteria, and retains signed/absolute estimate error and venous-offset error per virtual patient.
+
+
+Selective PI tests require exact PI-equivalent output when disabled or never anchored twice, correct reference timing, duplicate handling, bounded weight changes, integral tracking, propagation with the final applied command, pressure recovery screening and component direction. The frozen audit independently rebuilds both families' development selection, the two component arms, both baseline comparisons, every final cell and paired interval, all 30 displayed traces, the two archived pilots and the published table. The capacity check is an arithmetic screen, not dynamic feasibility validation.

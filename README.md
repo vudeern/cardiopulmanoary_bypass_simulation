@@ -6,7 +6,31 @@ A work-in-progress cardiopulmonary bypass simulation by Udeern Varanasi.
 
 The project explores how sensing errors, oxygen delivery and limited venous return affect pump control. It uses an uncalibrated adult-like synthetic circuit. It does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation.
 
-## Current design: continuity between level references
+## Current design: PI with a selective predictive override
+
+The `selective` controller keeps SIMC PI as its foundation. A predictive override requires two delivered reference acquisitions, sufficiently recent information and agreement between the reference-anchored mass balance and corrected inline level. Its weight changes gradually. The PI integral and pump estimate track the **actual applied command**, so fading the override returns to PI without an integral discontinuity. A recovery override cannot add flow at measured pressure ≥85 mmHg; the common pressure slowdown remains 90 mmHg.
+
+The override can either reduce flow for reservoir risk or recover flow toward oxygen demand when a reserve appears available. Separate braking-only and recovery-only arms use the selected parameters with no extra tuning. This is a candidate upgrade within the synthetic circuit, not a demonstrated replacement for a clinical controller. Agreement between imperfect estimates is not a confidence probability: shared bias can fool the gate, and a partially blended override need not satisfy a hard braking bound. Violations remain flagged.
+
+```bash
+python examples/selective_study.py --stage develop
+python examples/selective_study.py --stage evaluate
+python examples/validate_selective_study.py
+python examples/build_selective_web.py
+python examples/selective_capacity.py
+```
+
+The fresh evaluation shows a **scoped gain, not overall superiority**. Under good references and in-range plants, oxygen-deficit AUC falls from 224.13 to 174.37 mL O₂/m² (22.2%); paired difference −49.75, 95% interval −59.49 to −41.50. The protection criterion passes: low-reservoir time is 0.36 versus 0.20 s, both have zero empty requests, and the upper paired differences remain within the predefined +1 s low/empty and +5 s pressure margins. During outages, hybrid and matched PI have AUC 190.30 and 190.20; oxygen improvement fails. Against the fast PI under good references, the oxygen interval crosses zero, so the full joint criterion fails.
+
+The component arms show the recovery path supplies the oxygen gain; braking limits its extra reservoir exposure. Under good references, recovery-only AUC/low-reservoir time is 173.11/1.66 s, hybrid 174.37/0.36 s, and braking-only 225.60/0.00 s. With biased references, the hybrid's mean low-reservoir time is 51.03 versus 9.70 s for matched PI: shared reference error can fool the agreement gate. With no references, all physical metrics match the selected PI exactly. None of these simulations establishes clinical replacement or a universally protective controller.
+
+The matched PI foundation (`tau_c=5`, level target 0.65 L) was selected during development before tuning the override. The final grid gives each family 16 candidates; two preceding complete development grids are preserved in `results/selective-pilot-1/` and `results/selective-pilot-2/` with exact source snapshots. Total architecture exploration is not claimed to have equal budgets. Development uses the same wide synthetic parameter ranges as final evaluation, with disjoint patient/noise seeds. Previously studied scenario families and model assumptions remain reused.
+
+The frozen joint criterion compares the hybrid separately with **both** the development-selected PI and the previous fixed fast PI, in both good-reference and outage groups. Every comparison must pass the reservoir/pressure non-inferiority limits and show less oxygen deficit. Biased/never references and out-of-range lag are retained as secondary groups. Machine-readable logs include the component comparisons and all failed outcomes; there are no paper drafts or prose results documents.
+
+An offline steady-state capacity screen reports when a fixed oxygen target exceeds sustainable model capacity at the declared volume/pressure limits. Stored reservoir volume and pressure transients can bridge short intervals, so this screen is neither a finite-horizon impossibility proof nor a dynamic optimal controller. It never relaxes the controller success criterion.
+
+## Previous design: continuity between level references
 
 The `continuity` controller integrates measured venous inflow minus a nominal first-order pump-flow estimate. Delivered level references anchor this balance **at their acquisition time**, so a delayed sample corrects the past before propagation to the present. Consecutive reference volumes fit a venous-sensor offset (clipped to ±2 L/min); the controller does not receive the actual offset, future drainage or true pump lag. A braking reserve uses the command-history actuator interval and the estimated inflow. A linearly growing model-error allowance replaces the old abrupt 180-second loss-of-reference shutdown.
 

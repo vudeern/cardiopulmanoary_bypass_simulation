@@ -75,3 +75,12 @@ The primary comparison uses good references and three specified in-range actuato
 New debug fields are `balance_level_estimate` [L], `balance_reference_age` [s or null before anchoring], and `venous_bias_estimate` [L/min]. These are estimates, not injected truth. The common `control_level_lower` is an engineering lower estimate, not a calibrated confidence bound. `level_information_unknown` flags no delivered anchor. The stopping constraint's existing debug fields retain the same units as v1.9.
 
 The co-primary good-reference and delayed/lost-reference groups exclude the 12 s actuator, outside the design interval. The combined primary summary pools those two groups equally. Biased and never-delivered references, and all out-of-range lag cells, remain in explicitly labelled secondary groups, some of which overlap. Paired bootstrap intervals resample virtual patients as blocks; they do not represent a clinical population.
+
+
+## Selective PI engineering logs
+
+`results/selective-study/` contains 4,096 final-development runs, 256 selected-parameter development component checks, and 10,240 fresh evaluation runs (16 seeds × 8 cases × 4 plants × 4 reference regimes × 5 methods). Two separate preceding development-only grids and their component checks remain in `results/selective-pilot-{1,2}/`.
+
+New per-step debug fields are `reference_count`, `estimate_disagreement` [L], `override_eligible` [boolean], `override_weight` [dimensionless], `pi_command`, `predictive_command` and `override_delta` [L/min]. `predictive_feasible` describes the predictive recommendation's low-end feasibility, not the applied blended action. `infeasible` flags an active override whose applied action violates the conditional stopping inequality. PI does not receive future references or injected faults; all methods retain the same simulated sensing channels.
+
+`capacity.csv` and `capacity-summary.json` are offline steady-state diagnostic outputs using known synthetic parameters and faults. `steady_capacity_deficit_auc` is an integral of a steady-state capacity shortfall, not an achievable controller score or a certified lower bound on finite-duration oxygen deficit. It excludes the opportunity to borrow stored volume and temporary pressure transients. It must not be used as a dynamic oracle or to excuse failures of the frozen criterion.
