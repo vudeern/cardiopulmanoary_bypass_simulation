@@ -63,4 +63,15 @@ def main():
     print(result.stdout.strip())
 
 
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as error:
+        # Surface the exact publication error as a named Actions diagnostic step,
+        # as well as the ordinary log. No environment/token values are included.
+        output = os.environ.get('GITHUB_OUTPUT')
+        if output:
+            message = ' '.join(str(error).splitlines())[:700]
+            with open(output, 'a') as handle:
+                handle.write('failure='+message+'\n')
+        raise

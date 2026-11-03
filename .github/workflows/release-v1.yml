@@ -52,8 +52,12 @@ jobs:
           wheel-test/bin/python -m pip install --no-deps --force-reinstall release-assets/*.whl
           wheel-test/bin/perfusion-lab run --scenario compound --duration 20 --dt 1 --out /tmp/v1-wheel-smoke
       - name: Publish the immutable v1 tag and release assets
+        id: publish
         if: steps.existing.outputs.exists != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: python tooling/examples/publish_v1.py --assets release-assets
+      - name: "Publication error: ${{ steps.publish.outputs.failure }}"
+        if: failure() && steps.publish.outputs.failure != ''
+        run: exit 1
