@@ -17,7 +17,7 @@ elements.hb.value='9';elements.flow.value='4.5';
 let tick;
 const context=vm.createContext({document:{getElementById(id){assert(elements[id],'Missing element '+id);return elements[id];}},
   setInterval(fn){tick=fn;return 1;},clearInterval(){tick=null;},console});
-for(const match of html.matchAll(/<script src="((?:data|comparison|robustness|reference|submission|verified|braking|continuity|selective|integrity)[^"/]*\.js)"/g))
+for(const match of html.matchAll(/<script src="((?:data|comparison|robustness|reference|submission|verified|braking|continuity|selective|integrity|slowdown)[^"/]*\.js)"/g))
   vm.runInContext(fs.readFileSync(path.join(root,'web',match[1]),'utf8'),context);
 vm.runInContext(fs.readFileSync(path.join(root,'web/app.js'),'utf8'),context);
 const data=vm.runInContext('PERFUSION',context);
@@ -36,14 +36,15 @@ const braking=vm.runInContext('BRAKING_STUDY',context);assert.equal(Object.keys(
 const continuity=vm.runInContext('CONTINUITY_STUDY',context);assert.equal(Object.keys(continuity.runs).length,18);
 const selective=vm.runInContext('SELECTIVE_STUDY',context);assert.equal(Object.keys(selective.runs).length,30);
 const integrity=vm.runInContext('INTEGRITY_STUDY',context);assert.equal(Object.keys(integrity.runs).length,24);
+const slowdown=vm.runInContext('SLOWDOWN_STUDY',context);assert.equal(Object.keys(slowdown.runs).length,48);
 assert(html.includes('value="sentinel_guarded"'));
 assert(html.includes('id="controller-comparison"'));
 assert(!html.includes('PAPER_DRAFT.md'));
 assert(!html.includes('id="manuscript"'));
-for(const [experiment,source] of [['original',data],['comparison',comparison],['robustness',robustness],['reference',reference],['submission',submission],['verified',verified],['braking',braking],['continuity',continuity],['selective',selective],['integrity',integrity]]){
+for(const [experiment,source] of [['original',data],['comparison',comparison],['robustness',robustness],['reference',reference],['submission',submission],['verified',verified],['braking',braking],['continuity',continuity],['selective',selective],['integrity',integrity],['slowdown',slowdown]]){
 elements.experiment.value=experiment;elements.experiment.handlers.change();
 assert(elements['seed-note'].textContent.includes(String(source.protocol.start_seed)));
-if(['verified','braking','continuity','selective','integrity'].includes(experiment)){assert(elements['seed-note'].textContent.includes('10-minute'));assert(elements['timing-note'].textContent.includes('1-second'));}
+if(['verified','braking','continuity','selective','integrity','slowdown'].includes(experiment)){assert(elements['seed-note'].textContent.includes('10-minute'));assert(elements['timing-note'].textContent.includes('1-second'));}
 for(const [name,run] of Object.entries(source.runs)){
   const [scenario,policy]=name.split('/');
   elements.scenario.value=scenario;elements.policy.value=policy;
@@ -72,5 +73,5 @@ elements.play.handlers.click();assert.equal(tick,null);
 elements.reset.handlers.click();assert.equal(+elements.time.value,0);
 elements.hb.value='10';elements.flow.value='5';elements.hb.handlers.input();
 assert.equal(+elements['calc-do2'].textContent,Math.round(10*5*(1.34*10*.98+.0031*150)/1.85));
-console.log('PASS: 238 scenario/policy views, cohort/scenario switching, timeline, chart coordinates, play/pause/reset, calculator and DOM IDs.');
+console.log('PASS: 286 scenario/policy views, cohort/scenario switching, timeline, chart coordinates, play/pause/reset, calculator and DOM IDs.');
 

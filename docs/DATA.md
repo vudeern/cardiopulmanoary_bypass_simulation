@@ -95,3 +95,14 @@ New per-step debug fields are `reference_count`, `estimate_disagreement` [L], `o
 The added counters are `reference_bad_total`, `reference_bad_rejected`, `reference_good_total`, `reference_good_rejected` and `quarantine_s`. A routine sample is bias-labelled bad when absolute injected bias exceeds 0.04 L; sensor noise alone does not define bias. Rejection includes source quarantine, so it does not prove identification of a particular fault. Samples still pending at the end are excluded from decision counts. `classification.json` gives observed counts/fractions alongside healthy-sample rejection, not clinical sensitivity or specificity. Calibration-only PI ignores routine samples and is omitted from these rates.
 
 `decisions.json` retains all routine decision events and periodic guard snapshots for the displayed representative patient. The primary reference-fault group includes all nonclean fault-profile challenges under healthy calibration; the clean-reference group is separate. Missing, biased and shared calibration groups remain secondary and must not be silently excluded from general claims.
+
+
+## Slowdown audit artifacts
+
+`results/slowdown-audit/protocol.json` freezes post-result scope and source hashes. `runs.csv` has 640 existing/diagnostic runs, and `decision-counts.csv` has 128 observed hybrid audits. All reuse prior patient/noise seeds; there is no training/test split or retuning in this diagnostic. Counts and per-run means are over the declared eight case cells, not an independent population.
+
+`benchmarks.json` has 96 physical cells, both fixed heuristic outcomes, selected-witness metrics and checked LP results. `witness-commands.json` retains every selected full command schedule with benchmark/generator hashes. All can be replayed through the unchanged full plant. `local-events.json` retains representative-patient slowdown/probe events, including the counterfactual commands and verified immediate gains. The local gains must not be summed into an achievable trajectory. `replays.json` stores 40 controller/ablation views; the web exporter adds eight explicitly labelled truth-witness views. The LP is never exported as a physical replay.
+
+`audit_feasible` checks the reservoir floor, empty requests and initial-transient pressure envelope. Raw `high_pressure_s` still uses 95 mmHg. `guard_lower_above_truth_steps` is a post-hoc coverage failure count, not information supplied to the actual controller. Counterfactual flags overlap. The removed-interval and exact-volume ablations can violate constraints and are not substitutes for a new controller trial.
+
+The superseded initial tail calculation and its prior protocol/summary remain explicitly labelled invalid evidence under `data/slowdown-audit/tail-correction/`; they are excluded from current results.

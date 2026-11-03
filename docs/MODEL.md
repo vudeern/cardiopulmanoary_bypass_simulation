@@ -286,3 +286,18 @@ The current corrected inline estimate subtracts `base_uncertainty + drift_allowa
 The calibration-only PI uses this observer with no routine samples and a fixed declared uncertainty design, then development-selected PI gains. Screening disabled accepts routine samples despite test failures, with the same channels and guard allowances. This ablation isolates reference acceptance. Corrupting both channels can yield false agreement; noise being independent does not imply faults are independent.
 
 The v1.11 orchestration source remains at `data/selective-history/frozen-v1.11/simulation.py`; old protocol hashes are verified against that source while old numerical replays run through current orchestration.
+
+
+## Offline slowdown audit
+
+The audit is separate from controller execution. Its taps preserve the original sensor RNG draws and controller outputs in observed mode; the original frozen controller and simulation source hashes are checked. Exact volume and interval removal are explicit diagnostic-only changes before the decision. Local forks copy the identical PI/controller state before the decision and evaluate higher actions through the exact current plant with future disturbances.
+
+The feasible witness chooses from nine commands per interval, checking a 60 s exact-plant emergency slowdown. Once the command reaches zero, residual pump transfer is bounded by `flow * dt/120 * (1+a)/(1-a)`, `a=exp(-dt/tau)`, the infinite geometric sum of this model's trapezoidal flow integration. A continuous `tau*flow/60` expression would underestimate discrete transfer. The remaining pressure is bounded by `max(current_pressure, R*flow)`. Witnesses use a 0.00001 L numerical floor margin. Two fixed heuristics, with and without a true oxygen-demand cap, are retained; the lower-deficit feasible witness is selected. It is not a global optimizer.
+
+The LP variables are command, actuator flow, pressure, relaxed reservoir and oxygen deficit at every interval. Slew and actuator/pressure dynamics are exact linear equations. Venous return is replaced by its state-dependent upper envelope at the reservoir floor, propagated through any declared drainage lag. The relaxed tank has no physiological storage ceiling, only a mathematical finite upper bound from accumulated upper inflow. This optimistic relaxation contains feasible physical paths and therefore bounds their objective from below. Its trajectory is not generally feasible in the full plant.
+
+All constraints require floor 0.25 L, no empty requests, command 0–7 L/min and slew 0.15 L/min/s. Pressure above 95 mmHg is allowed only within the smallest reachable initial transient obtained by maximal immediate deceleration from the mandated initial pump state. Raw high-pressure time is still reported. This allowance is explicit and shared by witness, relaxation and audit-compliance checks; it is not a clinical safety criterion.
+
+The numerical LP check clips inequality/bound dual signs and accounts for stationarity residual using finite variable bounds: add `sum(min(residual*lower_bound, residual*upper_bound))` to the dual objective, then subtract 1e-7. Nonnegativity of deficit supplies a zero lower bound. Primal residuals and the objective gap are retained. This is floating-point numerical verification, not formal interval arithmetic or physiological validation.
+
+For feasible controls, the optimistic LP lower bound ≤ unknown perfect-information physical optimum ≤ full-plant witness. The middle gap is unresolved; the future-informed witness does not upper-bound the best attainable causal sensor-based policy. A locally verified continuation only proves existence for that fork. Its failure does not prove impossibility; successes from different forks need not be jointly realizable.

@@ -28,6 +28,8 @@ python examples/build_selective_web.py --check
 python examples/selective_capacity.py --check
 python examples/validate_integrity_study.py
 python examples/build_integrity_web.py --check
+python examples/validate_slowdown_audit.py
+python examples/build_slowdown_web.py --check
 ```
 
 Physics tests check mass conservation, actuator response, pressure decay, oxygen units and numerical refinement. Sensor/observer tests check causal timing, missing measurements, bias correction and explicit uncertainty assumptions. The frozen original replay cases detect changes to existing numerical behavior.
@@ -58,3 +60,6 @@ Selective PI tests require exact PI-equivalent output when disabled or never anc
 
 
 Reference-integrity tests check startup-bias screening before correction, rejection of a reference jump, healthy-sample false rejection under inline drift, shared-corruption non-detection, acquisition-time uncertainty growth, duplicate/future reference handling, quarantine recovery, suppression of upward override during fade, calibration-only input parity and the screening-disabled ablation. The independent audit rebuilds common guard selection and calibration-only PI selection, all 168 cells, paired intervals and the engineering criterion, decision classifications, all 24 displayed traces and the retained development pilot.
+
+
+Audit checks require the optional `[audit]` dependency (SciPy), while production controllers retain their original NumPy-only dependency. Tests cover a hand-solvable dual bound, deliberately inconsistent dual multipliers with a conservative finite-box correction, embedding feasible full-plant paths into the relaxation, severe-demand bounds, the unavoidable initial-pressure envelope, exact observed-mode parity, immutable local forks and a discrete-tail counterexample. The artifact audit replays all 96 selected command schedules through the full plant, rebuilds LP checks, matches 384 observed diagnostic records to frozen source records, rebuilds all 40 displayed observed/ablation traces and representative local forks, and checks paired intervals and the published table. The code does not prove a globally optimal physical controller or clinical safety.

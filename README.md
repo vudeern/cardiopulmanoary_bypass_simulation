@@ -6,7 +6,29 @@ A work-in-progress cardiopulmonary bypass simulation by Udeern Varanasi.
 
 The project explores how sensing errors, oxygen delivery and limited venous return affect pump control. It uses an uncalibrated adult-like synthetic circuit. It does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation.
 
-## Current experiment: screening biased references
+## Current work: audit the slowdowns before changing the controller
+
+This is a **post-result diagnostic**, not a new sensor-based controller or fresh performance validation. Every deployed controller source hash is unchanged. The audit reuses the v1.12 patients and scenarios, compares the hybrid and both PI references, forks identical decision states, and runs two diagnostic closed-loop ablations: removing the uncertainty interval and supplying exact current reservoir volume. Unsafe ablation outcomes remain failures.
+
+```bash
+python -m pip install -e ".[audit]"
+python examples/slowdown_audit.py --stage all
+python examples/export_slowdown_witnesses.py
+python examples/validate_slowdown_audit.py
+python examples/build_slowdown_web.py
+```
+
+The declared scope is 640 diagnostic runs over eight cells and 16 previously evaluated patients, including 128 observed hybrid decision audits. A separate 96-cell physical benchmark covers every patient/physiology/plant combination in the prior 10,752-run cohort. Reference faults do not alter those physical inputs. All 96 selected witness command schedules are retained for replay through the unchanged full plant.
+
+**There is demonstrated room within the model, but margins cannot simply be deleted.** Across the eight audit cells, observed hybrid mean oxygen-deficit AUC is 861.16 mL O₂/m². A truth-informed feasible witness reaches 512.15 with no reservoir-floor or empty-request violations; this is about 41% lower, but it uses true state, true parameters and future disturbances. Removing the interval gives AUC 567.56 while increasing low-reservoir time from 11.38 to 94.17 s and introducing empty requests. Exact volume gives 672.60 and 1.74 s, but remains noncompliant in 20 of 128 runs. It is a diagnostic, not a proposed deployable policy.
+
+A sparse LP relaxation gives a numerically checked deficit lower bound of 287.19 under the audit weighting; the 224.96 gap to the feasible witness is unresolved. The LP assumes optimistic maximum drainage at the reservoir floor and relaxed storage, so its commands are never presented as a real controller. The finite-grid witness is feasible, not globally optimal. Both use the same declared slew, pump, reservoir and pressure constraints, with an explicit minimum-reachable initial-pressure allowance.
+
+Of 38,742 observed slowdown decisions, 27,793 (71.7%) have at least one higher-flow first action with improved immediate true oxygen delivery and a verified emergency continuation. These local opportunities use future truth, overlap, and cannot be summed as one achievable improvement or used to delete every slowdown. Failed probes do not prove that a slowdown was physically necessary. The observer's mean interval width is 0.275 L; its lower estimate also exceeds true volume in some fault cases. Better volume estimation and reserve design need testing together.
+
+The first audit output used a continuous residual-flow approximation. It is explicitly superseded in `data/slowdown-audit/tail-correction/`; the final audit was rerun with the exact discrete trapezoidal geometric tail and a regression test for the counterexample. No controller tuning or case selection followed this correction. No paper drafts or prose result documents are generated.
+
+## Previous experiment: screening biased references
 
 The new `screened` reference mode evaluates routine samples **before** either PI or the predictive override uses them. It waits briefly for a same-acquisition independent calibration, tests unpaired samples against calibrated inline history and (after two calibrations) mass balance, quarantines inconsistent routine references, and restores the most recent independent calibration correction. A widening engineering uncertainty range defines the level supplied to both matched controllers. Quarantine and absent/stale calibration prevent upward predictive overrides, including during fade-out.
 
