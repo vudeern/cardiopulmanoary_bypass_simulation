@@ -30,6 +30,9 @@ python examples/validate_integrity_study.py
 python examples/build_integrity_web.py --check
 python examples/validate_slowdown_audit.py
 python examples/build_slowdown_web.py --check
+python examples/validate_model_bank_study.py
+python examples/build_model_bank_web.py --check
+python examples/check_versions.py
 ```
 
 Physics tests check mass conservation, actuator response, pressure decay, oxygen units and numerical refinement. Sensor/observer tests check causal timing, missing measurements, bias correction and explicit uncertainty assumptions. The frozen original replay cases detect changes to existing numerical behavior.
@@ -63,3 +66,6 @@ Reference-integrity tests check startup-bias screening before correction, reject
 
 
 Audit checks require the optional `[audit]` dependency (SciPy), while production controllers retain their original NumPy-only dependency. Tests cover a hand-solvable dual bound, deliberately inconsistent dual multipliers with a conservative finite-box correction, embedding feasible full-plant paths into the relaxation, severe-demand bounds, the unavoidable initial-pressure envelope, exact observed-mode parity, immutable local forks and a discrete-tail counterexample. The artifact audit replays all 96 selected command schedules through the full plant, rebuilds LP checks, matches 384 observed diagnostic records to frozen source records, rebuilds all 40 displayed observed/ablation traces and representative local forks, and checks paired intervals and the published table. The code does not prove a globally optimal physical controller or clinical safety.
+
+
+Model-bank tests check acquisition-time calibration fitting, coverage of an independently advanced plant under inline drift, no-anchor/duplicate/future handling, the discrete reserve against an independent numerical rollout, conditional cap behavior, unsupported PI equivalence, and exact harness parity with the old factories. The study audit independently rebuilds selection, every cell and paired criterion, all 40 replay traces and the truth timing of estimation errors. These checks do not establish a guaranteed uncertainty set, causal optimality, clinical safety or v2 qualification.

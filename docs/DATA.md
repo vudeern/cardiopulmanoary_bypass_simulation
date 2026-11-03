@@ -106,3 +106,12 @@ The added counters are `reference_bad_total`, `reference_bad_rejected`, `referen
 `audit_feasible` checks the reservoir floor, empty requests and initial-transient pressure envelope. Raw `high_pressure_s` still uses 95 mmHg. `guard_lower_above_truth_steps` is a post-hoc coverage failure count, not information supplied to the actual controller. Counterfactual flags overlap. The removed-interval and exact-volume ablations can violate constraints and are not substitutes for a new controller trial.
 
 The superseded initial tail calculation and its prior protocol/summary remain explicitly labelled invalid evidence under `data/slowdown-audit/tail-correction/`; they are excluded from current results.
+
+
+## v1.14 model-bank evidence and v2 milestone
+
+`results/model-bank-study/` contains 4,096 development records, frozen selection/protocol, 15,360 fresh evaluation records (16 patients × 2 physiology cases × 3 plants × 8 routine-reference regimes × 4 calibration regimes × 5 methods), cell means, paired intervals and 40 representative replays. Current patient/noise seeds are disjoint from development. The circuit and fault families remain reused synthetic assumptions.
+
+New fields include `bank_supported`, `bank_conflict`, `active_models`, `bank_lower` and `bank_upper`. Diagnostic metrics align the step-start estimate with preceding physical truth: `volume_mae_L`, `lower_undercoverage_s`, `mean_halfwidth_L`, `bank_supported_s` and `bank_conflict_s`. Truth is used only for these offline metrics. Declared half-widths are recorded before any nonnegative physical clipping; they are not calibrated confidence probabilities.
+
+`data/version2-gates.json` records the user-defined milestone. `version2-progress.json` reports exploratory primary-regime metrics, a comparator selected from development evidence, and the still-unmet requirement for two fresh cohorts of at least 32 virtual patients. It does not award v2 readiness from a 16-patient experiment. Missing/biased/shared calibration tests remain secondary limitations, never silently dropped.

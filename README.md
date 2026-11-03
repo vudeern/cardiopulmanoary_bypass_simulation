@@ -8,11 +8,12 @@ The project explores how sensing errors, oxygen delivery and limited venous retu
 
 ## Version history
 
-Versions are listed newest first. Each snapshot preserves the code and documentation recorded at that version; historical material may differ from the current project.
+Versions are listed newest first. The current entry follows `main`; earlier entries link to frozen code snapshots. Historical material may differ from the current project.
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
-| v1.13 (current) | Slowdown audit and truth-informed physical benchmarks | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cbb683484999ab73a79bf0fc368d682e8878ae7) |
+| v1.14 (current) | Calibration-constrained model bank and discrete reserve | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v1.13 | Slowdown audit and truth-informed physical benchmarks | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cbb683484999ab73a79bf0fc368d682e8878ae7) |
 | v1.12 | Reference screening, quarantine and independent calibration | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ed16fcf9056d41c2ffd1eca7fe1149515780ccaf) |
 | v1.11 | PI foundation with a selective predictive override | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/fe9c3cbab35d089a0af90ffdc6f9fae7b003ca07) |
 | v1.10 | Reference continuity between level measurements | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/1e84727d9e064d4fca93c8e33f34cf2c98b9e917) |
@@ -27,7 +28,43 @@ Versions are listed newest first. Each snapshot preserves the code and documenta
 | v1.1 | Causal reservoir level-step guard and paired evaluation | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61b74983f1681e5e80be3a24a6df9707793098fe) |
 | v1.0 | Initial simulation, paired benchmark and failure analysis | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/31414235c2587595a2f3c0e7e7b60b5a0632eff2) |
 
-## v1.13 — Audit the slowdowns before changing the controller (current)
+## Road to v2.0
+
+v2.0 is a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); each iteration reports [current progress](results/model-bank-study/version2-progress.json).
+
+- At least **10% lower mean oxygen-deficit AUC** than the strongest development-eligible PI comparator with the same inputs and limits; the paired 95% interval must support improvement. Determine the comparator on development data, not after final results.
+- **Zero empty-reservoir requests** in primary evaluation and mean low-reservoir time **≤1 s per 10-minute run** in each primary regime. Upper paired extra exposure must be ≤1 s low/empty and ≤5 s high pressure.
+- Pass separately for **normal sensing, routine-reference bias and routine-reference outages**, within the declared independent-calibration assumptions.
+- Confirm the frozen design on **two distinct fresh cohorts of at least 32 virtual patients each**, retain all failures, and pass source/artifact checks on both supported Python versions.
+- Publish missing/biased/shared-corruption calibration failures and the fallback behavior. An unidentifiable shared absolute bias is not solved by labelling a release v2.0.
+
+The present 16-patient evaluation is exploratory and cannot qualify for v2.0, even if some metrics pass. The synthetic parameter distribution and reused circuit model are not a validated clinical population.
+
+## v1.14 — Calibration-constrained model bank (current)
+
+The new causal observer propagates a generic bank of 1, 2, 4, 8 and 12 s pump models using applied commands and measured venous inflow. The last four delivered independent calibrations fit a mass-balance intercept and venous-offset slope. Calibration error allowances, fit residuals, extrapolation weights and model-error growth define an engineering volume interval across retained models. No true reservoir volume, true pump lag or future disturbance enters the controller.
+
+With supported calibration and a quarantined routine channel, the model/calibration path can operate independently of that rejected routine source. If the inline and bank intervals conflict, it widens to their union and disables recovery. Before calibration support exists or after model support is lost, it returns to the established guarded PI path. Shared calibration corruption and changing/unmodelled dynamics can still invalidate the estimate; this is not a calibrated confidence interval or safety proof.
+
+The reserve calculation uses the exact discrete first-order residual tail and discrete command-ramp area across retained pump states. A recovery floor limits extra flow, and the conditional reserve cap cannot be weakened by the recovery blend. Its protection still depends on model/error/inflow assumptions. Matched PI receives the same observer; retuned calibration-only PI, the frozen v1.12 hybrid and a single-model ablation are retained as comparisons.
+
+```bash
+python examples/model_bank_study.py --stage develop
+python examples/model_bank_study.py --stage evaluate
+python examples/validate_model_bank_study.py
+python examples/build_model_bank_web.py
+python examples/check_versions.py
+```
+
+The fresh evaluation improves the **routine-reference-bias group under healthy calibration** relative to the previous hybrid: oxygen-deficit AUC falls from 853.77 to 567.17 mL O₂/m² (33.6%), with paired difference −286.60 (95% interval −320.02 to −251.31). Mean volume error falls from 44.35 to 24.98 mL. Low-reservoir time changes from 0.68 to 0.80 s (upper paired extra exposure 0.26 s), with zero empty requests. In clean-reference cases the oxygen change versus the previous hybrid is inconclusive; outage AUC improves from 588.72 to 564.08. These scoped results do not establish overall superiority.
+
+The full criterion fails. Relative to matched model-bank PI, oxygen deficit improves by roughly 19–20%, but upper paired extra low-reservoir exposure is 1.84 s (clean), 1.39 s (bias) and 1.57 s (outage), beyond the +1 s limit. The retuned calibration-only PI has lower oxygen deficit but depletes much more in final testing (77.27 s mean low-reservoir time and 1.03 s empty requests in primary groups); it remains reported and is not discarded after seeing those failures. The hybrid has no empty requests in any primary run, but clean-reference low-reservoir time is 1.01 s, just over the 1 s milestone.
+
+**v2.0 status: not ready.** This is one 16-patient exploratory cohort, not either of the required 32-patient confirmation cohorts. Several comparator/protection checks remain unmet. With missing calibration the new hybrid reproduces the matched PI fallback. With biased or shared-corrupted calibration the model interval can fail and depletion/empty requests remain; a narrow range is not a guarantee of correctness. The detailed milestone checks are in `results/model-bank-study/version2-progress.json`.
+
+The new harness preserves the established timing and physiology pipeline and is tested for exact parity when using the old factories. Previous controller/orchestration files remain unchanged so frozen historical experiments remain reproducible. The study uses 4,096 development runs and 15,360 evaluation runs with fresh patient/noise seeds and pump responses different from development. Scenario families and the synthetic model remain reused. All failures and secondary calibration-corruption regimes remain in the logs; no paper drafts are generated.
+
+## v1.13 — Audit the slowdowns before changing the controller
 
 This is a **post-result diagnostic**, not a new sensor-based controller or fresh performance validation. Every deployed controller source hash is unchanged. The audit reuses the v1.12 patients and scenarios, compares the hybrid and both PI references, forks identical decision states, and runs two diagnostic closed-loop ablations: removing the uncertainty interval and supplying exact current reservoir volume. Unsafe ablation outcomes remain failures.
 

@@ -46,3 +46,6 @@ jobs:
       - run: python examples/build_integrity_web.py --check
       - run: python examples/validate_slowdown_audit.py
       - run: python examples/build_slowdown_web.py --check
+      - run: python examples/validate_model_bank_study.py
+      - run: python examples/build_model_bank_web.py --check
+      - run: python examples/check_versions.py
