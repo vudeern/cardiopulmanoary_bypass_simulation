@@ -13,6 +13,10 @@ python examples/validate_reference_study.py
 python examples/validate_submission_study.py
 python examples/published_patient_replay.py --check
 python examples/validate_controller_comparison.py
+python examples/verify_simc.py --check
+python examples/validate_simc_benchmark.py
+python examples/validate_simc_tight.py
+python examples/build_simc_web.py --check
 ```
 
 Physics tests check mass conservation, actuator response, pressure decay, oxygen units and numerical refinement. Sensor/observer tests check causal timing, missing measurements, bias correction and explicit uncertainty assumptions. The frozen original replay cases detect changes to existing numerical behavior.
@@ -26,3 +30,7 @@ The DOM contract executes exported traces and application code in a minimal mock
 The patient replay check recomputes arithmetic artifacts from the cited numerical inputs. It does not test held-out patient prediction. No raw external reservoir series or original reference-controller experimental traces have been obtained. Exact source-controller replication, independent model validation and equipment relevance remain open.
 
 Do not regenerate paper drafts or result write-ups during development. Those documents and their generators have been removed at the project owner's request.
+
+The verified general-reference check reproduces the published PI gains and five normalized frequency-domain values within declared rounding tolerances. An independent analytic time-domain solution tests the PI implementation at multiple timesteps. Signed-gain, anti-windup, common-constraint and unused-sensor invariance tests cover application details.
+
+The new benchmark validator independently checks all candidate budgets, seed partitions, selection, final cells and patient-block intervals, and recomputes the joint criterion. It reruns every stored replay and timestep-sensitivity case and checks source/configuration hashes. It does not certify physiological validity, optimal tuning or scientific novelty.

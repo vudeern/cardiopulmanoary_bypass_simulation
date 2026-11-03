@@ -51,6 +51,11 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         if policy!='sentinel':raise ValueError('Published adaptation uses the common observer')
         from .published_control import PublishedLevelAdapter
         controller=PublishedLevelAdapter(p.bsa,dt,**controller_options)
+    elif controller_kind in ('simc','matched_forecast'):
+        if policy!='sentinel':raise ValueError('Matched controllers use the common observer')
+        from .simc import MatchedSupervisor
+        controller=MatchedSupervisor('simc' if controller_kind=='simc' else 'forecast',
+            p.bsa,dt,target,**controller_options)
     elif controller_kind=='forecast':
         controller = Controller(policy, p.bsa, dt, target, **controller_options)
     else:

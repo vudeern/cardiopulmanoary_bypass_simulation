@@ -29,3 +29,7 @@ jobs:
       - run: python examples/validate_submission_study.py
       - run: python examples/published_patient_replay.py --check
       - run: python examples/validate_controller_comparison.py
+      - run: python examples/verify_simc.py --check
+      - run: python examples/validate_simc_benchmark.py
+      - run: python examples/build_simc_web.py --check
+      - run: python examples/validate_simc_tight.py

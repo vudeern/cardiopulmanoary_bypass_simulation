@@ -46,3 +46,15 @@ The optional venous sensor uses its own random stream. It samples current venous
 `data/published-case/observations.csv` preserves five reported samples and missing arterial saturation. `provenance.json` supplies the citation, units, extraction method and assumptions. `results/published-case/` contains arithmetic replay outputs. Chosen saturation endpoints are sensitivities, not measured values, confidence intervals or guaranteed bounds. No interpolation, deficit AUC or fitted reservoir model is produced from those sparse samples.
 
 Older experiment folders retain their recorded protocol, parameters and raw metrics. They are exploratory engineering logs. Browser traces are subsampled for display; integrated metrics use full simulation resolution.
+
+## Verified general-reference comparison
+
+`data/simc-reference/source.json` maps the published general PI rule and normalized verification case. It explicitly distinguishes source equations from the simulation supervisor. `results/simc-verification/verification.json` stores computed frequency values and time-domain refinement errors.
+
+`results/simc-benchmark/` contains the recorded protocol, development-only selection, every run in CSV, all final cells and patient-block comparisons in JSON, twelve replay traces, timestep sensitivity and machine diagnostics. The exact script/model/source hashes are recorded before the run. `diagnostics.json` retains every sensor-only pairing and finite-grid selection limitations. No prose result document is generated.
+
+Final parameters come from wider uncalibrated ranges than development parameters. The SIMC source has an integrating-process gain; the applied reservoir uses signed gain −1/60 and a fixed 1.5-second design delay. The design sampling assumption stays fixed during timestep sensitivity. Random sensor draws change with dt, so those runs are sensitivity checks rather than a pure deterministic convergence proof.
+
+The browser's verified-reference dataset has a 600-second duration and one-second scoring interval; older datasets retain their own duration and interval. The viewer scales its timeline and timing caption to the selected dataset.
+
+The separate `canonical-protocol.json`, `canonical-metrics.csv` and `canonical-summary.json` are post-result descriptive sensitivity logs. They apply the source's canonical tau_c = theta choice using the already development-selected reservoir target. They reuse final cases, make no independent confirmation claim, and do not replace the recorded primary comparison.

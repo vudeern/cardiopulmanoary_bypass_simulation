@@ -6,23 +6,28 @@ A work-in-progress cardiopulmonary bypass simulation by Udeern Varanasi.
 
 The project explores how sensing errors, oxygen delivery and limited venous return affect pump control. It uses an uncalibrated adult-like synthetic circuit. It does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation.
 
-## Current work: reproduce an existing controller
+## Current comparison: verified free SIMC PI reference
 
-The reference is [Takahashi et al., 2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC10393111/), DOI 10.1109/JTEHM.2023.3290951. Their system combines measured venous flow, arterial-flow control and reservoir feedback with occluder actuation. The [source map and unresolved configuration](data/controller-reference/reproduction.json) records which components are verified.
+The reproducible reference is [Skogestad's SIMC PI method](https://www.mic-journal.no/PDF/2004/MIC-2004-2-2.pdf), with [free author notes and corrections](https://skoge.folk.ntnu.no/publications/2003/tuningPID/README.html). This is an established **general process-control method**, applied here as a reservoir override. It is not a clinical CPB controller or commercial medical device.
 
-Implemented source components are the nonlinear occluder flow map and third-order reference filter. Tests independently check the direct equation, inverse, analytic step response and timestep consistency. Calibration parameters must be supplied explicitly.
+The implementation reproduces the published normalized PI settings and five reported frequency-response values. A separate analytic time-domain solution checks the discrete PI implementation and its refinement. The [source mapping](data/simc-reference/source.json) distinguishes the published equations from the shared oxygen/pressure/actuator supervisor added for this application.
 
-The comparison runner additionally provides a **flow-domain adaptation** of the reference architecture. It uses development-selected gains, the current synthetic pump actuator, explicit derivative damping/filtering and anti-windup. It does **not** implement the complete published feedforward/PID occluder loop. Exact reproduction remains blocked by unverified supplement configuration and unavailable original experimental traces. Its output cannot establish an advantage over the authors' controller.
-
-A new noisy venous-flow measurement is provided to both the adapted baseline and matched Sentinel. A separate legacy Sentinel arm retains inferred venous flow to expose the information difference. All share the synthetic plant, flow/slew limits and reference measurements. The reference prioritizes venous-flow/level tracking; Sentinel prioritizes oxygen delivery and a reservoir floor. Those objective differences remain visible in the logged metrics.
+Both controllers receive the same sensor/reference pipeline and actuator limits. Each family receives eight development candidates. Selection is frozen before evaluation on wider synthetic patient parameters, new faults, changed pump/drainage dynamics, and delayed or missing references. Patient-block comparisons retain all challenge cells and adverse outcomes. The planned joint advantage is not demonstrated; the model exposes an oxygen/depletion tradeoff. Neither clinical benefit nor scientific priority is established.
 
 ```bash
 python -m pip install -e .
-python examples/controller_comparison.py
-python examples/validate_controller_comparison.py
+python examples/verify_simc.py
+python examples/simc_benchmark.py
+python examples/analyze_simc.py
+python examples/check_simc_tight.py
+python examples/validate_simc_benchmark.py
+python examples/validate_simc_tight.py
+python examples/build_simc_web.py
 ```
 
-The runner records development candidates before final evaluation. Both families receive eight candidates and the same development conditions. Selection is frozen before evaluating new seeds, a lagged-drainage plant and a venous-sensor-bias condition. Outputs are working CSV/JSON logs under `results/controller-comparison/`. There is no publication verdict or final project conclusion.
+Working outputs remain CSV/JSON under `results/simc-verification/` and `results/simc-benchmark/`. The interactive replay offers six prespecified final cases, both methods and the first evaluation seed. It scores at one-second resolution and displays every third sample. The final cohort has 16 paired virtual patients; artificial challenge cells are not clinical event frequencies. Finite candidate grids and boundary-selected settings limit conclusions about optimal tuning. An additional canonical `tau_c = theta` check is explicitly labeled post-result and descriptive. It reuses final cases, retains the original test, and does not select a new setting on those outcomes.
+
+The earlier [Takahashi bypass-controller workbench](data/controller-reference/reproduction.json) remains explicitly incomplete. It is not the verified primary comparator. Its exploratory runner and logs are retained for continuity; they must not be presented as the authors' reproduced controller.
 
 ## Run the existing experiments
 

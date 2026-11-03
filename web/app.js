@@ -12,7 +12,7 @@ const descriptions = {
   unmodeled_level_bias: 'A +0.40 L reservoir measurement bias accompanies poor drainage and hemodilution. Original Sentinel trusts this reading. Guarded Sentinel detects implausible level steps and applies an offset estimate plus a reserve margin; compare its reservoir and oxygen-delivery tradeoff.'
 };
 let timer = null;
-function dataset() { return $('experiment').value==='submission'?SUBMISSION_STUDY:$('experiment').value==='reference'?REFERENCE_STUDY:$('experiment').value==='robustness'?ROBUSTNESS:$('experiment').value==='comparison'?COMPARISON:PERFUSION; }
+function dataset() { return $('experiment').value==='verified'?VERIFIED_STUDY:$('experiment').value==='submission'?SUBMISSION_STUDY:$('experiment').value==='reference'?REFERENCE_STUDY:$('experiment').value==='robustness'?ROBUSTNESS:$('experiment').value==='comparison'?COMPARISON:PERFUSION; }
 function run() { return dataset().runs[$('scenario').value+'/'+$('policy').value]; }
 const originalLabels = {
   sentinel_guarded:'Guarded Sentinel · level-step correction',
@@ -34,8 +34,9 @@ function switchExperiment(){
   $('scenario').value=source.protocol.scenarios.includes(previousScenario)?previousScenario:source.protocol.scenarios[0];
   $('policy').innerHTML=options.map(([value,label])=>`<option value="${value}">${label}</option>`).join('');
   $('policy').value=source.protocol.default_policy||(comparison?'guarded':'sentinel');
-  $('seed-note').textContent=`Representative virtual patient · Seed ${dataset().protocol.start_seed} · 20-minute experiment`;
-  $('cohort-label').textContent=`${$('experiment').value==='reference'?'REFERENCE TEST':$('experiment').value==='robustness'?'FROZEN-POLICY STRESS TEST':comparison?'FINAL EVALUATION':'ORIGINAL COHORT'} / ${source.protocol.n} PAIRED VIRTUAL PATIENTS`;
+  $('seed-note').textContent=`Representative virtual patient · Seed ${source.protocol.start_seed} · ${(source.protocol.duration||1200)/60}-minute experiment`;
+  $('timing-note').textContent=`Observations and decisions come from the start of each ${source.protocol.dt||2}-second interval; physical truth is at interval end. Display traces keep every third interval plus the last sample. Metrics use full resolution. The browser replays Python output.`;
+  $('cohort-label').textContent=`${$('experiment').value==='verified'?'FROZEN GENERAL-PI COMPARISON':$('experiment').value==='reference'?'REFERENCE TEST':$('experiment').value==='robustness'?'FROZEN-POLICY STRESS TEST':comparison?'FINAL EVALUATION':'ORIGINAL COHORT'} / ${source.protocol.n} PAIRED VIRTUAL PATIENTS`;
   $('cohort-note').textContent=comparison?
     `Difference = selected strategy − ${source.protocol.baseline_label||'Guarded Sentinel'}. Settings were selected on separate development seeds. Synthetic bootstrap intervals; no clinical benefit established.`:
     'Difference = selected strategy − reactive. Bootstrap intervals describe the synthetic sampler, not clinical benefit.';
@@ -45,13 +46,14 @@ function point() { const r=run(); return Math.min(+$('time').value,r.t.length-1)
 function clock(seconds) { return String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(Math.round(seconds%60)).padStart(2,'0'); }
 function chart(id, series, maxY, threshold, yLabel, index) {
   const r=run(), W=800, H=280, left=55, right=15, top=18, bottom=40;
-  const x=t=>left+t/1200*(W-left-right), y=v=>H-bottom-v/maxY*(H-top-bottom);
+  const duration=dataset().protocol.duration||1200;
+  const x=t=>left+t/duration*(W-left-right), y=v=>H-bottom-v/maxY*(H-top-bottom);
   let s='';
   for(let i=0;i<=4;i++){
     const v=maxY*i/4;
     s+=`<line x1="${left}" x2="${W-right}" y1="${y(v)}" y2="${y(v)}" stroke="#2a393b"/><text x="${left-10}" y="${y(v)+4}" text-anchor="end">${v.toFixed(maxY<10?2:0)}</text>`;
   }
-  for(let m=0;m<=20;m+=5) s+=`<text x="${x(m*60)}" y="${H-12}" text-anchor="middle">${m} min</text>`;
+  for(let tick=0;tick<=4;tick++){ const m=tick*duration/240; s+=`<text x="${x(m*60)}" y="${H-12}" text-anchor="middle">${m} min</text>`; }
   s+=`<text x="${left}" y="12">${yLabel}</text><line x1="${left}" x2="${W-right}" y1="${y(threshold)}" y2="${y(threshold)}" stroke="#ffbf76" stroke-dasharray="5 5"/>`;
   for(const [key,color] of series){
     const points=r.t.map((t,i)=>`${x(t).toFixed(1)},${y(r[key][i]).toFixed(1)}`).join(' ');
