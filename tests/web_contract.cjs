@@ -31,7 +31,9 @@ assert.equal(Object.keys(robustness.runs).length,24);
 assert.equal(Object.keys(reference.runs).length,30);
 assert.equal(Object.keys(submission.runs).length,12);
 assert(html.includes('value="sentinel_guarded"'));
-assert(html.includes('id="level-guard"'));
+assert(html.includes('id="controller-comparison"'));
+assert(!html.includes('PAPER_DRAFT.md'));
+assert(!html.includes('id="manuscript"'));
 for(const [experiment,source] of [['original',data],['comparison',comparison],['robustness',robustness],['reference',reference],['submission',submission]]){
 elements.experiment.value=experiment;elements.experiment.handlers.change();
 assert(elements['seed-note'].textContent.includes(String(source.protocol.start_seed)));

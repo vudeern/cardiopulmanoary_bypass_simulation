@@ -10,7 +10,7 @@ from .control import Controller
 def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=2.,
              target=280., patient=None, lab_period=180., controller_options=None,
              plant_options=None,level_mode='ignore',level_reference_options=None,
-             level_observer_options=None,controller_kind='forecast'):
+             level_observer_options=None,controller_kind='forecast',venous_measurement=None):
     """Return aligned step-end truth and step-start information/action logs.
 
     All metrics integrate actual step-average pump delivery. No ground-truth
@@ -39,7 +39,19 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
     sensors = Sensors(seed+10000, lab_period=lab_period)
     twin = Twin(p.hb, calibrate=policy!='no_calibration', guard_level=policy=='sentinel_guarded')
     controller_options = dict(controller_options or {})
-    if controller_kind=='forecast':
+    venous_options=dict(venous_measurement or {})
+    if set(venous_options)-{'noise_sd','bias'}:
+        raise ValueError('Unknown venous measurement settings')
+    if venous_measurement is not None:
+        if not all(math.isfinite(v) for v in venous_options.values()) or venous_options.get('noise_sd',.015)<0:
+            raise ValueError('Invalid venous measurement settings')
+    if controller_kind=='published_adapted' and venous_measurement is None:
+        raise ValueError('Published adaptation requires an explicit venous measurement channel')
+    if controller_kind=='published_adapted':
+        if policy!='sentinel':raise ValueError('Published adaptation uses the common observer')
+        from .published_control import PublishedLevelAdapter
+        controller=PublishedLevelAdapter(p.bsa,dt,**controller_options)
+    elif controller_kind=='forecast':
         controller = Controller(policy, p.bsa, dt, target, **controller_options)
     else:
         if policy!='sentinel':raise ValueError('Feedback baselines use sentinel Hb observation')
@@ -56,6 +68,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         if level_mode!='ignore':
             reference_filter=ReferenceLevel(level_mode,**dict(level_observer_options or {}))
     state = dict(flow=plant.flow, reservoir=plant.reservoir, pressure=plant.pressure)
+    venous_rng=np.random.default_rng(seed+70000)
     rows = []
     for k in range(round(duration/dt)):
         t = k*dt
@@ -65,6 +78,15 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         samples=reference_sensor.observe(t,state['reservoir'],inputs['reservoir_bias']) if reference_sensor else []
         reference_level=reference_filter.update(obs,samples) if reference_filter else None
         belief = twin.update(obs)
+        measured_venous=None
+        if venous_measurement is not None:
+            # Current sensor acquisition, before advancing plant/controller time.
+            # For lagged drainage the state is current flow, not future-step average.
+            current_venous=(plant.drainage_state if getattr(plant,'drainage_tau',0.)
+                            else plant.venous_return(inputs['drainage']))
+            measured_venous=max(0.,current_venous+venous_options.get('bias',0.)+
+                venous_options.get('noise_sd',.015)*venous_rng.normal())
+            belief=replace(belief,venous_flow=measured_venous)
         control_obs=replace(obs,reservoir=reference_level['lower']) if reference_level else obs
         decision = controller.decide(control_obs, belief)
         state = plant.step(decision.command, inputs['drainage'], dt)
@@ -76,6 +98,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
         measured_hb = obs.hb_inline if obs.hb_inline is not None else belief.hb
         rows.append(dict(time=t+dt, observation_time=t, **state, hb=hb,
                          observed_flow=obs.flow, observed_reservoir=obs.reservoir,
+                         observed_venous_flow=measured_venous,
                          injected_level_bias=inputs['reservoir_bias'],
                          injected_flow_bias=inputs.get('flow_bias',0.),
                          level_reference=samples[-1].value if samples else None,
@@ -118,7 +141,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
     metrics['level_fault_s'] = float(values('level_fault').sum()*dt)
     return dict(scenario=scenario.name, scenario_parameters=asdict(scenario),
                 policy=policy, controller_options=controller_options,
-                controller_kind=controller_kind,
+                controller_kind=controller_kind,venous_measurement=venous_measurement,
                 seed=seed, dt=dt, lab_period=lab_period,
                 plant_model=type(plant).__name__, plant_options=plant_options,
                 level_mode=level_mode,level_reference_options=level_reference_options,

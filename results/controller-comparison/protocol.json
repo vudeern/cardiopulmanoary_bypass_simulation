@@ -1,0 +1,229 @@
+{
+  "status": "exploratory_adaptation_not_exact_reproduction",
+  "development_seeds": [
+    13000,
+    13001,
+    13002,
+    13003
+  ],
+  "evaluation_seeds": [
+    14000,
+    14001,
+    14002,
+    14003,
+    14004,
+    14005,
+    14006,
+    14007,
+    14008,
+    14009,
+    14010,
+    14011
+  ],
+  "candidates": [
+    {
+      "id": "adapted_2.0_0.02_0.0",
+      "family": "adapted",
+      "kind": "published_adapted",
+      "options": {
+        "kp": 2.0,
+        "ki": 0.02,
+        "kd": 0.0
+      }
+    },
+    {
+      "id": "adapted_2.0_0.02_0.5",
+      "family": "adapted",
+      "kind": "published_adapted",
+      "options": {
+        "kp": 2.0,
+        "ki": 0.02,
+        "kd": 0.5
+      }
+    },
+    {
+      "id": "adapted_2.0_0.08_0.0",
+      "family": "adapted",
+      "kind": "published_adapted",
+      "options": {
+        "kp": 2.0,
+        "ki": 0.08,
+        "kd": 0.0
+      }
+    },
+    {
+      "id": "adapted_2.0_0.08_0.5",
+      "family": "adapted",
+      "kind": "published_adapted",
+      "options": {
+        "kp": 2.0,
+        "ki": 0.08,
+        "kd": 0.5
+      }
+    },
+    {
+      "id": "adapted_4.0_0.02_0.0",
+      "family": "adapted",
+      "kind": "published_adapted",
+      "options": {
+        "kp": 4.0,
+        "ki": 0.02,
+        "kd": 0.0
+      }
+    },
+    {
+      "id": "adapted_4.0_0.02_0.5",
+      "family": "adapted",
+      "kind": "published_adapted",
+      "options": {
+        "kp": 4.0,
+        "ki": 0.02,
+        "kd": 0.5
+      }
+    },
+    {
+      "id": "adapted_4.0_0.08_0.0",
+      "family": "adapted",
+      "kind": "published_adapted",
+      "options": {
+        "kp": 4.0,
+        "ki": 0.08,
+        "kd": 0.0
+      }
+    },
+    {
+      "id": "adapted_4.0_0.08_0.5",
+      "family": "adapted",
+      "kind": "published_adapted",
+      "options": {
+        "kp": 4.0,
+        "ki": 0.08,
+        "kd": 0.5
+      }
+    },
+    {
+      "id": "sentinel_0.0",
+      "family": "sentinel",
+      "kind": "forecast",
+      "options": {
+        "reserve_margin": 0.0
+      }
+    },
+    {
+      "id": "sentinel_0.1",
+      "family": "sentinel",
+      "kind": "forecast",
+      "options": {
+        "reserve_margin": 0.1
+      }
+    },
+    {
+      "id": "sentinel_0.2",
+      "family": "sentinel",
+      "kind": "forecast",
+      "options": {
+        "reserve_margin": 0.2
+      }
+    },
+    {
+      "id": "sentinel_0.3",
+      "family": "sentinel",
+      "kind": "forecast",
+      "options": {
+        "reserve_margin": 0.3
+      }
+    },
+    {
+      "id": "sentinel_0.4",
+      "family": "sentinel",
+      "kind": "forecast",
+      "options": {
+        "reserve_margin": 0.4
+      }
+    },
+    {
+      "id": "sentinel_0.5",
+      "family": "sentinel",
+      "kind": "forecast",
+      "options": {
+        "reserve_margin": 0.5
+      }
+    },
+    {
+      "id": "sentinel_0.6",
+      "family": "sentinel",
+      "kind": "forecast",
+      "options": {
+        "reserve_margin": 0.6
+      }
+    },
+    {
+      "id": "sentinel_0.7",
+      "family": "sentinel",
+      "kind": "forecast",
+      "options": {
+        "reserve_margin": 0.7
+      }
+    }
+  ],
+  "scenarios": {
+    "clean": {
+      "level_profile": "none",
+      "drainage": 1.0,
+      "dilution": 0.0
+    },
+    "drainage": {
+      "level_profile": "none",
+      "drainage": 0.45
+    },
+    "hb_bias": {
+      "level_profile": "none",
+      "drainage": 1.0,
+      "hb_bias": 2.0
+    },
+    "level_drift": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.4,
+      "drift_duration": 0.3
+    },
+    "arterial_flow_bias": {
+      "level_profile": "none",
+      "flow_bias": 0.75
+    },
+    "combined": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.4,
+      "drift_duration": 0.3,
+      "flow_bias": 0.75
+    }
+  },
+  "development_plants": {
+    "reference": {},
+    "slow_pump": {
+      "actuator_tau": 6.0
+    }
+  },
+  "evaluation_plants": {
+    "reference": {},
+    "slow_pump": {
+      "actuator_tau": 6.0
+    },
+    "lagged_drainage": {
+      "drainage_tau": 12.0,
+      "venous_nonlinearity": 0.04
+    }
+  },
+  "duration_s": 600.0,
+  "dt_s": 1.0,
+  "information": "Measured venous flow is available to adapted and matched Sentinel arms; legacy Sentinel uses the original inferred channel. All share Hb/level references, noise innovations and plant/actuator constraints.",
+  "objectives": "Adapted reference tracks measured venous flow and a 0.45 L level target. Sentinel prioritizes an oxygen target and reservoir floor. Report all metrics; objective differences prevent an unqualified ranking.",
+  "tuning": "8 candidates per family, same development cases and seeds; choose lowest oxygen deficit among methods meeting engineering mean exposure budgets. If none qualify, lexicographic reservoir/empty/pressure/oxygen ordering; declare unmatched.",
+  "final_extra_case": "Venous sensor bias +0.5 L/min is evaluated separately for all six scenarios.",
+  "final_settings_changed": "Only selected settings carry forward; final lagged-drainage plant and venous-bias regime were not used for tuning.",
+  "exposure_budgets": {
+    "low_reservoir_s": 1.0,
+    "empty_request_s": 1.0,
+    "high_pressure_s": 5.0
+  },
+  "reproduction_manifest": "data/controller-reference/reproduction.json"
+}

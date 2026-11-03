@@ -1,133 +1,48 @@
-# Data dictionary and experiment protocol
+# Data dictionary
 
-All files contain generated data. There are no patient records or device exports.
+All controller trajectories are synthetic unless explicitly identified as the five-point public-case oxygen input replay.
 
-## Main experiment
+## Simulation outputs
 
-`results/metrics.csv` contains 840 rows: seven scenarios × seeds 100–123 × five
-policies. Patients, scenario inputs and sensor-noise streams are paired between
-policies. All scenarios and failures are retained. `results/summary.json` records
-the protocol and 112 paired comparisons (7 scenarios × 4 nonreference policies ×
-4 metrics). Each difference is candidate minus reactive, calculated within seed
-before summarizing. Bootstrap uses 2,000 resampled patient pairs, seed 2026, and
-2.5/97.5 percentiles. Reusing the bootstrap seed makes estimates deterministic;
-intervals are not independent across comparisons. No correction for multiplicity
-or inference to a clinical population is performed.
+`simulate(...)` returns configuration, patient parameters, per-step rows and integrated metrics. Truth is recorded at the end of each interval; observations and decisions are from the start of that interval. Units are explicit in `model.py` and the table below.
 
-The artifact is an engineering benchmark defined for this project, not a
-preregistered clinical study. Controller weights and scenario magnitudes are
-chosen assumptions; no claim of exhaustive optimal tuning is made.
+| Field | Meaning / units |
+| --- | --- |
+| `time`, `observation_time` | Interval end and sensor acquisition time, seconds |
+| `flow`, `qv`, `command` | Step-average arterial flow, venous return, commanded flow, L/min |
+| `reservoir`, `patient_volume` | Conserved physical volumes, L |
+| `pressure` | Arterial pressure, mmHg |
+| `hb`, `hb_inline`, `hb_estimate`, `hb_lower`, `hb_upper` | Hemoglobin and observer bounds, g/dL |
+| `sao2` | Arterial saturation, fraction |
+| `do2`, `measured_do2` | Indexed oxygen delivery, mL O2/min/m² |
+| `observed_flow`, `observed_reservoir` | Faulty acquired channels, L/min and L |
+| `observed_venous_flow` | Optional independent acquired venous flow, L/min; null when disabled |
+| `level_reference`, `level_reference_acquired` | Delivered volume reference (L), original acquisition time (s) |
+| `level_reference_estimate`, `level_reference_lower` | Corrected level and engineering lower estimate, L |
+| `level_reference_age`, `level_reference_unknown` | Acquisition age (s) and missing/stale flag |
+| `injected_level_bias`, `injected_flow_bias` | Hidden scoring information; never controller inputs |
+| `empty_request`, `infeasible`, `level_fault` | Physical transfer limitation, candidate infeasibility, detector flag |
 
-## Per-run metrics
+Metrics include oxygen-deficit AUC (mL O2/m²), exposure durations (seconds), minimum reservoir (L), mean flow (L/min) and summed absolute command changes (L/min). AUC uses dt/60 to convert seconds to minutes. Experimental thresholds are engineering choices, not treatment settings. Observer bounds are not calibrated confidence limits.
 
-| Field | Unit | Meaning |
-|---|---|---|
-| scenario | string | Named fault schedule |
-| seed | integer | Patient sampler seed; sensor seed is seed + 10000 |
-| policy | string | Strategy identifier |
-| deficit_auc | mL O₂/m² | Sum max(0,target−true delivery) × dt/60 |
-| below_target_s | s | Duration true delivery < target |
-| false_reassurance_s | s | Duration monitor ≥ target and ensuing true delivery < target |
-| false_reassurance_margin_s | s | Same, additionally requiring true delivery < target−5 |
-| concealed_deficit_auc | mL O₂/m² | Delivery deficit area during false-reassurance intervals |
-| unmet_demand_auc | mL O₂/m² | Integrated hypothetical demand shortfall with extraction ceiling 0.60 |
-| low_reservoir_s | s | Duration interval-end reservoir < 0.25 L |
-| empty_request_s | s | Duration requested pump transfer exceeded available volume |
-| high_pressure_s | s | Duration interval-end pressure > 95 mmHg |
-| infeasible_s | s | Duration no predictive candidate met its screens and slew bound |
-| hb_bound_coverage | fraction | Fraction of true Hb values inside the engineering stress bounds |
-| minimum_reservoir | L | Smallest interval-end reservoir volume |
-| flow_variation | L/min | Sum absolute successive command differences, excluding initial transition |
-| mean_flow | L/min | Mean actual interval-average flow |
+## Controller comparison
 
-Strict inequalities matter near thresholds. A few units of noisy monitor error
-can produce a long near-target false-reassurance duration with little deficit
-area; use the margin and magnitude metrics together. A 0.25 L floor and 95 mmHg
-ceiling are experimental comparison limits, not device or clinical specifications.
+`data/controller-reference/reproduction.json` identifies the source, verified components, adaptations and unresolved reproduction requirements.
 
-## Full trajectories
+`results/controller-comparison/` contains:
 
-`perfusion-lab run` emits `run.json` and `run.csv`. The benchmark emits a regenerable
-`results/trajectories.json` containing full trajectories for its first seed only,
-one per scenario/policy. The JSON's top level has scenario name/parameters, policy,
-seed, dt, duration, target, lab period, patient parameters, metrics and rows.
+- `protocol.json`: candidate grid, seed split, measurement assumptions and shared constraints.
+- `selection.json`: development-only means, selected settings and exposure-budget eligibility.
+- `metrics.csv`: every development and final run; no failed run is removed.
+- `summary.json`: grouped working metrics and explicit false flags for exact reproduction and superiority claims.
+- `debug-traces.json`: two prespecified cases, one evaluation seed, all three methods, full trajectories.
 
-| Row field | Unit | Timing / meaning |
-|---|---|---|
-| time | s | End of simulation interval |
-| observation_time | s | Start of interval; time − dt |
-| flow | L/min | Actual interval-average pump delivery |
-| qv | L/min | Start-of-interval venous-return calculation |
-| reservoir | L | True end-of-interval volume |
-| patient_volume | L | True end-of-interval complementary storage |
-| pressure | mmHg | True end-of-interval Windkessel pressure |
-| empty_request | boolean | Requested transfer exceeded available fluid |
-| hb | g/dL | True held-interval hemoglobin |
-| hb_estimate / hb_lower / hb_upper | g/dL | Observer quantities from start-of-interval information |
-| hb_inline | g/dL or null | Noisy/bias-affected sensor sample; null means dropout |
-| sao2 | fraction | True held-interval arterial saturation |
-| temperature | °C | Held-interval scripted temperature |
-| command | L/min | Start-of-interval controller command |
-| do2 | mL/min/m² | True indexed delivery from actual mean flow |
-| measured_do2 | mL/min/m² | Preceding monitor estimate; held Hb fallback during dropout |
-| demand | mL/min/m² | Hypothetical indexed metabolic demand |
-| unmet_demand | mL/min/m² | max(0,demand−0.60 × true delivery) |
-| fault | boolean | Estimated Hb bias >0.6 g/dL in magnitude or stale inline Hb |
-| stale | boolean | Last inline Hb sample >10 s old |
-| infeasible | boolean | Predictive screen has no feasible grid candidate |
-| reference_age | s | Age of most recent independent reference |
-| hb_covered | boolean | True Hb lies in observer's engineering interval |
+`venous_tracking_mae_l_min` compares step-average true arterial flow with step-average true venous flow for scoring. `level_mae_l` compares volume with the reference architecture's 0.45 L target; Sentinel has a floor objective, so this is not a common optimization target. Development budgets and scenario weights do not represent clinical margins or event frequencies.
 
-The row does not export every noisy channel; `Observation` defines the full
-controller interface. Measured DO₂ uses the preceding flow observation and inline
-Hb, or the observer Hb when inline is missing. It remains an uncorrected monitor
-value when a biased inline measurement is available. Sentinel's internal decision
-uses its separate corrected lower Hb bound. The distinction is intentional.
+The optional venous sensor uses its own random stream. It samples current venous flow before the plant advances, including the current drainage state in lagged plants. Noise and bias are explicit. Both matched arms receive the same sensor model and random innovations. Different controller actions can produce different physical flow observations; pairing does not imply identical trajectories.
 
-## Compact replay
+## Public case
 
-`web/data.js` and `web/data-*.js` are generated by `examples/build_web.py`. It contains all 35 first-seed
-runs, their full-resolution metrics, and the paired aggregate comparisons. Chart
-arrays `t`, `do2`, `monitor`, `reservoir`, `pressure`, `fault`, `infeasible` are
-rounded for display. Sampling keeps every third row and the final row: approximately
-6 seconds between points. It does not retain every brief event; metrics remain
-computed at 2-second resolution. The live plot is a representative run, not the
-cohort mean. Its selected seed must not be mistaken for a random patient prediction.
+`data/published-case/observations.csv` preserves five reported samples and missing arterial saturation. `provenance.json` supplies the citation, units, extraction method and assumptions. `results/published-case/` contains arithmetic replay outputs. Chosen saturation endpoints are sensitivities, not measured values, confidence intervals or guaranteed bounds. No interpolation, deficit AUC or fitted reservoir model is produced from those sparse samples.
 
-## Failure map
-
-`results/failure-map.csv` has 392 rows: reservoir bias {0,0.1,…,0.6} L × seven
-equally spaced drainage multipliers from 0.3 to 1.0 × seeds 500–503 × two policies.
-The custom scenario includes dilution=1.8 g/dL, the standard fault schedules,
-and no inline Hb bias/dropout. `failure-map-protocol.json` records exact floating-
-point grid values and seeds. Additional columns `level_bias_L` and `drainage`
-identify the grid cell. Per-run metrics have the definitions above.
-
-`failure-map-summary.json` contains each grid cell's mean low-reservoir duration
-for reactive and Sentinel and their difference. These four-seed means are an
-exploratory map, with no claim of a precise transition boundary or clinical safety.
-
-
-## v1.1 level-step guard fields
-
-Simulation rows add `level_fault` (latched discontinuity flag), `level_bias_estimate` (inferred signed level offset, L) and `reservoir_lower` (corrected level minus the post-alarm 0.08 L allowance, clipped at zero; null for original policies). `level_fault_s` is the integrated latched-flag duration, not detection latency or confirmed-fault duration. `fault` remains the separate Hb flag. Extension CSVs add `experiment`, `level_bias_L` and `drainage`; see [LEVEL_GUARD.md](LEVEL_GUARD.md) for cohort definitions.
-
-## v1.2 conservative comparison
-
-`results/conservative-comparison/` contains a tuning-only candidate CSV, the complete 3,192-run CSV, protocol, frozen selection, environment, and final aggregate JSON. `experiment` identifies tuning/evaluation/map; `variant` identifies the complete policy configuration and `family` groups reserve/cap/original/guarded. The protocol maps variants to policy and options. `controller_options` in single-run exports records reserve margins in L and flow caps in L/min/m². Pooled intervals resample patient seeds after within-seed scenario averaging. `results/conservative-pilot/` is the separate 2,240-run exploratory archive. See [CONSERVATIVE_COMPARISON.md](CONSERVATIVE_COMPARISON.md).
-
-## v1.3 stress data
-
-Simulation rows now log `observed_flow`, `observed_reservoir`, `injected_level_bias` and `injected_flow_bias`. Injection values are truth logs for scoring, never inputs to the controller. `plant_options` and `plant_model` are exported separately from controller options. Stress CSV fields identify sensor/plant cells and alarm timing; blank `first_alarm_s` means no flag. `level_alarm_ever` is any latched level flag, not correct fault isolation. In no-level-fault cases, flags are false attribution by construction. See [ROBUSTNESS.md](ROBUSTNESS.md).
-
-## v1.4 reference-study data
-
-`results/reference-study/` contains 1,008 development and 7,560 evaluation rows, the protocol, selection, frozen methods, per-seed parameters, means and primary machine-readable verdict. `secondary-contrast.json` is explicitly a descriptive comparison added after final results, separate from the primary hypothesis. Simulation rows log delivered reference value/acquisition time, causal corrected level/lower estimate, acquisition age and an unknown flag. `level_reference_unknown_s` is only meaningful for reference-aware methods; ignored channels record zero by convention. All methods still simulate and log paired reference acquisitions. See [REFERENCE_RESULT.md](REFERENCE_RESULT.md).
-
-## v1.5 stronger baselines and mechanism audit
-
-`controller_kind` distinguishes original forecast, level PI and threshold control. Existing default benchmark metrics are regression checked. `results/submission-study/` records 2,464 development and 4,032 final rows, candidate configuration selection, paired intervals, per-seed parameters and explicit readiness status. `results/mechanism-audit/` contains the independent scalar recurrence checks, nominal-range samples and published aggregate-range provenance. No raw clinical/bench reservoir trajectory was used. See [PAPER_DRAFT.md](PAPER_DRAFT.md) and [THEORY.md](THEORY.md).
-
-## Published-patient oxygen replay update
-
-The v1.6 [patient replay](PATIENT_REPLAY.md) uses five public case-report observations. It checks oxygen arithmetic with actual inputs and explicit unmeasured-saturation assumptions. It supplies no raw reservoir series, fitted patient dynamics, held-out prediction or controller validation; those gaps above remain open. Reproduce and verify with `python examples/published_patient_replay.py --check`.
+Older experiment folders retain their recorded protocol, parameters and raw metrics. They are exploratory engineering logs. Browser traces are subsampled for display; integrated metrics use full simulation resolution.

@@ -7,7 +7,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'results/reference-study'
+ROOT=Path(__file__).resolve().parents[1]
+(ROOT/'results/figures').mkdir(parents=True,exist_ok=True);OUT=ROOT/'results/reference-study'
 p=json.loads((OUT/'protocol.json').read_text());s=json.loads((OUT/'summary.json').read_text())
 ids=[v['id'] for v in s['methods']]
 names=['Original','Fixed reserve','Old step guard','Simple reference','Age-based bound']
@@ -27,7 +28,7 @@ handles,labels=axes[0].get_legend_handles_labels()
 fig.legend(handles,labels,loc='outside lower center',ncol=5,frameon=False,fontsize=8)
 fig.suptitle('Does measurement credibility add value beyond simple correction?\n'
              'Good reference is the primary test; other regimes challenge its assumptions',fontsize=12)
-fig.savefig(ROOT/'docs/reference-results.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/reference-results.svg',metadata={'Date':None});plt.close(fig)
 sensors=list(p['final_sensors']);plants=list(p['final_plants'])
 matrices=[]
 for group in groups:
@@ -44,7 +45,7 @@ for ax,group,values in zip(axes.flat,groups,matrices):
     fig.colorbar(image,ax=ax,label='Mean exposure difference (s)',shrink=.8)
 fig.suptitle('Age-based bound − simple reference: all 126 final cells\n'
              'Blue favors age-based protection; red favors simple correction',fontsize=12)
-fig.savefig(ROOT/'docs/reference-cells.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/reference-cells.svg',metadata={'Date':None});plt.close(fig)
 for name in ('reference-results.svg','reference-cells.svg'):
     shutil.copyfile(ROOT/'docs'/name,ROOT/'web'/name)
 print('Plotted every reference regime and all 126 final cells.')

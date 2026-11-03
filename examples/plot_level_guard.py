@@ -36,7 +36,7 @@ for ax, matrix, title in zip(axes, [a, b, b-a],
     fig.colorbar(image, ax=ax, label='Seconds below 0.25 L', shrink=.8)
 fig.suptitle('A step-fault guard reduces depletion, but small offsets can escape\n'
              '49 fault cells × 4 paired virtual patients · fresh seeds 1500–1503', fontsize=12)
-fig.savefig(ROOT/'docs/level-guard.svg', metadata={'Date':None})
+fig.savefig(ROOT/'results/figures/level-guard.svg', metadata={'Date':None})
 plt.close(fig)
-shutil.copyfile(ROOT/'docs/level-guard.svg', ROOT/'web/level-guard.svg')
-print('Wrote guard stress map to docs and replay.')
+shutil.copyfile(ROOT/'results/figures/level-guard.svg', ROOT/'web/level-guard.svg')
+print('Wrote guard stress map to results/figures and replay.')

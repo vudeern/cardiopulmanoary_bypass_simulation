@@ -8,7 +8,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'results/submission-study'
+ROOT=Path(__file__).resolve().parents[1]
+(ROOT/'results/figures').mkdir(parents=True,exist_ok=True);OUT=ROOT/'results/submission-study'
 s=json.loads((OUT/'summary.json').read_text());p=json.loads((OUT/'protocol.json').read_text())
 plt.rcParams.update({'font.family':'DejaVu Sans','font.size':9,'svg.hashsalt':'perfusion-mechanism-v1.5'})
 fig,axes=plt.subplots(1,2,figsize=(12,4.7),layout='constrained')
@@ -28,7 +29,7 @@ axes[1].set_xlabel('Mean seconds below reservoir floor');axes[1].set_ylabel('Mea
 axes[1].set_xlim(-.3,max(m['low_reservoir_s'] for m in good.values())*1.7)
 axes[1].set_ylim(0,max(m['deficit_auc'] for m in good.values())*1.18);axes[1].set_title('Final good-reference comparison: no universal winner',loc='left',fontweight='bold',fontsize=10)
 for ax in axes:ax.grid(alpha=.15);ax.set_axisbelow(True)
-fig.savefig(ROOT/'docs/submission-mechanism.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/submission-mechanism.svg',metadata={'Date':None});plt.close(fig)
 groups=list(p['references']);x=np.arange(len(groups))
 fig,axes=plt.subplots(1,3,figsize=(14,4.6),layout='constrained')
 for ax,metric,title in zip(axes,['low_reservoir_s','deficit_auc','high_pressure_s'],
@@ -40,7 +41,7 @@ for ax,metric,title in zip(axes,['low_reservoir_s','deficit_auc','high_pressure_
     ax.grid(axis='y',alpha=.15);ax.set_axisbelow(True)
 handles,labels=axes[0].get_legend_handles_labels();fig.legend(handles,labels,loc='outside lower center',ncol=3,frameon=False)
 fig.suptitle('All frozen stronger-baseline outcomes: protection, delivery and pressure remain distinct',fontsize=12)
-fig.savefig(ROOT/'docs/submission-outcomes.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/submission-outcomes.svg',metadata={'Date':None});plt.close(fig)
 for name in ('submission-mechanism.svg','submission-outcomes.svg'):
     shutil.copyfile(ROOT/'docs'/name,ROOT/'web'/name)
 print('Plotted reduced-model mechanism and every reference-regime outcome.')

@@ -8,6 +8,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 ROOT=Path(__file__).resolve().parents[1]
+(ROOT/'results/figures').mkdir(parents=True,exist_ok=True)
 OUT=ROOT/'results/robustness'
 p=json.loads((OUT/'protocol.json').read_text())
 s=json.loads((OUT/'summary.json').read_text())
@@ -31,7 +32,7 @@ for ax,v,name in zip(axes.flat,p['variants'],names):
     fig.colorbar(image,ax=ax,label='Mean seconds below 0.25 L',shrink=.85)
 fig.suptitle('Frozen strategies under unfamiliar sensing and dynamics\n'
              'All 45 synthetic cells × 24 paired virtual patients; no retuning',fontsize=12)
-fig.savefig(ROOT/'docs/robustness-exposure.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/robustness-exposure.svg',metadata={'Date':None});plt.close(fig)
 fig,axes=plt.subplots(1,2,figsize=(12,5.5),layout='constrained')
 for ax,metric,title,unit in zip(axes,['low_reservoir_s','deficit_auc'],
         ['Reservoir exposure: guarded − reserve','Oxygen deficit: guarded − reserve'],
@@ -43,7 +44,7 @@ for ax,metric,title,unit in zip(axes,['low_reservoir_s','deficit_auc'],
     fig.colorbar(image,ax=ax,label=unit,shrink=.85)
 fig.suptitle('Protection and oxygen delivery remain separate outcomes\n'
              'Blue favors guarded; red favors the locked fixed reserve',fontsize=12)
-fig.savefig(ROOT/'docs/robustness-tradeoffs.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/robustness-tradeoffs.svg',metadata={'Date':None});plt.close(fig)
 fig,ax=plt.subplots(figsize=(8,5.5),layout='constrained')
 values=matrix('guarded','level_alarm_ever')
 image=ax.imshow(values,aspect='auto',vmin=0,vmax=1,cmap='YlOrRd')
@@ -57,7 +58,7 @@ for i in range(9):
 fig.colorbar(image,ax=ax,label='Fraction of runs with any level flag',shrink=.85)
 ax.set_title('A level flag does not establish correct fault identification\n'
              '* No level fault injected; all other channels/physics may still differ',fontsize=11)
-fig.savefig(ROOT/'docs/robustness-alarms.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/robustness-alarms.svg',metadata={'Date':None});plt.close(fig)
 for name in ('robustness-exposure.svg','robustness-tradeoffs.svg','robustness-alarms.svg'):
     shutil.copyfile(ROOT/'docs'/name,ROOT/'web'/name)
 print('Plotted all 45 cells, paired tradeoffs and alarm ambiguity.')

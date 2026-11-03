@@ -8,6 +8,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 ROOT=Path(__file__).resolve().parents[1]
+(ROOT/'results/figures').mkdir(parents=True,exist_ok=True)
 OUT=ROOT/'results/conservative-comparison'
 p=json.loads((OUT/'protocol.json').read_text())
 selection=json.loads((OUT/'selection.json').read_text())
@@ -44,7 +45,7 @@ for ax in axes:
     ax.set_ylim(bottom=0)
 fig.suptitle('Does detecting a fault beat always being conservative?\n'
              'Equal weight for seven synthetic scenarios; lower on both axes is preferable',fontsize=12)
-fig.savefig(ROOT/'docs/conservative-frontier.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/conservative-frontier.svg',metadata={'Date':None});plt.close(fig)
 cells=s['map'];biases=p['level_bias_L'];drains=p['drainage']
 limit=max(1,max(c['means'][v['id']]['low_reservoir_s'] for c in cells for v in s['selected']))
 fig,axes=plt.subplots(2,2,figsize=(10,8),layout='constrained')
@@ -59,7 +60,7 @@ for ax,v in zip(axes.flat,s['selected']):
     fig.colorbar(image,ax=ax,label='Seconds below 0.25 L',shrink=.85)
 fig.suptitle('No strategy eliminates the complete fault grid\n'
              '49 cells × four paired virtual patients · fresh seeds 7000–7003',fontsize=12)
-fig.savefig(ROOT/'docs/conservative-map.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/conservative-map.svg',metadata={'Date':None});plt.close(fig)
 for name in ('conservative-frontier.svg','conservative-map.svg'):
     shutil.copyfile(ROOT/'docs'/name,ROOT/'web'/name)
 print('Wrote complete tuning/evaluation frontier and four-strategy stress map.')

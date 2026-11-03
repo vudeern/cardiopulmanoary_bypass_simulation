@@ -7,6 +7,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 ROOT=Path(__file__).resolve().parents[1]
+(ROOT/'results/figures').mkdir(parents=True,exist_ok=True)
 rows=list(csv.DictReader((ROOT/'results/failure-map.csv').open()))
 biases=sorted({float(r['level_bias_L']) for r in rows})
 drains=sorted({float(r['drainage']) for r in rows})
@@ -31,6 +32,6 @@ for ax,matrix,title in zip(axes,[a,b,b-a],['Reactive: time below floor','Sentine
     ax.set_ylabel('Positive reservoir sensor bias (L)');ax.set_title(title,fontweight='bold')
     fig.colorbar(image,ax=ax,label='Seconds',shrink=.8)
 fig.suptitle('An oxygen-delivery improvement can conceal a reservoir failure\n49 fault cells × 4 paired virtual patients; experimental floor 0.25 L',fontsize=12)
-fig.savefig(ROOT/'docs/failure-map.svg',metadata={'Date':None});plt.close(fig)
+fig.savefig(ROOT/'results/figures/failure-map.svg',metadata={'Date':None});plt.close(fig)
 (ROOT/'results/failure-map-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 print('Wrote failure-map figure and 49-cell summary.')
