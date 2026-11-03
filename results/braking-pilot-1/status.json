@@ -1,0 +1,5 @@
+{
+  "status": "development_only_superseded_before_final_evaluation",
+  "reason": "Fixed inflow allowance selected zero and left some depletion exposure; add a command-history mass-balance cross-check. No evaluation cases were run.",
+  "source_snapshots": "data/braking-history/pilot1_*.py"
+}

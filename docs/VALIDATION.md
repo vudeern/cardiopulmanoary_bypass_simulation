@@ -17,6 +17,8 @@ python examples/verify_simc.py --check
 python examples/validate_simc_benchmark.py
 python examples/validate_simc_tight.py
 python examples/build_simc_web.py --check
+python examples/validate_braking_study.py
+python examples/build_braking_web.py --check
 ```
 
 Physics tests check mass conservation, actuator response, pressure decay, oxygen units and numerical refinement. Sensor/observer tests check causal timing, missing measurements, bias correction and explicit uncertainty assumptions. The frozen original replay cases detect changes to existing numerical behavior.
@@ -34,3 +36,5 @@ Do not regenerate paper drafts or result write-ups during development. Those doc
 The verified general-reference check reproduces the published PI gains and five normalized frequency-domain values within declared rounding tolerances. An independent analytic time-domain solution tests the PI implementation at multiple timesteps. Signed-gain, anti-windup, common-constraint and unused-sensor invariance tests cover application details.
 
 The new benchmark validator independently checks all candidate budgets, seed partitions, selection, final cells and patient-block intervals, and recomputes the joint criterion. It reruns every stored replay and timestep-sensitivity case and checks source/configuration hashes. It does not certify physiological validity, optimal tuning or scientific novelty.
+
+Braking tests check the reserve's units and independent numerical upper estimate, command-history actuator intervals, reference-bias trend handling, missing information, common actuator limits and independence from unused arterial-flow measurements. The study validator independently checks both retained development pilots, archived source hashes, final selection and source freeze, every final cell, paired intervals, the criterion and all stored replays. None of these checks supplies a clinical safety proof.

@@ -47,7 +47,12 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
             raise ValueError('Invalid venous measurement settings')
     if controller_kind=='published_adapted' and venous_measurement is None:
         raise ValueError('Published adaptation requires an explicit venous measurement channel')
-    if controller_kind=='published_adapted':
+    if controller_kind=='braking':
+        if policy!='sentinel' or venous_measurement is None:
+            raise ValueError('Braking controller requires the common observer and explicit venous sensor')
+        from .braking import BrakingController
+        controller=BrakingController(p.bsa,dt,target,**controller_options)
+    elif controller_kind=='published_adapted':
         if policy!='sentinel':raise ValueError('Published adaptation uses the common observer')
         from .published_control import PublishedLevelAdapter
         controller=PublishedLevelAdapter(p.bsa,dt,**controller_options)
@@ -93,6 +98,9 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                 venous_options.get('noise_sd',.015)*venous_rng.normal())
             belief=replace(belief,venous_flow=measured_venous)
         control_obs=replace(obs,reservoir=reference_level['lower']) if reference_level else obs
+        if reference_level is not None:
+            control_obs=replace(control_obs,level_reference_age=reference_level['age'] if reference_level else None,
+                level_reference_bias=reference_level['bias'] if reference_level else 0.)
         decision = controller.decide(control_obs, belief)
         state = plant.step(decision.command, inputs['drainage'], dt)
         do2 = delivery(state['flow'], hb, inputs['sao2'], p.bsa)
@@ -124,6 +132,7 @@ def simulate(scenario='compound', policy='sentinel', seed=7, duration=1200., dt=
                          infeasible=decision.infeasible,
                          reference_age=belief.reference_age,
                          hb_covered=belief.hb_lower<=hb<=belief.hb_upper))
+        if controller_kind=='braking':rows[-1].update(controller.last_debug)
     values = lambda key: np.array([r[key] for r in rows], dtype=float)
     true_low = values('do2')<target
     # False reassurance compares a start-of-step monitor to its ensuing interval;

@@ -1,0 +1,482 @@
+{
+  "development_seeds": [
+    24000,
+    24001,
+    24002,
+    24003
+  ],
+  "evaluation_seeds": [
+    25000,
+    25001,
+    25002,
+    25003,
+    25004,
+    25005,
+    25006,
+    25007,
+    25008,
+    25009,
+    25010,
+    25011,
+    25012,
+    25013,
+    25014,
+    25015
+  ],
+  "duration_s": 600.0,
+  "dt_s": 1.0,
+  "candidates": [
+    {
+      "id": "braking_0.0_0.12_1.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.0,
+        "base_allowance": 0.12,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 1.0
+      }
+    },
+    {
+      "id": "braking_0.0_0.12_1.5",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.0,
+        "base_allowance": 0.12,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 1.5
+      }
+    },
+    {
+      "id": "braking_0.0_0.12_2.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.0,
+        "base_allowance": 0.12,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 2.0
+      }
+    },
+    {
+      "id": "braking_0.0_0.12_3.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.0,
+        "base_allowance": 0.12,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 3.0
+      }
+    },
+    {
+      "id": "braking_0.0_0.2_1.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.0,
+        "base_allowance": 0.2,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 1.0
+      }
+    },
+    {
+      "id": "braking_0.0_0.2_1.5",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.0,
+        "base_allowance": 0.2,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 1.5
+      }
+    },
+    {
+      "id": "braking_0.0_0.2_2.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.0,
+        "base_allowance": 0.2,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 2.0
+      }
+    },
+    {
+      "id": "braking_0.0_0.2_3.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.0,
+        "base_allowance": 0.2,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 3.0
+      }
+    },
+    {
+      "id": "braking_0.4_0.12_1.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.4,
+        "base_allowance": 0.12,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 1.0
+      }
+    },
+    {
+      "id": "braking_0.4_0.12_1.5",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.4,
+        "base_allowance": 0.12,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 1.5
+      }
+    },
+    {
+      "id": "braking_0.4_0.12_2.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.4,
+        "base_allowance": 0.12,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 2.0
+      }
+    },
+    {
+      "id": "braking_0.4_0.12_3.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.4,
+        "base_allowance": 0.12,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 3.0
+      }
+    },
+    {
+      "id": "braking_0.4_0.2_1.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.4,
+        "base_allowance": 0.2,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 1.0
+      }
+    },
+    {
+      "id": "braking_0.4_0.2_1.5",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.4,
+        "base_allowance": 0.2,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 1.5
+      }
+    },
+    {
+      "id": "braking_0.4_0.2_2.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.4,
+        "base_allowance": 0.2,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 2.0
+      }
+    },
+    {
+      "id": "braking_0.4_0.2_3.0",
+      "family": "braking",
+      "kind": "braking",
+      "options": {
+        "venous_allowance": 0.4,
+        "base_allowance": 0.2,
+        "drift_allowance": 0.0005,
+        "rate_multiplier": 3.0
+      }
+    },
+    {
+      "id": "simc_1.5_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.35
+      }
+    },
+    {
+      "id": "simc_1.5_0.45",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.45
+      }
+    },
+    {
+      "id": "simc_1.5_0.55",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.55
+      }
+    },
+    {
+      "id": "simc_1.5_0.65",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.65
+      }
+    },
+    {
+      "id": "simc_5.0_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.35
+      }
+    },
+    {
+      "id": "simc_5.0_0.45",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.45
+      }
+    },
+    {
+      "id": "simc_5.0_0.55",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.55
+      }
+    },
+    {
+      "id": "simc_5.0_0.65",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.65
+      }
+    },
+    {
+      "id": "simc_10.0_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 10.0,
+        "target_level": 0.35
+      }
+    },
+    {
+      "id": "simc_10.0_0.45",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 10.0,
+        "target_level": 0.45
+      }
+    },
+    {
+      "id": "simc_10.0_0.55",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 10.0,
+        "target_level": 0.55
+      }
+    },
+    {
+      "id": "simc_10.0_0.65",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 10.0,
+        "target_level": 0.65
+      }
+    },
+    {
+      "id": "simc_20.0_0.35",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.35
+      }
+    },
+    {
+      "id": "simc_20.0_0.45",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.45
+      }
+    },
+    {
+      "id": "simc_20.0_0.55",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.55
+      }
+    },
+    {
+      "id": "simc_20.0_0.65",
+      "family": "simc",
+      "kind": "simc",
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.65
+      }
+    }
+  ],
+  "development_cases": {
+    "clean": {},
+    "drainage": {
+      "drainage": 0.4,
+      "event_start": 0.3,
+      "event_end": 0.7
+    },
+    "drift": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.4,
+      "drift_duration": 0.25
+    },
+    "initial": {
+      "level_profile": "initial",
+      "reservoir_bias": 0.4
+    },
+    "venous_bias": {
+      "venous_bias": 0.5
+    },
+    "combined": {
+      "drainage": 0.4,
+      "level_profile": "ramp",
+      "reservoir_bias": 0.4,
+      "drift_duration": 0.25,
+      "venous_bias": 0.5,
+      "flow_bias": 0.9,
+      "hb_bias": 1.8,
+      "dilution": 1.8,
+      "noise_scale": 2.0
+    }
+  },
+  "final_cases": {
+    "clean": {},
+    "drainage": {
+      "drainage": 0.3,
+      "event_start": 0.28,
+      "event_end": 0.75
+    },
+    "drift": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.6,
+      "drift_duration": 0.22
+    },
+    "initial": {
+      "level_profile": "initial",
+      "reservoir_bias": 0.6
+    },
+    "venous_bias": {
+      "venous_bias": 0.75
+    },
+    "arterial_bias": {
+      "flow_bias": 1.3
+    },
+    "combined": {
+      "drainage": 0.3,
+      "event_start": 0.28,
+      "event_end": 0.75,
+      "level_profile": "ramp",
+      "reservoir_bias": 0.6,
+      "drift_duration": 0.22,
+      "venous_bias": 0.75,
+      "flow_bias": 1.3,
+      "hb_bias": 2.4,
+      "dilution": 2.4,
+      "noise_scale": 4.0,
+      "dropout": true
+    },
+    "negative_venous_bias": {
+      "venous_bias": -0.75
+    }
+  },
+  "development_plants": {
+    "nominal": {},
+    "slow": {
+      "actuator_tau": 6.0
+    }
+  },
+  "final_plants": {
+    "nominal": {},
+    "slow": {
+      "actuator_tau": 8.0
+    },
+    "lagged": {
+      "actuator_tau": 5.0,
+      "drainage_tau": 20.0,
+      "venous_nonlinearity": 0.08
+    },
+    "outside_lag_bound": {
+      "actuator_tau": 12.0
+    }
+  },
+  "references": {
+    "good": {
+      "period": 60.0,
+      "delay": 4.0,
+      "noise_sd": 0.01
+    },
+    "delayed_loss": {
+      "period": 90.0,
+      "delay": 30.0,
+      "noise_sd": 0.02,
+      "dropout_prob": 0.25,
+      "outage_start": 150.0,
+      "outage_end": 480.0
+    },
+    "biased": {
+      "period": 60.0,
+      "delay": 4.0,
+      "noise_sd": 0.02,
+      "bias": 0.18
+    }
+  },
+  "replay_cells": [
+    "clean__nominal__good",
+    "drainage__slow__good",
+    "venous_bias__nominal__good",
+    "combined__lagged__good",
+    "combined__lagged__delayed_loss",
+    "initial__outside_lag_bound__biased"
+  ],
+  "primary_scope": "Good references and nominal/slow/lagged plants. Outside-lag-bound plant is explicitly secondary.",
+  "primary": "Braking minus SIMC: upper paired CI <=1s low reservoir, <=1s empty requests, <=5s high pressure, and oxygen deficit upper CI <0.",
+  "selection": "16 candidates/family. Same development cases; lowest deficit among methods with means <=1s low/empty and <=5s pressure. Otherwise lexicographic low/empty/pressure/deficit; mark unmatched.",
+  "assumptions": "Actuator tau in [1,10]s, bounded residual level error and inflow lower estimate valid during braking. Level allowance adapts to observed reference-bias changes with an explicit minimum; these engineering allowances and past-slope cross-checks are not calibrated probability or future-inflow guarantees. The tau12 and biased-reference regimes deliberately challenge these assumptions.",
+  "shared": "Same observer, sensors, references, oxygen cap, pressure slowdown90, flow0..7 and slew.15. Both get reference acquisition age; PI does not use it.",
+  "old_forecast": "Previous matched forecast with reserve0 retained as fixed context, not retuned.",
+  "source_hashes": {
+    "src/perfusion_lab/braking.py": "60759c0cdc7c11477d6ee3e1e309339f84855c89ef594c80e7a67163fa1cfca6",
+    "src/perfusion_lab/simulation.py": "acf4a67b5ada829597bb7fa91b7f38401a6c8b9786300f8827a26a930a9058bb",
+    "src/perfusion_lab/sensing.py": "8fba9eb4ca37e689acc69c3ec487674a8d2c877d78ce25684b69f5d64699563b",
+    "examples/braking_study.py": "7d449acb49a76c4432cf6d6afd964cb62783df295dd239e325d04f5656027629"
+  }
+}

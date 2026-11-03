@@ -243,3 +243,13 @@ The PI/threshold controller classes use corrected level, Hb, saturation and dire
 The PI core has error = setpoint − measurement and explicit rectangular integral update. Tracking anti-windup is called after the application applies common oxygen-demand, direct pressure and flow/slew constraints. The forecast arm retains the original predictive controller inside that same application shell. Its internal candidate objective, pressure forecast and reservoir screen are algorithm differences, not extra physical actuator authority.
 
 The published reference is general process control. Only its PI tuning and normalized mathematical example are reproduced. The CPB supervisor and circuit are declared simulation adaptations. No clinical controller, device behavior or source patient experiment is reproduced by this comparison. Source mapping is in `data/simc-reference/source.json`.
+
+## Predictive braking controller
+
+`braking.py` uses the pump-volume balance to bound excess outflow while holding a candidate command for one sample and then braking toward an inflow estimate at the common slew limit. For nonnegative command excess c = max(u − q_in_lower,0), initial positive flow excess d = max(q_upper − q_in_lower,0), response lag bound T and slew r, the reserved volume is `(T*d + dt*c + c*c/(2*r))/60` L. This upper estimate assumes a constant first-order lag <=T and a persistent valid inflow lower estimate. Its numerical test integrates independent braking trajectories.
+
+Current actuator-flow bounds propagate from known initial command and command history using lag endpoints. A five-second past raw-level slope provides a second inflow estimate using the lower actuator bound. Raw level is reconstructed by undoing only the causal reference correction, so a calibration update is not treated as an actual volume change. The lower of the two inflow estimates is used. A slope over past samples is not a guaranteed lower bound on future inflow.
+
+The reference-bias trend sets an engineering drift allowance above an explicit minimum. The controller subtracts base error plus drift allowance times acquisition age from corrected level. With missing/stale information or insufficient braking reserve it requests the fastest permitted slowdown and records infeasibility. It still cannot exceed common command and slew limits, so depletion remains possible. These uncertainty choices are not probability statements.
+
+The v1.8 simulator source used for the previous general-PI protocol is retained in `data/simc-reference/frozen-v1.8/`. Its recorded hash is checked there if the current simulator has changed. Prior replay metrics are independently rerun with the current implementation to check that the interface extension did not alter old behavior.

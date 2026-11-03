@@ -13,6 +13,8 @@ class Observation:
     sao2: float
     temperature: float
     hb_lab: float | None        # independent periodic reference
+    level_reference_age: float | None = None  # acquired level-reference age [s]
+    level_reference_bias: float = 0.  # causal estimate, not injected fault truth
 
 
 class Sensors:

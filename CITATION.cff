@@ -4,7 +4,7 @@ title: "Perfusion Sentinel: A Cardiopulmonary Bypass Fault-Testing Laboratory"
 authors:
   - family-names: Varanasi
     given-names: Udeern
-version: 1.8.0
+version: 1.9.0
 date-released: 2026-11-03
 type: software
 license: MIT

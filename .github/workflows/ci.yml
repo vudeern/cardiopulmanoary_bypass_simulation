@@ -33,3 +33,5 @@ jobs:
       - run: python examples/validate_simc_benchmark.py
       - run: python examples/build_simc_web.py --check
       - run: python examples/validate_simc_tight.py
+      - run: python examples/validate_braking_study.py
+      - run: python examples/build_braking_web.py --check

@@ -58,3 +58,11 @@ Final parameters come from wider uncalibrated ranges than development parameters
 The browser's verified-reference dataset has a 600-second duration and one-second scoring interval; older datasets retain their own duration and interval. The viewer scales its timeline and timing caption to the selected dataset.
 
 The separate `canonical-protocol.json`, `canonical-metrics.csv` and `canonical-summary.json` are post-result descriptive sensitivity logs. They apply the source's canonical tau_c = theta choice using the already development-selected reservoir target. They reuse final cases, make no independent confirmation claim, and do not replace the recorded primary comparison.
+
+## Braking-controller logs
+
+`results/braking-study/` retains protocol, development candidates, selected methods, all evaluation rows, all 96 final cells and patient-block comparisons, and six prespecified replay cells. The final table is separate from two retained development-only pilots. Their original source hashes resolve to the snapshots in `data/braking-history/`. These are engineering records, not prose result reports.
+
+New controller-only row fields are `braking_volume` and `braking_budget` (L), `control_level_lower` (L), `inflow_lower` and `balance_inflow_lower` (L/min), `actuator_flow_upper` (L/min), `estimated_drift_rate` (L/s), `braking_feasible` and `level_information_unknown`. A null balance estimate means insufficient past samples. Reference age and the estimated reference bias are causal observation metadata; injected bias and future truth are never passed to the controller.
+
+The primary comparison uses good references and three specified in-range actuator regimes. The 12-second lag plant and delayed/missing or biased references are explicit secondary stress groups. All groups remain visible; engineering tolerances are not clinical safety margins.
