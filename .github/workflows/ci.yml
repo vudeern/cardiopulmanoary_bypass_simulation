@@ -50,3 +50,7 @@ jobs:
       - run: python examples/build_model_bank_web.py --check
       - run: python examples/check_versions.py
       - run: python examples/validate_runtime.py --check
+      - run: python examples/validate_reachability_study.py
+      - run: python examples/validate_reachability_base.py
+      - run: python examples/build_reachability_risk.py --check
+      - run: python examples/build_reachability_web.py --check

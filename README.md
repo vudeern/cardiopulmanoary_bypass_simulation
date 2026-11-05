@@ -51,19 +51,63 @@ The new harness preserves the established timing and physiology pipeline and is 
 
 ## Current progress
 
-The `main` branch is **v2.0-rc.1**, an unreleased development candidate for v2.0. The v1 freeze/package and controller-interface phases are complete. Estimator/reserve development is next; confirmation has not started, with **0/2 qualifying cohorts**. The [roadmap](data/version2-roadmap.json) records the phases and reserved cohorts.
+### v2.0-rc.2 — Calibration sets, joint braking and PI-base development (current)
 
-### v2.0-rc.1 — Controller interface and frozen v1 package (current)
+The `main` branch is **v2.0-rc.2**. This iteration completes a two-stage experiment on **32 development virtual patients**: 15,360 primary + 3,072 calibration-failure runs in the first stage, followed by 2,048 primary + 1,536 failure runs in an adaptive PI-base follow-up. The total is **22,016 completed development runs across 34 candidate/reference configurations**. These stages reuse the same patients for design and selection; they are not separate confirmation cohorts. Confirmation remains **0/2**.
 
-This release candidate starts the v2 development line. **Controller behavior is unchanged from v1.14; the performance milestone has not passed.** Exact parity on 24 paired 10-minute runs covers hybrid, matched PI and single-model configurations, including missing, biased and shared calibration. Every trajectory field and metric matches. This reuses old cases and is an interface regression check, not a new confirmation cohort. The check and source hashes are in [runtime parity](results/runtime-parity/summary.json).
+The code adds a feasible calibration/model set for reservoir volume and venous-sensor offset, plus a joint braking reserve that evaluates the whole discrete emergency-deceleration trajectory and its infinite residual tail. Each change was first isolated against a same-settings control. The first stage did not beat the independently tuned eligible PI on oxygen delivery, so the follow-up held protection settings fixed and tested two PI-base levels with both observers. All settings, candidates and failures are retained.
 
-`ControllerRuntime` accepts a `MeasurementFrame` containing the current `Observation`, measured venous flow and already-delivered timestamped level samples. It returns a bounded requested setpoint, a validity interval and explicit unsupported/conflict/quarantine/infeasibility statuses. It receives no plant object, true reservoir volume, injected fault labels, future inputs or random seed. The caller must acknowledge the setpoint actually applied before sending another frame; both the observer mass balance and PI tracking use that acknowledgement. Invalid values, future/unmatched samples and missing/duplicate frames are rejected before input state changes. Rejected input produces no new command; a future adapter must implement an independent watchdog and stop path.
+The selected research configuration is `aggressive_consistent`: calibration-consistent sets, joint braking and the more aggressive PI base. On the predefined healthy-calibration development grid, mean oxygen-deficit AUC is **396.25 versus 444.08** for the development-selected eligible PI (**10.8% lower overall**). The mean below-floor time is **0.81 versus 0.72 s per 600-second run**. The selected configuration has **zero empty requests in its 512 primary cases**. Its lower volume estimate never exceeds truth in those primary cases, but this empirical observation does not guarantee future coverage. The aggregate grid includes two bias families and one each of clean-reference and outage cases.
 
-The simulation adapter is `perfusion_lab.runtime_simulation.simulate_runtime`. Frozen v1 controller and simulation modules remain intact. The interface is fixed-step Python with histories that grow with run length; timing, bounded memory, device drivers and physical stopping remain future work. It is a foundation for a bench prototype, not equipment-ready software.
+| Healthy-calibration regime | Selected deficit AUC (mL O₂/m²) | PI deficit AUC (mL O₂/m²) | Reduction | Selected below-floor time (s) | PI below-floor time (s) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Clean reference | 395.92 | 420.75 | 5.9% | 0.83 | 0.98 |
+| Reference bias | 396.55 | 455.13 | 12.9% | 0.80 | 0.59 |
+| Reference outage | 395.96 | 445.29 | 11.1% | 0.82 | 0.71 |
+
+**The full development milestone still fails.** Clean-reference improvement is only **5.9%**, below the required 10%. The other per-regime mean/paired reservoir and pressure gates pass on these development data. Paired bootstrap intervals are exploratory because design, tuning and selection reuse the same 32 patients; neither stage is independent confirmation.
+
+**Mean gates do not guarantee individual protection.** The selected configuration crosses the 250 mL experimental floor in **24/512 primary cases, affecting 5/32 virtual patients**. The longest below-floor exposure is **28 s**, and the minimum reservoir volume is **3.54 mL**. For the eligible PI, the minimum is 108.60 mL; for frozen v1 it is 156.83 mL on this same development grid. Zero empty requests therefore does not imply acceptable worst-case depletion. A post-result [risk audit](results/reachability-base-development/risk-summary.json) and a worst-case replay expose these failures. The reserve is conditional on retained pump dynamics and a future inflow lower estimate; unexpected drainage changes can defeat that assumption.
+
+<details>
+<summary>All mechanism arms, adaptive follow-up settings and calibration failures</summary>
+
+Means per 600-second healthy-calibration primary run. Eligibility uses the predeclared per-regime mean floor-exposure limit and zero primary empty requests. Lower-estimate overstatement means the lower reservoir estimate exceeds actual volume; it is not a confidence-coverage guarantee.
+
+| Configuration | Deficit AUC (mL O₂/m²) | Below floor (s) | Empty requests (s) | Lower estimate above truth (s) | Development-eligible |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Legacy hybrid · common settings | 455.84 | 0.49 | 0.000 | 1.12 | Yes |
+| Calibration sets only | 483.91 | 0.33 | 0.000 | 0.00 | Yes |
+| Joint braking only | 453.49 | 0.49 | 0.000 | 1.12 | Yes |
+| Both changes · original PI base | 479.70 | 0.33 | 0.000 | 0.00 | Yes |
+| Joint braking · matched PI base | 404.29 | 0.61 | 0.000 | 1.12 | Yes |
+| Both changes · matched PI base | 441.76 | 0.57 | 0.000 | 0.00 | Yes |
+| Joint braking · aggressive PI base | 362.56 | 0.81 | 0.023 | 1.25 | No |
+| Both changes · aggressive PI base | 396.25 | 0.81 | 0.000 | 0.00 | Yes |
+| Development-selected eligible PI | 444.08 | 0.72 | 0.000 | 1.32 | Yes |
+| Frozen final v1 hybrid | 441.51 | 0.53 | 0.000 | 1.63 | Yes |
+
+The common-settings arms hold calibration allowance, model-error growth and recovery floor fixed. Frozen v1 uses its original selected settings and is an additional reference. The faster `aggressive_legacy` follow-up produces empty requests and remains reported as ineligible.
+
+For the selected configuration, absent or corrupted independent calibration remains a major failure mode. These secondary results do not determine selection:
+
+| Calibration failure | Mean below-floor time (s) | Mean empty-request time (s) | Mean volume error (mL) |
+| --- | ---: | ---: | ---: |
+| Missing calibration | 78.89 | 0.000 | 185.4 |
+| Biased calibration | 5.56 | 0.031 | 220.0 |
+| Shared calibration | 5.56 | 0.031 | 220.0 |
+
+Missing calibration disables predictive recovery but leaves the aggressive PI base; this fallback is not adequate protection in these tests. Biased/shared-corrupted calibration invalidates the volume range and can cause empty requests. Shared unknown absolute bias remains unidentifiable under the declared information assumptions.
+
+The initial execution rejected signed raw Gaussian level references near an empty reservoir. The [interrupted run and frozen sources](results/reachability-interrupted-rc2/status.json) are preserved. The corrected runtime accepts signed finite raw references while retaining timestamp/finiteness checks; all 5,760 previously completed runs are identical in the full rerun. A recorded [runner correction](results/reachability-development/runner-correction/correction.json) fixes JSON tuple/list comparison without changing parameters, outcome gates or any raw primary result.
+
+</details>
+
+The [first-stage protocol](results/reachability-development/protocol.json), [adaptive follow-up protocol](results/reachability-base-development/protocol.json), [selected settings](results/reachability-base-development/selection.json), [results](results/reachability-base-development/summary.json) and [current v2 progress](results/reachability-base-development/version2-progress.json) are public. Both development-only selection and individual failures limit the claim. Stable v2.0.0, clinical suitability, scientific novelty and physical prototype readiness remain unestablished.
 
 ## Next steps
 
-1. Develop and compare estimator/reserve changes on **32 development virtual patients**, keeping every candidate and failure. Improve estimation and conditional reserve design together, testing the effect of each margin.
+1. Continue development on the same **32 development virtual patients** to improve clean-reference delivery and address individual depletion, drainage-change robustness and unsupported-calibration fallback. Keep the confirmation cohorts untouched while these issues are investigated.
 2. Tune a PI comparator independently using the same measurement channels and actuator limits. Select eligibility and settings on development data.
 3. Freeze the candidate, comparator, source hashes, settings and analysis before confirmation.
 4. Evaluate the same frozen design on **two untouched cohorts of at least 32 patients each**. Pass normal sensing, routine-reference bias and routine-reference outage regimes separately. Retain failures; revised designs need new unseen confirmation cohorts.
@@ -72,7 +116,7 @@ The simulation adapter is `perfusion_lab.runtime_simulation.simulate_runtime`. F
 
 ### Requirements for stable v2.0.0
 
-The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); each iteration reports [current progress](results/model-bank-study/version2-progress.json).
+The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); each iteration reports [current progress](results/reachability-base-development/version2-progress.json).
 
 - At least **10% lower mean oxygen-deficit AUC** than the strongest development-eligible PI comparator with the same inputs and limits; the paired 95% interval must support improvement. Determine the comparator on development data, not after final results.
 - **Zero empty-reservoir requests** in primary evaluation and mean low-reservoir time **≤1 s per 10-minute run** in each primary regime. Upper paired extra exposure must be ≤1 s low/empty and ≤5 s high pressure.
@@ -82,7 +126,7 @@ The active development line is **v2.0 release candidates**. Stable v2.0.0 remain
 
 The original evidence policy is retained unchanged for historical hash verification; [version2-roadmap.json](data/version2-roadmap.json) records the new release-candidate numbering and exact remaining phases.
 
-The present 16-patient evaluation is exploratory and cannot qualify for v2.0, even if some metrics pass. The synthetic parameter distribution and reused circuit model are not a validated clinical population.
+The released v1 evaluation used 16 patients. The current 32-patient development set is used for design and selection and also cannot count as either untouched confirmation cohort. The synthetic parameter distribution and reused circuit model are not a validated clinical population.
 
 ## How to use the repository
 
@@ -120,13 +164,20 @@ The public-case input file contains five observations transcribed from [Hunter e
 
 ### Use the current controller interface
 
-This example is for the `main` development version; the frozen v1 package predates `ControllerRuntime`.
+This synthetic example uses the selected experimental rc.2 configuration. Its calibration assumptions and individual failures above apply. The frozen v1 package predates these runtime interfaces.
 
 ```python
-from perfusion_lab.runtime import ControllerRuntime, MeasurementFrame
+from perfusion_lab.reachability_runtime import ReachabilityRuntime
+from perfusion_lab.runtime import MeasurementFrame
+from pathlib import Path
+import json
 from perfusion_lab.sensing import Observation
 
-runtime = ControllerRuntime(bsa=1.85, initial_hb=9.0, dt=1.0)
+protocol = json.loads(Path("results/reachability-base-development/protocol.json").read_text())
+selection = json.loads(Path("results/reachability-base-development/selection.json").read_text())
+method = protocol["methods"][selection["candidate"]]
+runtime = ReachabilityRuntime(bsa=1.85, initial_hb=9.0, dt=1.0,
+    controller_options=method["options"], guard_options=method["guard"])
 # Illustrative measured values in the documented units, not patient settings.
 obs = Observation(0.0, 4.44, 0.85, 60.0, 9.0, 0.98, 37.0, 9.0)
 output = runtime.observe(MeasurementFrame(obs, venous_flow=4.44))
@@ -139,6 +190,23 @@ runtime.acknowledge(observation_time=0.0, applied_command=output.decision.comman
 python examples/validate_runtime.py --check
 python examples/check_versions.py
 ```
+
+### Reproduce the current development experiment
+
+```bash
+python examples/reachability_study.py --stage primary
+python examples/reachability_study.py --stage secondary
+python examples/reachability_study.py --stage replays
+python examples/reachability_base_study.py --stage primary
+python examples/reachability_base_study.py --stage secondary
+python examples/reachability_base_study.py --stage replays
+python examples/build_reachability_risk.py
+python examples/validate_reachability_study.py
+python examples/validate_reachability_base.py
+python examples/build_reachability_web.py --check
+```
+
+Existing source/protocol hashes are checked before a study resumes. Source changes require an explicitly recorded new development iteration; do not overwrite prior failures or reuse confirmation cases for tuning. The browser includes the selected configuration, eligible PI, frozen v1 and a clearly labelled post-result worst-case patient.
 
 ### Repository layout
 
@@ -163,7 +231,8 @@ Versions are listed newest first. The current entry follows `main`; earlier entr
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
-| v2.0-rc.1 (current) | Measurement-only controller API, exact v1 parity and final-v1 packaging | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v2.0-rc.2 (current) | Calibration sets, joint braking, adaptive PI-base development and explicit worst-case failures | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v2.0-rc.1 | Measurement-only controller API, exact v1 parity and final-v1 packaging | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/99d7237a37115cd30ea0c99836fa6515d62c7bb1) |
 | v1.14 | Final v1: calibration-constrained model bank and discrete reserve | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ace6a9fed2f9084b5fda95e9e1113af7a3d93dca) |
 | v1.13 | Slowdown audit and truth-informed physical benchmarks | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cbb683484999ab73a79bf0fc368d682e8878ae7) |
 | v1.12 | Reference screening, quarantine and independent calibration | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ed16fcf9056d41c2ffd1eca7fe1149515780ccaf) |
@@ -314,5 +383,18 @@ python examples/build_simc_web.py
 Working outputs remain CSV/JSON under `results/simc-verification/` and `results/simc-benchmark/`. The interactive replay offers six prespecified final cases, both methods and the first evaluation seed. It scores at one-second resolution and displays every third sample. The final cohort has 16 paired virtual patients; artificial challenge cells are not clinical event frequencies. Finite candidate grids and boundary-selected settings limit conclusions about optimal tuning. An additional canonical `tau_c = theta` check is explicitly labeled post-result and descriptive. It reuses final cases, retains the original test, and does not select a new setting on those outcomes.
 
 The earlier [Takahashi bypass-controller workbench](data/controller-reference/reproduction.json) remains explicitly incomplete. It is not the verified primary comparator. Its exploratory runner and logs are retained for continuity; they must not be presented as the authors' reproduced controller.
+
+</details>
+
+<details>
+<summary>v2.0-rc.1 interface foundation</summary>
+
+### v2.0-rc.1 — Controller interface and frozen v1 package
+
+This release candidate starts the v2 development line. **Controller behavior is unchanged from v1.14; the performance milestone has not passed.** Exact parity on 24 paired 10-minute runs covers hybrid, matched PI and single-model configurations, including missing, biased and shared calibration. Every trajectory field and metric matches. This reuses old cases and is an interface regression check, not a new confirmation cohort. The check and source hashes are in [runtime parity](results/runtime-parity/summary.json).
+
+`ControllerRuntime` accepts a `MeasurementFrame` containing the current `Observation`, measured venous flow and already-delivered timestamped level samples. It returns a bounded requested setpoint, a validity interval and explicit unsupported/conflict/quarantine/infeasibility statuses. It receives no plant object, true reservoir volume, injected fault labels, future inputs or random seed. The caller must acknowledge the setpoint actually applied before sending another frame; both the observer mass balance and PI tracking use that acknowledgement. Invalid values, future/unmatched samples and missing/duplicate frames are rejected before input state changes. Rejected input produces no new command; a future adapter must implement an independent watchdog and stop path.
+
+The simulation adapter is `perfusion_lab.runtime_simulation.simulate_runtime`. Frozen v1 controller and simulation modules remain intact. The interface is fixed-step Python with histories that grow with run length; timing, bounded memory, device drivers and physical stopping remain future work. It is a foundation for a bench prototype, not equipment-ready software.
 
 </details>

@@ -1,0 +1,744 @@
+{
+  "version": "2.0.0rc2",
+  "stage": "development_only",
+  "development_seeds": [
+    37000,
+    37001,
+    37002,
+    37003,
+    37004,
+    37005,
+    37006,
+    37007,
+    37008,
+    37009,
+    37010,
+    37011,
+    37012,
+    37013,
+    37014,
+    37015,
+    37016,
+    37017,
+    37018,
+    37019,
+    37020,
+    37021,
+    37022,
+    37023,
+    37024,
+    37025,
+    37026,
+    37027,
+    37028,
+    37029,
+    37030,
+    37031
+  ],
+  "confirmation_seeds_executed": [],
+  "duration_s": 600.0,
+  "dt_s": 1.0,
+  "physiology": {
+    "clean": {},
+    "combined": {
+      "drainage": 0.3,
+      "event_start": 0.28,
+      "event_end": 0.75,
+      "level_profile": "ramp",
+      "reservoir_bias": 0.6,
+      "drift_duration": 0.22,
+      "venous_bias": 0.75,
+      "flow_bias": 1.3,
+      "hb_bias": 2.4,
+      "dilution": 2.4,
+      "noise_scale": 4.0,
+      "dropout": true
+    }
+  },
+  "plants": {
+    "nominal": {},
+    "slow": {
+      "actuator_tau": 6.0
+    }
+  },
+  "primary_faults": {
+    "clean": {},
+    "positive_start": {
+      "fault_bias": 0.22
+    },
+    "step": {
+      "profile": "step",
+      "fault_bias": 0.28,
+      "start": 210.0
+    },
+    "outage": {
+      "dropout_prob": 0.25,
+      "outage_start": 150.0,
+      "outage_end": 480.0
+    }
+  },
+  "calibrations": {
+    "good": {
+      "period": 120.0,
+      "delay": 6.0,
+      "noise_sd": 0.01
+    },
+    "missing": {
+      "period": 120.0,
+      "delay": 6.0,
+      "noise_sd": 0.01,
+      "dropout_prob": 1.0
+    },
+    "biased": {
+      "period": 120.0,
+      "delay": 6.0,
+      "noise_sd": 0.01,
+      "fault_bias": 0.22
+    },
+    "shared": {
+      "period": 120.0,
+      "delay": 6.0,
+      "noise_sd": 0.01
+    }
+  },
+  "methods": {
+    "legacy_common": {
+      "engine": "reach",
+      "kind": "integrity_hybrid",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "recovery_floor": 0.45,
+        "reserve_mode": "legacy"
+      },
+      "family": "candidate"
+    },
+    "interval_only": {
+      "engine": "reach",
+      "kind": "integrity_hybrid",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "recovery_floor": 0.45,
+        "reserve_mode": "legacy"
+      },
+      "family": "candidate"
+    },
+    "reserve_only": {
+      "engine": "reach",
+      "kind": "integrity_hybrid",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "recovery_floor": 0.45,
+        "reserve_mode": "joint"
+      },
+      "family": "candidate"
+    },
+    "combined": {
+      "engine": "reach",
+      "kind": "integrity_hybrid",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "recovery_floor": 0.45,
+        "reserve_mode": "joint"
+      },
+      "family": "candidate"
+    },
+    "pi_legacy_1.5_0.35": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.35,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_1.5_0.5": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.5,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_1.5_0.65": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.65,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_1.5_0.8": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.8,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_5.0_0.35": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.35,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_5.0_0.5": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.5,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_5.0_0.65": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.65,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_5.0_0.8": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.8,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_20.0_0.35": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.35,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_20.0_0.5": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.5,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_20.0_0.65": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.65,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_legacy_20.0_0.8": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.8,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    },
+    "pi_consistent_1.5_0.35": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.35,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_1.5_0.5": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.5,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_1.5_0.65": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.65,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_1.5_0.8": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 1.5,
+        "target_level": 0.8,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_5.0_0.35": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.35,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_5.0_0.5": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.5,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_5.0_0.65": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.65,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_5.0_0.8": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.8,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_20.0_0.35": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.35,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_20.0_0.5": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.5,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_20.0_0.65": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.65,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "pi_consistent_20.0_0.8": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "tau_c": 20.0,
+        "target_level": 0.8,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "consistent"
+    },
+    "frozen_v1": {
+      "engine": "v1",
+      "kind": "integrity_hybrid",
+      "family": "reference",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.02,
+        "model_error_flow": 0.03
+      },
+      "options": {
+        "recovery_floor": 0.45
+      }
+    },
+    "frozen_calibration_pi": {
+      "id": "calpi_5.0_0.35",
+      "family": "pi",
+      "engine": "old",
+      "kind": "simc",
+      "guard": {
+        "base_uncertainty": 0.04,
+        "drift_allowance": 0.001,
+        "audit_tolerance": 0.06
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.35
+      },
+      "mode": "calibration_only",
+      "observer": "calibration_only"
+    }
+  },
+  "metrics": [
+    "deficit_auc",
+    "low_reservoir_s",
+    "empty_request_s",
+    "high_pressure_s",
+    "minimum_reservoir",
+    "flow_variation",
+    "mean_flow",
+    "volume_mae_L",
+    "lower_undercoverage_s",
+    "mean_halfwidth_L",
+    "bank_supported_s",
+    "bank_conflict_s"
+  ],
+  "replay_cells": [
+    [
+      "clean",
+      "nominal",
+      "clean",
+      "good"
+    ],
+    [
+      "combined",
+      "slow",
+      "step",
+      "good"
+    ],
+    [
+      "combined",
+      "slow",
+      "outage",
+      "good"
+    ],
+    [
+      "combined",
+      "nominal",
+      "positive_start",
+      "missing"
+    ],
+    [
+      "combined",
+      "nominal",
+      "positive_start",
+      "biased"
+    ],
+    [
+      "combined",
+      "nominal",
+      "positive_start",
+      "shared"
+    ]
+  ],
+  "primary_runs": 15360,
+  "secondary_runs": 3072,
+  "mechanism": "Four paired arms hold calibration_error=.04, model_error_flow=.03, recovery_floor=.45 fixed: legacy, interval only, joint reserve only, both. Frozen selected v1 (.02 calibration allowance) is an additional reference, not the isolation control.",
+  "information": "Measurement-only runtime. Feasible (offset, constant venous bias) polygons per generic pump model from at most four delivered calibration anchors. Allowed model-flow error grows with anchor separation and forecast age. Inline overlap does not trim the independent set; disjoint unquarantined information disables recovery and widens to a union. Missing/stale/inconsistent calibration falls back to PI.",
+  "reserve": "Maximum cumulative net volume loss over one candidate command followed by full slew-limited braking to zero, including an exact geometric infinite tail, maximized over retained pump hypotheses. Conditional on a retained correct model and future inflow >= causal lower estimate. No future drainage supplied.",
+  "selection": "Eligibility separately in clean/bias/outage groups: mean low-reservoir <=1s and zero empty requests across primary runs. Candidate chosen among four mechanism arms by lowest overall oxygen deficit, or lexicographic low/empty/deficit marked ineligible. PI independently tuned on 24 settings (two observers x three gains x four setpoints), plus frozen calibration-only PI; same eligibility and oxygen ranking. Retain every result. Paired intervals use patient-level cell means; development selection makes them exploratory.",
+  "secondary": "After development selection, all five hybrid/reference arms plus selected PI for each of three observer families on missing, biased and shared calibration; positive-start routine bias, both physiology/plant families, all 32 development seeds. Secondary results never determine selection.",
+  "raw_reference_convention": "Reference samples preserve signed finite Gaussian readings, including small negative values near an empty reservoir; they are measurements, not physical true volumes. The new runtime validates timestamps and finiteness while allowing those signed raw readings. An earlier interrupted run, its 12 complete patients and frozen sources are archived in results/reachability-interrupted-rc2; the full rerun uses the same seeds, methods, settings and gates.",
+  "limitations": "This is a development experiment using known scenario/model families and new seeds, not a fresh confirmation or validated patient population. Gaussian errors are unbounded, generic pump grid may miss the true dynamics, venous bias may change, and shared corruption can invalidate the sets. No guaranteed coverage, clinical validation, novelty or overall superiority is assumed.",
+  "source_hashes": {
+    "src/perfusion_lab/reachability.py": "8cd70c4bab130b94394830d8d669c96ed0dd304bb56957321ace6f68ddf8a330",
+    "src/perfusion_lab/reachability_runtime.py": "b742b1dd48744190628bd59a5be281b34b3f160238a82fd1758ae32c2415fced",
+    "src/perfusion_lab/reachability_simulation.py": "fb7d6e300e2cb1a58210b3b1dc5fa973b94250090d3b185cf555c78d7a62f464",
+    "src/perfusion_lab/runtime.py": "11a7ee879940c8640e348e9910d42228e057a65850445ec24d0bc0352c5a24d0",
+    "src/perfusion_lab/runtime_simulation.py": "308e112580e24c5a9ec3a3e0f2094b358ca2a0c30c15097624243037d9409c7b",
+    "src/perfusion_lab/model_bank.py": "d51787a60b2d566281492b1866aafecdec837f7068889b44fc40f05674e36f64",
+    "src/perfusion_lab/model_simulation.py": "ddcd463993ae28c55fbfbf49bb83309c508ce479106c8240c826ed87d62ed75c",
+    "src/perfusion_lab/integrity.py": "8ee329d0f62ca27664753946ffb0482ac7bdac99f7b26456168eae90d0389def",
+    "src/perfusion_lab/simulation.py": "27d0a7645f273f5afbbf068a1c93b201b58720f59252888365843fe49e5fea20",
+    "src/perfusion_lab/model.py": "0e86f4f172dd103c484698bbea48597673384e637ffdd05342a8c0489aa82662",
+    "src/perfusion_lab/stress.py": "4315e23b7e1eb76252457a5df00ca962de4cc4852eb0164ee1edd9d0b4a460fd",
+    "src/perfusion_lab/sensing.py": "8fba9eb4ca37e689acc69c3ec487674a8d2c877d78ce25684b69f5d64699563b",
+    "src/perfusion_lab/reference.py": "dc9d314a0e77ee02951fe4f35d851a52cab29bb9751649becdc59c48f4a78a4e",
+    "src/perfusion_lab/simc.py": "efa8b877156b2a3b22c07e4aabbeb59e9d51e3207ca5ed6584ecfcffcd615d0b",
+    "src/perfusion_lab/braking.py": "60759c0cdc7c11477d6ee3e1e309339f84855c89ef594c80e7a67163fa1cfca6",
+    "examples/continuity_study.py": "1cf72484f4016b96675d58837c514a60c1de2f07d105d6388dde4257beae8e69",
+    "examples/integrity_study.py": "5b0f51a29eb98ce0cc46b3429d32f7d20f19fe19044503fb70727d18499903cb",
+    "examples/model_bank_study.py": "6c5e4a9dd7812af419fa2f359d247e09636a9a06c7e4836e9f7619b0898f0b77",
+    "examples/reachability_study.py": "947b4998321403d800dfa0cf2e313d297531b50466aed77eab6e408f1edb2587"
+  }
+}

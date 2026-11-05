@@ -1,5 +1,5 @@
 {
-  "current_version": "2.0.0rc1",
+  "current_version": "2.0.0rc2",
   "next_stable_version": "2.0.0",
   "final_v1_version": "1.14.0",
   "final_v1_commit": "ace6a9fed2f9084b5fda95e9e1113af7a3d93dca",
@@ -26,7 +26,7 @@
     {
       "id": 3,
       "name": "Observer and reserve development",
-      "status": "pending",
+      "status": "development_iteration_complete_further_work_required",
       "minimum_virtual_patients": 32,
       "seeds": [
         37000,
@@ -62,12 +62,20 @@
         37030,
         37031
       ],
-      "rule": "Use development only; change one mechanism at a time; tune PI independently with identical measurement channels and actuator limits. Retain every candidate and failure."
+      "rule": "Use development only; change one mechanism at a time; tune PI independently with identical measurement channels and actuator limits. Retain every candidate and failure.",
+      "primary_runs": 17408,
+      "secondary_runs": 4608,
+      "selected_candidate": "aggressive_consistent",
+      "pi_comparator": "pi_legacy_5.0_0.5",
+      "development_joint_success": false,
+      "artifact": "results/reachability-base-development/summary.json",
+      "individual_risk": "results/reachability-base-development/risk-summary.json",
+      "remaining": "Clean-reference oxygen improvement below 10%; individual severe depletion and unsupported/biased calibration failures remain. Same patients reused for adaptive design; no confirmation executed."
     },
     {
       "id": 4,
       "name": "Freeze candidate, comparator and analysis",
-      "status": "pending",
+      "status": "pending_further_development_and_individual_failure_review",
       "rule": "Freeze source hashes, selected settings, comparator eligibility, patient distribution, fault grid, units, paired analysis and all gates before confirmation."
     },
     {
@@ -164,5 +172,6 @@
     "Observer histories currently grow with run length; bounded-memory work remains.",
     "No physical device driver, electrical design, hardware testing or independent stop system.",
     "Model intervals and braking reserve remain conditional engineering hypotheses."
-  ]
+  ],
+  "current_progress": "results/reachability-base-development/version2-progress.json"
 }

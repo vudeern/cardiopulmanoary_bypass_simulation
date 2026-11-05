@@ -1,0 +1,7 @@
+{
+  "status": "interrupted_not_complete_evidence",
+  "complete_patients": 12,
+  "completed_runs": 5760,
+  "reason": "Runtime reference validation rejected a raw Gaussian level reference. Signed raw reference noise must be supported; timestamps, finite-value validation and all outcome gates remain unchanged. Full rerun uses the same 32 seeds, settings and candidate list. No failed arm or patient is excluded.",
+  "baseline_repository_commit": "99d7237a37115cd30ea0c99836fa6515d62c7bb1"
+}
