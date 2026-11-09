@@ -51,6 +51,17 @@ The new harness preserves the established timing and physiology pipeline and is 
 
 ## Current progress
 
+### New development milestone — Identifiability before estimation and MPC
+
+The next architectural step now has a reproducible [information audit](docs/IDENTIFIABILITY.md): **128 baseline runs and 3,968 frozen-command plant replays** on the existing 32 development patients, producing 2,048 local sensitivity analyses. Under explicitly healthy absolute references the tested six unknowns are locally full rank; allowing shared unknown level bias leaves one unresolved direction in all 128 cases. A finite shift in initial volume, patient storage and shared sensor offset produces indistinguishable measurements. This identifies an estimator-design limitation, not a controller improvement or a safety guarantee.
+
+Raw commands, per-case spectra, [protocol](results/identifiability-development/protocol.json), [summary](results/identifiability-development/summary.json) and checksums are public. Reference acquisition/delivery timing and physical pump lag use the actual simulator. These are reused development data and conditional local diagnostics; practical recovery under fresh noisy faults remains to be tested. Next: an independently anchored estimator shared by PI and MPC, followed by full horizon control with stopping reserve. **No controller behavior, package version or release gate changes here.** Current prerelease remains rc.5; stable v2.0 remains blocked and confirmation stays 0/2.
+
+```bash
+python examples/identifiability_study.py
+python examples/validate_identifiability.py
+```
+
 ### v2.0-rc.5 — Startup support and calibrated pump braking (current)
 
 The `main` branch is **v2.0-rc.5**. This iteration adds **4,096 simulations on the same 32 development virtual patients**: 2,048 primary, 1,536 calibration-failure and 512 abrupt-stop runs across four mechanism arms. The fixed 2,048-run startup stage informed an explicitly adaptive 2,048-run pump-model follow-up; these reused patients are not independent evidence. Cumulative development runs are **34,944**. Both reserved confirmation cohorts stay untouched; confirmation remains **0/2**.

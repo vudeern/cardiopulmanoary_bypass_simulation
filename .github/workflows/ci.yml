@@ -61,3 +61,4 @@ jobs:
       - run: python examples/validate_startup.py --replay
       - run: python examples/validate_calibrated_pump.py --replay
       - run: python examples/build_startup_web.py --check
+      - run: python examples/validate_identifiability.py

@@ -1,0 +1,630 @@
+{
+  "actuator_tau_s": 2.0,
+  "analyses": [
+    {
+      "condition_number": 30.61825358517631,
+      "cutoff_s": 5.0,
+      "half_step_rank": 6,
+      "locally_full_rank": true,
+      "mode": "healthy",
+      "numerical_rank": 6,
+      "observations": 25,
+      "parameter_count": 6,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "flow_bias"
+      ],
+      "singular_values": [
+        175.30388398314236,
+        99.49540536774597,
+        52.17622828477145,
+        21.481932186866455,
+        14.470630553962195,
+        5.725469726595215
+      ],
+      "smallest_scaled_sensitivity": 5.725469726595215,
+      "weakest_direction": {
+        "flow_bias": 0.002864328613646701,
+        "initial_volume": -0.567114489448482,
+        "inline_bias": 0.576402646153697,
+        "pump_tau": -0.008480656237756592,
+        "unstressed_volume": 0.5864924044890928,
+        "venous_bias": 0.045691125315273196
+      }
+    },
+    {
+      "condition_number": 32.11448098223806,
+      "cutoff_s": 30.0,
+      "half_step_rank": 6,
+      "locally_full_rank": true,
+      "mode": "healthy",
+      "numerical_rank": 6,
+      "observations": 126,
+      "parameter_count": 6,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "flow_bias"
+      ],
+      "singular_values": [
+        261.31596452256895,
+        201.20091290279007,
+        163.4617580974999,
+        98.54948627823894,
+        60.0124410046939,
+        8.137013475855273
+      ],
+      "smallest_scaled_sensitivity": 8.137013475855273,
+      "weakest_direction": {
+        "flow_bias": -0.0010825926238824048,
+        "initial_volume": 0.5733898343388629,
+        "inline_bias": -0.5791804331700344,
+        "pump_tau": 0.001295565944387905,
+        "unstressed_volume": -0.5794378145504959,
+        "venous_bias": -0.004805442837237623
+      }
+    },
+    {
+      "condition_number": 40.97786376898027,
+      "cutoff_s": 126.0,
+      "half_step_rank": 6,
+      "locally_full_rank": true,
+      "mode": "healthy",
+      "numerical_rank": 6,
+      "observations": 513,
+      "parameter_count": 6,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "flow_bias"
+      ],
+      "singular_values": [
+        528.8945156030871,
+        227.8659457919219,
+        184.92502169412776,
+        148.75048920847414,
+        121.87170856477978,
+        12.906834738502246
+      ],
+      "smallest_scaled_sensitivity": 12.906834738502246,
+      "weakest_direction": {
+        "flow_bias": 0.00010050502922165452,
+        "initial_volume": 0.576539420215845,
+        "inline_bias": -0.578083708907076,
+        "pump_tau": -0.00023113398389232415,
+        "unstressed_volume": -0.5774265694025489,
+        "venous_bias": -0.00012592553531340703
+      }
+    },
+    {
+      "condition_number": 51.68259148292899,
+      "cutoff_s": 599.0,
+      "half_step_rank": 6,
+      "locally_full_rank": true,
+      "mode": "healthy",
+      "numerical_rank": 6,
+      "observations": 2415,
+      "parameter_count": 6,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "flow_bias"
+      ],
+      "singular_values": [
+        1153.5508986586187,
+        474.8625475945141,
+        464.15677382946086,
+        256.14589049828584,
+        166.68163423595436,
+        22.31991209341045
+      ],
+      "smallest_scaled_sensitivity": 22.31991209341045,
+      "weakest_direction": {
+        "flow_bias": 5.807482123241286e-06,
+        "initial_volume": -0.5835874484115432,
+        "inline_bias": 0.5744660870275832,
+        "pump_tau": -0.0003851458916829232,
+        "unstressed_volume": 0.5739461143756035,
+        "venous_bias": -0.0003381327900848511
+      }
+    },
+    {
+      "condition_number": 30.61825358517631,
+      "cutoff_s": 5.0,
+      "half_step_rank": 6,
+      "locally_full_rank": true,
+      "mode": "reference_outage",
+      "numerical_rank": 6,
+      "observations": 25,
+      "parameter_count": 6,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "flow_bias"
+      ],
+      "singular_values": [
+        175.30388398314236,
+        99.49540536774597,
+        52.17622828477145,
+        21.481932186866455,
+        14.470630553962195,
+        5.725469726595215
+      ],
+      "smallest_scaled_sensitivity": 5.725469726595215,
+      "weakest_direction": {
+        "flow_bias": 0.002864328613646701,
+        "initial_volume": -0.567114489448482,
+        "inline_bias": 0.576402646153697,
+        "pump_tau": -0.008480656237756592,
+        "unstressed_volume": 0.5864924044890928,
+        "venous_bias": 0.045691125315273196
+      }
+    },
+    {
+      "condition_number": 32.11448098223806,
+      "cutoff_s": 30.0,
+      "half_step_rank": 6,
+      "locally_full_rank": true,
+      "mode": "reference_outage",
+      "numerical_rank": 6,
+      "observations": 126,
+      "parameter_count": 6,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "flow_bias"
+      ],
+      "singular_values": [
+        261.31596452256895,
+        201.20091290279007,
+        163.4617580974999,
+        98.54948627823894,
+        60.0124410046939,
+        8.137013475855273
+      ],
+      "smallest_scaled_sensitivity": 8.137013475855273,
+      "weakest_direction": {
+        "flow_bias": -0.0010825926238824048,
+        "initial_volume": 0.5733898343388629,
+        "inline_bias": -0.5791804331700344,
+        "pump_tau": 0.001295565944387905,
+        "unstressed_volume": -0.5794378145504959,
+        "venous_bias": -0.004805442837237623
+      }
+    },
+    {
+      "condition_number": 40.97786376898027,
+      "cutoff_s": 126.0,
+      "half_step_rank": 6,
+      "locally_full_rank": true,
+      "mode": "reference_outage",
+      "numerical_rank": 6,
+      "observations": 513,
+      "parameter_count": 6,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "flow_bias"
+      ],
+      "singular_values": [
+        528.8945156030871,
+        227.8659457919219,
+        184.92502169412776,
+        148.75048920847414,
+        121.87170856477978,
+        12.906834738502246
+      ],
+      "smallest_scaled_sensitivity": 12.906834738502246,
+      "weakest_direction": {
+        "flow_bias": 0.00010050502922165452,
+        "initial_volume": 0.576539420215845,
+        "inline_bias": -0.578083708907076,
+        "pump_tau": -0.00023113398389232415,
+        "unstressed_volume": -0.5774265694025489,
+        "venous_bias": -0.00012592553531340703
+      }
+    },
+    {
+      "condition_number": 63.21408312072968,
+      "cutoff_s": 599.0,
+      "half_step_rank": 6,
+      "locally_full_rank": true,
+      "mode": "reference_outage",
+      "numerical_rank": 6,
+      "observations": 2410,
+      "parameter_count": 6,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "flow_bias"
+      ],
+      "singular_values": [
+        1153.4419417468262,
+        474.8624050641748,
+        464.15677381262407,
+        256.1452404745982,
+        166.432552326362,
+        18.246597669445276
+      ],
+      "smallest_scaled_sensitivity": 18.246597669445276,
+      "weakest_direction": {
+        "flow_bias": 2.5778478204613458e-06,
+        "initial_volume": -0.5801085352534714,
+        "inline_bias": 0.5761302554014115,
+        "pump_tau": -0.00017109153092613198,
+        "unstressed_volume": 0.5758020181245312,
+        "venous_bias": -0.00015093685972458816
+      }
+    },
+    {
+      "condition_number": null,
+      "cutoff_s": 5.0,
+      "half_step_rank": 6,
+      "locally_full_rank": false,
+      "mode": "calibration_missing",
+      "numerical_rank": 6,
+      "observations": 25,
+      "parameter_count": 7,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "common_level_bias",
+        "flow_bias"
+      ],
+      "singular_values": [
+        175.92569500955435,
+        128.14586259322047,
+        52.177257940304074,
+        21.48299985192748,
+        14.471189861475628,
+        7.671592213380742,
+        2.1212835618615286e-10
+      ],
+      "smallest_scaled_sensitivity": 2.1212835618615286e-10,
+      "weakest_direction": {
+        "common_level_bias": -0.5773502691888325,
+        "flow_bias": -2.2411601301506296e-13,
+        "initial_volume": 0.577350269188833,
+        "inline_bias": -4.301348726376401e-13,
+        "pump_tau": 6.730446440687244e-13,
+        "unstressed_volume": -0.5773502691912118,
+        "venous_bias": -7.908939365059218e-13
+      }
+    },
+    {
+      "condition_number": null,
+      "cutoff_s": 30.0,
+      "half_step_rank": 6,
+      "locally_full_rank": false,
+      "mode": "calibration_missing",
+      "numerical_rank": 6,
+      "observations": 125,
+      "parameter_count": 7,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "common_level_bias",
+        "flow_bias"
+      ],
+      "singular_values": [
+        314.04597946271804,
+        203.3470674625822,
+        172.8511947141769,
+        98.99751268984826,
+        59.9923717046628,
+        7.726708446468118,
+        2.625999255569956e-10
+      ],
+      "smallest_scaled_sensitivity": 2.625999255569956e-10,
+      "weakest_direction": {
+        "common_level_bias": -0.5773502691889278,
+        "flow_bias": -2.1559310295365808e-14,
+        "initial_volume": 0.5773502691889273,
+        "inline_bias": -6.37990463537643e-13,
+        "pump_tau": 2.5737025947173022e-14,
+        "unstressed_volume": -0.5773502691910222,
+        "venous_bias": -1.8016154800216525e-13
+      }
+    },
+    {
+      "condition_number": null,
+      "cutoff_s": 126.0,
+      "half_step_rank": 6,
+      "locally_full_rank": false,
+      "mode": "calibration_missing",
+      "numerical_rank": 6,
+      "observations": 511,
+      "parameter_count": 7,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "common_level_bias",
+        "flow_bias"
+      ],
+      "singular_values": [
+        646.309258640162,
+        229.36274160762335,
+        187.93848473717514,
+        153.3641806323726,
+        121.911797900936,
+        13.409808426216829,
+        2.640307868104061e-10
+      ],
+      "smallest_scaled_sensitivity": 2.640307868104061e-10,
+      "weakest_direction": {
+        "common_level_bias": -0.5773502691892776,
+        "flow_bias": 2.1330731089172777e-14,
+        "initial_volume": 0.5773502691888075,
+        "inline_bias": -1.9979845147456812e-13,
+        "pump_tau": -4.954849638478446e-14,
+        "unstressed_volume": -0.5773502691907926,
+        "venous_bias": -1.7634119026515476e-14
+      }
+    },
+    {
+      "condition_number": null,
+      "cutoff_s": 599.0,
+      "half_step_rank": 6,
+      "locally_full_rank": false,
+      "mode": "calibration_missing",
+      "numerical_rank": 6,
+      "observations": 2410,
+      "parameter_count": 7,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "common_level_bias",
+        "flow_bias"
+      ],
+      "singular_values": [
+        1412.3604067586232,
+        474.94957152588444,
+        464.15677441500446,
+        256.2228888817486,
+        175.0541094176123,
+        24.480720985456717,
+        2.643946001314753e-10
+      ],
+      "smallest_scaled_sensitivity": 2.643946001314753e-10,
+      "weakest_direction": {
+        "common_level_bias": -0.5773502691893817,
+        "flow_bias": 5.135456141515618e-16,
+        "initial_volume": 0.5773502691887642,
+        "inline_bias": -5.934353482297762e-14,
+        "pump_tau": -2.8173493166635472e-14,
+        "unstressed_volume": -0.5773502691907317,
+        "venous_bias": -4.422593033085283e-15
+      }
+    },
+    {
+      "condition_number": null,
+      "cutoff_s": 5.0,
+      "half_step_rank": 6,
+      "locally_full_rank": false,
+      "mode": "shared_unknown",
+      "numerical_rank": 6,
+      "observations": 25,
+      "parameter_count": 7,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "common_level_bias",
+        "flow_bias"
+      ],
+      "singular_values": [
+        175.92569500955435,
+        128.14586259322047,
+        52.177257940304074,
+        21.48299985192748,
+        14.471189861475628,
+        7.671592213380742,
+        2.1212835618615286e-10
+      ],
+      "smallest_scaled_sensitivity": 2.1212835618615286e-10,
+      "weakest_direction": {
+        "common_level_bias": -0.5773502691888325,
+        "flow_bias": -2.2411601301506296e-13,
+        "initial_volume": 0.577350269188833,
+        "inline_bias": -4.301348726376401e-13,
+        "pump_tau": 6.730446440687244e-13,
+        "unstressed_volume": -0.5773502691912118,
+        "venous_bias": -7.908939365059218e-13
+      }
+    },
+    {
+      "condition_number": null,
+      "cutoff_s": 30.0,
+      "half_step_rank": 6,
+      "locally_full_rank": false,
+      "mode": "shared_unknown",
+      "numerical_rank": 6,
+      "observations": 126,
+      "parameter_count": 7,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "common_level_bias",
+        "flow_bias"
+      ],
+      "singular_values": [
+        314.0989779732804,
+        203.43540346390387,
+        173.02295607741956,
+        99.0432761634816,
+        60.01902751896014,
+        10.899903106239718,
+        2.6259680012620177e-10
+      ],
+      "smallest_scaled_sensitivity": 2.6259680012620177e-10,
+      "weakest_direction": {
+        "common_level_bias": -0.5773502691889271,
+        "flow_bias": -2.1575540916804112e-14,
+        "initial_volume": 0.5773502691889278,
+        "inline_bias": -6.387693771800321e-13,
+        "pump_tau": 2.594796936526786e-14,
+        "unstressed_volume": -0.5773502691910222,
+        "venous_bias": -1.796600502990922e-13
+      }
+    },
+    {
+      "condition_number": null,
+      "cutoff_s": 126.0,
+      "half_step_rank": 6,
+      "locally_full_rank": false,
+      "mode": "shared_unknown",
+      "numerical_rank": 6,
+      "observations": 513,
+      "parameter_count": 7,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "common_level_bias",
+        "flow_bias"
+      ],
+      "singular_values": [
+        646.4381718953539,
+        229.40272008948796,
+        188.02509297338673,
+        153.56237234674748,
+        121.92039737220318,
+        17.301481609405094,
+        2.6407336123034433e-10
+      ],
+      "smallest_scaled_sensitivity": 2.6407336123034433e-10,
+      "weakest_direction": {
+        "common_level_bias": -0.5773502691892449,
+        "flow_bias": 2.144362793902192e-14,
+        "initial_volume": 0.5773502691888249,
+        "inline_bias": -2.468459891274576e-13,
+        "pump_tau": -4.964104857027165e-14,
+        "unstressed_volume": -0.5773502691908072,
+        "venous_bias": -1.6814233867485086e-14
+      }
+    },
+    {
+      "condition_number": null,
+      "cutoff_s": 599.0,
+      "half_step_rank": 6,
+      "locally_full_rank": false,
+      "mode": "shared_unknown",
+      "numerical_rank": 6,
+      "observations": 2415,
+      "parameter_count": 7,
+      "parameters": [
+        "initial_volume",
+        "inline_bias",
+        "venous_bias",
+        "pump_tau",
+        "unstressed_volume",
+        "common_level_bias",
+        "flow_bias"
+      ],
+      "singular_values": [
+        1412.5611531261281,
+        474.9499586678671,
+        464.15677441879717,
+        256.22464166367587,
+        175.43096399318375,
+        29.981314634086797,
+        2.6447334762389784e-10
+      ],
+      "smallest_scaled_sensitivity": 2.6447334762389784e-10,
+      "weakest_direction": {
+        "common_level_bias": -0.5773502691893648,
+        "flow_bias": 3.2234988992590286e-16,
+        "initial_volume": 0.5773502691887749,
+        "inline_bias": -8.485538200519154e-14,
+        "pump_tau": -2.7900396862612844e-14,
+        "unstressed_volume": -0.5773502691907377,
+        "venous_bias": -3.952525748376172e-15
+      }
+    }
+  ],
+  "baseline_metrics": {
+    "below_target_s": 371.0,
+    "concealed_deficit_auc": 0.23261581181698812,
+    "deficit_auc": 744.0696711943888,
+    "empty_request_s": 0.0,
+    "false_reassurance_margin_s": 1.0,
+    "false_reassurance_s": 8.0,
+    "flow_variation": 15.073737078493746,
+    "hb_bound_coverage": 1.0,
+    "high_pressure_s": 0.0,
+    "infeasible_s": 127.0,
+    "level_fault_s": 0.0,
+    "low_reservoir_s": 0.0,
+    "mean_flow": 2.733785204494776,
+    "minimum_reservoir": 0.8829320719827485,
+    "quarantine_s": 6.0,
+    "reference_bad_rejected": 0,
+    "reference_bad_total": 0,
+    "reference_good_rejected": 0,
+    "reference_good_total": 10,
+    "unmet_demand_auc": 149.40547492876152
+  },
+  "gauge_max_measurement_error": 8.881784197001252e-15,
+  "known_scripted_venous_bias": 0.0,
+  "patient": {
+    "bsa": 1.8043018356909641,
+    "compliance": 0.0014889662817220545,
+    "demand37": 125.0,
+    "hb": 10.150585445718702,
+    "q10": 2.3,
+    "resistance": 19.245237499805725,
+    "unstressed_volume": 4.35,
+    "venous_compliance": 0.09325518602854689,
+    "venous_resistance": 1.0250480419762522,
+    "volume": 5.8
+  },
+  "physiology": "clean",
+  "plant": "nominal",
+  "relative_jacobian_half_step_change": 0.007427124095986064,
+  "replay_parity_max_error": 0.0,
+  "seed": 37007
+}
