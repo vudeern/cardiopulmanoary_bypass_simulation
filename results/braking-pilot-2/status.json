@@ -1,5 +1,0 @@
-{
-  "status": "development_only_superseded_before_final_evaluation",
-  "reason": "Always applying the full drift allowance lost the oxygen gain. Use observed reference-bias trend, retain a minimum drift allowance and initial reserve; tighten the constant-lag braking integral bound. No final evaluation was run.",
-  "source_snapshots": "data/braking-history/pilot2_*.py"
-}

@@ -1,4 +1,0 @@
-{
-  "status": "development_only_superseded_before_evaluation",
-  "reason": "Separate calibration RNG stream from the virtual-patient parameter stream and log delivered calibration inputs explicitly before final evaluation."
-}

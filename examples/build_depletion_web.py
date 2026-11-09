@@ -33,7 +33,10 @@ def section(summary):
 
 def plot(check=False):
     results = {name: study.run(37014, 'combined', 'slow', 'positive_start', 'good', name, method) for name, method in study.methods().items()}
-    traces = {name: [[r['time'], r['reservoir'], r['do2']] for r in result['rows']] for name, result in results.items()}
+    # Numerical libraries/CPU kernels can differ in insignificant last bits.
+    # Validate scientific traces at 1e-8 precision, below displayed precision;
+    # raw simulation records retain full precision and their own checks.
+    traces = {name: [[round(r['time'], 8), round(r['reservoir'], 8), round(r['do2'], 8)] for r in result['rows']] for name, result in results.items()}
     checksum = hashlib.sha256(json.dumps(traces, sort_keys=True).encode()).hexdigest()
     if check:
         root = ElementTree.fromstring((ROOT/'web/depletion-worst-case.svg').read_text())

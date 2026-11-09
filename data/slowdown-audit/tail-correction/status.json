@@ -1,5 +1,0 @@
-{
-  "status": "superseded_incorrect_tail_approximation",
-  "not_valid_evidence": true,
-  "reason": "Use the exact infinite trapezoidal geometric tail, rather than continuous tau*flow/60, to match the discrete plant. Scope and controller settings unchanged; all audit calculations rerun."
-}
