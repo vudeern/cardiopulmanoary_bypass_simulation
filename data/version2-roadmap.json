@@ -1,5 +1,5 @@
 {
-  "current_version": "2.0.0rc2",
+  "current_version": "2.0.0rc3",
   "next_stable_version": "2.0.0",
   "final_v1_version": "1.14.0",
   "final_v1_commit": "ace6a9fed2f9084b5fda95e9e1113af7a3d93dca",
@@ -65,12 +65,15 @@
       "rule": "Use development only; change one mechanism at a time; tune PI independently with identical measurement channels and actuator limits. Retain every candidate and failure.",
       "primary_runs": 17408,
       "secondary_runs": 4608,
-      "selected_candidate": "aggressive_consistent",
+      "selected_candidate": "conservative_depletion_reference",
       "pi_comparator": "pi_legacy_5.0_0.5",
       "development_joint_success": false,
-      "artifact": "results/reachability-base-development/summary.json",
+      "artifact": "results/depletion-development/summary.json",
       "individual_risk": "results/reachability-base-development/risk-summary.json",
-      "remaining": "Clean-reference oxygen improvement below 10%; individual severe depletion and unsupported/biased calibration failures remain. Same patients reused for adaptive design; no confirmation executed."
+      "remaining": "Conservative zero-return reserve prevents floor crossings in the recorded development grid but incurs excessive oxygen deficit. Develop explicit, testable less restrictive inflow protection; retune matched PI before freezing. No confirmation executed.",
+      "latest_iteration_primary_runs": 1536,
+      "latest_iteration_secondary_runs": 1152,
+      "cumulative_development_runs": 24704
     },
     {
       "id": 4,

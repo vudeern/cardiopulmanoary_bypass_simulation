@@ -1,0 +1,339 @@
+{
+  "version": "2.0.0rc3",
+  "stage": "development_only",
+  "seeds": [
+    37000,
+    37001,
+    37002,
+    37003,
+    37004,
+    37005,
+    37006,
+    37007,
+    37008,
+    37009,
+    37010,
+    37011,
+    37012,
+    37013,
+    37014,
+    37015,
+    37016,
+    37017,
+    37018,
+    37019,
+    37020,
+    37021,
+    37022,
+    37023,
+    37024,
+    37025,
+    37026,
+    37027,
+    37028,
+    37029,
+    37030,
+    37031
+  ],
+  "confirmation_seeds_executed": [],
+  "duration_s": 600.0,
+  "dt_s": 1.0,
+  "methods": {
+    "rc2": {
+      "engine": "reach",
+      "kind": "integrity_hybrid",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "recovery_floor": 0.45,
+        "reserve_mode": "joint",
+        "tau_c": 5.0,
+        "target_level": 0.35
+      },
+      "family": "candidate"
+    },
+    "protected": {
+      "engine": "reach",
+      "kind": "integrity_hybrid",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "consistent"
+      },
+      "options": {
+        "recovery_floor": 0.45,
+        "reserve_mode": "joint",
+        "tau_c": 5.0,
+        "target_level": 0.35
+      },
+      "family": "candidate"
+    },
+    "eligible_pi": {
+      "engine": "reach",
+      "kind": "integrity_pi",
+      "guard": {
+        "base_uncertainty": 0.06,
+        "drift_allowance": 0.004,
+        "audit_tolerance": 0.12,
+        "calibration_error": 0.04,
+        "model_error_flow": 0.03,
+        "interval_mode": "legacy"
+      },
+      "options": {
+        "tau_c": 5.0,
+        "target_level": 0.5,
+        "reserve_mode": "legacy"
+      },
+      "family": "pi",
+      "observer": "legacy"
+    }
+  },
+  "cells": [
+    [
+      "primary",
+      "clean",
+      "nominal",
+      "clean",
+      "good"
+    ],
+    [
+      "primary",
+      "clean",
+      "nominal",
+      "positive_start",
+      "good"
+    ],
+    [
+      "primary",
+      "clean",
+      "nominal",
+      "step",
+      "good"
+    ],
+    [
+      "primary",
+      "clean",
+      "nominal",
+      "outage",
+      "good"
+    ],
+    [
+      "secondary",
+      "clean",
+      "nominal",
+      "positive_start",
+      "missing"
+    ],
+    [
+      "secondary",
+      "clean",
+      "nominal",
+      "positive_start",
+      "biased"
+    ],
+    [
+      "secondary",
+      "clean",
+      "nominal",
+      "positive_start",
+      "shared"
+    ],
+    [
+      "primary",
+      "clean",
+      "slow",
+      "clean",
+      "good"
+    ],
+    [
+      "primary",
+      "clean",
+      "slow",
+      "positive_start",
+      "good"
+    ],
+    [
+      "primary",
+      "clean",
+      "slow",
+      "step",
+      "good"
+    ],
+    [
+      "primary",
+      "clean",
+      "slow",
+      "outage",
+      "good"
+    ],
+    [
+      "secondary",
+      "clean",
+      "slow",
+      "positive_start",
+      "missing"
+    ],
+    [
+      "secondary",
+      "clean",
+      "slow",
+      "positive_start",
+      "biased"
+    ],
+    [
+      "secondary",
+      "clean",
+      "slow",
+      "positive_start",
+      "shared"
+    ],
+    [
+      "primary",
+      "combined",
+      "nominal",
+      "clean",
+      "good"
+    ],
+    [
+      "primary",
+      "combined",
+      "nominal",
+      "positive_start",
+      "good"
+    ],
+    [
+      "primary",
+      "combined",
+      "nominal",
+      "step",
+      "good"
+    ],
+    [
+      "primary",
+      "combined",
+      "nominal",
+      "outage",
+      "good"
+    ],
+    [
+      "secondary",
+      "combined",
+      "nominal",
+      "positive_start",
+      "missing"
+    ],
+    [
+      "secondary",
+      "combined",
+      "nominal",
+      "positive_start",
+      "biased"
+    ],
+    [
+      "secondary",
+      "combined",
+      "nominal",
+      "positive_start",
+      "shared"
+    ],
+    [
+      "primary",
+      "combined",
+      "slow",
+      "clean",
+      "good"
+    ],
+    [
+      "primary",
+      "combined",
+      "slow",
+      "positive_start",
+      "good"
+    ],
+    [
+      "primary",
+      "combined",
+      "slow",
+      "step",
+      "good"
+    ],
+    [
+      "primary",
+      "combined",
+      "slow",
+      "outage",
+      "good"
+    ],
+    [
+      "secondary",
+      "combined",
+      "slow",
+      "positive_start",
+      "missing"
+    ],
+    [
+      "secondary",
+      "combined",
+      "slow",
+      "positive_start",
+      "biased"
+    ],
+    [
+      "secondary",
+      "combined",
+      "slow",
+      "positive_start",
+      "shared"
+    ]
+  ],
+  "primary_runs": 1536,
+  "secondary_runs": 1152,
+  "selection": "No selection or tuning. Compare one conservative mechanism with frozen rc2 and independently selected rc2 eligible PI. All methods use identical measurement channels and slew limits.",
+  "mechanism": "Zero future venous return reserve over ALL configured pump models; maximum permitted braking without independent model/calibration support. Hybrid PI settings unchanged from rc2.",
+  "limitations": "Same 32 development patients and reused scenario families. Shared absolute calibration bias and omitted pump dynamics can invalidate protection. No clinical or hardware validation. Stopping may be infeasible at initialization. Report all oxygen costs and individual failures; no v2 success claim.",
+  "source_hashes": {
+    "src/perfusion_lab/__init__.py": "ffe218138cc355d4c175dbd6838de4a2a5dce6cc46c287fa45953027c5dc07dd",
+    "src/perfusion_lab/audit.py": "143746165898e8ea80e753aa8ff04ae27ca68baf0acce847c1517a6e4282bab5",
+    "src/perfusion_lab/benchmark.py": "f379667718673d60135f5e7f9489d8e72e2c4ad1f1890e27c649dbc1422daa06",
+    "src/perfusion_lab/braking.py": "5c4ea2b510cba7bb1292e6b9cdee6214649145390c8d7ea1aa4e1d5887291f94",
+    "src/perfusion_lab/cli.py": "51d443da41083f2968fda7a5805d383067abc3ae3d744d3d3e44a674445c82ae",
+    "src/perfusion_lab/continuity.py": "711b1638f38ec937ba1411c9d2e6db8141d067338942b3f8bfa9908ff94f3389",
+    "src/perfusion_lab/control.py": "e3f62f2b04cde989f37dca0df07376675a69b762ca4f8107247ebef00b286d55",
+    "src/perfusion_lab/decision_audit.py": "2243b52697c1e44d00bdab03fafe1f8492f6fc1aad7a4f9ffc785f8ea84b6e53",
+    "src/perfusion_lab/depletion.py": "7d3f88ca1db505993da90fedd48d3741e1a06aa3deed2920d9d8e5232b2ded38",
+    "src/perfusion_lab/depletion_simulation.py": "ba8e1526224db676d4bf8321eb2258765989cb9e60997927c2e5a59896679057",
+    "src/perfusion_lab/feedback.py": "9323d92c8dd8484dc909791b27b22f37863b4fa436453687b8bb28c3c5430d24",
+    "src/perfusion_lab/integrity.py": "d9cef842121e6a9a93d6d5dd83042a90456820adddf15b5c7e4aca083984c102",
+    "src/perfusion_lab/model.py": "fd4bc50667d70c846c8fd6aa717e5c263bea2fb93d0037d000e0717838700e46",
+    "src/perfusion_lab/model_bank.py": "2c25e34710d8dd1262d5997b81c34672af034376df8ea0482e5786afd72ba239",
+    "src/perfusion_lab/model_simulation.py": "0ac6f8a215acbd217f744949a8496a9378e98f40c2efa70ad159382a52d25b91",
+    "src/perfusion_lab/patient_replay.py": "44bc24eeba011763282bc4e93903aa3e98e8a901322428d90e35a86ea15c3eff",
+    "src/perfusion_lab/published_control.py": "744971164206268105af1a4ed0e585f6eda72256dd5ef11b031d8598debbd0ac",
+    "src/perfusion_lab/reachability.py": "579dad4bc8a85108389c4f0f62d5dcf446a0ae8fbac8dc93e73b60e5ef231ec7",
+    "src/perfusion_lab/reachability_runtime.py": "ebec4d5e7cae77aeba598dd4b363635f20864c88d2731c543b693c27e29c1479",
+    "src/perfusion_lab/reachability_simulation.py": "2663b426fb528b36e2ecf561c1fd88e543c2d573dc639cb8e38c66f3667ce9fa",
+    "src/perfusion_lab/reference.py": "c45ec9972a07f0ed6fc1b52572dcb9175071b31e66c876cc8d34c1a71a57cfbf",
+    "src/perfusion_lab/runtime.py": "c589f191ae0510231c944bb2bf190d0e820e251eb1094765408ce735a705792a",
+    "src/perfusion_lab/runtime_simulation.py": "ba6820cc024d42ea766dde2e887e1f9450393e0e6ca3fda1d3f18d4b7dc05242",
+    "src/perfusion_lab/selective.py": "e4cef444ca7da2d6df1d9db239eafd787429271245bbbc47745ee068b201e88e",
+    "src/perfusion_lab/sensing.py": "d230b88b54073855246531f19f51f116a575ccf29486bbfb93cf8c5ecadb3057",
+    "src/perfusion_lab/simc.py": "66faf751637b09a6fee82465d7277f164e4c122c32380165be6d3da7f7673a31",
+    "src/perfusion_lab/simulation.py": "7ca7a397724a5d9ef58876ba580a32ca6ed705bd71ea8d91e39af1eb4473486b",
+    "src/perfusion_lab/stress.py": "0c53962f43dc9cae1f0bc806f4ee4049d8eab79f2f9a1f0d38e899d6a902c3eb",
+    "examples/depletion_study.py": "ab98e70e66e31d047149560b02df718dc0849d3ccde5a7ee35bdb92f7b4bd277",
+    "examples/continuity_study.py": "e9c9ba35e3ae3226991e41033392964ed70bc5fab0b150fd2ae51802c8cb1cca",
+    "examples/integrity_study.py": "01916a7a34f597fd7d8b124fd01bf5b9a057dd75411352e44d2af1b111846b50",
+    "examples/simc_benchmark.py": "c829a7dd6f893d4e303a32dfd7aa1479ba2a8ce09831a716424c933ac1cfbbe9",
+    "results/reachability-development/protocol.json": "c16c31e273799c49cd612d8894ab20e4eaaed8e2cdd08182d49d3ae3526b5616",
+    "results/reachability-base-development/selection.json": "e45113018abba3a626448007ad6dc738eee85a326e27125f4e72dc6fab02f57a"
+  }
+}

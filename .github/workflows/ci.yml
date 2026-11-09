@@ -54,3 +54,5 @@ jobs:
       - run: python examples/validate_reachability_base.py
       - run: python examples/build_reachability_risk.py --check
       - run: python examples/build_reachability_web.py --check
+      - run: python examples/validate_depletion_study.py --replay
+      - run: python examples/build_depletion_web.py --check

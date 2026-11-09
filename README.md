@@ -51,9 +51,45 @@ The new harness preserves the established timing and physiology pipeline and is 
 
 ## Current progress
 
-### v2.0-rc.2 — Calibration sets, joint braking and PI-base development (current)
+### v2.0-rc.3 — Conservative depletion protection (current)
 
-The `main` branch is **v2.0-rc.2**. This iteration completes a two-stage experiment on **32 development virtual patients**: 15,360 primary + 3,072 calibration-failure runs in the first stage, followed by 2,048 primary + 1,536 failure runs in an adaptive PI-base follow-up. The total is **22,016 completed development runs across 34 candidate/reference configurations**. These stages reuse the same patients for design and selection; they are not separate confirmation cohorts. Confirmation remains **0/2**.
+The `main` branch is **v2.0-rc.3**. A fixed, development-only comparison adds **2,688 runs on the same 32 virtual patients**: 1,536 primary runs and 1,152 missing/biased/shared-calibration runs across the protected candidate, frozen rc.2 candidate and previously selected eligible PI. There is no new tuning, comparator selection or confirmation. The two earlier development stages remain intact; cumulative completed development runs are **24,704**.
+
+The new opt-in `DepletionRuntime` assumes **zero future venous return** during braking, retains the **entire configured pump grid** for stopping calculations, and commands maximum permitted deceleration whenever the independent calibration/model set is unsupported or conflicting. The aggressive PI settings and actuator limits stay fixed. Earlier controller/runtime modules remain byte-for-byte unchanged. The new simulation adapter differs only in runtime selection and its function name/docstring; timing, physiology and metrics are unchanged.
+
+| Healthy-calibration primary grid | Protected rc.3 | Previous rc.2 | Eligible PI |
+| --- | ---: | ---: | ---: |
+| Cases | 512 | 512 | 512 |
+| Mean oxygen-deficit AUC (mL O₂/m²) | 1,749.13 | 396.25 | 444.08 |
+| Cases below 250 mL | 0 | 24 | 28 |
+| Worst minimum reservoir (mL) | 753.62 | 3.54 | 108.60 |
+| Empty-request cases | 0 | 0 | 0 |
+
+**Protection improves on this grid, but oxygen delivery fails badly.** Mean deficit is 294% higher than eligible PI, with an exploratory patient-paired deficit difference of +1,305.05 (95% interval +1,275.18 to +1,334.98). The protection cap acts for an average 556.62 s of each 600-second primary run. It is a conservative reference, not a design ready to freeze for confirmation.
+
+| Calibration failure (128 cases per method/regime) | Protected deficit AUC | Protected floor crossings | Protected worst minimum (mL) |
+| --- | ---: | ---: | ---: |
+| Missing | 2,706.39 | 0 | 753.62 |
+| Biased | 1,583.12 | 0 | 622.15 |
+| Shared corruption | 1,583.12 | 0 | 622.15 |
+
+The protected mode has no empty requests in these secondary tests. These are empirical outcomes in the reused synthetic grid. Unknown shared absolute bias remains unidentifiable, omitted pump dynamics can invalidate reserve, and stopping can already be infeasible at initialization. No universal safety guarantee follows from these results. In missing-calibration cases the explicit braking fallback sacrifices delivery rather than continuing the aggressive PI base.
+
+[Fixed protocol](results/depletion-development/protocol.json), [all 32 patient logs and summary](results/depletion-development/summary.json), [protection implementation](src/perfusion_lab/depletion.py) and [previous worst-case replay figure](web/depletion-worst-case.svg) are public. The repeated 1,024 primary reference runs exactly reproduce published rc.2 candidate/PI numerics. A recorded text-retrieval correction removes one trailing newline from imported local sources; Python ASTs, settings and raw results are unchanged, and execution hashes remain reconstructible in [the normalization record](results/depletion-development/retrieval-normalization.json).
+
+```bash
+PYTHONPATH=src python examples/depletion_study.py --stage run
+PYTHONPATH=src python examples/validate_depletion_study.py --replay
+PYTHONPATH=src python examples/build_depletion_web.py --check
+```
+
+After an editable install, `PYTHONPATH=src` is optional; on Windows run the Python commands without that prefix. `--stage run` resumes complete patient files and verifies the frozen protocol before running.
+
+**Stable v2.0 remains blocked; confirmation is 0/2.** Next: develop a less restrictive protection design with explicit, testable return-flow assumptions, keeping this zero-return mode as the conservative reference. Retune an equally informed PI on development data before freezing any new design. Hardware readiness and clinical validation remain unestablished.
+
+### v2.0-rc.2 — Calibration sets, joint braking and PI-base development (previous)
+
+The previous **v2.0-rc.2** iteration completes a two-stage experiment on **32 development virtual patients**: 15,360 primary + 3,072 calibration-failure runs in the first stage, followed by 2,048 primary + 1,536 failure runs in an adaptive PI-base follow-up. The total is **22,016 completed development runs across 34 candidate/reference configurations**. These stages reuse the same patients for design and selection; they are not separate confirmation cohorts. Confirmation remains **0/2**.
 
 The code adds a feasible calibration/model set for reservoir volume and venous-sensor offset, plus a joint braking reserve that evaluates the whole discrete emergency-deceleration trajectory and its infinite residual tail. Each change was first isolated against a same-settings control. The first stage did not beat the independently tuned eligible PI on oxygen delivery, so the follow-up held protection settings fixed and tested two PI-base levels with both observers. All settings, candidates and failures are retained.
 
@@ -107,7 +143,7 @@ The [first-stage protocol](results/reachability-development/protocol.json), [ada
 
 ## Next steps
 
-1. Continue development on the same **32 development virtual patients** to improve clean-reference delivery and address individual depletion, drainage-change robustness and unsupported-calibration fallback. Keep the confirmation cohorts untouched while these issues are investigated.
+1. Continue development on the same **32 development virtual patients** to recover oxygen delivery while retaining depletion protection. The rc.3 zero-return mode is a conservative reference; develop and test any relaxed inflow assumptions explicitly. Keep the confirmation cohorts untouched while these issues are investigated.
 2. Tune a PI comparator independently using the same measurement channels and actuator limits. Select eligibility and settings on development data.
 3. Freeze the candidate, comparator, source hashes, settings and analysis before confirmation.
 4. Evaluate the same frozen design on **two untouched cohorts of at least 32 patients each**. Pass normal sensing, routine-reference bias and routine-reference outage regimes separately. Retain failures; revised designs need new unseen confirmation cohorts.
@@ -116,7 +152,7 @@ The [first-stage protocol](results/reachability-development/protocol.json), [ada
 
 ### Requirements for stable v2.0.0
 
-The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); each iteration reports [current progress](results/reachability-base-development/version2-progress.json).
+The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); the latest iteration reports [current progress](results/depletion-development/summary.json).
 
 - At least **10% lower mean oxygen-deficit AUC** than the strongest development-eligible PI comparator with the same inputs and limits; the paired 95% interval must support improvement. Determine the comparator on development data, not after final results.
 - **Zero empty-reservoir requests** in primary evaluation and mean low-reservoir time **≤1 s per 10-minute run** in each primary regime. Upper paired extra exposure must be ≤1 s low/empty and ≤5 s high pressure.
@@ -164,10 +200,10 @@ The public-case input file contains five observations transcribed from [Hunter e
 
 ### Use the current controller interface
 
-This synthetic example uses the selected experimental rc.2 configuration. Its calibration assumptions and individual failures above apply. The frozen v1 package predates these runtime interfaces.
+This synthetic example uses the conservative rc.3 protection runtime. Its oxygen-delivery penalty and calibration/model limitations above apply. The frozen v1 package predates these runtime interfaces.
 
 ```python
-from perfusion_lab.reachability_runtime import ReachabilityRuntime
+from perfusion_lab.depletion import DepletionRuntime
 from perfusion_lab.runtime import MeasurementFrame
 from pathlib import Path
 import json
@@ -176,7 +212,7 @@ from perfusion_lab.sensing import Observation
 protocol = json.loads(Path("results/reachability-base-development/protocol.json").read_text())
 selection = json.loads(Path("results/reachability-base-development/selection.json").read_text())
 method = protocol["methods"][selection["candidate"]]
-runtime = ReachabilityRuntime(bsa=1.85, initial_hb=9.0, dt=1.0,
+runtime = DepletionRuntime(bsa=1.85, initial_hb=9.0, dt=1.0,
     controller_options=method["options"], guard_options=method["guard"])
 # Illustrative measured values in the documented units, not patient settings.
 obs = Observation(0.0, 4.44, 0.85, 60.0, 9.0, 0.98, 37.0, 9.0)
@@ -231,7 +267,8 @@ Versions are listed newest first. The current entry follows `main`; earlier entr
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
-| v2.0-rc.2 (current) | Calibration sets, joint braking, adaptive PI-base development and explicit worst-case failures | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v2.0-rc.3 (current) | Zero-return braking reserve, explicit calibration fallback and a 2,688-run protection/delivery comparison | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v2.0-rc.2 | Calibration sets, joint braking, adaptive PI-base development and explicit worst-case failures | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/df071764934fbb8bdc2496363a42bf545fc28bc7) |
 | v2.0-rc.1 | Measurement-only controller API, exact v1 parity and final-v1 packaging | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/99d7237a37115cd30ea0c99836fa6515d62c7bb1) |
 | v1.14 | Final v1: calibration-constrained model bank and discrete reserve | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ace6a9fed2f9084b5fda95e9e1113af7a3d93dca) |
 | v1.13 | Slowdown audit and truth-informed physical benchmarks | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cbb683484999ab73a79bf0fc368d682e8878ae7) |
