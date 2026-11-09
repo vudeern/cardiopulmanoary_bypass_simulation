@@ -114,7 +114,7 @@
     "examples/continuity_study.py": "1cf72484f4016b96675d58837c514a60c1de2f07d105d6388dde4257beae8e69",
     "examples/depletion_study.py": "ab98e70e66e31d047149560b02df718dc0849d3ccde5a7ee35bdb92f7b4bd277",
     "examples/finite_return_study.py": "9ddc2894a3b7968170b2aae773c62f80b0c7931fb6c728516809644aabcbe053",
-    "examples/identifiability_study.py": "a01aa90536a5b738762a642fbc19e256bed56fcdbf5cac62bef73e9e651c594a",
+    "examples/identifiability_study.py": "c74dc20d5244f4042ec2e224722eb133d89e703f40d6ce8d6c983d3fab795204",
     "examples/integrity_study.py": "5b0f51a29eb98ce0cc46b3429d32f7d20f19fe19044503fb70727d18499903cb",
     "examples/simc_benchmark.py": "2322f11ef2dde036fa6ddd51843c29847c79a9f6b2ca1471074996eff66504d6",
     "examples/startup_study.py": "5b4bc328593619840b2d440f55ce79249cf5df4341179ca84d84c33117352ddd",
@@ -143,7 +143,6 @@
     "src/perfusion_lab/depletion.py": "7d3f88ca1db505993da90fedd48d3741e1a06aa3deed2920d9d8e5232b2ded38",
     "src/perfusion_lab/depletion_simulation.py": "ba8e1526224db676d4bf8321eb2258765989cb9e60997927c2e5a59896679057",
     "src/perfusion_lab/feedback.py": "65341757c9dbdf0718ed03c6d8611f2d21891b64c3c884394b496e2605e7c09a",
-    "src/perfusion_lab/identifiability.py": "a7cead5dc661c94bb17b0e3eb268801d2a28177c4d0b2a02f3dbba0fc6ba10f1",
     "src/perfusion_lab/integrity.py": "8ee329d0f62ca27664753946ffb0482ac7bdac99f7b26456168eae90d0389def",
     "src/perfusion_lab/model.py": "0e86f4f172dd103c484698bbea48597673384e637ffdd05342a8c0489aa82662",
     "src/perfusion_lab/model_bank.py": "d51787a60b2d566281492b1866aafecdec837f7068889b44fc40f05674e36f64",
@@ -160,7 +159,9 @@
     "src/perfusion_lab/sensing.py": "8fba9eb4ca37e689acc69c3ec487674a8d2c877d78ce25684b69f5d64699563b",
     "src/perfusion_lab/simc.py": "efa8b877156b2a3b22c07e4aabbeb59e9d51e3207ca5ed6584ecfcffcd615d0b",
     "src/perfusion_lab/simulation.py": "27d0a7645f273f5afbbf068a1c93b201b58720f59252888365843fe49e5fea20",
-    "src/perfusion_lab/stress.py": "4315e23b7e1eb76252457a5df00ca962de4cc4852eb0164ee1edd9d0b4a460fd"
+    "src/perfusion_lab/stress.py": "4315e23b7e1eb76252457a5df00ca962de4cc4852eb0164ee1edd9d0b4a460fd",
+    "src/perfusion_research/__init__.py": "b9cdad8c175608d33420539ab3340bedf331bd9f20e12849dff25d98c2535c75",
+    "src/perfusion_research/identifiability.py": "7f00c4799f0e44d3659dbba2fa9abee116b32f9057a82c9d97aab1e9324e68db"
   },
   "stage": "local_identifiability_development"
 }

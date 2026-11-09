@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 from perfusion_lab.model import Patient
 from perfusion_lab.stress import StressScenario
-from perfusion_lab.identifiability import trajectory, sensitivity, diagnose
+from perfusion_research.identifiability import trajectory, sensitivity, diagnose
 
 
 class IdentifiabilityTests(unittest.TestCase):

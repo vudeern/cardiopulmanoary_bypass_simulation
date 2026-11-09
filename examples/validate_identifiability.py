@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import numpy as np
 from identifiability_study import ROOT, OUT, SEEDS, CUTOFFS, digest
-from perfusion_lab.identifiability import MODES, trajectory, sensitivity, diagnose
+from perfusion_research.identifiability import MODES, trajectory, sensitivity, diagnose
 from perfusion_lab.model import Patient
 from perfusion_lab.stress import StressScenario
 import calibrated_pump_study as baseline

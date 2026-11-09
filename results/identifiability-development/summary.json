@@ -184,7 +184,7 @@
   ],
   "interpretation": "Local, conditional information audit. No controller performance or safety claim.",
   "max_relative_half_step_change": 0.010390938047117767,
-  "protocol_sha256": "d816c6ba9199659bfe42bcd851134302d9cfc6e10195b49a12e31d4ecee783f6",
+  "protocol_sha256": "3d123d223860f806d7063b8f625b22927d39eac6a518b079416bf4a074a49461",
   "replay_parity_max_error": 1.1102230246251565e-16,
   "version2_ready": false
 }

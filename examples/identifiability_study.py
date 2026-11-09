@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import calibrated_pump_study as baseline
 from continuity_study import patient
-from perfusion_lab.identifiability import (
+from perfusion_research.identifiability import (
     PARAMETERS, SCALES, MODES, trajectory, sensitivity, diagnose)
 from perfusion_lab.stress import StressScenario
 
@@ -28,7 +28,7 @@ def save(path, value):
 
 def protocol():
     paths = set(json.loads((baseline.OUT/'protocol.json').read_text())['source_hashes'])
-    paths.update(('src/perfusion_lab/identifiability.py', 'examples/identifiability_study.py',
+    paths.update(('src/perfusion_research/identifiability.py', 'src/perfusion_research/__init__.py', 'examples/identifiability_study.py',
                   'examples/calibrated_pump_study.py', 'data/version2-gates.json'))
     value = dict(stage='local_identifiability_development', seeds=list(SEEDS),
         confirmation_seeds_executed=[], baseline_commit='c92c7f2fe84bc00b7d81f283ee916a76f72bf347',

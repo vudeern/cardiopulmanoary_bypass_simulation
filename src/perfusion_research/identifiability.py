@@ -6,8 +6,8 @@ full local rank here is only an optimistic diagnostic, not an identification pro
 """
 from dataclasses import replace
 import numpy as np
-from .stress import StressPlant
-from .reference import LevelReferences
+from perfusion_lab.stress import StressPlant
+from perfusion_lab.reference import LevelReferences
 
 
 PARAMETERS = ('initial_volume', 'inline_bias', 'venous_bias', 'pump_tau',
