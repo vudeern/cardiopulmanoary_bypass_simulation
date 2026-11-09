@@ -51,9 +51,55 @@ The new harness preserves the established timing and physiology pipeline and is 
 
 ## Current progress
 
-### v2.0-rc.3 — Conservative depletion protection (current)
+### v2.0-rc.4 — Finite return-flow credit (current)
 
-The `main` branch is **v2.0-rc.3**. A fixed, development-only comparison adds **2,688 runs on the same 32 virtual patients**: 1,536 primary runs and 1,152 missing/biased/shared-calibration runs across the protected candidate, frozen rc.2 candidate and previously selected eligible PI. There is no new tuning, comparator selection or confirmation. The two earlier development stages remain intact; cumulative completed development runs are **24,704**.
+The `main` branch is **v2.0-rc.4**. This fixed experiment adds **6,144 runs on the same 32 development virtual patients**: 3,072 primary, 2,304 calibration-failure and 768 abrupt-stop runs. Cumulative completed development runs are **30,848**. Confirmation remains **0/2** and both reserved cohorts stay untouched.
+
+The new candidate credits **half of a conservative causal return-flow estimate for 15, 30 or 60 seconds**, then assumes zero return forever. It retains rc.3's entire configured pump grid and maximum-braking fallback without independent support. The three horizons are fixed before outcome runs; no settings are revised during the sweep. Earlier controller, runtime and study source files remain byte-for-byte unchanged. The opt-in candidate package keeps frozen historical source scopes intact.
+
+| Configuration | Mean primary deficit AUC (mL O₂/m²) | Primary floor crossings | Abrupt-stop floor crossings | Primary worst minimum (mL) |
+| --- | ---: | ---: | ---: | ---: |
+| 15-second credit | 1545.77 | 0/512 | 0/128 | 656.99 |
+| 30-second credit | 1281.77 | 0/512 | 21/128 | 538.91 |
+| 60-second credit | 1196.16 | 0/512 | 56/128 | 537.63 |
+| rc.3 zero return | 1749.13 | 0/512 | 0/128 | 753.62 |
+| Previous rc.2 | 396.25 | 24/512 | 118/128 | 3.54 |
+| Eligible PI | 444.08 | 28/512 | 123/128 | 108.60 |
+
+**The fixed development rule selects `credit_15`.** It has zero floor crossings and zero empty requests across both primary and abrupt-stop grids. Primary oxygen deficit falls **11.6%** versus the rc.3 zero-return reference, from **1749.13 to 1545.77**. Eligible PI remains at **444.08**. These are reused development data, not independent confirmation.
+
+**The complete development milestone still fails.** Oxygen delivery remains insufficient for stable v2.0.
+
+The added challenge abruptly sets drainage to zero for **45 seconds, t=168–213 s**, in both physiology and plant families. The controller sees current measurements but never the event schedule. Selection requires zero floor-crossing and empty-request cases in primary **and** abrupt-stop testing, then lowest primary mean deficit among qualifying candidates. Shared/biased/missing calibration outcomes never select a winner. The existing independently development-tuned PI remains fixed; revisit an equally informed comparator before freezing a new design.
+
+<details>
+<summary>All finite-credit calibration-failure outcomes</summary>
+
+Mean deficit per 600-second run; each method/regime has 128 cases. The missing-calibration fallback retains maximum permitted braking, with its substantial delivery cost.
+
+| Calibration regime | Candidate | Deficit AUC (mL O₂/m²) | Floor-crossing cases | Empty-request cases |
+| --- | --- | ---: | ---: | ---: |
+| missing | 15-second credit | 2706.39 | 0/128 | 0/128 |
+| missing | 30-second credit | 2706.39 | 0/128 | 0/128 |
+| missing | 60-second credit | 2706.39 | 0/128 | 0/128 |
+| biased | 15-second credit | 1364.42 | 0/128 | 0/128 |
+| biased | 30-second credit | 1121.00 | 0/128 | 0/128 |
+| biased | 60-second credit | 1034.99 | 0/128 | 0/128 |
+| shared | 15-second credit | 1364.42 | 0/128 | 0/128 |
+| shared | 30-second credit | 1121.00 | 0/128 | 0/128 |
+| shared | 60-second credit | 1034.99 | 0/128 | 0/128 |
+
+</details>
+
+The finite-return assumption can be violated, shared absolute calibration bias remains unidentifiable, and omitted pump dynamics can invalidate reserve. Passing the added abrupt-stop grid does not establish universal protection. Initial stopping may already be infeasible. No hardware or clinical validation is claimed.
+
+The analytic reserve is independently tested against step-by-step emergency braking. All **2,688 repeated rc.3 reference cases** reproduce their recorded metrics. [Fixed protocol](results/finite-return-development/protocol.json), [all patient logs and summary](results/finite-return-development/summary.json), [reserve explanation](docs/RETURN_CREDIT.md), [implementation](src/perfusion_candidates/finite_return.py) and [diagnostic replays](web/finite-return-comparison.svg) are public. Paired patient-level intervals are exploratory because development data are reused.
+
+**Next:** reduce the remaining delivery penalty without weakening individual protection, diagnose startup/calibration support and braking conservatism, then retune the equally informed PI before considering a design freeze. Stable v2.0.0 remains blocked on the full evidence policy and two untouched confirmation cohorts.
+
+### v2.0-rc.3 — Conservative depletion protection (previous)
+
+The previous **v2.0-rc.3** iteration added **2,688 runs on the same 32 virtual patients**: 1,536 primary runs and 1,152 missing/biased/shared-calibration runs across the protected candidate, frozen rc.2 candidate and previously selected eligible PI. There is no new tuning, comparator selection or confirmation. The two earlier development stages remain intact; cumulative completed development runs are **24,704**.
 
 The new opt-in `DepletionRuntime` assumes **zero future venous return** during braking, retains the **entire configured pump grid** for stopping calculations, and commands maximum permitted deceleration whenever the independent calibration/model set is unsupported or conflicting. The aggressive PI settings and actuator limits stay fixed. Earlier controller/runtime modules remain byte-for-byte unchanged. The new simulation adapter differs only in runtime selection and its function name/docstring; timing, physiology and metrics are unchanged.
 
@@ -152,7 +198,7 @@ The [first-stage protocol](results/reachability-development/protocol.json), [ada
 
 ### Requirements for stable v2.0.0
 
-The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); the latest iteration reports [current progress](results/depletion-development/summary.json).
+The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); the latest iteration reports [current progress](results/finite-return-development/summary.json).
 
 - At least **10% lower mean oxygen-deficit AUC** than the strongest development-eligible PI comparator with the same inputs and limits; the paired 95% interval must support improvement. Determine the comparator on development data, not after final results.
 - **Zero empty-reservoir requests** in primary evaluation and mean low-reservoir time **≤1 s per 10-minute run** in each primary regime. Upper paired extra exposure must be ≤1 s low/empty and ≤5 s high pressure.
@@ -200,19 +246,19 @@ The public-case input file contains five observations transcribed from [Hunter e
 
 ### Use the current controller interface
 
-This synthetic example uses the conservative rc.3 protection runtime. Its oxygen-delivery penalty and calibration/model limitations above apply. The frozen v1 package predates these runtime interfaces.
+This synthetic example uses the development-selected rc.4 finite-return candidate. Its explicit return-flow assumption, delivery penalty and calibration/model limitations above apply. The frozen v1 package predates these runtime interfaces.
 
 ```python
-from perfusion_lab.depletion import DepletionRuntime
+from perfusion_candidates.finite_return import FiniteReturnRuntime
 from perfusion_lab.runtime import MeasurementFrame
 from pathlib import Path
 import json
 from perfusion_lab.sensing import Observation
 
-protocol = json.loads(Path("results/reachability-base-development/protocol.json").read_text())
-selection = json.loads(Path("results/reachability-base-development/selection.json").read_text())
-method = protocol["methods"][selection["candidate"]]
-runtime = DepletionRuntime(bsa=1.85, initial_hb=9.0, dt=1.0,
+protocol = json.loads(Path("results/finite-return-development/protocol.json").read_text())
+summary = json.loads(Path("results/finite-return-development/summary.json").read_text())
+method = protocol["methods"][summary["selected_candidate"]]
+runtime = FiniteReturnRuntime(bsa=1.85, initial_hb=9.0, dt=1.0,
     controller_options=method["options"], guard_options=method["guard"])
 # Illustrative measured values in the documented units, not patient settings.
 obs = Observation(0.0, 4.44, 0.85, 60.0, 9.0, 0.98, 37.0, 9.0)
@@ -228,6 +274,14 @@ python examples/check_versions.py
 ```
 
 ### Reproduce the current development experiment
+
+```bash
+python examples/finite_return_study.py --stage run
+python examples/validate_finite_return.py --replay
+python examples/build_finite_return_web.py --check
+```
+
+Earlier development stages remain reproducible:
 
 ```bash
 python examples/reachability_study.py --stage primary
@@ -267,7 +321,8 @@ Versions are listed newest first. The current entry follows `main`; earlier entr
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
-| v2.0-rc.3 (current) | Zero-return braking reserve, explicit calibration fallback and a 2,688-run protection/delivery comparison | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v2.0-rc.4 (current) | Finite return-flow credit, explicit abrupt-stop challenges and a 6,144-run fixed development comparison | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v2.0-rc.3 | Zero-return braking reserve, explicit calibration fallback and a 2,688-run protection/delivery comparison | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/63c71527ca3760ccdb22235d9945b89cbdfed445) |
 | v2.0-rc.2 | Calibration sets, joint braking, adaptive PI-base development and explicit worst-case failures | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/df071764934fbb8bdc2496363a42bf545fc28bc7) |
 | v2.0-rc.1 | Measurement-only controller API, exact v1 parity and final-v1 packaging | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/99d7237a37115cd30ea0c99836fa6515d62c7bb1) |
 | v1.14 | Final v1: calibration-constrained model bank and discrete reserve | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ace6a9fed2f9084b5fda95e9e1113af7a3d93dca) |

@@ -1,5 +1,5 @@
 {
-  "current_version": "2.0.0rc3",
+  "current_version": "2.0.0rc4",
   "next_stable_version": "2.0.0",
   "final_v1_version": "1.14.0",
   "final_v1_commit": "ace6a9fed2f9084b5fda95e9e1113af7a3d93dca",
@@ -65,15 +65,16 @@
       "rule": "Use development only; change one mechanism at a time; tune PI independently with identical measurement channels and actuator limits. Retain every candidate and failure.",
       "primary_runs": 17408,
       "secondary_runs": 4608,
-      "selected_candidate": "conservative_depletion_reference",
+      "selected_candidate": "credit_15",
       "pi_comparator": "pi_legacy_5.0_0.5",
       "development_joint_success": false,
-      "artifact": "results/depletion-development/summary.json",
+      "artifact": "results/finite-return-development/summary.json",
       "individual_risk": "results/reachability-base-development/risk-summary.json",
-      "remaining": "Conservative zero-return reserve prevents floor crossings in the recorded development grid but incurs excessive oxygen deficit. Develop explicit, testable less restrictive inflow protection; retune matched PI before freezing. No confirmation executed.",
-      "latest_iteration_primary_runs": 1536,
-      "latest_iteration_secondary_runs": 1152,
-      "cumulative_development_runs": 24704
+      "remaining": "Recover the remaining oxygen-delivery penalty while retaining individual protection and explicit return-flow assumptions. Diagnose startup/calibration and braking conservatism; retune equally informed PI before freeze. Confirmation remains untouched.",
+      "latest_iteration_primary_runs": 3072,
+      "latest_iteration_secondary_runs": 2304,
+      "cumulative_development_runs": 30848,
+      "latest_iteration_abrupt_stop_runs": 768
     },
     {
       "id": 4,
@@ -176,5 +177,5 @@
     "No physical device driver, electrical design, hardware testing or independent stop system.",
     "Model intervals and braking reserve remain conditional engineering hypotheses."
   ],
-  "current_progress": "results/reachability-base-development/version2-progress.json"
+  "current_progress": "results/finite-return-development/summary.json"
 }
