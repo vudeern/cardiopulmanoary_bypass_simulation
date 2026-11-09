@@ -1,0 +1,206 @@
+{
+  "version": "1.2.0",
+  "candidates": [
+    {
+      "id": "original",
+      "family": "original",
+      "policy": "sentinel",
+      "options": {}
+    },
+    {
+      "id": "guarded",
+      "family": "guarded",
+      "policy": "sentinel_guarded",
+      "options": {}
+    },
+    {
+      "id": "reserve_0.1",
+      "family": "reserve",
+      "policy": "sentinel",
+      "options": {
+        "reserve_margin": 0.1
+      }
+    },
+    {
+      "id": "reserve_0.2",
+      "family": "reserve",
+      "policy": "sentinel",
+      "options": {
+        "reserve_margin": 0.2
+      }
+    },
+    {
+      "id": "reserve_0.3",
+      "family": "reserve",
+      "policy": "sentinel",
+      "options": {
+        "reserve_margin": 0.3
+      }
+    },
+    {
+      "id": "reserve_0.4",
+      "family": "reserve",
+      "policy": "sentinel",
+      "options": {
+        "reserve_margin": 0.4
+      }
+    },
+    {
+      "id": "reserve_0.5",
+      "family": "reserve",
+      "policy": "sentinel",
+      "options": {
+        "reserve_margin": 0.5
+      }
+    },
+    {
+      "id": "reserve_0.6",
+      "family": "reserve",
+      "policy": "sentinel",
+      "options": {
+        "reserve_margin": 0.6
+      }
+    },
+    {
+      "id": "cap_1.4",
+      "family": "flow_cap",
+      "policy": "sentinel",
+      "options": {
+        "flow_cap_index": 1.4
+      }
+    },
+    {
+      "id": "cap_1.6",
+      "family": "flow_cap",
+      "policy": "sentinel",
+      "options": {
+        "flow_cap_index": 1.6
+      }
+    },
+    {
+      "id": "cap_1.8",
+      "family": "flow_cap",
+      "policy": "sentinel",
+      "options": {
+        "flow_cap_index": 1.8
+      }
+    },
+    {
+      "id": "cap_2.0",
+      "family": "flow_cap",
+      "policy": "sentinel",
+      "options": {
+        "flow_cap_index": 2.0
+      }
+    },
+    {
+      "id": "cap_2.2",
+      "family": "flow_cap",
+      "policy": "sentinel",
+      "options": {
+        "flow_cap_index": 2.2
+      }
+    },
+    {
+      "id": "cap_2.4",
+      "family": "flow_cap",
+      "policy": "sentinel",
+      "options": {
+        "flow_cap_index": 2.4
+      }
+    }
+  ],
+  "tuning_seeds": [
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007
+  ],
+  "evaluation_seeds": [
+    3000,
+    3001,
+    3002,
+    3003,
+    3004,
+    3005,
+    3006,
+    3007,
+    3008,
+    3009,
+    3010,
+    3011,
+    3012,
+    3013,
+    3014,
+    3015,
+    3016,
+    3017,
+    3018,
+    3019,
+    3020,
+    3021,
+    3022,
+    3023
+  ],
+  "map_seeds": [
+    4000,
+    4001,
+    4002,
+    4003
+  ],
+  "scenarios": [
+    "nominal",
+    "hemodilution",
+    "hb_bias",
+    "venous_obstruction",
+    "oxygenator_loss",
+    "compound",
+    "unmodeled_level_bias"
+  ],
+  "duration": 1200.0,
+  "dt": 2.0,
+  "target": 280.0,
+  "level_bias_L": [
+    0.0,
+    0.09999999999999999,
+    0.19999999999999998,
+    0.3,
+    0.39999999999999997,
+    0.49999999999999994,
+    0.6
+  ],
+  "drainage": [
+    0.3,
+    0.41666666666666663,
+    0.5333333333333333,
+    0.6499999999999999,
+    0.7666666666666666,
+    0.8833333333333333,
+    1.0
+  ],
+  "primary_metric": "deficit_auc",
+  "risk_metrics": [
+    "low_reservoir_s",
+    "empty_request_s"
+  ],
+  "weighting": "Equal weight for each of seven artificial scenarios; not clinical prevalence",
+  "selection": "Within each family, minimize tuning mean deficit among candidates meeting both guarded tuning mean risk budgets. If none match, choose lexicographically by low-reservoir exposure, empty requests, deficit, candidate order; label unmatched.",
+  "guard": "Frozen v1.1 detector; no new guard tuning",
+  "paired_intervals": "2000 percentile bootstrap resamples, seed 2026; pooled results resample patient seeds after averaging seven scenarios within each seed",
+  "replay": "Evaluation seed 3000, fixed before evaluation",
+  "tuning_runs": 784,
+  "evaluation_runs": 672,
+  "map_runs": 784,
+  "total_runs": 2240,
+  "limitations": [
+    "Same structural plant and fault schedules as prior work.",
+    "New seeds do not provide external validation.",
+    "Finite simple-baseline grids do not exhaust existing methods.",
+    "Tuning risk matching does not imply evaluation risk matching.",
+    "No publication, patentability, clinical benefit or commercial demand established."
+  ]
+}

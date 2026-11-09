@@ -1,0 +1,17 @@
+{
+  "status": "post_result_descriptive_sensitivity",
+  "reason": "Primary SIMC selection at fast grid boundary; include canonical source tau_c=theta.",
+  "method": {
+    "id": "canonical_tight",
+    "family": "simc",
+    "kind": "simc",
+    "options": {
+      "tau_c": 1.5,
+      "target_level": 0.45
+    }
+  },
+  "design_theta_s": 1.5,
+  "source": "data/simc-reference/source.json",
+  "data_reused": "Original final cases and patient seeds; no independent confirmation or replacement primary test.",
+  "no_retuning": true
+}

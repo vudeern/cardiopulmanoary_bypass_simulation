@@ -1,0 +1,18 @@
+{
+  "brake_only": {
+    "deficit_auc": 182.9469306860235,
+    "low_reservoir_s": 0.0,
+    "empty_request_s": 0.0,
+    "high_pressure_s": 3.359375,
+    "flow_variation": 33.950372193439,
+    "mean_flow": 3.8376478053164966
+  },
+  "boost_only": {
+    "deficit_auc": 158.17252734343955,
+    "low_reservoir_s": 0.0,
+    "empty_request_s": 0.0,
+    "high_pressure_s": 3.3984375,
+    "flow_variation": 34.569820958979975,
+    "mean_flow": 3.879895478587926
+  }
+}

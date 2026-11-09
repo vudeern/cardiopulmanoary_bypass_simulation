@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0rc2",
+  "stage": "development_only",
+  "patients": 32,
+  "primary_runs": 17408,
+  "secondary_runs": 4608,
+  "candidate": "aggressive_consistent",
+  "comparator": "pi_legacy_5.0_0.5",
+  "candidate_eligible": true,
+  "comparator_eligible": true,
+  "development_gates": {
+    "clean": {
+      "oxygen_mean_10_percent": false,
+      "oxygen_paired_interval": true,
+      "mean_low_reservoir": true,
+      "zero_empty_requests": true,
+      "extra_low_reservoir": true,
+      "extra_empty_requests": true,
+      "extra_high_pressure": true
+    },
+    "bias": {
+      "oxygen_mean_10_percent": true,
+      "oxygen_paired_interval": true,
+      "mean_low_reservoir": true,
+      "zero_empty_requests": true,
+      "extra_low_reservoir": true,
+      "extra_empty_requests": true,
+      "extra_high_pressure": true
+    },
+    "outage": {
+      "oxygen_mean_10_percent": true,
+      "oxygen_paired_interval": true,
+      "mean_low_reservoir": true,
+      "zero_empty_requests": true,
+      "extra_low_reservoir": true,
+      "extra_empty_requests": true,
+      "extra_high_pressure": true
+    }
+  },
+  "development_joint_success": false,
+  "version2_ready": false,
+  "qualifying_confirmation_cohorts": 0,
+  "confirmation_seeds_executed": [],
+  "reason": "Development selection and analysis reuse the same 32 patients. Two distinct untouched confirmation cohorts are still required, even if development gates pass."
+}

@@ -1,0 +1,117 @@
+# Data dictionary
+
+All controller trajectories are synthetic unless explicitly identified as the five-point public-case oxygen input replay.
+
+## Simulation outputs
+
+`simulate(...)` returns configuration, patient parameters, per-step rows and integrated metrics. Truth is recorded at the end of each interval; observations and decisions are from the start of that interval. Units are explicit in `model.py` and the table below.
+
+| Field | Meaning / units |
+| --- | --- |
+| `time`, `observation_time` | Interval end and sensor acquisition time, seconds |
+| `flow`, `qv`, `command` | Step-average arterial flow, venous return, commanded flow, L/min |
+| `reservoir`, `patient_volume` | Conserved physical volumes, L |
+| `pressure` | Arterial pressure, mmHg |
+| `hb`, `hb_inline`, `hb_estimate`, `hb_lower`, `hb_upper` | Hemoglobin and observer bounds, g/dL |
+| `sao2` | Arterial saturation, fraction |
+| `do2`, `measured_do2` | Indexed oxygen delivery, mL O2/min/m² |
+| `observed_flow`, `observed_reservoir` | Faulty acquired channels, L/min and L |
+| `observed_venous_flow` | Optional independent acquired venous flow, L/min; null when disabled |
+| `level_reference`, `level_reference_acquired` | Delivered volume reference (L), original acquisition time (s) |
+| `level_reference_estimate`, `level_reference_lower` | Corrected level and engineering lower estimate, L |
+| `level_reference_age`, `level_reference_unknown` | Acquisition age (s) and missing/stale flag |
+| `injected_level_bias`, `injected_flow_bias` | Hidden scoring information; never controller inputs |
+| `empty_request`, `infeasible`, `level_fault` | Physical transfer limitation, candidate infeasibility, detector flag |
+
+Metrics include oxygen-deficit AUC (mL O2/m²), exposure durations (seconds), minimum reservoir (L), mean flow (L/min) and summed absolute command changes (L/min). AUC uses dt/60 to convert seconds to minutes. Experimental thresholds are engineering choices, not treatment settings. Observer bounds are not calibrated confidence limits.
+
+## Controller comparison
+
+`data/controller-reference/reproduction.json` identifies the source, verified components, adaptations and unresolved reproduction requirements.
+
+`results/controller-comparison/` contains:
+
+- `protocol.json`: candidate grid, seed split, measurement assumptions and shared constraints.
+- `selection.json`: development-only means, selected settings and exposure-budget eligibility.
+- `metrics.csv`: every development and final run; no failed run is removed.
+- `summary.json`: grouped working metrics and explicit false flags for exact reproduction and superiority claims.
+- `debug-traces.json`: two prespecified cases, one evaluation seed, all three methods, full trajectories.
+
+`venous_tracking_mae_l_min` compares step-average true arterial flow with step-average true venous flow for scoring. `level_mae_l` compares volume with the reference architecture's 0.45 L target; Sentinel has a floor objective, so this is not a common optimization target. Development budgets and scenario weights do not represent clinical margins or event frequencies.
+
+The optional venous sensor uses its own random stream. It samples current venous flow before the plant advances, including the current drainage state in lagged plants. Noise and bias are explicit. Both matched arms receive the same sensor model and random innovations. Different controller actions can produce different physical flow observations; pairing does not imply identical trajectories.
+
+## Public case
+
+`data/published-case/observations.csv` preserves five reported samples and missing arterial saturation. `provenance.json` supplies the citation, units, extraction method and assumptions. `results/published-case/` contains arithmetic replay outputs. Chosen saturation endpoints are sensitivities, not measured values, confidence intervals or guaranteed bounds. No interpolation, deficit AUC or fitted reservoir model is produced from those sparse samples.
+
+Older experiment folders retain their recorded protocol, parameters and raw metrics. They are exploratory engineering logs. Browser traces are subsampled for display; integrated metrics use full simulation resolution.
+
+## Verified general-reference comparison
+
+`data/simc-reference/source.json` maps the published general PI rule and normalized verification case. It explicitly distinguishes source equations from the simulation supervisor. `results/simc-verification/verification.json` stores computed frequency values and time-domain refinement errors.
+
+`results/simc-benchmark/` contains the recorded protocol, development-only selection, every run in CSV, all final cells and patient-block comparisons in JSON, twelve replay traces, timestep sensitivity and machine diagnostics. The exact script/model/source hashes are recorded before the run. `diagnostics.json` retains every sensor-only pairing and finite-grid selection limitations. No prose result document is generated.
+
+Final parameters come from wider uncalibrated ranges than development parameters. The SIMC source has an integrating-process gain; the applied reservoir uses signed gain −1/60 and a fixed 1.5-second design delay. The design sampling assumption stays fixed during timestep sensitivity. Random sensor draws change with dt, so those runs are sensitivity checks rather than a pure deterministic convergence proof.
+
+The browser's verified-reference dataset has a 600-second duration and one-second scoring interval; older datasets retain their own duration and interval. The viewer scales its timeline and timing caption to the selected dataset.
+
+The separate `canonical-protocol.json`, `canonical-metrics.csv` and `canonical-summary.json` are post-result descriptive sensitivity logs. They apply the source's canonical tau_c = theta choice using the already development-selected reservoir target. They reuse final cases, make no independent confirmation claim, and do not replace the recorded primary comparison.
+
+## Braking-controller logs
+
+`results/braking-study/` retains protocol, development candidates, selected methods, all evaluation rows, all 96 final cells and patient-block comparisons, and six prespecified replay cells. The final table is separate from two retained development-only pilots. Their original source hashes resolve to the snapshots in `data/braking-history/`. These are engineering records, not prose result reports.
+
+New controller-only row fields are `braking_volume` and `braking_budget` (L), `control_level_lower` (L), `inflow_lower` and `balance_inflow_lower` (L/min), `actuator_flow_upper` (L/min), `estimated_drift_rate` (L/s), `braking_feasible` and `level_information_unknown`. A null balance estimate means insufficient past samples. Reference age and the estimated reference bias are causal observation metadata; injected bias and future truth are never passed to the controller.
+
+The primary comparison uses good references and three specified in-range actuator regimes. The 12-second lag plant and delayed/missing or biased references are explicit secondary stress groups. All groups remain visible; engineering tolerances are not clinical safety margins.
+
+
+## Continuity engineering logs
+
+`results/continuity-study/` contains a frozen protocol, development selection, full per-run metrics, cell/group means, paired patient-block intervals and representative traces. The final-development grid has 3,072 runs; fresh evaluation has 6,144 runs (16 virtual patients × 8 faults × 4 plants × 4 reference regimes × 3 controllers). A separate 3,072-run development-only grid remains under `results/continuity-pilot-1/`; it is not a final evaluation.
+
+New debug fields are `balance_level_estimate` [L], `balance_reference_age` [s or null before anchoring], and `venous_bias_estimate` [L/min]. These are estimates, not injected truth. The common `control_level_lower` is an engineering lower estimate, not a calibrated confidence bound. `level_information_unknown` flags no delivered anchor. The stopping constraint's existing debug fields retain the same units as v1.9.
+
+The co-primary good-reference and delayed/lost-reference groups exclude the 12 s actuator, outside the design interval. The combined primary summary pools those two groups equally. Biased and never-delivered references, and all out-of-range lag cells, remain in explicitly labelled secondary groups, some of which overlap. Paired bootstrap intervals resample virtual patients as blocks; they do not represent a clinical population.
+
+
+## Selective PI engineering logs
+
+`results/selective-study/` contains 4,096 final-development runs, 256 selected-parameter development component checks, and 10,240 fresh evaluation runs (16 seeds × 8 cases × 4 plants × 4 reference regimes × 5 methods). Two separate preceding development-only grids and their component checks remain in `results/selective-pilot-{1,2}/`.
+
+New per-step debug fields are `reference_count`, `estimate_disagreement` [L], `override_eligible` [boolean], `override_weight` [dimensionless], `pi_command`, `predictive_command` and `override_delta` [L/min]. `predictive_feasible` describes the predictive recommendation's low-end feasibility, not the applied blended action. `infeasible` flags an active override whose applied action violates the conditional stopping inequality. PI does not receive future references or injected faults; all methods retain the same simulated sensing channels.
+
+`capacity.csv` and `capacity-summary.json` are offline steady-state diagnostic outputs using known synthetic parameters and faults. `steady_capacity_deficit_auc` is an integral of a steady-state capacity shortfall, not an achievable controller score or a certified lower bound on finite-duration oxygen deficit. It excludes the opportunity to borrow stored volume and temporary pressure transients. It must not be used as a dynamic oracle or to excuse failures of the frozen criterion.
+
+
+## Reference-integrity logs
+
+`results/integrity-study/` contains 3,072 development runs and 10,752 fresh evaluation runs (16 virtual patients × 2 physiological challenges × 3 plants × 7 routine-reference faults × 4 calibration regimes × 4 methods). The same synthetic parameter ranges and previously studied physiology families remain; fresh seeds are not independent model or clinical validation. `results/integrity-pilot-1/` retains the preceding development-only run and has no final evaluation.
+
+`reference_events` include acquisition, delivery and decision times, acceptance and reason. `injected_bias_for_analysis` is joined only after the decision; it never enters the guard/controller. `calibration_value`, `calibration_acquired` and `calibration_delivered` record actual delivered simulated measurements. Other debug fields include `reference_quarantined`, `reference_uncertainty` [L], `calibration_age` [s], `calibration_count` and `recovery_supported`.
+
+The added counters are `reference_bad_total`, `reference_bad_rejected`, `reference_good_total`, `reference_good_rejected` and `quarantine_s`. A routine sample is bias-labelled bad when absolute injected bias exceeds 0.04 L; sensor noise alone does not define bias. Rejection includes source quarantine, so it does not prove identification of a particular fault. Samples still pending at the end are excluded from decision counts. `classification.json` gives observed counts/fractions alongside healthy-sample rejection, not clinical sensitivity or specificity. Calibration-only PI ignores routine samples and is omitted from these rates.
+
+`decisions.json` retains all routine decision events and periodic guard snapshots for the displayed representative patient. The primary reference-fault group includes all nonclean fault-profile challenges under healthy calibration; the clean-reference group is separate. Missing, biased and shared calibration groups remain secondary and must not be silently excluded from general claims.
+
+
+## Slowdown audit artifacts
+
+`results/slowdown-audit/protocol.json` freezes post-result scope and source hashes. `runs.csv` has 640 existing/diagnostic runs, and `decision-counts.csv` has 128 observed hybrid audits. All reuse prior patient/noise seeds; there is no training/test split or retuning in this diagnostic. Counts and per-run means are over the declared eight case cells, not an independent population.
+
+`benchmarks.json` has 96 physical cells, both fixed heuristic outcomes, selected-witness metrics and checked LP results. `witness-commands.json` retains every selected full command schedule with benchmark/generator hashes. All can be replayed through the unchanged full plant. `local-events.json` retains representative-patient slowdown/probe events, including the counterfactual commands and verified immediate gains. The local gains must not be summed into an achievable trajectory. `replays.json` stores 40 controller/ablation views; the web exporter adds eight explicitly labelled truth-witness views. The LP is never exported as a physical replay.
+
+`audit_feasible` checks the reservoir floor, empty requests and initial-transient pressure envelope. Raw `high_pressure_s` still uses 95 mmHg. `guard_lower_above_truth_steps` is a post-hoc coverage failure count, not information supplied to the actual controller. Counterfactual flags overlap. The removed-interval and exact-volume ablations can violate constraints and are not substitutes for a new controller trial.
+
+The superseded initial tail calculation and its prior protocol/summary remain explicitly labelled invalid evidence under `data/slowdown-audit/tail-correction/`; they are excluded from current results.
+
+
+## v1.14 model-bank evidence and v2 milestone
+
+`results/model-bank-study/` contains 4,096 development records, frozen selection/protocol, 15,360 fresh evaluation records (16 patients × 2 physiology cases × 3 plants × 8 routine-reference regimes × 4 calibration regimes × 5 methods), cell means, paired intervals and 40 representative replays. Current patient/noise seeds are disjoint from development. The circuit and fault families remain reused synthetic assumptions.
+
+New fields include `bank_supported`, `bank_conflict`, `active_models`, `bank_lower` and `bank_upper`. Diagnostic metrics align the step-start estimate with preceding physical truth: `volume_mae_L`, `lower_undercoverage_s`, `mean_halfwidth_L`, `bank_supported_s` and `bank_conflict_s`. Truth is used only for these offline metrics. Declared half-widths are recorded before any nonnegative physical clipping; they are not calibrated confidence probabilities.
+
+`data/version2-gates.json` records the user-defined milestone. `version2-progress.json` reports exploratory primary-regime metrics, a comparator selected from development evidence, and the still-unmet requirement for two fresh cohorts of at least 32 virtual patients. It does not award v2 readiness from a 16-patient experiment. Missing/biased/shared calibration tests remain secondary limitations, never silently dropped.

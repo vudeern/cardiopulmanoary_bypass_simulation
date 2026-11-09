@@ -1,0 +1,395 @@
+{
+  "version": "1.5.0",
+  "development_seeds": [
+    11000,
+    11001,
+    11002,
+    11003,
+    11004,
+    11005,
+    11006,
+    11007
+  ],
+  "evaluation_seeds": [
+    12000,
+    12001,
+    12002,
+    12003,
+    12004,
+    12005,
+    12006,
+    12007,
+    12008,
+    12009,
+    12010,
+    12011,
+    12012,
+    12013,
+    12014,
+    12015
+  ],
+  "candidates": [
+    {
+      "id": "forecast_0.0",
+      "family": "forecast",
+      "kind": "forecast",
+      "label": "Forecast +0.0 L",
+      "options": {
+        "reserve_margin": 0.0
+      }
+    },
+    {
+      "id": "forecast_0.1",
+      "family": "forecast",
+      "kind": "forecast",
+      "label": "Forecast +0.1 L",
+      "options": {
+        "reserve_margin": 0.1
+      }
+    },
+    {
+      "id": "forecast_0.2",
+      "family": "forecast",
+      "kind": "forecast",
+      "label": "Forecast +0.2 L",
+      "options": {
+        "reserve_margin": 0.2
+      }
+    },
+    {
+      "id": "forecast_0.3",
+      "family": "forecast",
+      "kind": "forecast",
+      "label": "Forecast +0.3 L",
+      "options": {
+        "reserve_margin": 0.3
+      }
+    },
+    {
+      "id": "forecast_0.4",
+      "family": "forecast",
+      "kind": "forecast",
+      "label": "Forecast +0.4 L",
+      "options": {
+        "reserve_margin": 0.4
+      }
+    },
+    {
+      "id": "forecast_0.5",
+      "family": "forecast",
+      "kind": "forecast",
+      "label": "Forecast +0.5 L",
+      "options": {
+        "reserve_margin": 0.5
+      }
+    },
+    {
+      "id": "pi_0.4_2.0_0.02",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.4 L",
+      "options": {
+        "target_level": 0.4,
+        "kp": 2.0,
+        "ki": 0.02
+      }
+    },
+    {
+      "id": "pi_0.4_2.0_0.08",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.4 L",
+      "options": {
+        "target_level": 0.4,
+        "kp": 2.0,
+        "ki": 0.08
+      }
+    },
+    {
+      "id": "pi_0.4_4.0_0.02",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.4 L",
+      "options": {
+        "target_level": 0.4,
+        "kp": 4.0,
+        "ki": 0.02
+      }
+    },
+    {
+      "id": "pi_0.4_4.0_0.08",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.4 L",
+      "options": {
+        "target_level": 0.4,
+        "kp": 4.0,
+        "ki": 0.08
+      }
+    },
+    {
+      "id": "pi_0.4_8.0_0.02",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.4 L",
+      "options": {
+        "target_level": 0.4,
+        "kp": 8.0,
+        "ki": 0.02
+      }
+    },
+    {
+      "id": "pi_0.4_8.0_0.08",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.4 L",
+      "options": {
+        "target_level": 0.4,
+        "kp": 8.0,
+        "ki": 0.08
+      }
+    },
+    {
+      "id": "pi_0.6_2.0_0.02",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.6 L",
+      "options": {
+        "target_level": 0.6,
+        "kp": 2.0,
+        "ki": 0.02
+      }
+    },
+    {
+      "id": "pi_0.6_2.0_0.08",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.6 L",
+      "options": {
+        "target_level": 0.6,
+        "kp": 2.0,
+        "ki": 0.08
+      }
+    },
+    {
+      "id": "pi_0.6_4.0_0.02",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.6 L",
+      "options": {
+        "target_level": 0.6,
+        "kp": 4.0,
+        "ki": 0.02
+      }
+    },
+    {
+      "id": "pi_0.6_4.0_0.08",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.6 L",
+      "options": {
+        "target_level": 0.6,
+        "kp": 4.0,
+        "ki": 0.08
+      }
+    },
+    {
+      "id": "pi_0.6_8.0_0.02",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.6 L",
+      "options": {
+        "target_level": 0.6,
+        "kp": 8.0,
+        "ki": 0.02
+      }
+    },
+    {
+      "id": "pi_0.6_8.0_0.08",
+      "family": "pi",
+      "kind": "pi",
+      "label": "Level PI \u00b7 target 0.6 L",
+      "options": {
+        "target_level": 0.6,
+        "kp": 8.0,
+        "ki": 0.08
+      }
+    },
+    {
+      "id": "threshold_0.4",
+      "family": "threshold",
+      "kind": "threshold",
+      "label": "Threshold slowdown \u00b7 0.4 L",
+      "options": {
+        "threshold": 0.4
+      }
+    },
+    {
+      "id": "threshold_0.6",
+      "family": "threshold",
+      "kind": "threshold",
+      "label": "Threshold slowdown \u00b7 0.6 L",
+      "options": {
+        "threshold": 0.6
+      }
+    },
+    {
+      "id": "threshold_0.8",
+      "family": "threshold",
+      "kind": "threshold",
+      "label": "Threshold slowdown \u00b7 0.8 L",
+      "options": {
+        "threshold": 0.8
+      }
+    },
+    {
+      "id": "threshold_1.0",
+      "family": "threshold",
+      "kind": "threshold",
+      "label": "Threshold slowdown \u00b7 1.0 L",
+      "options": {
+        "threshold": 1.0
+      }
+    }
+  ],
+  "development_sensors": {
+    "clean": {
+      "level_profile": "none"
+    },
+    "step": {
+      "level_profile": "step",
+      "reservoir_bias": 0.5
+    },
+    "drift": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.5,
+      "drift_duration": 0.2
+    },
+    "initial": {
+      "level_profile": "initial",
+      "reservoir_bias": 0.5
+    },
+    "flow_high": {
+      "level_profile": "none",
+      "flow_bias": 0.9
+    },
+    "drift_flow": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.5,
+      "drift_duration": 0.2,
+      "flow_bias": 0.9
+    },
+    "noisy": {
+      "level_profile": "none",
+      "noise_scale": 12.0
+    }
+  },
+  "final_sensors": {
+    "clean": {
+      "level_profile": "none"
+    },
+    "step": {
+      "level_profile": "step",
+      "reservoir_bias": 0.6
+    },
+    "drift": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.6,
+      "drift_duration": 0.25
+    },
+    "initial": {
+      "level_profile": "initial",
+      "reservoir_bias": 0.6
+    },
+    "flow_high": {
+      "level_profile": "none",
+      "flow_bias": 1.1
+    },
+    "drift_flow": {
+      "level_profile": "ramp",
+      "reservoir_bias": 0.6,
+      "drift_duration": 0.25,
+      "flow_bias": 1.1
+    },
+    "noisy": {
+      "level_profile": "none",
+      "noise_scale": 14.0
+    }
+  },
+  "development_plants": {
+    "reference": {},
+    "slow_pump": {
+      "actuator_tau": 8.0
+    }
+  },
+  "final_plants": {
+    "reference": {},
+    "slow_pump": {
+      "actuator_tau": 5.0
+    },
+    "lagged": {
+      "drainage_tau": 20.0,
+      "venous_nonlinearity": 0.08
+    }
+  },
+  "references": {
+    "good": {
+      "period": 60.0,
+      "delay": 4.0,
+      "noise_sd": 0.01
+    },
+    "delayed": {
+      "period": 90.0,
+      "delay": 30.0,
+      "noise_sd": 0.01
+    },
+    "dropout": {
+      "period": 60.0,
+      "delay": 4.0,
+      "noise_sd": 0.01,
+      "dropout_prob": 0.25,
+      "outage_start": 360.0,
+      "outage_end": 840.0
+    },
+    "biased": {
+      "period": 60.0,
+      "delay": 4.0,
+      "noise_sd": 0.01,
+      "bias": 0.15
+    }
+  },
+  "development_runs": 2464,
+  "evaluation_runs": 4032,
+  "total_runs": 6496,
+  "selection": "Within each family select lowest mean deficit among candidates with development mean low reservoir <=1 s and empty requests <=1 s. If no candidate qualifies, retain least low-reservoir/empty-request/deficit in that order and mark unmatched. Ties follow candidate order.",
+  "primary": "PI minus forecast on good reference: upper paired 95% intervals <=1 s for low reservoir/empty requests and <=5 s for high pressure, plus deficit upper interval <0.",
+  "primary_tolerances": {
+    "low_reservoir_s": 1.0,
+    "empty_request_s": 1.0,
+    "high_pressure_s": 5.0
+  },
+  "scope": "Engineering comparison tolerances, not clinical noninferiority/safety margins",
+  "common_information": "All methods use identical reference schedules/noise/dropout and Hb/saturation/pressure. PI and threshold intentionally ignore measured flow/inferred drainage.",
+  "pressure_handling": "Forecast predicts pressure using measured-flow resistance; feedback baselines slow down on direct pressure above 90 mmHg. High pressure outcome threshold remains 95 mmHg.",
+  "duration": 1200.0,
+  "dt": 2.0,
+  "weighting": "Equal challenge weights, not clinical prevalence",
+  "bootstrap": {
+    "repetitions": 2000,
+    "seed": 2026,
+    "unit": "paired patient seed after within-seed cell averaging"
+  },
+  "replay_cells": [
+    "flow_high__reference__good",
+    "drift_flow__lagged__good",
+    "initial__slow_pump__good",
+    "drift__reference__dropout"
+  ],
+  "replay_seed": 12000,
+  "limitations": [
+    "No novel PI/threshold algorithm claimed.",
+    "No clinical data or reservoir bench time series used for validation.",
+    "The formal reduced-model result is not a full-system safety proof.",
+    "No assertion of journal acceptance or established scientific priority."
+  ]
+}

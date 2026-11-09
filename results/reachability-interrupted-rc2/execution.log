@@ -1,0 +1,49 @@
+primary patient complete 37000 runs 480
+primary patient complete 37001 runs 480
+primary patient complete 37002 runs 480
+primary patient complete 37003 runs 480
+primary patient complete 37007 runs 480
+primary patient complete 37006 runs 480
+primary patient complete 37004 runs 480
+primary patient complete 37005 runs 480
+primary patient complete 37008 runs 480
+primary patient complete 37009 runs 480
+primary patient complete 37010 runs 480
+primary patient complete 37011 runs 480
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/process.py", line 264, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/48fd56134cea/perfusion/examples/reachability_study.py", line 109, in worker
+    result=run(seed,phys,plant,fault,cal,method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/48fd56134cea/perfusion/examples/reachability_study.py", line 65, in run
+    result=engine(StressScenario(phys,**params),'sentinel',seed=seed,duration=600.,dt=1.,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/48fd56134cea/perfusion/src/perfusion_lab/reachability_simulation.py", line 80, in simulate_reachability
+    output = runtime.observe(MeasurementFrame(obs, measured_venous, tuple(samples), tuple(calibration_samples)))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/48fd56134cea/perfusion/src/perfusion_lab/runtime.py", line 89, in observe
+    self._validate(frame)
+  File "/workspace/scratch/48fd56134cea/perfusion/src/perfusion_lab/runtime.py", line 81, in _validate
+    raise ValueError('Invalid or future reference')
+ValueError: Invalid or future reference
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/scratch/48fd56134cea/perfusion/examples/reachability_study.py", line 233, in <module>
+    if args.stage=='primary':grid('primary',methods());summarize()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/48fd56134cea/perfusion/examples/reachability_study.py", line 121, in grid
+    seed=futures[future];rows=future.result()
+                              ^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+ValueError: Invalid or future reference

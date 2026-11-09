@@ -1,0 +1,28 @@
+{
+  "reference": "Skogestad S. Simple analytic rules for model reduction and PID controller tuning. J Process Control. 2003;13:291–309. Corrected open reprint: Modeling, Identification and Control. 2004;25:85–120.",
+  "doi": "10.4173/mic.2004.2.2",
+  "free_paper": "https://www.mic-journal.no/PDF/2004/MIC-2004-2-2.pdf",
+  "author_copy": "https://skoge.folk.ntnu.no/publications/2003/tuningPID/mic-version/mic.pdf",
+  "author_corrections_and_examples": "https://skoge.folk.ntnu.no/publications/2003/tuningPID/README.html",
+  "scope": "Fully specified general integrating-process PI reference. Not a clinical CPB controller or medical device reproduction.",
+  "equations": {"plant": "g(s)=kprime*exp(-theta*s)/s", "controller": "C(s)=Kc*(1+1/(tauI*s))", "Kc": "1/(kprime*(tau_c+theta))", "tauI": "4*(tau_c+theta)"},
+  "locations": ["Corrected reprint Eqs.23–24 and Table 1", "Author notes: integrating process, original c=4, tau_c/theta=1"],
+  "verification_case": {
+    "kprime": 1.0, "theta": 1.0, "tau_c": 1.0,
+    "published_Kc": 0.5, "published_tauI": 8.0,
+    "published_gain_margin": 2.96, "published_phase_margin_deg": 46.9,
+    "published_max_sensitivity": 1.70,
+    "published_phase_crossover": 1.49, "published_gain_crossover": 0.51,
+    "tolerances": {"gain_margin": 0.02, "phase_margin_deg": 0.2, "max_sensitivity": 0.02, "phase_crossover": 0.02, "gain_crossover": 0.02}
+  },
+  "application_changes": [
+    "Reservoir signed integrating gain is -1/60 L per second per L/min of outflow command",
+    "Nominal effective delay is half the 2-second actuator lag plus half the 1-second sample period; a design approximation, not identification from data",
+    "Both controllers share an oxygen-demand cap, pressure slowdown at 90 mmHg, 0–7 L/min command bounds and 0.15 L/min/s slew",
+    "PI reservoir override uses explicit tracking anti-windup after the shared application constraints",
+    "The same sensor/reference/observer pipeline feeds both methods, including the same optional noisy venous-flow channel",
+    "Forecast retains its own internal objective and candidate constraints. These are algorithm differences; comparison tuning uses a common outcome criterion"
+  ],
+  "replication_claim": "Published PI tuning and normalized frequency-domain example only. CPB application is a declared simulation adaptation. No original clinical traces or clinical validation are claimed.",
+  "previous_bypass_reference": "Takahashi et al. remains an incomplete, separately labeled workbench; it is not used as the verified primary comparator."
+}

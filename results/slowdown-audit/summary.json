@@ -1,0 +1,240 @@
+{
+  "status": "completed_post_result_slowdown_audit",
+  "diagnostic_runs": 640,
+  "decision_runs": 128,
+  "old_cohort_runs": 10752,
+  "means": {
+    "hybrid": {
+      "deficit_auc": 861.1578501237601,
+      "low_reservoir_s": 11.3828125,
+      "empty_request_s": 0.0,
+      "high_pressure_s": 1.2578125,
+      "flow_variation": 51.66348433016941,
+      "mean_flow": 3.4197702682828126,
+      "feasible_runs": 105,
+      "runs": 128
+    },
+    "matched_pi": {
+      "deficit_auc": 962.7741984255974,
+      "low_reservoir_s": 0.359375,
+      "empty_request_s": 0.0,
+      "high_pressure_s": 1.203125,
+      "flow_variation": 49.57118730000296,
+      "mean_flow": 3.2045758430039344,
+      "feasible_runs": 119,
+      "runs": 128
+    },
+    "calibration_pi": {
+      "deficit_auc": 694.6655516187379,
+      "low_reservoir_s": 4.6640625,
+      "empty_request_s": 0.0,
+      "high_pressure_s": 2.53125,
+      "flow_variation": 59.03647101021302,
+      "mean_flow": 3.7546233974851972,
+      "feasible_runs": 96,
+      "runs": 128
+    },
+    "margin_removed": {
+      "deficit_auc": 567.5588961001463,
+      "low_reservoir_s": 94.171875,
+      "empty_request_s": 5.4765625,
+      "high_pressure_s": 1.7734375,
+      "flow_variation": 49.452227283034595,
+      "mean_flow": 4.018087588882544,
+      "feasible_runs": 35,
+      "runs": 128
+    },
+    "true_volume": {
+      "deficit_auc": 672.5987792108773,
+      "low_reservoir_s": 1.7421875,
+      "empty_request_s": 0.0,
+      "high_pressure_s": 1.265625,
+      "flow_variation": 29.316094736093795,
+      "mean_flow": 3.8064481182694077,
+      "feasible_runs": 108,
+      "runs": 128
+    }
+  },
+  "bounds": {
+    "physical_cells": 96,
+    "witness_feasible_cells": 96,
+    "lp_success_cells": 96,
+    "audit_weighted_witness_auc": 512.1502042614547,
+    "audit_weighted_lp_lower": 287.1885359412885,
+    "unresolved_witness_minus_bound": 224.96166832016624
+  },
+  "decision_counts": {
+    "decision_steps": 76800.0,
+    "slowdown_steps": 38742.0,
+    "below_target_steps": 57343.0,
+    "uncertainty_raises_command_steps": 48547.0,
+    "true_volume_raises_command_steps": 39040.0,
+    "support_gate_raises_command_steps": 34322.0,
+    "local_safe_higher_oxygen_steps": 43879.0,
+    "slowdown_local_safe_higher_oxygen_steps": 27793.0,
+    "guard_lower_above_truth_steps": 16849.0,
+    "observed_pressure_slowdown_steps": 1317.0,
+    "mean_guard_lower_error": -0.14001247690092994,
+    "mean_interval_width": 0.27451875000000003
+  },
+  "comparisons": [
+    {
+      "method": "matched_pi",
+      "metric": "deficit_auc",
+      "mean": 101.61634830183735,
+      "low": 85.56952262010637,
+      "high": 120.49228991045732,
+      "n": 16
+    },
+    {
+      "method": "matched_pi",
+      "metric": "low_reservoir_s",
+      "mean": -11.0234375,
+      "low": -12.703125,
+      "high": -8.8359375,
+      "n": 16
+    },
+    {
+      "method": "matched_pi",
+      "metric": "empty_request_s",
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n": 16
+    },
+    {
+      "method": "matched_pi",
+      "metric": "high_pressure_s",
+      "mean": -0.0546875,
+      "low": -0.1484375,
+      "high": 0.0,
+      "n": 16
+    },
+    {
+      "method": "calibration_pi",
+      "metric": "deficit_auc",
+      "mean": -166.49229850502206,
+      "low": -188.13227082866126,
+      "high": -143.52396652819826,
+      "n": 16
+    },
+    {
+      "method": "calibration_pi",
+      "metric": "low_reservoir_s",
+      "mean": -6.71875,
+      "low": -9.0470703125,
+      "high": -4.312304687500001,
+      "n": 16
+    },
+    {
+      "method": "calibration_pi",
+      "metric": "empty_request_s",
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n": 16
+    },
+    {
+      "method": "calibration_pi",
+      "metric": "high_pressure_s",
+      "mean": 1.2734375,
+      "low": 0.3515625,
+      "high": 2.398828124999998,
+      "n": 16
+    },
+    {
+      "method": "margin_removed",
+      "metric": "deficit_auc",
+      "mean": -293.5989540236138,
+      "low": -329.8615655759196,
+      "high": -258.15092397774265,
+      "n": 16
+    },
+    {
+      "method": "margin_removed",
+      "metric": "low_reservoir_s",
+      "mean": 82.7890625,
+      "low": 71.16953125,
+      "high": 91.430078125,
+      "n": 16
+    },
+    {
+      "method": "margin_removed",
+      "metric": "empty_request_s",
+      "mean": 5.4765625,
+      "low": 3.6640625,
+      "high": 6.953125,
+      "n": 16
+    },
+    {
+      "method": "margin_removed",
+      "metric": "high_pressure_s",
+      "mean": 0.515625,
+      "low": 0.125,
+      "high": 1.008007812499999,
+      "n": 16
+    },
+    {
+      "method": "true_volume",
+      "metric": "deficit_auc",
+      "mean": -188.55907091288287,
+      "low": -227.14363091565218,
+      "high": -152.4075769304436,
+      "n": 16
+    },
+    {
+      "method": "true_volume",
+      "metric": "low_reservoir_s",
+      "mean": -9.640625,
+      "low": -11.4771484375,
+      "high": -7.616992187500001,
+      "n": 16
+    },
+    {
+      "method": "true_volume",
+      "metric": "empty_request_s",
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n": 16
+    },
+    {
+      "method": "true_volume",
+      "metric": "high_pressure_s",
+      "mean": 0.0078125,
+      "low": -0.34375,
+      "high": 0.41425781249999893,
+      "n": 16
+    }
+  ],
+  "old_cohort": {
+    "hybrid": {
+      "runs": 2688,
+      "observed_deficit_auc": 645.6857806466994,
+      "feasible_witness_auc": 344.11841985689836,
+      "caution": "Existing cohort is reused; witness has perfect information. Observed floor/pressure violations are not excused or erased. No globally optimal controller is claimed."
+    },
+    "matched_pi": {
+      "runs": 2688,
+      "observed_deficit_auc": 750.5877597221576,
+      "feasible_witness_auc": 344.11841985689836,
+      "caution": "Existing cohort is reused; witness has perfect information. Observed floor/pressure violations are not excused or erased. No globally optimal controller is claimed."
+    },
+    "calibration_pi": {
+      "runs": 2688,
+      "observed_deficit_auc": 544.5389658495616,
+      "feasible_witness_auc": 344.11841985689836,
+      "caution": "Existing cohort is reused; witness has perfect information. Observed floor/pressure violations are not excused or erased. No globally optimal controller is claimed."
+    },
+    "unscreened": {
+      "runs": 2688,
+      "observed_deficit_auc": 578.5119824261762,
+      "feasible_witness_auc": 344.11841985689836,
+      "caution": "Existing cohort is reused; witness has perfect information. Observed floor/pressure violations are not excused or erased. No globally optimal controller is claimed."
+    }
+  },
+  "mathematical_optimum_found": false,
+  "controller_changed": false,
+  "clinical_validation": false,
+  "interpretation": "A feasible truth-informed witness demonstrates possibility within this model; the checked optimistic LP gives a lower bound only under its declared constraints. The remaining gap is unresolved. Removing uncertainty or supplying exact volume are diagnostic-only ablations and can violate protection. Local probe gains overlap and are not additive."
+}

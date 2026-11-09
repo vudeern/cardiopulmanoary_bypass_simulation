@@ -1,0 +1,60 @@
+{
+  "milestone_policy_sha256": "5dcb863a73e4e4119301a0b95bc464bba594191a4b6b1c7bcce8ab25deb4e8a3",
+  "release": "v1.14",
+  "target": "v2.0",
+  "version2_ready": false,
+  "baseline_selected_on_development": "calibration_pi",
+  "patient_count_this_cohort": 16,
+  "qualifying_confirmation_cohorts": 0,
+  "required_confirmation_cohorts": 2,
+  "minimum_patients_each_confirmation": 32,
+  "regimes": {
+    "clean": {
+      "mean_oxygen_reduction_fraction": -0.3488860168664587,
+      "mean_low_reservoir_s": 1.0104166666666667,
+      "empty_request_runs": 0,
+      "checks": {
+        "oxygen_mean_reduction_at_least_10_percent": false,
+        "oxygen_paired_interval_supports_improvement": false,
+        "mean_low_reservoir_at_most_1s": false,
+        "zero_empty_request_runs": true,
+        "paired_low_extra_at_most_1s": true,
+        "paired_empty_extra_at_most_1s": true,
+        "paired_pressure_extra_at_most_5s": true
+      },
+      "exploratory_metrics_pass": false
+    },
+    "bias": {
+      "mean_oxygen_reduction_fraction": -0.4308013132805635,
+      "mean_low_reservoir_s": 0.7986111111111112,
+      "empty_request_runs": 0,
+      "checks": {
+        "oxygen_mean_reduction_at_least_10_percent": false,
+        "oxygen_paired_interval_supports_improvement": false,
+        "mean_low_reservoir_at_most_1s": true,
+        "zero_empty_request_runs": true,
+        "paired_low_extra_at_most_1s": true,
+        "paired_empty_extra_at_most_1s": true,
+        "paired_pressure_extra_at_most_5s": true
+      },
+      "exploratory_metrics_pass": false
+    },
+    "outage": {
+      "mean_oxygen_reduction_fraction": -0.4230029782808149,
+      "mean_low_reservoir_s": 0.90625,
+      "empty_request_runs": 0,
+      "checks": {
+        "oxygen_mean_reduction_at_least_10_percent": false,
+        "oxygen_paired_interval_supports_improvement": false,
+        "mean_low_reservoir_at_most_1s": true,
+        "zero_empty_request_runs": true,
+        "paired_low_extra_at_most_1s": true,
+        "paired_empty_extra_at_most_1s": true,
+        "paired_pressure_extra_at_most_5s": true
+      },
+      "exploratory_metrics_pass": false
+    }
+  },
+  "reason": "This 16-patient exploratory evaluation does not satisfy the prespecified two-cohort 32-patient confirmation requirement, irrespective of individual metric outcomes.",
+  "limitations": "Primary claims assume healthy independent calibration. Missing/biased/shared-corruption calibration failures remain published; version numbers do not confer clinical certification."
+}

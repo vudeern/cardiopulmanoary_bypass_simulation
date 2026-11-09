@@ -1,0 +1,2258 @@
+{
+  "8000": {
+    "reference": {
+      "patient": {
+        "bsa": 1.697162291749926,
+        "hb": 9.227903404216313,
+        "resistance": 14.95167311278016,
+        "compliance": 0.00201685227606116,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 135.14025510644115,
+        "q10": 2.0487629199306907
+      },
+      "event_start": 0.43041952585557713,
+      "event_end": 0.62583264841559,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.697162291749926,
+        "hb": 9.227903404216313,
+        "resistance": 14.95167311278016,
+        "compliance": 0.00201685227606116,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 135.14025510644115,
+        "q10": 2.0487629199306907
+      },
+      "event_start": 0.43041952585557713,
+      "event_end": 0.62583264841559,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.697162291749926,
+        "hb": 9.227903404216313,
+        "resistance": 14.95167311278016,
+        "compliance": 0.00201685227606116,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 135.14025510644115,
+        "q10": 2.0487629199306907
+      },
+      "event_start": 0.43041952585557713,
+      "event_end": 0.62583264841559,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.697162291749926,
+        "hb": 9.227903404216313,
+        "resistance": 14.95167311278016,
+        "compliance": 0.00201685227606116,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 135.14025510644115,
+        "q10": 2.0487629199306907
+      },
+      "event_start": 0.43041952585557713,
+      "event_end": 0.62583264841559,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.697162291749926,
+        "hb": 9.227903404216313,
+        "resistance": 14.95167311278016,
+        "compliance": 0.00201685227606116,
+        "venous_compliance": 0.14905540956229377,
+        "venous_resistance": 0.7130086610932214,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 135.14025510644115,
+        "q10": 2.0487629199306907
+      },
+      "event_start": 0.43041952585557713,
+      "event_end": 0.62583264841559,
+      "plant_options": {}
+    }
+  },
+  "8001": {
+    "reference": {
+      "patient": {
+        "bsa": 1.884501074526275,
+        "hb": 9.342691279182905,
+        "resistance": 17.471389916721655,
+        "compliance": 0.002108254434188372,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 138.94821428885913,
+        "q10": 2.0236141533464567
+      },
+      "event_start": 0.4256784542846497,
+      "event_end": 0.6061505454576779,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.884501074526275,
+        "hb": 9.342691279182905,
+        "resistance": 17.471389916721655,
+        "compliance": 0.002108254434188372,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 138.94821428885913,
+        "q10": 2.0236141533464567
+      },
+      "event_start": 0.4256784542846497,
+      "event_end": 0.6061505454576779,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.884501074526275,
+        "hb": 9.342691279182905,
+        "resistance": 17.471389916721655,
+        "compliance": 0.002108254434188372,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 138.94821428885913,
+        "q10": 2.0236141533464567
+      },
+      "event_start": 0.4256784542846497,
+      "event_end": 0.6061505454576779,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.884501074526275,
+        "hb": 9.342691279182905,
+        "resistance": 17.471389916721655,
+        "compliance": 0.002108254434188372,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 138.94821428885913,
+        "q10": 2.0236141533464567
+      },
+      "event_start": 0.4256784542846497,
+      "event_end": 0.6061505454576779,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.884501074526275,
+        "hb": 9.342691279182905,
+        "resistance": 17.471389916721655,
+        "compliance": 0.002108254434188372,
+        "venous_compliance": 0.134992467498734,
+        "venous_resistance": 0.9573333792912881,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 138.94821428885913,
+        "q10": 2.0236141533464567
+      },
+      "event_start": 0.4256784542846497,
+      "event_end": 0.6061505454576779,
+      "plant_options": {}
+    }
+  },
+  "8002": {
+    "reference": {
+      "patient": {
+        "bsa": 1.5507029438397628,
+        "hb": 9.727471580147423,
+        "resistance": 12.862922219708615,
+        "compliance": 0.0016329312125479421,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 136.3729788886342,
+        "q10": 2.0309186435871895
+      },
+      "event_start": 0.38858558507814833,
+      "event_end": 0.5419689598160283,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.5507029438397628,
+        "hb": 9.727471580147423,
+        "resistance": 12.862922219708615,
+        "compliance": 0.0016329312125479421,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 136.3729788886342,
+        "q10": 2.0309186435871895
+      },
+      "event_start": 0.38858558507814833,
+      "event_end": 0.5419689598160283,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.5507029438397628,
+        "hb": 9.727471580147423,
+        "resistance": 12.862922219708615,
+        "compliance": 0.0016329312125479421,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 136.3729788886342,
+        "q10": 2.0309186435871895
+      },
+      "event_start": 0.38858558507814833,
+      "event_end": 0.5419689598160283,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.5507029438397628,
+        "hb": 9.727471580147423,
+        "resistance": 12.862922219708615,
+        "compliance": 0.0016329312125479421,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 136.3729788886342,
+        "q10": 2.0309186435871895
+      },
+      "event_start": 0.38858558507814833,
+      "event_end": 0.5419689598160283,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.5507029438397628,
+        "hb": 9.727471580147423,
+        "resistance": 12.862922219708615,
+        "compliance": 0.0016329312125479421,
+        "venous_compliance": 0.14529293152512354,
+        "venous_resistance": 0.7152063990036006,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 136.3729788886342,
+        "q10": 2.0309186435871895
+      },
+      "event_start": 0.38858558507814833,
+      "event_end": 0.5419689598160283,
+      "plant_options": {}
+    }
+  },
+  "8003": {
+    "reference": {
+      "patient": {
+        "bsa": 1.9726379837121328,
+        "hb": 8.882115056713175,
+        "resistance": 16.33669210139737,
+        "compliance": 0.0016097992262358294,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 118.70260432548845,
+        "q10": 2.262410376925215
+      },
+      "event_start": 0.4882974387985602,
+      "event_end": 0.6996683276892242,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.9726379837121328,
+        "hb": 8.882115056713175,
+        "resistance": 16.33669210139737,
+        "compliance": 0.0016097992262358294,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 118.70260432548845,
+        "q10": 2.262410376925215
+      },
+      "event_start": 0.4882974387985602,
+      "event_end": 0.6996683276892242,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.9726379837121328,
+        "hb": 8.882115056713175,
+        "resistance": 16.33669210139737,
+        "compliance": 0.0016097992262358294,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 118.70260432548845,
+        "q10": 2.262410376925215
+      },
+      "event_start": 0.4882974387985602,
+      "event_end": 0.6996683276892242,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.9726379837121328,
+        "hb": 8.882115056713175,
+        "resistance": 16.33669210139737,
+        "compliance": 0.0016097992262358294,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 118.70260432548845,
+        "q10": 2.262410376925215
+      },
+      "event_start": 0.4882974387985602,
+      "event_end": 0.6996683276892242,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.9726379837121328,
+        "hb": 8.882115056713175,
+        "resistance": 16.33669210139737,
+        "compliance": 0.0016097992262358294,
+        "venous_compliance": 0.09331361729837645,
+        "venous_resistance": 0.9975057968155869,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 118.70260432548845,
+        "q10": 2.262410376925215
+      },
+      "event_start": 0.4882974387985602,
+      "event_end": 0.6996683276892242,
+      "plant_options": {}
+    }
+  },
+  "8004": {
+    "reference": {
+      "patient": {
+        "bsa": 1.7366364944346637,
+        "hb": 9.199295599368057,
+        "resistance": 15.633929361418996,
+        "compliance": 0.0021702028501908756,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.92491663583107,
+        "q10": 2.207388522923909
+      },
+      "event_start": 0.3117398397463941,
+      "event_end": 0.5263640089014967,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.7366364944346637,
+        "hb": 9.199295599368057,
+        "resistance": 15.633929361418996,
+        "compliance": 0.0021702028501908756,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.92491663583107,
+        "q10": 2.207388522923909
+      },
+      "event_start": 0.3117398397463941,
+      "event_end": 0.5263640089014967,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.7366364944346637,
+        "hb": 9.199295599368057,
+        "resistance": 15.633929361418996,
+        "compliance": 0.0021702028501908756,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.92491663583107,
+        "q10": 2.207388522923909
+      },
+      "event_start": 0.3117398397463941,
+      "event_end": 0.5263640089014967,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.7366364944346637,
+        "hb": 9.199295599368057,
+        "resistance": 15.633929361418996,
+        "compliance": 0.0021702028501908756,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.92491663583107,
+        "q10": 2.207388522923909
+      },
+      "event_start": 0.3117398397463941,
+      "event_end": 0.5263640089014967,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.7366364944346637,
+        "hb": 9.199295599368057,
+        "resistance": 15.633929361418996,
+        "compliance": 0.0021702028501908756,
+        "venous_compliance": 0.1337696514904979,
+        "venous_resistance": 1.0215304788780875,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.92491663583107,
+        "q10": 2.207388522923909
+      },
+      "event_start": 0.3117398397463941,
+      "event_end": 0.5263640089014967,
+      "plant_options": {}
+    }
+  },
+  "8005": {
+    "reference": {
+      "patient": {
+        "bsa": 2.109737844446148,
+        "hb": 9.666403653803878,
+        "resistance": 14.820948869957139,
+        "compliance": 0.002189374077580709,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 137.97000968422992,
+        "q10": 2.509821843935635
+      },
+      "event_start": 0.48003128760998803,
+      "event_end": 0.7228723899937948,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 2.109737844446148,
+        "hb": 9.666403653803878,
+        "resistance": 14.820948869957139,
+        "compliance": 0.002189374077580709,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 137.97000968422992,
+        "q10": 2.509821843935635
+      },
+      "event_start": 0.48003128760998803,
+      "event_end": 0.7228723899937948,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 2.109737844446148,
+        "hb": 9.666403653803878,
+        "resistance": 14.820948869957139,
+        "compliance": 0.002189374077580709,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 137.97000968422992,
+        "q10": 2.509821843935635
+      },
+      "event_start": 0.48003128760998803,
+      "event_end": 0.7228723899937948,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 2.109737844446148,
+        "hb": 9.666403653803878,
+        "resistance": 14.820948869957139,
+        "compliance": 0.002189374077580709,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 137.97000968422992,
+        "q10": 2.509821843935635
+      },
+      "event_start": 0.48003128760998803,
+      "event_end": 0.7228723899937948,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 2.109737844446148,
+        "hb": 9.666403653803878,
+        "resistance": 14.820948869957139,
+        "compliance": 0.002189374077580709,
+        "venous_compliance": 0.1420599819142747,
+        "venous_resistance": 0.8852784929238586,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 137.97000968422992,
+        "q10": 2.509821843935635
+      },
+      "event_start": 0.48003128760998803,
+      "event_end": 0.7228723899937948,
+      "plant_options": {}
+    }
+  },
+  "8006": {
+    "reference": {
+      "patient": {
+        "bsa": 1.559785292872489,
+        "hb": 8.716103656307801,
+        "resistance": 16.931644986533147,
+        "compliance": 0.0015604833896704468,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 124.41365676137107,
+        "q10": 2.1010900672848205
+      },
+      "event_start": 0.37086156529341413,
+      "event_end": 0.5834427582378414,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.559785292872489,
+        "hb": 8.716103656307801,
+        "resistance": 16.931644986533147,
+        "compliance": 0.0015604833896704468,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 124.41365676137107,
+        "q10": 2.1010900672848205
+      },
+      "event_start": 0.37086156529341413,
+      "event_end": 0.5834427582378414,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.559785292872489,
+        "hb": 8.716103656307801,
+        "resistance": 16.931644986533147,
+        "compliance": 0.0015604833896704468,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 124.41365676137107,
+        "q10": 2.1010900672848205
+      },
+      "event_start": 0.37086156529341413,
+      "event_end": 0.5834427582378414,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.559785292872489,
+        "hb": 8.716103656307801,
+        "resistance": 16.931644986533147,
+        "compliance": 0.0015604833896704468,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 124.41365676137107,
+        "q10": 2.1010900672848205
+      },
+      "event_start": 0.37086156529341413,
+      "event_end": 0.5834427582378414,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.559785292872489,
+        "hb": 8.716103656307801,
+        "resistance": 16.931644986533147,
+        "compliance": 0.0015604833896704468,
+        "venous_compliance": 0.14724581073919837,
+        "venous_resistance": 1.0976040011511232,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 124.41365676137107,
+        "q10": 2.1010900672848205
+      },
+      "event_start": 0.37086156529341413,
+      "event_end": 0.5834427582378414,
+      "plant_options": {}
+    }
+  },
+  "8007": {
+    "reference": {
+      "patient": {
+        "bsa": 1.7280401840317463,
+        "hb": 9.967464783229492,
+        "resistance": 16.726509166086284,
+        "compliance": 0.0014335840317136392,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 131.62565614926874,
+        "q10": 2.33275228568202
+      },
+      "event_start": 0.42329710684118327,
+      "event_end": 0.583485016224293,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.7280401840317463,
+        "hb": 9.967464783229492,
+        "resistance": 16.726509166086284,
+        "compliance": 0.0014335840317136392,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 131.62565614926874,
+        "q10": 2.33275228568202
+      },
+      "event_start": 0.42329710684118327,
+      "event_end": 0.583485016224293,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.7280401840317463,
+        "hb": 9.967464783229492,
+        "resistance": 16.726509166086284,
+        "compliance": 0.0014335840317136392,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 131.62565614926874,
+        "q10": 2.33275228568202
+      },
+      "event_start": 0.42329710684118327,
+      "event_end": 0.583485016224293,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.7280401840317463,
+        "hb": 9.967464783229492,
+        "resistance": 16.726509166086284,
+        "compliance": 0.0014335840317136392,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 131.62565614926874,
+        "q10": 2.33275228568202
+      },
+      "event_start": 0.42329710684118327,
+      "event_end": 0.583485016224293,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.7280401840317463,
+        "hb": 9.967464783229492,
+        "resistance": 16.726509166086284,
+        "compliance": 0.0014335840317136392,
+        "venous_compliance": 0.10043259616794994,
+        "venous_resistance": 1.07904309566913,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 131.62565614926874,
+        "q10": 2.33275228568202
+      },
+      "event_start": 0.42329710684118327,
+      "event_end": 0.583485016224293,
+      "plant_options": {}
+    }
+  },
+  "8008": {
+    "reference": {
+      "patient": {
+        "bsa": 1.584094900579809,
+        "hb": 8.977353329360508,
+        "resistance": 12.656845996389556,
+        "compliance": 0.0020334207189506063,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 126.63600251926015,
+        "q10": 2.5282533072095057
+      },
+      "event_start": 0.4534241951268238,
+      "event_end": 0.6177844743990921,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.584094900579809,
+        "hb": 8.977353329360508,
+        "resistance": 12.656845996389556,
+        "compliance": 0.0020334207189506063,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 126.63600251926015,
+        "q10": 2.5282533072095057
+      },
+      "event_start": 0.4534241951268238,
+      "event_end": 0.6177844743990921,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.584094900579809,
+        "hb": 8.977353329360508,
+        "resistance": 12.656845996389556,
+        "compliance": 0.0020334207189506063,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 126.63600251926015,
+        "q10": 2.5282533072095057
+      },
+      "event_start": 0.4534241951268238,
+      "event_end": 0.6177844743990921,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.584094900579809,
+        "hb": 8.977353329360508,
+        "resistance": 12.656845996389556,
+        "compliance": 0.0020334207189506063,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 126.63600251926015,
+        "q10": 2.5282533072095057
+      },
+      "event_start": 0.4534241951268238,
+      "event_end": 0.6177844743990921,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.584094900579809,
+        "hb": 8.977353329360508,
+        "resistance": 12.656845996389556,
+        "compliance": 0.0020334207189506063,
+        "venous_compliance": 0.10049862836072126,
+        "venous_resistance": 1.0610643456724638,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 126.63600251926015,
+        "q10": 2.5282533072095057
+      },
+      "event_start": 0.4534241951268238,
+      "event_end": 0.6177844743990921,
+      "plant_options": {}
+    }
+  },
+  "8009": {
+    "reference": {
+      "patient": {
+        "bsa": 1.9980448056693207,
+        "hb": 8.737857441221015,
+        "resistance": 14.591196891536939,
+        "compliance": 0.0016037263185556133,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 128.50276144964357,
+        "q10": 2.696028664814717
+      },
+      "event_start": 0.3049393503144655,
+      "event_end": 0.4902799787026271,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.9980448056693207,
+        "hb": 8.737857441221015,
+        "resistance": 14.591196891536939,
+        "compliance": 0.0016037263185556133,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 128.50276144964357,
+        "q10": 2.696028664814717
+      },
+      "event_start": 0.3049393503144655,
+      "event_end": 0.4902799787026271,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.9980448056693207,
+        "hb": 8.737857441221015,
+        "resistance": 14.591196891536939,
+        "compliance": 0.0016037263185556133,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 128.50276144964357,
+        "q10": 2.696028664814717
+      },
+      "event_start": 0.3049393503144655,
+      "event_end": 0.4902799787026271,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.9980448056693207,
+        "hb": 8.737857441221015,
+        "resistance": 14.591196891536939,
+        "compliance": 0.0016037263185556133,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 128.50276144964357,
+        "q10": 2.696028664814717
+      },
+      "event_start": 0.3049393503144655,
+      "event_end": 0.4902799787026271,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.9980448056693207,
+        "hb": 8.737857441221015,
+        "resistance": 14.591196891536939,
+        "compliance": 0.0016037263185556133,
+        "venous_compliance": 0.1451641226173558,
+        "venous_resistance": 1.0665824176189767,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 128.50276144964357,
+        "q10": 2.696028664814717
+      },
+      "event_start": 0.3049393503144655,
+      "event_end": 0.4902799787026271,
+      "plant_options": {}
+    }
+  },
+  "8010": {
+    "reference": {
+      "patient": {
+        "bsa": 2.096437595721068,
+        "hb": 10.019931544590749,
+        "resistance": 14.186015787336173,
+        "compliance": 0.001980667614158832,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.94596733265837,
+        "q10": 2.3582226621801348
+      },
+      "event_start": 0.30493876328521463,
+      "event_end": 0.4695348260366897,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 2.096437595721068,
+        "hb": 10.019931544590749,
+        "resistance": 14.186015787336173,
+        "compliance": 0.001980667614158832,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.94596733265837,
+        "q10": 2.3582226621801348
+      },
+      "event_start": 0.30493876328521463,
+      "event_end": 0.4695348260366897,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 2.096437595721068,
+        "hb": 10.019931544590749,
+        "resistance": 14.186015787336173,
+        "compliance": 0.001980667614158832,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.94596733265837,
+        "q10": 2.3582226621801348
+      },
+      "event_start": 0.30493876328521463,
+      "event_end": 0.4695348260366897,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 2.096437595721068,
+        "hb": 10.019931544590749,
+        "resistance": 14.186015787336173,
+        "compliance": 0.001980667614158832,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.94596733265837,
+        "q10": 2.3582226621801348
+      },
+      "event_start": 0.30493876328521463,
+      "event_end": 0.4695348260366897,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 2.096437595721068,
+        "hb": 10.019931544590749,
+        "resistance": 14.186015787336173,
+        "compliance": 0.001980667614158832,
+        "venous_compliance": 0.10780047535564076,
+        "venous_resistance": 0.91897525016024,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.94596733265837,
+        "q10": 2.3582226621801348
+      },
+      "event_start": 0.30493876328521463,
+      "event_end": 0.4695348260366897,
+      "plant_options": {}
+    }
+  },
+  "8011": {
+    "reference": {
+      "patient": {
+        "bsa": 2.082831872459544,
+        "hb": 9.657779155620025,
+        "resistance": 17.441741349690318,
+        "compliance": 0.0019211323113416767,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 130.13196417757143,
+        "q10": 2.43595634155997
+      },
+      "event_start": 0.321463719716538,
+      "event_end": 0.4790766353217518,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 2.082831872459544,
+        "hb": 9.657779155620025,
+        "resistance": 17.441741349690318,
+        "compliance": 0.0019211323113416767,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 130.13196417757143,
+        "q10": 2.43595634155997
+      },
+      "event_start": 0.321463719716538,
+      "event_end": 0.4790766353217518,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 2.082831872459544,
+        "hb": 9.657779155620025,
+        "resistance": 17.441741349690318,
+        "compliance": 0.0019211323113416767,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 130.13196417757143,
+        "q10": 2.43595634155997
+      },
+      "event_start": 0.321463719716538,
+      "event_end": 0.4790766353217518,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 2.082831872459544,
+        "hb": 9.657779155620025,
+        "resistance": 17.441741349690318,
+        "compliance": 0.0019211323113416767,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 130.13196417757143,
+        "q10": 2.43595634155997
+      },
+      "event_start": 0.321463719716538,
+      "event_end": 0.4790766353217518,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 2.082831872459544,
+        "hb": 9.657779155620025,
+        "resistance": 17.441741349690318,
+        "compliance": 0.0019211323113416767,
+        "venous_compliance": 0.1493136813858189,
+        "venous_resistance": 0.8844080514174567,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 130.13196417757143,
+        "q10": 2.43595634155997
+      },
+      "event_start": 0.321463719716538,
+      "event_end": 0.4790766353217518,
+      "plant_options": {}
+    }
+  },
+  "8012": {
+    "reference": {
+      "patient": {
+        "bsa": 1.5616653820491317,
+        "hb": 10.019420780977988,
+        "resistance": 17.168437732312672,
+        "compliance": 0.002067657556671552,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.78605286700714,
+        "q10": 2.377890951669264
+      },
+      "event_start": 0.357287443313565,
+      "event_end": 0.5114678050884618,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.5616653820491317,
+        "hb": 10.019420780977988,
+        "resistance": 17.168437732312672,
+        "compliance": 0.002067657556671552,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.78605286700714,
+        "q10": 2.377890951669264
+      },
+      "event_start": 0.357287443313565,
+      "event_end": 0.5114678050884618,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.5616653820491317,
+        "hb": 10.019420780977988,
+        "resistance": 17.168437732312672,
+        "compliance": 0.002067657556671552,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.78605286700714,
+        "q10": 2.377890951669264
+      },
+      "event_start": 0.357287443313565,
+      "event_end": 0.5114678050884618,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.5616653820491317,
+        "hb": 10.019420780977988,
+        "resistance": 17.168437732312672,
+        "compliance": 0.002067657556671552,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.78605286700714,
+        "q10": 2.377890951669264
+      },
+      "event_start": 0.357287443313565,
+      "event_end": 0.5114678050884618,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.5616653820491317,
+        "hb": 10.019420780977988,
+        "resistance": 17.168437732312672,
+        "compliance": 0.002067657556671552,
+        "venous_compliance": 0.11879208938928551,
+        "venous_resistance": 0.7630044913103504,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 114.78605286700714,
+        "q10": 2.377890951669264
+      },
+      "event_start": 0.357287443313565,
+      "event_end": 0.5114678050884618,
+      "plant_options": {}
+    }
+  },
+  "8013": {
+    "reference": {
+      "patient": {
+        "bsa": 1.830745833245895,
+        "hb": 9.781334264851438,
+        "resistance": 14.001932495101386,
+        "compliance": 0.0019639889650646296,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.567652146887,
+        "q10": 2.085322582408326
+      },
+      "event_start": 0.32042777202342904,
+      "event_end": 0.5631727134950888,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.830745833245895,
+        "hb": 9.781334264851438,
+        "resistance": 14.001932495101386,
+        "compliance": 0.0019639889650646296,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.567652146887,
+        "q10": 2.085322582408326
+      },
+      "event_start": 0.32042777202342904,
+      "event_end": 0.5631727134950888,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.830745833245895,
+        "hb": 9.781334264851438,
+        "resistance": 14.001932495101386,
+        "compliance": 0.0019639889650646296,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.567652146887,
+        "q10": 2.085322582408326
+      },
+      "event_start": 0.32042777202342904,
+      "event_end": 0.5631727134950888,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.830745833245895,
+        "hb": 9.781334264851438,
+        "resistance": 14.001932495101386,
+        "compliance": 0.0019639889650646296,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.567652146887,
+        "q10": 2.085322582408326
+      },
+      "event_start": 0.32042777202342904,
+      "event_end": 0.5631727134950888,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.830745833245895,
+        "hb": 9.781334264851438,
+        "resistance": 14.001932495101386,
+        "compliance": 0.0019639889650646296,
+        "venous_compliance": 0.12375781629543778,
+        "venous_resistance": 1.0948662362205703,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.567652146887,
+        "q10": 2.085322582408326
+      },
+      "event_start": 0.32042777202342904,
+      "event_end": 0.5631727134950888,
+      "plant_options": {}
+    }
+  },
+  "8014": {
+    "reference": {
+      "patient": {
+        "bsa": 2.1264717080834687,
+        "hb": 8.898068977611747,
+        "resistance": 15.193639453266506,
+        "compliance": 0.0019129844693849306,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.45127227263876,
+        "q10": 2.1328828465031573
+      },
+      "event_start": 0.3944945405122819,
+      "event_end": 0.5503359547519365,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 2.1264717080834687,
+        "hb": 8.898068977611747,
+        "resistance": 15.193639453266506,
+        "compliance": 0.0019129844693849306,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.45127227263876,
+        "q10": 2.1328828465031573
+      },
+      "event_start": 0.3944945405122819,
+      "event_end": 0.5503359547519365,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 2.1264717080834687,
+        "hb": 8.898068977611747,
+        "resistance": 15.193639453266506,
+        "compliance": 0.0019129844693849306,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.45127227263876,
+        "q10": 2.1328828465031573
+      },
+      "event_start": 0.3944945405122819,
+      "event_end": 0.5503359547519365,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 2.1264717080834687,
+        "hb": 8.898068977611747,
+        "resistance": 15.193639453266506,
+        "compliance": 0.0019129844693849306,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.45127227263876,
+        "q10": 2.1328828465031573
+      },
+      "event_start": 0.3944945405122819,
+      "event_end": 0.5503359547519365,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 2.1264717080834687,
+        "hb": 8.898068977611747,
+        "resistance": 15.193639453266506,
+        "compliance": 0.0019129844693849306,
+        "venous_compliance": 0.1467486321000842,
+        "venous_resistance": 0.9492680663027651,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 134.45127227263876,
+        "q10": 2.1328828465031573
+      },
+      "event_start": 0.3944945405122819,
+      "event_end": 0.5503359547519365,
+      "plant_options": {}
+    }
+  },
+  "8015": {
+    "reference": {
+      "patient": {
+        "bsa": 1.5880578411352753,
+        "hb": 10.1313676545053,
+        "resistance": 16.65800925753468,
+        "compliance": 0.0018427215588101105,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.99481546835098,
+        "q10": 2.4873107640183454
+      },
+      "event_start": 0.49288584118230394,
+      "event_end": 0.6843410872660434,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.5880578411352753,
+        "hb": 10.1313676545053,
+        "resistance": 16.65800925753468,
+        "compliance": 0.0018427215588101105,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.99481546835098,
+        "q10": 2.4873107640183454
+      },
+      "event_start": 0.49288584118230394,
+      "event_end": 0.6843410872660434,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.5880578411352753,
+        "hb": 10.1313676545053,
+        "resistance": 16.65800925753468,
+        "compliance": 0.0018427215588101105,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.99481546835098,
+        "q10": 2.4873107640183454
+      },
+      "event_start": 0.49288584118230394,
+      "event_end": 0.6843410872660434,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.5880578411352753,
+        "hb": 10.1313676545053,
+        "resistance": 16.65800925753468,
+        "compliance": 0.0018427215588101105,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.99481546835098,
+        "q10": 2.4873107640183454
+      },
+      "event_start": 0.49288584118230394,
+      "event_end": 0.6843410872660434,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.5880578411352753,
+        "hb": 10.1313676545053,
+        "resistance": 16.65800925753468,
+        "compliance": 0.0018427215588101105,
+        "venous_compliance": 0.12249246988271956,
+        "venous_resistance": 1.0699773257899556,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.99481546835098,
+        "q10": 2.4873107640183454
+      },
+      "event_start": 0.49288584118230394,
+      "event_end": 0.6843410872660434,
+      "plant_options": {}
+    }
+  },
+  "8016": {
+    "reference": {
+      "patient": {
+        "bsa": 2.109358482275135,
+        "hb": 9.199320616091729,
+        "resistance": 14.167811436957013,
+        "compliance": 0.002168900872804376,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 139.12157935819906,
+        "q10": 2.3144628635729436
+      },
+      "event_start": 0.2677589713290923,
+      "event_end": 0.48548120033827874,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 2.109358482275135,
+        "hb": 9.199320616091729,
+        "resistance": 14.167811436957013,
+        "compliance": 0.002168900872804376,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 139.12157935819906,
+        "q10": 2.3144628635729436
+      },
+      "event_start": 0.2677589713290923,
+      "event_end": 0.48548120033827874,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 2.109358482275135,
+        "hb": 9.199320616091729,
+        "resistance": 14.167811436957013,
+        "compliance": 0.002168900872804376,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 139.12157935819906,
+        "q10": 2.3144628635729436
+      },
+      "event_start": 0.2677589713290923,
+      "event_end": 0.48548120033827874,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 2.109358482275135,
+        "hb": 9.199320616091729,
+        "resistance": 14.167811436957013,
+        "compliance": 0.002168900872804376,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 139.12157935819906,
+        "q10": 2.3144628635729436
+      },
+      "event_start": 0.2677589713290923,
+      "event_end": 0.48548120033827874,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 2.109358482275135,
+        "hb": 9.199320616091729,
+        "resistance": 14.167811436957013,
+        "compliance": 0.002168900872804376,
+        "venous_compliance": 0.0974517497890062,
+        "venous_resistance": 0.8239547061904197,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 139.12157935819906,
+        "q10": 2.3144628635729436
+      },
+      "event_start": 0.2677589713290923,
+      "event_end": 0.48548120033827874,
+      "plant_options": {}
+    }
+  },
+  "8017": {
+    "reference": {
+      "patient": {
+        "bsa": 1.9510481574038236,
+        "hb": 9.512485180238226,
+        "resistance": 13.561561525293254,
+        "compliance": 0.002131892399981711,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 121.44639091294226,
+        "q10": 2.003340846246438
+      },
+      "event_start": 0.47250832329798387,
+      "event_end": 0.6347637637714332,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.9510481574038236,
+        "hb": 9.512485180238226,
+        "resistance": 13.561561525293254,
+        "compliance": 0.002131892399981711,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 121.44639091294226,
+        "q10": 2.003340846246438
+      },
+      "event_start": 0.47250832329798387,
+      "event_end": 0.6347637637714332,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.9510481574038236,
+        "hb": 9.512485180238226,
+        "resistance": 13.561561525293254,
+        "compliance": 0.002131892399981711,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 121.44639091294226,
+        "q10": 2.003340846246438
+      },
+      "event_start": 0.47250832329798387,
+      "event_end": 0.6347637637714332,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.9510481574038236,
+        "hb": 9.512485180238226,
+        "resistance": 13.561561525293254,
+        "compliance": 0.002131892399981711,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 121.44639091294226,
+        "q10": 2.003340846246438
+      },
+      "event_start": 0.47250832329798387,
+      "event_end": 0.6347637637714332,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.9510481574038236,
+        "hb": 9.512485180238226,
+        "resistance": 13.561561525293254,
+        "compliance": 0.002131892399981711,
+        "venous_compliance": 0.13240876625792386,
+        "venous_resistance": 1.0975346204594587,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 121.44639091294226,
+        "q10": 2.003340846246438
+      },
+      "event_start": 0.47250832329798387,
+      "event_end": 0.6347637637714332,
+      "plant_options": {}
+    }
+  },
+  "8018": {
+    "reference": {
+      "patient": {
+        "bsa": 1.570545531315928,
+        "hb": 8.840796625977276,
+        "resistance": 15.050505446409352,
+        "compliance": 0.001438122193782088,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 115.84401344922165,
+        "q10": 2.1557826001303555
+      },
+      "event_start": 0.3540590311326854,
+      "event_end": 0.5285993742161517,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.570545531315928,
+        "hb": 8.840796625977276,
+        "resistance": 15.050505446409352,
+        "compliance": 0.001438122193782088,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 115.84401344922165,
+        "q10": 2.1557826001303555
+      },
+      "event_start": 0.3540590311326854,
+      "event_end": 0.5285993742161517,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.570545531315928,
+        "hb": 8.840796625977276,
+        "resistance": 15.050505446409352,
+        "compliance": 0.001438122193782088,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 115.84401344922165,
+        "q10": 2.1557826001303555
+      },
+      "event_start": 0.3540590311326854,
+      "event_end": 0.5285993742161517,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.570545531315928,
+        "hb": 8.840796625977276,
+        "resistance": 15.050505446409352,
+        "compliance": 0.001438122193782088,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 115.84401344922165,
+        "q10": 2.1557826001303555
+      },
+      "event_start": 0.3540590311326854,
+      "event_end": 0.5285993742161517,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.570545531315928,
+        "hb": 8.840796625977276,
+        "resistance": 15.050505446409352,
+        "compliance": 0.001438122193782088,
+        "venous_compliance": 0.12834241295945492,
+        "venous_resistance": 0.7458083277386199,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 115.84401344922165,
+        "q10": 2.1557826001303555
+      },
+      "event_start": 0.3540590311326854,
+      "event_end": 0.5285993742161517,
+      "plant_options": {}
+    }
+  },
+  "8019": {
+    "reference": {
+      "patient": {
+        "bsa": 1.626358725743586,
+        "hb": 9.99937287349375,
+        "resistance": 16.551210879350077,
+        "compliance": 0.001931144717238941,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 132.42198602165564,
+        "q10": 2.664199102895765
+      },
+      "event_start": 0.4051009468570456,
+      "event_end": 0.5982065129047069,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.626358725743586,
+        "hb": 9.99937287349375,
+        "resistance": 16.551210879350077,
+        "compliance": 0.001931144717238941,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 132.42198602165564,
+        "q10": 2.664199102895765
+      },
+      "event_start": 0.4051009468570456,
+      "event_end": 0.5982065129047069,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.626358725743586,
+        "hb": 9.99937287349375,
+        "resistance": 16.551210879350077,
+        "compliance": 0.001931144717238941,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 132.42198602165564,
+        "q10": 2.664199102895765
+      },
+      "event_start": 0.4051009468570456,
+      "event_end": 0.5982065129047069,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.626358725743586,
+        "hb": 9.99937287349375,
+        "resistance": 16.551210879350077,
+        "compliance": 0.001931144717238941,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 132.42198602165564,
+        "q10": 2.664199102895765
+      },
+      "event_start": 0.4051009468570456,
+      "event_end": 0.5982065129047069,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.626358725743586,
+        "hb": 9.99937287349375,
+        "resistance": 16.551210879350077,
+        "compliance": 0.001931144717238941,
+        "venous_compliance": 0.1415907135602748,
+        "venous_resistance": 0.972032637244559,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 132.42198602165564,
+        "q10": 2.664199102895765
+      },
+      "event_start": 0.4051009468570456,
+      "event_end": 0.5982065129047069,
+      "plant_options": {}
+    }
+  },
+  "8020": {
+    "reference": {
+      "patient": {
+        "bsa": 1.9559523450564567,
+        "hb": 9.86153848789609,
+        "resistance": 13.019872232926748,
+        "compliance": 0.002107807394253046,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 111.91315970230558,
+        "q10": 2.689206598301276
+      },
+      "event_start": 0.4964115318758871,
+      "event_end": 0.6549137935040442,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.9559523450564567,
+        "hb": 9.86153848789609,
+        "resistance": 13.019872232926748,
+        "compliance": 0.002107807394253046,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 111.91315970230558,
+        "q10": 2.689206598301276
+      },
+      "event_start": 0.4964115318758871,
+      "event_end": 0.6549137935040442,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.9559523450564567,
+        "hb": 9.86153848789609,
+        "resistance": 13.019872232926748,
+        "compliance": 0.002107807394253046,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 111.91315970230558,
+        "q10": 2.689206598301276
+      },
+      "event_start": 0.4964115318758871,
+      "event_end": 0.6549137935040442,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.9559523450564567,
+        "hb": 9.86153848789609,
+        "resistance": 13.019872232926748,
+        "compliance": 0.002107807394253046,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 111.91315970230558,
+        "q10": 2.689206598301276
+      },
+      "event_start": 0.4964115318758871,
+      "event_end": 0.6549137935040442,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.9559523450564567,
+        "hb": 9.86153848789609,
+        "resistance": 13.019872232926748,
+        "compliance": 0.002107807394253046,
+        "venous_compliance": 0.14800769406950695,
+        "venous_resistance": 0.8137280278441126,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 111.91315970230558,
+        "q10": 2.689206598301276
+      },
+      "event_start": 0.4964115318758871,
+      "event_end": 0.6549137935040442,
+      "plant_options": {}
+    }
+  },
+  "8021": {
+    "reference": {
+      "patient": {
+        "bsa": 1.637351048104211,
+        "hb": 8.72534564301602,
+        "resistance": 11.436706642108748,
+        "compliance": 0.0017731875297100164,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 119.97839048106079,
+        "q10": 2.3348294482620284
+      },
+      "event_start": 0.34364267129290804,
+      "event_end": 0.5881344966065818,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.637351048104211,
+        "hb": 8.72534564301602,
+        "resistance": 11.436706642108748,
+        "compliance": 0.0017731875297100164,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 119.97839048106079,
+        "q10": 2.3348294482620284
+      },
+      "event_start": 0.34364267129290804,
+      "event_end": 0.5881344966065818,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.637351048104211,
+        "hb": 8.72534564301602,
+        "resistance": 11.436706642108748,
+        "compliance": 0.0017731875297100164,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 119.97839048106079,
+        "q10": 2.3348294482620284
+      },
+      "event_start": 0.34364267129290804,
+      "event_end": 0.5881344966065818,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.637351048104211,
+        "hb": 8.72534564301602,
+        "resistance": 11.436706642108748,
+        "compliance": 0.0017731875297100164,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 119.97839048106079,
+        "q10": 2.3348294482620284
+      },
+      "event_start": 0.34364267129290804,
+      "event_end": 0.5881344966065818,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.637351048104211,
+        "hb": 8.72534564301602,
+        "resistance": 11.436706642108748,
+        "compliance": 0.0017731875297100164,
+        "venous_compliance": 0.10897489376504907,
+        "venous_resistance": 0.8048520086506163,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 119.97839048106079,
+        "q10": 2.3348294482620284
+      },
+      "event_start": 0.34364267129290804,
+      "event_end": 0.5881344966065818,
+      "plant_options": {}
+    }
+  },
+  "8022": {
+    "reference": {
+      "patient": {
+        "bsa": 1.6835080337218133,
+        "hb": 9.993430300607848,
+        "resistance": 16.018283207908215,
+        "compliance": 0.0016544466604784846,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.19388429740653,
+        "q10": 2.3145972228131075
+      },
+      "event_start": 0.4277866402983246,
+      "event_end": 0.6581765113200662,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.6835080337218133,
+        "hb": 9.993430300607848,
+        "resistance": 16.018283207908215,
+        "compliance": 0.0016544466604784846,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.19388429740653,
+        "q10": 2.3145972228131075
+      },
+      "event_start": 0.4277866402983246,
+      "event_end": 0.6581765113200662,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.6835080337218133,
+        "hb": 9.993430300607848,
+        "resistance": 16.018283207908215,
+        "compliance": 0.0016544466604784846,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.19388429740653,
+        "q10": 2.3145972228131075
+      },
+      "event_start": 0.4277866402983246,
+      "event_end": 0.6581765113200662,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.6835080337218133,
+        "hb": 9.993430300607848,
+        "resistance": 16.018283207908215,
+        "compliance": 0.0016544466604784846,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.19388429740653,
+        "q10": 2.3145972228131075
+      },
+      "event_start": 0.4277866402983246,
+      "event_end": 0.6581765113200662,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.6835080337218133,
+        "hb": 9.993430300607848,
+        "resistance": 16.018283207908215,
+        "compliance": 0.0016544466604784846,
+        "venous_compliance": 0.14650765648790348,
+        "venous_resistance": 0.7852302402197102,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 123.19388429740653,
+        "q10": 2.3145972228131075
+      },
+      "event_start": 0.4277866402983246,
+      "event_end": 0.6581765113200662,
+      "plant_options": {}
+    }
+  },
+  "8023": {
+    "reference": {
+      "patient": {
+        "bsa": 1.9678864008516241,
+        "hb": 9.425247051287778,
+        "resistance": 17.092021465670335,
+        "compliance": 0.0019094269926752806,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.59274984590445,
+        "q10": 2.1835074427495194
+      },
+      "event_start": 0.33479567101479796,
+      "event_end": 0.5461020451433372,
+      "plant_options": {}
+    },
+    "slow_pump": {
+      "patient": {
+        "bsa": 1.9678864008516241,
+        "hb": 9.425247051287778,
+        "resistance": 17.092021465670335,
+        "compliance": 0.0019094269926752806,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.59274984590445,
+        "q10": 2.1835074427495194
+      },
+      "event_start": 0.33479567101479796,
+      "event_end": 0.5461020451433372,
+      "plant_options": {
+        "actuator_tau": 8.0
+      }
+    },
+    "lagged_nonlinear": {
+      "patient": {
+        "bsa": 1.9678864008516241,
+        "hb": 9.425247051287778,
+        "resistance": 17.092021465670335,
+        "compliance": 0.0019094269926752806,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.59274984590445,
+        "q10": 2.1835074427495194
+      },
+      "event_start": 0.33479567101479796,
+      "event_end": 0.5461020451433372,
+      "plant_options": {
+        "drainage_tau": 12.0,
+        "venous_nonlinearity": 0.04
+      }
+    },
+    "cap_violation": {
+      "patient": {
+        "bsa": 1.9678864008516241,
+        "hb": 9.425247051287778,
+        "resistance": 17.092021465670335,
+        "compliance": 0.0019094269926752806,
+        "venous_compliance": 0.12,
+        "venous_resistance": 0.9,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.59274984590445,
+        "q10": 2.1835074427495194
+      },
+      "event_start": 0.33479567101479796,
+      "event_end": 0.5461020451433372,
+      "plant_options": {
+        "max_drainage": 9.0
+      }
+    },
+    "varied_storage": {
+      "patient": {
+        "bsa": 1.9678864008516241,
+        "hb": 9.425247051287778,
+        "resistance": 17.092021465670335,
+        "compliance": 0.0019094269926752806,
+        "venous_compliance": 0.14361423063577372,
+        "venous_resistance": 0.8409777715210642,
+        "volume": 5.8,
+        "unstressed_volume": 4.35,
+        "demand37": 122.59274984590445,
+        "q10": 2.1835074427495194
+      },
+      "event_start": 0.33479567101479796,
+      "event_end": 0.5461020451433372,
+      "plant_options": {}
+    }
+  }
+}

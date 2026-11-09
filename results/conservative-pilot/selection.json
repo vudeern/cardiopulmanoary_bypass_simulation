@@ -1,0 +1,174 @@
+{
+  "guard_budget": {
+    "low_reservoir_s": 0.0,
+    "empty_request_s": 0.0,
+    "deficit_auc": 39.02061557899517,
+    "high_pressure_s": 0.17857142857142858,
+    "false_reassurance_s": 86.85714285714286,
+    "mean_flow": 4.81058715665943,
+    "flow_variation": 25.53392857142858,
+    "infeasible_s": 1.1785714285714286
+  },
+  "candidate_means": {
+    "original": {
+      "low_reservoir_s": 25.178571428571427,
+      "empty_request_s": 0.0,
+      "deficit_auc": 21.031676077383477,
+      "high_pressure_s": 0.14285714285714285,
+      "false_reassurance_s": 88.57142857142857,
+      "mean_flow": 4.831536561421333,
+      "flow_variation": 25.108928571428574,
+      "infeasible_s": 0.8928571428571429
+    },
+    "guarded": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 39.02061557899517,
+      "high_pressure_s": 0.17857142857142858,
+      "false_reassurance_s": 86.85714285714286,
+      "mean_flow": 4.81058715665943,
+      "flow_variation": 25.53392857142858,
+      "infeasible_s": 1.1785714285714286
+    },
+    "reserve_0.1": {
+      "low_reservoir_s": 24.964285714285715,
+      "empty_request_s": 0.0,
+      "deficit_auc": 24.95981859646562,
+      "high_pressure_s": 0.17857142857142858,
+      "false_reassurance_s": 94.0,
+      "mean_flow": 4.824271680468954,
+      "flow_variation": 25.44464285714286,
+      "infeasible_s": 1.1428571428571428
+    },
+    "reserve_0.2": {
+      "low_reservoir_s": 24.464285714285715,
+      "empty_request_s": 0.0,
+      "deficit_auc": 38.746247402691324,
+      "high_pressure_s": 0.21428571428571427,
+      "false_reassurance_s": 96.14285714285714,
+      "mean_flow": 4.807917513802287,
+      "flow_variation": 26.080357142857142,
+      "infeasible_s": 2.107142857142857
+    },
+    "reserve_0.3": {
+      "low_reservoir_s": 22.642857142857142,
+      "empty_request_s": 0.0,
+      "deficit_auc": 64.13634257070045,
+      "high_pressure_s": 0.32142857142857145,
+      "false_reassurance_s": 88.92857142857143,
+      "mean_flow": 4.782384775707048,
+      "flow_variation": 26.51964285714286,
+      "infeasible_s": 2.4642857142857144
+    },
+    "reserve_0.4": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 98.13233048261111,
+      "high_pressure_s": 0.21428571428571427,
+      "false_reassurance_s": 80.57142857142857,
+      "mean_flow": 4.750551442373715,
+      "flow_variation": 27.051785714285717,
+      "infeasible_s": 3.4285714285714284
+    },
+    "reserve_0.5": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 136.73471879711943,
+      "high_pressure_s": 0.14285714285714285,
+      "false_reassurance_s": 80.14285714285714,
+      "mean_flow": 4.715044126775118,
+      "flow_variation": 27.15535714285715,
+      "infeasible_s": 4.142857142857143
+    },
+    "reserve_0.6": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 196.41354492161003,
+      "high_pressure_s": 0.0,
+      "false_reassurance_s": 132.46428571428572,
+      "mean_flow": 4.6228029517580485,
+      "flow_variation": 30.88214285714284,
+      "infeasible_s": 4.821428571428571
+    },
+    "cap_1.4": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 2324.800340272572,
+      "high_pressure_s": 0.0,
+      "false_reassurance_s": 2.0,
+      "mean_flow": 2.70018689389527,
+      "flow_variation": 1.6634588290293728,
+      "infeasible_s": 11.75
+    },
+    "cap_1.6": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 1890.848488506957,
+      "high_pressure_s": 0.0,
+      "false_reassurance_s": 2.0,
+      "mean_flow": 3.0587012444436303,
+      "flow_variation": 1.347387400457944,
+      "infeasible_s": 9.821428571428571
+    },
+    "cap_1.8": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 1408.6471050634889,
+      "high_pressure_s": 0.0,
+      "false_reassurance_s": 2.0,
+      "mean_flow": 3.4551614248495,
+      "flow_variation": 0.9831016861722297,
+      "infeasible_s": 7.464285714285714
+    },
+    "cap_2.0": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 958.7592997767308,
+      "high_pressure_s": 0.0,
+      "false_reassurance_s": 2.5,
+      "mean_flow": 3.827668238357931,
+      "flow_variation": 0.6152445433150868,
+      "infeasible_s": 4.285714285714286
+    },
+    "cap_2.2": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 548.3941731733528,
+      "high_pressure_s": 0.0,
+      "false_reassurance_s": 122.17857142857143,
+      "mean_flow": 4.1935271599395,
+      "flow_variation": 1.9045302576008012,
+      "infeasible_s": 2.2857142857142856
+    },
+    "cap_2.4": {
+      "low_reservoir_s": 0.0,
+      "empty_request_s": 0.0,
+      "deficit_auc": 291.9574583365839,
+      "high_pressure_s": 0.0,
+      "false_reassurance_s": 210.5,
+      "mean_flow": 4.48473101430849,
+      "flow_variation": 9.950000000000001,
+      "infeasible_s": 0.32142857142857145
+    }
+  },
+  "selected": [
+    {
+      "id": "reserve_0.4",
+      "family": "reserve",
+      "policy": "sentinel",
+      "options": {
+        "reserve_margin": 0.4
+      },
+      "matched_tuning_budget": true
+    },
+    {
+      "id": "cap_2.4",
+      "family": "flow_cap",
+      "policy": "sentinel",
+      "options": {
+        "flow_cap_index": 2.4
+      },
+      "matched_tuning_budget": true
+    }
+  ]
+}

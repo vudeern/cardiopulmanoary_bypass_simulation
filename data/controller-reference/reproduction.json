@@ -1,0 +1,38 @@
+{
+  "reference": "Takahashi H et al. Simultaneous Control of Venous Reservoir Level and Arterial Flow Rate in Cardiopulmonary Bypass With a Centrifugal Pump. IEEE J Transl Eng Health Med. 2023;11:435–440.",
+  "doi": "10.1109/JTEHM.2023.3290951",
+  "article": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10393111/",
+  "supplement": "https://pmc.ncbi.nlm.nih.gov/articles/instance/10393111/bin/supp1-3290951.pdf",
+  "author_preprint": "https://doi.org/10.21203/rs.3.rs-1980291/v1",
+  "status": "partial_component_reproduction_with_flow_domain_adaptation",
+  "verified_from_sources": [
+    "Final article: measured venous flow, arterial flow and reservoir level; arterial occluder actuation",
+    "Final article: nested feedforward/PID flow controller and I-PD reservoir controller",
+    "Final Eq.1: nonlinear occluder map; Eq.2: first-order lag with dead time",
+    "Author preprint Eq.5: third-order reference model; sigma=3.6 s in experimental setup",
+    "Final article: reservoir target 0.45 L; original sampling interval 0.01 s"
+  ],
+  "implemented_components": [
+    {"component": "OccluderMap", "mapping": "Final Eq.1, beta=A*(R+delta_R0); caller must supply independently calibrated parameters", "validation": "Independent direct-form equivalence and inverse round-trip tests"},
+    {"component": "ThirdOrderReference", "mapping": "Author preprint Eq.5, exact zero-order-hold update of three cascaded lags", "validation": "Analytic third-order step response and timestep refinement tests"}
+  ],
+  "adaptation_changes": [
+    "Current comparison uses common pump-flow actuation, not the source occluder/feedforward/PID inner loop",
+    "I-PD gains are chosen on development cases; they are not claimed to be the authors' gains",
+    "Conventional positive derivative damping is an explicit design choice; the extracted preprint PD sign must be checked against the supplement",
+    "Derivative filtering, anti-windup, startup states and shared flow/slew limits are engineering choices",
+    "1-second sampling, adult-like synthetic plant and reference-assisted level correction differ from the source experiment",
+    "An explicit noisy venous-flow sensor is added to both comparison arms; legacy Sentinel is kept as a separate information ablation",
+    "Source controller tracks venous flow/level; Sentinel targets oxygen delivery/floor. Different objectives are kept visible; no global winner is certified"
+  ],
+  "unresolved": [
+    "Retrieve and verify final Supplement A2–A5: complete controller equations, gains, signs, sampling, filtering and initialization",
+    "Obtain/calibrate the source-specific occluder static and dynamic parameters",
+    "Implement and verify the full source feedforward/PID inner loop and experimental protocol",
+    "Compare reproduced traces and metrics against original experimental data; raw traces have not been obtained"
+  ],
+  "access_notes": "Main article and author-preprint equations were read. Linked supplement retrieval failed in the available web tool. No inaccessible configuration values were invented or labelled verified.",
+  "exact_reproduction_completed": false,
+  "authors_results_reproduced": false,
+  "comparison_publication_ready": false
+}

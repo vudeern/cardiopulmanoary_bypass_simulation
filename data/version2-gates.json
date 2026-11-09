@@ -1,0 +1,33 @@
+{
+  "status": "adopted_project_milestone_not_clinical_certification",
+  "target_version": "2.0.0",
+  "primary_assumption": "Independent calibration meets the declared noise, availability and integrity envelope. Shared unknown absolute bias is not assumed identifiable.",
+  "primary_regimes": ["normal sensing", "routine-reference bias", "routine-reference outage"],
+  "comparator": "Strongest development-tuned PI baseline eligible under the same reservoir/empty-request protection targets, with the same measurement channels and actuator limits. Eligibility and comparator selection are determined on development data, never after seeing final results. Retain all other PI results too.",
+  "oxygen": {
+    "minimum_mean_deficit_reduction_fraction": 0.10,
+    "paired_95_interval_upper_difference_must_be_negative": true
+  },
+  "protection": {
+    "mean_low_reservoir_s_max_per_primary_regime": 1.0,
+    "empty_request_runs_max_in_primary_evaluation": 0,
+    "paired_95_upper_extra_low_reservoir_s_max": 1.0,
+    "paired_95_upper_extra_empty_request_s_max": 1.0,
+    "paired_95_upper_extra_high_pressure_s_max": 5.0,
+    "limits_are_engineering_choices_not_clinical_equivalence": true
+  },
+  "confirmation": {
+    "distinct_fresh_cohorts_min": 2,
+    "virtual_patients_min_per_cohort": 32,
+    "settings_frozen_before_each_confirmation": true,
+    "cohort_failures_retained": true,
+    "all_primary_regimes_must_pass_separately": true
+  },
+  "reproduction": {
+    "automated_tests_and_artifact_checks_pass": true,
+    "two_supported_python_versions": true,
+    "public_code_settings_raw_results_and_replays": true
+  },
+  "failure_envelope": "Publish missing/biased/shared-corruption calibration failures. Require an explicit fallback and unsupported-information status when no independent anchor exists. Do not label shared hidden bias as solved, or broaden claims beyond tested assumptions.",
+  "version_policy": "Continue v1.x research iterations until the complete milestone is demonstrated. A version label never certifies clinical safety, regulatory suitability, publication novelty or commercial readiness."
+}

@@ -1,0 +1,6 @@
+{
+  "solver_documentation": "https://docs.scipy.org/doc/scipy-1.17.0/reference/optimize.linprog-highs.html",
+  "use": "SciPy HiGHS dual-simplex solves a project-specific linear relaxation. Returned objective sensitivities are independently sign-checked and corrected for stationarity residual over finite variable bounds.",
+  "published_controller_reproduction": false,
+  "scope": "Numerically checked lower bound within the declared synthetic plant; not interval arithmetic, global physiological validation or a deployable controller."
+}
