@@ -51,9 +51,58 @@ The new harness preserves the established timing and physiology pipeline and is 
 
 ## Current progress
 
-### v2.0-rc.4 — Finite return-flow credit (current)
+### v2.0-rc.5 — Startup support and calibrated pump braking (current)
 
-The `main` branch is **v2.0-rc.4**. This fixed experiment adds **6,144 runs on the same 32 development virtual patients**: 3,072 primary, 2,304 calibration-failure and 768 abrupt-stop runs. Cumulative completed development runs are **30,848**. Confirmation remains **0/2** and both reserved cohorts stay untouched.
+The `main` branch is **v2.0-rc.5**. This iteration adds **4,096 simulations on the same 32 development virtual patients**: 2,048 primary, 1,536 calibration-failure and 512 abrupt-stop runs across four mechanism arms. The fixed 2,048-run startup stage informed an explicitly adaptive 2,048-run pump-model follow-up; these reused patients are not independent evidence. Cumulative development runs are **34,944**. Both reserved confirmation cohorts stay untouched; confirmation remains **0/2**.
+
+One independent calibration arrives at 6 s; the next arrives at 126 s. The first stage initializes the same volume/venous-bias set from one delivered anchor, keeping the full ±2 L/min bias prior and all existing error allowances. Startup unsupported time falls from 126 to 6 s, but deficit improves by only **0.009%**. Earlier support does not create a feasible higher-flow command when the volume/braking constraint still binds.
+
+The follow-up uses pump hypotheses still consistent with calibration for the existing 15-second finite-return reserve. It crosses one/two-anchor support with the entire/retained stopping grid, holding measurements, gains, error allowances, recovery settings and actuator limits fixed. It introduces a dependency on retaining an adequately accurate pump response: calibration/model assumptions that discard the real response can defeat protection. All previous controller/runtime/study source files remain unchanged.
+
+| Mechanism arm | Startup unsupported (s) | Mean primary deficit AUC (mL O₂/m²) | Primary floor crossings | Abrupt-stop floor crossings |
+| --- | ---: | ---: | ---: | ---: |
+| rc.4 reference | 126 | 1545.77 | 0/512 | 0/128 |
+| One anchor / full grid | 6 | 1545.64 | 0/512 | 0/128 |
+| Two anchors / retained models | 126 | 1456.76 | 0/512 | 0/128 |
+| One anchor / retained models | 6 | 1456.62 | 0/512 | 0/128 |
+
+**The follow-up rule selects `retained_single_anchor`.** Mean primary deficit falls **5.8%**, from **1545.77 to 1456.62**, relative to rc.4. It has zero floor crossings and empty requests across 512 primary cases and 128 abrupt-stop challenges. Its worst primary minimum is **494.40 mL**. The fixed archived eligible PI remains at **444.08**.
+
+**The complete development milestone still fails.** Oxygen delivery remains insufficient versus eligible PI; stable v2.0 is not ready.
+
+Selection across both stages requires zero floor crossings and empty requests in primary **and** abrupt-stop grids, then lowest primary deficit among eligible arms. Calibration-failure data do not select the winner. The 512 archived eligible-PI primary records provide the unchanged gate comparison and are not counted as new simulations. A new equally informed comparator review remains required before any design freeze. Patient-paired intervals are exploratory because design and selection reuse development outcomes.
+
+<details>
+<summary>All four-arm calibration-failure outcomes</summary>
+
+Mean deficit per 600-second run; 128 cases per arm/regime. Missing calibration preserves the same maximum-braking fallback across all four arms, including its large delivery cost.
+
+| Calibration | Arm | Deficit AUC (mL O₂/m²) | Floor crossings | Empty requests |
+| --- | --- | ---: | ---: | ---: |
+| missing | rc.4 reference | 2706.39 | 0/128 | 0/128 |
+| missing | One anchor / full grid | 2706.39 | 0/128 | 0/128 |
+| missing | Two anchors / retained models | 2706.39 | 0/128 | 0/128 |
+| missing | One anchor / retained models | 2706.39 | 0/128 | 0/128 |
+| biased | rc.4 reference | 1364.42 | 0/128 | 0/128 |
+| biased | One anchor / full grid | 1361.36 | 0/128 | 0/128 |
+| biased | Two anchors / retained models | 1273.74 | 0/128 | 0/128 |
+| biased | One anchor / retained models | 1270.68 | 0/128 | 0/128 |
+| shared | rc.4 reference | 1364.42 | 0/128 | 0/128 |
+| shared | One anchor / full grid | 1361.36 | 0/128 | 0/128 |
+| shared | Two anchors / retained models | 1273.74 | 0/128 | 0/128 |
+| shared | One anchor / retained models | 1270.68 | 0/128 | 0/128 |
+
+</details>
+
+No true pump lag, true volume or future event schedule enters control. Raw logs include startup/later deficit separately and lower-estimate overstatement against step-start truth for analysis only. Shared absolute calibration bias remains unidentifiable; Gaussian noise is unbounded and omitted dynamics can invalidate the engineering sets. Passing this finite abrupt-stop grid is not a universal protection guarantee or hardware/clinical validation.
+
+[Startup protocol](results/startup-development/protocol.json), [startup results](results/startup-development/summary.json), [adaptive follow-up protocol](results/calibrated-pump-development/protocol.json), [all four-arm results and gates](results/calibrated-pump-development/summary.json), [mechanism explanation](docs/STARTUP_AND_MODELS.md) and [diagnostic figure](web/startup-models-comparison.svg) are public. All **1,024 repeated rc.4 reference cases** reproduce their prior metrics. Independent checks recalculate the grids, startup/later partition, paired intervals, selection, gates and missing-calibration parity.
+
+**Next:** investigate the remaining stopping-reserve and delivery tradeoff with explicit actuator/estimator assumptions, then retune an equally informed PI before considering a design freeze. Stable v2.0 still needs all project gates and two untouched confirmation cohorts. Physical prototype adaptation remains future work.
+
+### v2.0-rc.4 — Finite return-flow credit (previous)
+
+The previous **v2.0-rc.4** experiment added **6,144 runs on the same 32 development virtual patients**: 3,072 primary, 2,304 calibration-failure and 768 abrupt-stop runs. Cumulative completed development runs are **30,848**. Confirmation remains **0/2** and both reserved cohorts stay untouched.
 
 The new candidate credits **half of a conservative causal return-flow estimate for 15, 30 or 60 seconds**, then assumes zero return forever. It retains rc.3's entire configured pump grid and maximum-braking fallback without independent support. The three horizons are fixed before outcome runs; no settings are revised during the sweep. Earlier controller, runtime and study source files remain byte-for-byte unchanged. The opt-in candidate package keeps frozen historical source scopes intact.
 
@@ -198,7 +247,7 @@ The [first-stage protocol](results/reachability-development/protocol.json), [ada
 
 ### Requirements for stable v2.0.0
 
-The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); the latest iteration reports [current progress](results/finite-return-development/summary.json).
+The active development line is **v2.0 release candidates**. Stable v2.0.0 remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); the latest iteration reports [current progress](results/calibrated-pump-development/summary.json).
 
 - At least **10% lower mean oxygen-deficit AUC** than the strongest development-eligible PI comparator with the same inputs and limits; the paired 95% interval must support improvement. Determine the comparator on development data, not after final results.
 - **Zero empty-reservoir requests** in primary evaluation and mean low-reservoir time **≤1 s per 10-minute run** in each primary regime. Upper paired extra exposure must be ≤1 s low/empty and ≤5 s high pressure.
@@ -246,19 +295,19 @@ The public-case input file contains five observations transcribed from [Hunter e
 
 ### Use the current controller interface
 
-This synthetic example uses the development-selected rc.4 finite-return candidate. Its explicit return-flow assumption, delivery penalty and calibration/model limitations above apply. The frozen v1 package predates these runtime interfaces.
+This synthetic example uses the development-selected rc.5 candidate. Its return-flow, calibration/model-retention assumptions and remaining delivery penalty above apply. The frozen v1 package predates these runtime interfaces.
 
 ```python
-from perfusion_candidates.finite_return import FiniteReturnRuntime
+from perfusion_candidates.calibrated_pump import CalibratedPumpRuntime
 from perfusion_lab.runtime import MeasurementFrame
 from pathlib import Path
 import json
 from perfusion_lab.sensing import Observation
 
-protocol = json.loads(Path("results/finite-return-development/protocol.json").read_text())
-summary = json.loads(Path("results/finite-return-development/summary.json").read_text())
+protocol = json.loads(Path("results/calibrated-pump-development/protocol.json").read_text())
+summary = json.loads(Path("results/calibrated-pump-development/summary.json").read_text())
 method = protocol["methods"][summary["selected_candidate"]]
-runtime = FiniteReturnRuntime(bsa=1.85, initial_hb=9.0, dt=1.0,
+runtime = CalibratedPumpRuntime(bsa=1.85, initial_hb=9.0, dt=1.0,
     controller_options=method["options"], guard_options=method["guard"])
 # Illustrative measured values in the documented units, not patient settings.
 obs = Observation(0.0, 4.44, 0.85, 60.0, 9.0, 0.98, 37.0, 9.0)
@@ -274,6 +323,16 @@ python examples/check_versions.py
 ```
 
 ### Reproduce the current development experiment
+
+```bash
+python examples/startup_study.py --stage run
+python examples/validate_startup.py --replay
+python examples/calibrated_pump_study.py --stage run
+python examples/validate_calibrated_pump.py --replay
+python examples/build_startup_web.py --check
+```
+
+The preceding rc.4 experiment remains reproducible:
 
 ```bash
 python examples/finite_return_study.py --stage run
@@ -321,7 +380,8 @@ Versions are listed newest first. The current entry follows `main`; earlier entr
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
-| v2.0-rc.4 (current) | Finite return-flow credit, explicit abrupt-stop challenges and a 6,144-run fixed development comparison | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v2.0-rc.5 (current) | Single-anchor startup, calibrated pump hypotheses and a 4,096-run controlled/adaptive development comparison | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v2.0-rc.4 | Finite return-flow credit, explicit abrupt-stop challenges and a 6,144-run fixed development comparison | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/9d79573635bcc1760292516b70d518d7dd55881a) |
 | v2.0-rc.3 | Zero-return braking reserve, explicit calibration fallback and a 2,688-run protection/delivery comparison | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/63c71527ca3760ccdb22235d9945b89cbdfed445) |
 | v2.0-rc.2 | Calibration sets, joint braking, adaptive PI-base development and explicit worst-case failures | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/df071764934fbb8bdc2496363a42bf545fc28bc7) |
 | v2.0-rc.1 | Measurement-only controller API, exact v1 parity and final-v1 packaging | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/99d7237a37115cd30ea0c99836fa6515d62c7bb1) |

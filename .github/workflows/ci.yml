@@ -58,3 +58,6 @@ jobs:
       - run: python examples/build_depletion_web.py --check
       - run: python examples/validate_finite_return.py --replay
       - run: python examples/build_finite_return_web.py --check
+      - run: python examples/validate_startup.py --replay
+      - run: python examples/validate_calibrated_pump.py --replay
+      - run: python examples/build_startup_web.py --check
