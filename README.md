@@ -53,6 +53,12 @@ The new harness preserves the established timing and physiology pipeline and is 
 
 Development updates are published to GitHub and reflected in the portfolio after validation. Stable v2.0 remains a separate release that requires all agreed performance, protection and confirmation gates.
 
+### New development milestone — Horizon MPC applied in feedback
+
+The optimizer now **actually controls the simulated pump** behind the same current protection cap as matched PI. A fixed [48-run pilot](docs/FEEDBACK_PILOT.md) on four reused development patients measures **0.1435% lower oxygen deficit than matched point-estimate PI**, well below the 10% target, and about 0.0418% worse than the existing rc.5 hybrid. All three arms have zero observed floor crossings and empty requests in this limited healthy-reference grid.
+
+MPC actions are applied on **7,459 control steps**; rejected or unsupported optimization falls back to the same protected PI. Both nominal controllers receive the same guard point-volume estimate while the independent lower estimate determines their shared cap. Full applied trajectories, rejection statuses, settings and [paired results](results/feedback-pilot/summary.json) are public. This candidate does not justify a larger tuning sweep or a superiority claim. Stable v2.0 and its gates are unchanged; confirmation remains untouched.
+
 ### New development milestone — Delivery limits and a nominal horizon optimizer
 
 The [horizon foundation](docs/HORIZON_FOUNDATION.md) now includes **384 measured-controller runs and 1,024 offline optimizer snapshots** on the same 32 development patients. In this healthy-reference audit, **90.50% of rc.5 deficit occurs during intervals labelled stopping-reserve limited**. An illustrative fast PI nearly matches rc.5 (1456.578 versus 1456.624 AUC), pointing to the shared constraint rather than a large gain-tuning opportunity. These labels are temporal associations, not proof that relaxing reserve would safely recover that delivery.

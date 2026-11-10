@@ -1,0 +1,68 @@
+{
+  "confirmation_seeds_executed": [],
+  "groups": {
+    "mpc": {
+      "action_changed_s": 42,
+      "cap_violations": 0,
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "mean_deficit_auc": 1453.89449444211,
+      "mean_high_pressure_s": 0.0,
+      "minimum_L": 0.5524203264566524,
+      "mpc_accepted_s": 7459,
+      "runs": 16
+    },
+    "pi": {
+      "action_changed_s": 0,
+      "cap_violations": 0,
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "mean_deficit_auc": 1455.9839151604206,
+      "mean_high_pressure_s": 0.0,
+      "minimum_L": 0.552420230916,
+      "mpc_accepted_s": 0,
+      "runs": 16
+    },
+    "rc5": {
+      "action_changed_s": 0,
+      "cap_violations": 0,
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "mean_deficit_auc": 1453.2876882431424,
+      "mean_high_pressure_s": 0.0,
+      "minimum_L": 0.552440807048882,
+      "mpc_accepted_s": 0,
+      "runs": 16
+    }
+  },
+  "mpc_reduction_fraction": 0.0014350575556189016,
+  "paired_patient_differences": [
+    {
+      "difference": -1.27279853622872,
+      "mpc": 1563.736478684956,
+      "pi": 1565.0092772211847,
+      "seed": 37000
+    },
+    {
+      "difference": -3.074799211182608,
+      "mpc": 1240.5326213065878,
+      "pi": 1243.6074205177704,
+      "seed": 37007
+    },
+    {
+      "difference": -0.9568381711878828,
+      "mpc": 1829.9367147215376,
+      "pi": 1830.8935528927254,
+      "seed": 37014
+    },
+    {
+      "difference": -3.0532469546431003,
+      "mpc": 1181.3721630553582,
+      "pi": 1184.4254100100013,
+      "seed": 37031
+    }
+  ],
+  "protocol_sha256": "87c1f33271e016af180e4d21eb26d6365c1dd6ea52252197b219872a78d5c346",
+  "runs": 48,
+  "version2_ready": false
+}
