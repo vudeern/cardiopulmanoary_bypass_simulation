@@ -1,0 +1,40 @@
+name: Horizon numerical diagnostic
+on:
+  push:
+    branches: [development/horizon-foundation]
+    paths: [.github/workflows/horizon-probe.yml]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.probe.outputs.result }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install -e ".[audit,horizon]"
+      - id: probe
+        shell: python
+        run: |
+          import os,sys,unittest,io
+          import numpy as np
+          sys.path.insert(0,'src')
+          from perfusion_research.horizon import formulate,HorizonSolver
+          p=formulate([1.4,1.,14.],1.,np.ones(8),np.full(8,60.),np.full(8,100.))
+          a=HorizonSolver('osqp',deadline_s=5.).solve(p)
+          b=HorizonSolver().solve(p)
+          c=a['checks']
+          text='status='+a['status']+' accept='+str(a['accepted'])+' time='+str(round(a['elapsed_s'],3))
+          for k in ('matrix_violation','rollout_error','physical_violation','slack_understatement','objective'):
+              if k in c:text+=' '+k[:4]+'='+format(c[k],'.4g')
+          text+=' ref='+format(b['checks'].get('objective',-1),'.4g')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('result='+text[:250]+'\n')
+  report:
+    needs: probe
+    name: ${{ needs.probe.outputs.result }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Numerical diagnostic complete"
