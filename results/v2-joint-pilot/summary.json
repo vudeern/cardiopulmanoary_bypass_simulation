@@ -1,0 +1,154 @@
+{
+  "confirmation_seeds_executed": [],
+  "groups": {
+    "normal": {
+      "aggregate_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1414.5170579492135,
+        "mean_recovery_deficit_auc": 254.75820043026798,
+        "runs": 4,
+        "widened_cap_s": 1243,
+        "worst_minimum_reservoir_L": 0.7737291782594528
+      },
+      "joint_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 1150,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1236.5381764733118,
+        "mean_recovery_deficit_auc": 195.9971541331485,
+        "runs": 4,
+        "widened_cap_s": 1150,
+        "worst_minimum_reservoir_L": 0.7737291782594528
+      },
+      "reduction_fraction": 0.12582307189277586
+    },
+    "repeated": {
+      "aggregate_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1623.6487599292668,
+        "mean_recovery_deficit_auc": 390.38522455833146,
+        "runs": 4,
+        "widened_cap_s": 1056,
+        "worst_minimum_reservoir_L": 0.43825870462626243
+      },
+      "joint_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 689,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1540.1440213289386,
+        "mean_recovery_deficit_auc": 380.28362177543363,
+        "runs": 4,
+        "widened_cap_s": 689,
+        "worst_minimum_reservoir_L": 0.06809573964676481
+      },
+      "reduction_fraction": 0.05143029740247884
+    },
+    "repeated_bias": {
+      "aggregate_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1625.9166746667106,
+        "mean_recovery_deficit_auc": 390.5968046007489,
+        "runs": 4,
+        "widened_cap_s": 1054,
+        "worst_minimum_reservoir_L": 0.4401863415984642
+      },
+      "joint_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 572,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1543.2242742609535,
+        "mean_recovery_deficit_auc": 380.232611349634,
+        "runs": 4,
+        "widened_cap_s": 572,
+        "worst_minimum_reservoir_L": 0.06843648291989073
+      },
+      "reduction_fraction": 0.05085894110945621
+    },
+    "repeated_noise": {
+      "aggregate_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1629.6639651658634,
+        "mean_recovery_deficit_auc": 391.19484393766214,
+        "runs": 4,
+        "widened_cap_s": 1034,
+        "worst_minimum_reservoir_L": 0.43920645856463114
+      },
+      "joint_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 771,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1525.4827331976228,
+        "mean_recovery_deficit_auc": 381.2642119655383,
+        "runs": 4,
+        "widened_cap_s": 771,
+        "worst_minimum_reservoir_L": 0.07769661215751762
+      },
+      "reduction_fraction": 0.06392804541004704
+    },
+    "single": {
+      "aggregate_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1494.7734599177966,
+        "mean_recovery_deficit_auc": 266.6158571888294,
+        "runs": 4,
+        "widened_cap_s": 1155,
+        "worst_minimum_reservoir_L": 0.6086719362228514
+      },
+      "joint_pi": {
+        "cap_violations": 0,
+        "changed_action_s": 951,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1399.2620354237974,
+        "mean_recovery_deficit_auc": 238.20489866134037,
+        "runs": 4,
+        "widened_cap_s": 951,
+        "worst_minimum_reservoir_L": 0.06809573964676481
+      },
+      "reduction_fraction": 0.06389692288171323
+    }
+  },
+  "protocol_sha256": "7e7dc8195602f934bf37a1b3b06c511a03a15b1b034c718a692a794a5caed2c6",
+  "runs": 40,
+  "v2_milestone_passed": false,
+  "version_line": "v2"
+}

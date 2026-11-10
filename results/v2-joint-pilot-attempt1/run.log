@@ -1,0 +1,48 @@
+Completed joint pilot 37000 nominal normal
+Completed joint pilot 37000 nominal single
+Completed joint pilot 37000 nominal repeated
+Completed joint pilot 37000 nominal repeated_bias
+Completed joint pilot 37000 nominal repeated_noise
+Completed joint pilot 37000 slow normal
+Completed joint pilot 37000 slow single
+Completed joint pilot 37000 slow repeated
+Completed joint pilot 37000 slow repeated_bias
+Completed joint pilot 37000 slow repeated_noise
+Completed joint pilot 37014 nominal normal
+Completed joint pilot 37014 nominal single
+Completed joint pilot 37014 nominal repeated
+Completed joint pilot 37014 nominal repeated_bias
+Completed joint pilot 37014 nominal repeated_noise
+Completed joint pilot 37014 slow normal
+Completed joint pilot 37014 slow single
+Completed joint pilot 37014 slow repeated
+Completed joint pilot 37014 slow repeated_bias
+Completed joint pilot 37014 slow repeated_noise
+Traceback (most recent call last):
+  File "/workspace/scratch/c32e57dd45a9/perfusion/examples/joint_v2_study.py", line 107, in <module>
+    if __name__=='__main__':protocol();execute()
+                                       ^^^^^^^^^
+  File "/workspace/scratch/c32e57dd45a9/perfusion/examples/joint_v2_study.py", line 89, in execute
+    save(OUT/'runs.json',records);groups={}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/c32e57dd45a9/perfusion/examples/recovery_v2_study.py", line 22, in save
+    def save(p,x):p.write_text(json.dumps(x,indent=2,sort_keys=True,allow_nan=False)+'\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 430, in _iterencode
+    yield from _iterencode_list(o, _current_indent_level)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type int64 is not JSON serializable

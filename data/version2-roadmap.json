@@ -1,5 +1,5 @@
 {
-  "current_version": "2.0.0rc1",
+  "current_version": "2.0.0rc2",
   "next_stable_version": "2.0.0",
   "final_v1_version": "1.15.0",
   "final_v1_tag": "v1.15.0",
@@ -7,7 +7,7 @@
   "version2_ready": false,
   "qualifying_confirmation_cohorts": 0,
   "evidence_policy": "data/version2-gates.json",
-  "current_progress": "results/v2-recovery-pilot/summary.json",
-  "next_goal": "Recovery-aware control; all new recovery experiments belong to v2",
+  "current_progress": "results/v2-joint-pilot/summary.json",
+  "next_goal": "Preserve joint-hypothesis efficiency while enforcing zero-return stopping viability; retained finite-return candidate fails interruption protection",
   "confirmation_seeds_executed": []
 }
