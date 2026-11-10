@@ -67,3 +67,4 @@ jobs:
       - run: python examples/fixed_ceiling_bound.py --check
       - run: python examples/validate_recovery_v2.py
       - run: python examples/validate_joint_v2.py
+      - run: python examples/validate_zero_v2.py

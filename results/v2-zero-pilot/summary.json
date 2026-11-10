@@ -1,0 +1,301 @@
+{
+  "confirmation_seeds_executed": [],
+  "evaluations": 80,
+  "groups": {
+    "normal": {
+      "aggregate_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1414.5170579492135,
+        "mean_recovery_deficit_auc": 254.75820043026798,
+        "minimum_reservoir_L": 0.7737291782594528,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1659.5469422223937,
+        "mean_recovery_deficit_auc": 328.18565712494234,
+        "minimum_reservoir_L": 0.7737291782594528,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1236.5381764733118,
+        "mean_recovery_deficit_auc": 195.9971541331485,
+        "minimum_reservoir_L": 0.7737291782594528,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1554.7152637921006,
+        "mean_recovery_deficit_auc": 285.2816983805026,
+        "minimum_reservoir_L": 0.7737291782594528,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "zero_joint_reduction_fraction": 0.06316885395836225
+    },
+    "repeated": {
+      "aggregate_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1623.6487599292668,
+        "mean_recovery_deficit_auc": 390.38522455833146,
+        "minimum_reservoir_L": 0.43825870462626243,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1804.2777196302306,
+        "mean_recovery_deficit_auc": 419.9754450336329,
+        "minimum_reservoir_L": 0.4417901531102679,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1540.1440213289386,
+        "mean_recovery_deficit_auc": 380.28362177543363,
+        "minimum_reservoir_L": 0.06809573964676481,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1753.7622121737793,
+        "mean_recovery_deficit_auc": 403.1738579647805,
+        "minimum_reservoir_L": 0.4361840068209591,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "zero_joint_reduction_fraction": 0.027997634126305182
+    },
+    "repeated_bias": {
+      "aggregate_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1625.9166746667106,
+        "mean_recovery_deficit_auc": 390.5968046007489,
+        "minimum_reservoir_L": 0.4401863415984642,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1806.0960517274584,
+        "mean_recovery_deficit_auc": 420.07661050043765,
+        "minimum_reservoir_L": 0.44369284858980673,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1543.2242742609535,
+        "mean_recovery_deficit_auc": 380.232611349634,
+        "minimum_reservoir_L": 0.06843648291989073,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1756.3993840446233,
+        "mean_recovery_deficit_auc": 403.31465195042335,
+        "minimum_reservoir_L": 0.43582891585127503,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "zero_joint_reduction_fraction": 0.02751607127168143
+    },
+    "repeated_noise": {
+      "aggregate_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1629.6639651658634,
+        "mean_recovery_deficit_auc": 391.19484393766214,
+        "minimum_reservoir_L": 0.43920645856463114,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1810.079703588673,
+        "mean_recovery_deficit_auc": 420.8197566561292,
+        "minimum_reservoir_L": 0.4428900040404107,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1525.4827331976228,
+        "mean_recovery_deficit_auc": 381.2642119655383,
+        "minimum_reservoir_L": 0.07769661215751762,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1749.6467969574658,
+        "mean_recovery_deficit_auc": 404.4910077123913,
+        "minimum_reservoir_L": 0.4356761235710009,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "zero_joint_reduction_fraction": 0.03338687600959933
+    },
+    "single": {
+      "aggregate_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1494.7734599177966,
+        "mean_recovery_deficit_auc": 266.6158571888294,
+        "minimum_reservoir_L": 0.6086719362228514,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1719.0972663447374,
+        "mean_recovery_deficit_auc": 337.57094856918604,
+        "minimum_reservoir_L": 0.628839781405045,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_credit": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1399.2620354237974,
+        "mean_recovery_deficit_auc": 238.20489866134037,
+        "minimum_reservoir_L": 0.06809573964676481,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "empty_cases": 0,
+        "feasible_margin_violations": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 1661.81921695697,
+        "mean_recovery_deficit_auc": 309.95581247172436,
+        "minimum_reservoir_L": 0.4565325656139634,
+        "runs": 4,
+        "unsupported_s": 24
+      },
+      "zero_joint_reduction_fraction": 0.033318678651357514
+    }
+  },
+  "new_simulations": 40,
+  "protocol_sha256": "1ea5abe1a5375d57255ea7d5f122d5bf83050667e2e16f86bd6ab7850c7c6073",
+  "retained_reference_runs": 40,
+  "totals": {
+    "aggregate_credit": {
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "high_pressure_cases": 0,
+      "mean_deficit_auc": 1557.70398352577,
+      "minimum_reservoir_L": 0.43825870462626243,
+      "runs": 20
+    },
+    "aggregate_zero": {
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "high_pressure_cases": 0,
+      "mean_deficit_auc": 1759.8195367026988,
+      "minimum_reservoir_L": 0.4417901531102679,
+      "runs": 20
+    },
+    "joint_credit": {
+      "empty_cases": 0,
+      "floor_cases": 8,
+      "high_pressure_cases": 0,
+      "mean_deficit_auc": 1448.9302481369248,
+      "minimum_reservoir_L": 0.06809573964676481,
+      "runs": 20
+    },
+    "joint_zero": {
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "high_pressure_cases": 0,
+      "mean_deficit_auc": 1695.2685747849878,
+      "minimum_reservoir_L": 0.4356761235710009,
+      "runs": 20
+    }
+  },
+  "v2_milestone_passed": false,
+  "version_line": "v2",
+  "zero_joint_reduction_fraction": 0.03668044397248682
+}

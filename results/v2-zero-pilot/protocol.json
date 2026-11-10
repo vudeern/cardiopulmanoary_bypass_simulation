@@ -1,0 +1,283 @@
+{
+  "cases": [
+    "normal",
+    "single",
+    "repeated",
+    "repeated_bias",
+    "repeated_noise"
+  ],
+  "confirmation_seeds_executed": [],
+  "dt_s": 1.0,
+  "duration_s": 600.0,
+  "evaluations": 80,
+  "fairness": "Same point-estimate fast PI, identical measurements, causal observer and starting state for all arms. Credit arms are the 40 already published exact configurations/cases, reused by hashed trace reference; not new simulations or independent replication.",
+  "limits": "Zero-return reserve eliminates the future-inflow assumption only. Conditional calibration/model retention and bounds, initial/unsupported state, pressure and actual dynamics can still invalidate protection. Two reused development patients; no general safety or clinical/hardware claim.",
+  "mechanism": "Fixed 2x2: aggregate/joint model association crossed with zero/15-second future-return credit. Zero arms enforce stopping reserve with no credited future inflow; finite_return_reserve(horizon=0) equals full zero-return braking reserve. No new sensing, gains, pruning, slew authority, floor or error allowances. All retained models must pass in joint arms.",
+  "methods": {
+    "aggregate_credit": {
+      "engine": "reach",
+      "family": "candidate",
+      "guard": {
+        "audit_tolerance": 0.12,
+        "base_uncertainty": 0.06,
+        "calibration_error": 0.04,
+        "drift_allowance": 0.004,
+        "interval_mode": "consistent",
+        "model_error_flow": 0.03,
+        "startup_minimum_anchors": 1
+      },
+      "kind": "integrity_pi",
+      "options": {
+        "joint_enabled": false,
+        "recovery_floor": 0.45,
+        "reserve_mode": "joint",
+        "return_fraction": 0.5,
+        "return_horizon_s": 15.0,
+        "target_level": 0.25,
+        "tau_c": 0.2
+      }
+    },
+    "aggregate_zero": {
+      "engine": "reach",
+      "family": "candidate",
+      "guard": {
+        "audit_tolerance": 0.12,
+        "base_uncertainty": 0.06,
+        "calibration_error": 0.04,
+        "drift_allowance": 0.004,
+        "interval_mode": "consistent",
+        "model_error_flow": 0.03,
+        "startup_minimum_anchors": 1
+      },
+      "kind": "integrity_pi",
+      "options": {
+        "joint_enabled": false,
+        "recovery_floor": 0.45,
+        "reserve_mode": "joint",
+        "return_fraction": 0.5,
+        "return_horizon_s": 0.0,
+        "target_level": 0.25,
+        "tau_c": 0.2
+      }
+    },
+    "joint_credit": {
+      "engine": "reach",
+      "family": "candidate",
+      "guard": {
+        "audit_tolerance": 0.12,
+        "base_uncertainty": 0.06,
+        "calibration_error": 0.04,
+        "drift_allowance": 0.004,
+        "interval_mode": "consistent",
+        "model_error_flow": 0.03,
+        "startup_minimum_anchors": 1
+      },
+      "kind": "integrity_pi",
+      "options": {
+        "joint_enabled": true,
+        "recovery_floor": 0.45,
+        "reserve_mode": "joint",
+        "return_fraction": 0.5,
+        "return_horizon_s": 15.0,
+        "target_level": 0.25,
+        "tau_c": 0.2
+      }
+    },
+    "joint_zero": {
+      "engine": "reach",
+      "family": "candidate",
+      "guard": {
+        "audit_tolerance": 0.12,
+        "base_uncertainty": 0.06,
+        "calibration_error": 0.04,
+        "drift_allowance": 0.004,
+        "interval_mode": "consistent",
+        "model_error_flow": 0.03,
+        "startup_minimum_anchors": 1
+      },
+      "kind": "integrity_pi",
+      "options": {
+        "joint_enabled": true,
+        "recovery_floor": 0.45,
+        "reserve_mode": "joint",
+        "return_fraction": 0.5,
+        "return_horizon_s": 0.0,
+        "target_level": 0.25,
+        "tau_c": 0.2
+      }
+    }
+  },
+  "new_simulations": 40,
+  "plants": [
+    "nominal",
+    "slow"
+  ],
+  "recovery_analysis_window_s": [
+    213.0,
+    348.0
+  ],
+  "retained_hashes": {
+    "results/v2-joint-pilot/37000-nominal-normal-aggregate_pi.csv": "b191f7f45d303225cde9ba101975a2998b42b5d017ae4e3ea6a213418bd7993b",
+    "results/v2-joint-pilot/37000-nominal-normal-joint_pi.csv": "cec8a703fea926a07082ac9ec519f30e057c5a166e391edfda59a0537f3bc503",
+    "results/v2-joint-pilot/37000-nominal-repeated-aggregate_pi.csv": "49779f59db3c28fffb33d9249bc42e547a2ece4a9920636507434858cc54c511",
+    "results/v2-joint-pilot/37000-nominal-repeated-joint_pi.csv": "005ba1b45f30535787218533aa24067125a0e383ffbd2a26c2b9958bb7e85e8c",
+    "results/v2-joint-pilot/37000-nominal-repeated_bias-aggregate_pi.csv": "8ae23bda8349d5fc43d321874ab6a58a65670f35f20336c6646dc61574e0bfd2",
+    "results/v2-joint-pilot/37000-nominal-repeated_bias-joint_pi.csv": "bd21e19102e7d77470e83fd821bc7f58ee5b1a8a25712c1cacba1eb14cc3fe9d",
+    "results/v2-joint-pilot/37000-nominal-repeated_noise-aggregate_pi.csv": "674dd474f7743e7c176493978bfdf96f386464811824296060579f248b29ebaf",
+    "results/v2-joint-pilot/37000-nominal-repeated_noise-joint_pi.csv": "0be4b065790ef33006595da293c557c19d64360a151617f24c3adfa82ccb0531",
+    "results/v2-joint-pilot/37000-nominal-single-aggregate_pi.csv": "690c6f5d7d3b88019b780b6165a0d933c9ec9d56af87b6ba97f185623e38e60b",
+    "results/v2-joint-pilot/37000-nominal-single-joint_pi.csv": "09c0fab95d5d81707b05396b53294c58b11176296088a25a304fd9646e7703ff",
+    "results/v2-joint-pilot/37000-slow-normal-aggregate_pi.csv": "c9a0b6b4c605c09c978a47291ec63a478207332ba94ae8ef5b3d94368f41ede3",
+    "results/v2-joint-pilot/37000-slow-normal-joint_pi.csv": "72ff21624243ec026c74432c44ebe99ea9a42037488eedf8fe3a8af005d84a41",
+    "results/v2-joint-pilot/37000-slow-repeated-aggregate_pi.csv": "a54f849686a283ba8a2f992f0224c16bf8d7b35b1b92ff864f20ce37dd7803af",
+    "results/v2-joint-pilot/37000-slow-repeated-joint_pi.csv": "929ecee804ca3ca43c4e3b177dc4570f3ca6b9b0274fa71b0dbdb535ccf9240e",
+    "results/v2-joint-pilot/37000-slow-repeated_bias-aggregate_pi.csv": "d558fb96c8e2159d337f9c058f0006e4747c83cd247eceafe80eb20de24476f0",
+    "results/v2-joint-pilot/37000-slow-repeated_bias-joint_pi.csv": "8f5301d01c48571bbea0105f931320376e463ce2bbf05d224ec989acbe1e2807",
+    "results/v2-joint-pilot/37000-slow-repeated_noise-aggregate_pi.csv": "ea79ae57c9715bf967bab8c164e3c1b153caba6eb928ff14016ef253268338a7",
+    "results/v2-joint-pilot/37000-slow-repeated_noise-joint_pi.csv": "6cbea249d6afede320324fb298843449615b61e6327c2e473ab34af29fba3d31",
+    "results/v2-joint-pilot/37000-slow-single-aggregate_pi.csv": "1f33c84d02ed3c097e4e5bdb92dc9de9dd6bafa4b03185ee2eaffb38ca77757b",
+    "results/v2-joint-pilot/37000-slow-single-joint_pi.csv": "7d1316b138c7522dfc51c0047818ac6436c1e59ad0a180ec7dacb66cefed2f9b",
+    "results/v2-joint-pilot/37014-nominal-normal-aggregate_pi.csv": "c7a85d397330c5c65d70c1974ee4548e1bbd21be92c239c9473c28310452151a",
+    "results/v2-joint-pilot/37014-nominal-normal-joint_pi.csv": "3ff281bf831f38b9cf7ac4356b7f8c4cbfe44cae4854d77492e4d2d9384e9756",
+    "results/v2-joint-pilot/37014-nominal-repeated-aggregate_pi.csv": "0a589c51379358049b0c4d83257bb9dbcfd5f5e3b4e616ef5d982c4aeca7ea0b",
+    "results/v2-joint-pilot/37014-nominal-repeated-joint_pi.csv": "b0248910fb4747ef52e73b2b7fd160183d517d4225697e1300850ad23710e364",
+    "results/v2-joint-pilot/37014-nominal-repeated_bias-aggregate_pi.csv": "a2a89ce903753e76c5a263b381b67c2eb7e4e54baeaa4f253514d3d124ec1b2d",
+    "results/v2-joint-pilot/37014-nominal-repeated_bias-joint_pi.csv": "80bf58a0ddae37daa326a44d229cb42638b3bb11d9a25f1013353e621ab2a63e",
+    "results/v2-joint-pilot/37014-nominal-repeated_noise-aggregate_pi.csv": "0f61e796fbd14561eb1359363760491d975175056d3aef8644f94415c826974a",
+    "results/v2-joint-pilot/37014-nominal-repeated_noise-joint_pi.csv": "029000d5162c2764bd5193257c55145dbe580116e888c70bca719c2ca7dafbc9",
+    "results/v2-joint-pilot/37014-nominal-single-aggregate_pi.csv": "c12c12dfa58b9329d5d286391d857b46067bc289c14c546d6a50d47b0492eac3",
+    "results/v2-joint-pilot/37014-nominal-single-joint_pi.csv": "bc82f82d3a14cf162a16bc518c6cd6144f768c83f3479ff1bf66be7aff7c289b",
+    "results/v2-joint-pilot/37014-slow-normal-aggregate_pi.csv": "b3116a1c29b086cbd664979af305a94ad4a662237623cf3e42e5ebba1cdbcebb",
+    "results/v2-joint-pilot/37014-slow-normal-joint_pi.csv": "668bfa304de91e74578d3e0374aec25cd0a3f9c62abb505b6806f8fe7204695d",
+    "results/v2-joint-pilot/37014-slow-repeated-aggregate_pi.csv": "1dddbcc2cf9129891f36fb2835c1025e973e8a148387be35c51db64bd4c99a15",
+    "results/v2-joint-pilot/37014-slow-repeated-joint_pi.csv": "0eeb10a982b1db50b471cd9648049b045ce425cf32e5752ed78b81f0a194f78e",
+    "results/v2-joint-pilot/37014-slow-repeated_bias-aggregate_pi.csv": "ea8ed2d4360a4ace53f81ec622bf6fcf8d38d5c3c6298956a3c280be55d94d0c",
+    "results/v2-joint-pilot/37014-slow-repeated_bias-joint_pi.csv": "5eb92fcae6d892a629e05d083906e955fd4eea8b61c2de350d5301208e7c84c1",
+    "results/v2-joint-pilot/37014-slow-repeated_noise-aggregate_pi.csv": "3a601315d8a17c80a39379940b31858973dfdcbea55c2758b4f11f4225092d94",
+    "results/v2-joint-pilot/37014-slow-repeated_noise-joint_pi.csv": "0ba92192894bab7bacc352488c3bdad4d5acfb429bdf3c0c6a4cc5c07290149f",
+    "results/v2-joint-pilot/37014-slow-single-aggregate_pi.csv": "f7aa1a06c3c9f36842a7b16a6d04fa20b6fadd82f879fa907f55d853e1b2c156",
+    "results/v2-joint-pilot/37014-slow-single-joint_pi.csv": "f333bb99cad90fbe97c34e0b1b2cfb75907ce7e828900a49ee14fdb1aaf8cf56",
+    "results/v2-joint-pilot/protocol.json": "7e7dc8195602f934bf37a1b3b06c511a03a15b1b034c718a692a794a5caed2c6",
+    "results/v2-joint-pilot/runs.json": "ff11c59159b07a5af384f3f6db1a0ab3381722b72e7bf7aa4e86d4a3b2f16a85",
+    "results/v2-joint-pilot/summary.json": "75e503b10d120418436c7bf453b3cc00689a662f484ee2235f688654224af930"
+  },
+  "retained_reference_runs": 40,
+  "seeds": [
+    37000,
+    37014
+  ],
+  "source_hashes": {
+    "examples/calibrated_pump_study.py": "f9c8442e0bced358d71fc629cd8be2fc9a621378d64ecb43ef8efa583c684795",
+    "examples/continuity_study.py": "1cf72484f4016b96675d58837c514a60c1de2f07d105d6388dde4257beae8e69",
+    "examples/depletion_study.py": "ab98e70e66e31d047149560b02df718dc0849d3ccde5a7ee35bdb92f7b4bd277",
+    "examples/finite_return_study.py": "9ddc2894a3b7968170b2aae773c62f80b0c7931fb6c728516809644aabcbe053",
+    "examples/integrity_study.py": "5b0f51a29eb98ce0cc46b3429d32f7d20f19fe19044503fb70727d18499903cb",
+    "examples/joint_v2_study.py": "4eceec4b9ed21e02ccbb8ba3c123d1b4f85c3be67be5ac1d2668b46d506c3d6b",
+    "examples/recovery_v2_study.py": "2cd232e12df80d2cc2930430e9f721352db0d59569a53459f0de2ae18be109d5",
+    "examples/simc_benchmark.py": "2322f11ef2dde036fa6ddd51843c29847c79a9f6b2ca1471074996eff66504d6",
+    "examples/startup_study.py": "5b4bc328593619840b2d440f55ce79249cf5df4341179ca84d84c33117352ddd",
+    "examples/zero_v2_study.py": "52c2cfe868c83c671cc382033dd5985e60fa0c695829a5fa9edfc0b7269058f9",
+    "results/depletion-development/summary.json": "8b519289f4116c0c3d155aa4f9c3db755c93f65db749fd140ace02c682456f07",
+    "results/finite-return-development/protocol.json": "0b48a6291f947292729df4e8cd6eaab11428e12e92cd12a094593b210adf1319",
+    "results/finite-return-development/summary.json": "a66585552bc4a441e3aa4e97dd393ed9b295c937d37db3f00e0152d2932d386d",
+    "results/reachability-base-development/selection.json": "d20f81ba0fb1e4198b474c82ca034a291b022e4dfdf5d788455cc3e109460cec",
+    "results/reachability-development/protocol.json": "73444ceb583fd0f4dcede5924445c061024990ef202478942965a1ed75208cc7",
+    "results/startup-development/protocol.json": "fcf4ceb5a9a3c72e5931a3ff773279975cce73ecea77b849a617473a7201d567",
+    "results/startup-development/summary.json": "6841fef5e971f57ec69da0c0fe4d1a899e379c5e9ab593e02276b13225a8952f",
+    "src/perfusion_candidates/__init__.py": "d98692ea115dc561978cca642afff20ad7f091af0f2d08f181ec0c2cdc41db74",
+    "src/perfusion_candidates/calibrated_pump.py": "d997e6c8784748bf05d29970b8430aa0017990d5e207513898177be216132af0",
+    "src/perfusion_candidates/calibrated_pump_simulation.py": "801f3fc84d009d3195a27ea33911dfc5b0c8b09fa66746beb230106345928589",
+    "src/perfusion_candidates/finite_return.py": "9c878e076f2148e545ff7553ebb99c3acd5bc05c0f29fd2cae328c085aad39fb",
+    "src/perfusion_candidates/simulation.py": "3b68232d6a1e4ef23e1243b3d9f9207edf4dee2e3afe6c06b1bf7bb71511538d",
+    "src/perfusion_candidates/startup.py": "a7f82daa4f72a12e1fa7cad7474ef36f0f4ce4c63498129fd10cb66ea048ea5e",
+    "src/perfusion_candidates/startup_simulation.py": "5111140906f2d2374aa46ad4e9e7d0e1ab81619b6dd03170eefa5b6934e5e5a8",
+    "src/perfusion_lab/__init__.py": "5cbe01820931fbbaef78a9ac85c61af071016ae802770275e8b16d6fd3c7ecf5",
+    "src/perfusion_lab/audit.py": "644f7a92877d4c6512dd91427a92170172c792e12508e466ac7ec6c19495f7ce",
+    "src/perfusion_lab/benchmark.py": "955106cd6a605251d766c120911b8f6e237d7d3997a96589f98b9d9ee88cc9fe",
+    "src/perfusion_lab/braking.py": "60759c0cdc7c11477d6ee3e1e309339f84855c89ef594c80e7a67163fa1cfca6",
+    "src/perfusion_lab/cli.py": "1d08c62e3c9c12fcc612458d826966fd6c59854377861a374b6d24db3970c55f",
+    "src/perfusion_lab/continuity.py": "d632c4377e14b78334e6a6efbbad3f10fd2a47adf819663d3f55196c821d612c",
+    "src/perfusion_lab/control.py": "b8a801db453dfa5abbd2ecb6cf1e8e28fdd205727351c0b15e9e866e128dd435",
+    "src/perfusion_lab/decision_audit.py": "c5fb29edbad34cb1ff09ab49c0ca3745e249612def37d676642363cb355e8bb2",
+    "src/perfusion_lab/depletion.py": "7d3f88ca1db505993da90fedd48d3741e1a06aa3deed2920d9d8e5232b2ded38",
+    "src/perfusion_lab/depletion_simulation.py": "ba8e1526224db676d4bf8321eb2258765989cb9e60997927c2e5a59896679057",
+    "src/perfusion_lab/feedback.py": "65341757c9dbdf0718ed03c6d8611f2d21891b64c3c884394b496e2605e7c09a",
+    "src/perfusion_lab/integrity.py": "8ee329d0f62ca27664753946ffb0482ac7bdac99f7b26456168eae90d0389def",
+    "src/perfusion_lab/model.py": "0e86f4f172dd103c484698bbea48597673384e637ffdd05342a8c0489aa82662",
+    "src/perfusion_lab/model_bank.py": "d51787a60b2d566281492b1866aafecdec837f7068889b44fc40f05674e36f64",
+    "src/perfusion_lab/model_simulation.py": "ddcd463993ae28c55fbfbf49bb83309c508ce479106c8240c826ed87d62ed75c",
+    "src/perfusion_lab/patient_replay.py": "c55edabf35167c7bc14b53f1143b45c46acf8a358b72d2b6ba486ccea0319418",
+    "src/perfusion_lab/published_control.py": "85b6e8a00bd693a1fc31139338c5e4e25068c5bc153e49efd8b4107fd2a59c2f",
+    "src/perfusion_lab/reachability.py": "8cd70c4bab130b94394830d8d669c96ed0dd304bb56957321ace6f68ddf8a330",
+    "src/perfusion_lab/reachability_runtime.py": "b742b1dd48744190628bd59a5be281b34b3f160238a82fd1758ae32c2415fced",
+    "src/perfusion_lab/reachability_simulation.py": "fb7d6e300e2cb1a58210b3b1dc5fa973b94250090d3b185cf555c78d7a62f464",
+    "src/perfusion_lab/reference.py": "dc9d314a0e77ee02951fe4f35d851a52cab29bb9751649becdc59c48f4a78a4e",
+    "src/perfusion_lab/runtime.py": "11a7ee879940c8640e348e9910d42228e057a65850445ec24d0bc0352c5a24d0",
+    "src/perfusion_lab/runtime_simulation.py": "308e112580e24c5a9ec3a3e0f2094b358ca2a0c30c15097624243037d9409c7b",
+    "src/perfusion_lab/selective.py": "d01108fcba3d82a49108b5eebc37de9d34f1c81c458ed18e107fe6b0c84d3eff",
+    "src/perfusion_lab/sensing.py": "8fba9eb4ca37e689acc69c3ec487674a8d2c877d78ce25684b69f5d64699563b",
+    "src/perfusion_lab/simc.py": "efa8b877156b2a3b22c07e4aabbeb59e9d51e3207ca5ed6584ecfcffcd615d0b",
+    "src/perfusion_lab/simulation.py": "27d0a7645f273f5afbbf068a1c93b201b58720f59252888365843fe49e5fea20",
+    "src/perfusion_lab/stress.py": "4315e23b7e1eb76252457a5df00ca962de4cc4852eb0164ee1edd9d0b4a460fd",
+    "src/perfusion_research/bottleneck.py": "d9a2078d014f5fc667e29370be453bbc3ee3a85eb02e82046bca12ca01fa7db8",
+    "src/perfusion_research/feedback.py": "c60a5c89409238f558718e37e23285a199ed497eed4af6b4780aad687ece4e98",
+    "src/perfusion_research/horizon.py": "3a8e2f95b666e2fb6ae4b13c58705d59b424d2bcd25f9dadb27f86982b2acdda",
+    "src/perfusion_research/joint_v2.py": "b1919c796364400a412e24c4736c1c9eee24a9a66b98a443a3331156eb61677f",
+    "src/perfusion_research/recovery_v2.py": "2fd051c0d2dcb7f59c09f9074b3900d397a1dc404cab862b8baa5352c961b11d"
+  },
+  "stage": "zero_return_joint_development_pilot",
+  "v2_milestone_passed": false,
+  "version": "2.0.0rc3",
+  "version_line": "v2",
+  "windows_s": {
+    "normal": [],
+    "repeated": [
+      [
+        168.0,
+        213.0
+      ],
+      [
+        228.0,
+        243.0
+      ],
+      [
+        258.0,
+        288.0
+      ]
+    ],
+    "repeated_bias": [
+      [
+        168.0,
+        213.0
+      ],
+      [
+        228.0,
+        243.0
+      ],
+      [
+        258.0,
+        288.0
+      ]
+    ],
+    "repeated_noise": [
+      [
+        168.0,
+        213.0
+      ],
+      [
+        228.0,
+        243.0
+      ],
+      [
+        258.0,
+        288.0
+      ]
+    ],
+    "single": [
+      [
+        168.0,
+        213.0
+      ]
+    ]
+  }
+}

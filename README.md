@@ -26,13 +26,15 @@ A conditional mathematical bound rules out 10% **when the recorded PI command-ce
 
 No universal MPC impossibility, overall superiority, hardware validation or clinical benefit is established. All measured results and failures remain retained. Version numbers describe the research line, not scientific success.
 
-## Current progress: v2.0.0rc2 joint hypothesis protection
+## Current progress: v2.0.0rc3 zero-return stopping comparison
 
-The new development line is **v2: recovery-aware control**, version **2.0.0rc2**. Detect return-flow interruption from measurements, retain independent stopping/floor protection, and restore delivery promptly when measured return recovers. Compare recovery-window deficit, total deficit, recovery time, false alarms, floor exposure and empty requests against equally informed PI.
+The new development line is **v2: recovery-aware control**, version **2.0.0rc3**. Detect return-flow interruption from measurements, retain independent stopping/floor protection, and restore delivery promptly when measured return recovers. Compare recovery-window deficit, total deficit, recovery time, false alarms, floor exposure and empty requests against equally informed PI.
 
-**Latest v2 experiment:** a 40-run matched-PI study preserves each retained pump model's own volume and stopping calculation instead of combining extrema from different models. Normal-return deficit falls **12.58%**, but the candidate crosses the 250 mL floor in **8/20 runs**, versus **0/20** for aggregate PI. Worst volume is **68.10 mL**. It is **not selected**. [Results, conditional argument and failure replay](docs/V2_JOINT.md).
+**Latest v2 comparison:** 40 new zero-credit runs plus 40 hashed references complete the aggregate/joint × zero/15-second-credit design. Joint accounting lowers deficit by **3.67% versus aggregate accounting under the same zero-return assumption**, with **0/20 floor cases** and a worst volume of **435.68 mL**. The retained joint-credit arm had 8/20 floor cases. Joint zero-credit control still has **8.83% more deficit than the older aggregate credit reference**. It is a limited development gain, not overall superiority or stable-v2 qualification. [Full four-way results](docs/V2_ZERO_RETURN.md).
 
-**Next goal:** retain the useful joint model accounting while testing zero-future-return stopping viability. A fixed aggregate/joint × zero-return/15-second-credit comparison will separate the two mechanisms. The current finite-credit failures remain public references.
+**Previous v2 experiment:** a 40-run matched-PI study preserves each retained pump model's own volume and stopping calculation instead of combining extrema from different models. Normal-return deficit falls **12.58%**, but the candidate crosses the 250 mL floor in **8/20 runs**, versus **0/20** for aggregate PI. Worst volume is **68.10 mL**. It is **not selected**. [Results, conditional argument and failure replay](docs/V2_JOINT.md).
+
+**Next goal:** broaden the zero-credit comparison across calibration faults, pump-model mismatch and unsupported states before freezing a design. Retain the same matched PI and all failures; confirmation cohorts remain untouched.
 
 **First v2 pilot completed:** 24 runs on two reused development patients. Interruption and recovery detection latency is 1 second in all four recovery-arm interruption cases, with no false alarms in its eight cases. Recovery-aware fast PI and matched fast PI produce identical commands: **0% added deficit reduction**. All 24 runs have zero observed floor crossings, empty requests and cap violations. [Results, limitations and next design question](docs/V2_RECOVERY.md).
 
@@ -43,8 +45,8 @@ A recovery-specific benefit does not automatically satisfy the original full-run
 ```bash
 python -m pip install -e ".[audit,horizon]"
 python examples/fixed_ceiling_bound.py
-python examples/joint_v2_study.py
-python examples/validate_joint_v2.py
+python examples/zero_v2_study.py
+python examples/validate_zero_v2.py
 python -m unittest discover -s tests -v
 perfusion-lab run --scenario compound --out results/local-run
 ```
@@ -55,6 +57,7 @@ Frozen protocols and historical result fields keep their original execution iden
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
+| v2.0.0rc3 (development) | Zero-return joint cap: 3.67% gain vs matched zero-return aggregate PI; no observed floor failures | [Study](docs/V2_ZERO_RETURN.md) |
 | v2.0.0rc2 (development; candidate rejected) | Joint model cap: normal-return gain, interruption floor failures | [Study](docs/V2_JOINT.md) |
 | v2.0.0rc1 (historical development) | Recovery-aware interruption and resumption pilot | [Study](docs/V2_RECOVERY.md) |
 | v1.15 (final v1 release) | Complete MPC research, applied pilot and conditional fixed-ceiling conclusion | [Final v1 release](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/releases/tag/v1.15.0) |
