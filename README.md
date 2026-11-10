@@ -20,6 +20,8 @@ The complete source ZIP includes controller code, historical comparisons and fai
 
 The applied 48-run pilot improves mean oxygen-deficit AUC by **0.1435%** versus matched PI and is about **0.0418% worse** than the existing hybrid. The tested MPC misses 10%.
 
+Earlier development variants crossed the reservoir floor in **24/512** cases, with a minimum of **3.54 mL**. Shared-corrupted calibration failures remain unresolved. The recent small pilot does not erase those retained historical failures.
+
 A conditional mathematical bound rules out 10% **when the recorded PI command-ceiling streams are held fixed**: an optimistic relaxation can improve mean deficit by at most about **0.0163%**. This does **not** prove all MPC designs incapable of 10%; a different controller can change future ceilings. [Argument and limitations](docs/V1_CONCLUSION.md) · [Reproducible bound](results/v1-closure/fixed-ceiling-bound.json).
 
 No universal MPC impossibility, overall superiority, hardware validation or clinical benefit is established. All measured results and failures remain retained. Version numbers describe the research line, not scientific success.
