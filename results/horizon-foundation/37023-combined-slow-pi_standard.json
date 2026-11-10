@@ -1,0 +1,67 @@
+{
+  "commands_sha256": "0b21e38d3a52ab13eada7fb40551d670436a1cdad856c1b2f0bd495fac6e7358",
+  "method": "pi_standard",
+  "metrics": {
+    "below_target_s": 590.0,
+    "concealed_deficit_auc": 464.42757417374173,
+    "deficit_auc": 1554.9708078024757,
+    "empty_request_s": 0.0,
+    "false_reassurance_margin_s": 249.0,
+    "false_reassurance_s": 250.0,
+    "flow_variation": 16.63823431229069,
+    "hb_bound_coverage": 0.6966666666666667,
+    "high_pressure_s": 0.0,
+    "infeasible_s": 134.0,
+    "level_fault_s": 0.0,
+    "low_reservoir_s": 0.0,
+    "mean_flow": 1.8945205070276883,
+    "minimum_reservoir": 0.7531954697272317,
+    "quarantine_s": 6.0,
+    "reference_bad_rejected": 0,
+    "reference_bad_total": 0,
+    "reference_good_rejected": 0,
+    "reference_good_total": 10,
+    "unmet_demand_auc": 278.1461824129446
+  },
+  "physiology": "combined",
+  "plant": "slow",
+  "reasons": {
+    "controller_choice": {
+      "deficit_auc": 100.61053752838885,
+      "headroom_sum": 2.8195019748964754,
+      "seconds": 40
+    },
+    "down_slew": {
+      "deficit_auc": 0.0,
+      "headroom_sum": 0.0,
+      "seconds": 0
+    },
+    "oxygen_cap": {
+      "deficit_auc": 0.0,
+      "headroom_sum": 0.0,
+      "seconds": 0
+    },
+    "pressure_slowdown": {
+      "deficit_auc": 0.0,
+      "headroom_sum": 0.0,
+      "seconds": 0
+    },
+    "stopping_reserve": {
+      "deficit_auc": 1369.276064312124,
+      "headroom_sum": 0.0,
+      "seconds": 528
+    },
+    "unsupported_calibration": {
+      "deficit_auc": 0.0,
+      "headroom_sum": 0.0,
+      "seconds": 6
+    },
+    "up_slew": {
+      "deficit_auc": 85.08420596196312,
+      "headroom_sum": 0.0,
+      "seconds": 26
+    }
+  },
+  "seed": 37023,
+  "snapshots": []
+}

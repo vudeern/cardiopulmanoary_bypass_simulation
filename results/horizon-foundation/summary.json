@@ -1,0 +1,173 @@
+{
+  "baseline_runs": 384,
+  "confirmation_seeds_executed": [],
+  "groups": {
+    "pi_fast": {
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "mean_deficit_auc": 1456.5783725498195,
+      "reasons": {
+        "controller_choice": {
+          "deficit_fraction": 0.0,
+          "mean_headroom": 0.0,
+          "seconds": 0
+        },
+        "down_slew": {
+          "deficit_fraction": 0.0,
+          "mean_headroom": 0.0,
+          "seconds": 10
+        },
+        "oxygen_cap": {
+          "deficit_fraction": 6.728774819048455e-05,
+          "mean_headroom": 0.0,
+          "seconds": 1854
+        },
+        "pressure_slowdown": {
+          "deficit_fraction": 5.7528006316783104e-05,
+          "mean_headroom": 0.0,
+          "seconds": 20
+        },
+        "stopping_reserve": {
+          "deficit_fraction": 0.9170887790997274,
+          "mean_headroom": 0.0,
+          "seconds": 68960
+        },
+        "unsupported_calibration": {
+          "deficit_fraction": 0.0004528065014702631,
+          "mean_headroom": 0.0,
+          "seconds": 768
+        },
+        "up_slew": {
+          "deficit_fraction": 0.0823335986442954,
+          "mean_headroom": 0.0,
+          "seconds": 5188
+        }
+      },
+      "runs": 128
+    },
+    "pi_standard": {
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "mean_deficit_auc": 1461.3786683641126,
+      "reasons": {
+        "controller_choice": {
+          "deficit_fraction": 0.07514374175397548,
+          "mean_headroom": 0.07400376667651924,
+          "seconds": 5014
+        },
+        "down_slew": {
+          "deficit_fraction": 0.0,
+          "mean_headroom": 0.0,
+          "seconds": 10
+        },
+        "oxygen_cap": {
+          "deficit_fraction": 6.657184336262973e-05,
+          "mean_headroom": 0.0,
+          "seconds": 1852
+        },
+        "pressure_slowdown": {
+          "deficit_fraction": 5.733903992914846e-05,
+          "mean_headroom": 0.0,
+          "seconds": 20
+        },
+        "stopping_reserve": {
+          "deficit_fraction": 0.8707467167324671,
+          "mean_headroom": 0.0,
+          "seconds": 65975
+        },
+        "unsupported_calibration": {
+          "deficit_fraction": 0.0004513191353270816,
+          "mean_headroom": 0.0,
+          "seconds": 768
+        },
+        "up_slew": {
+          "deficit_fraction": 0.05353431149493887,
+          "mean_headroom": 0.0,
+          "seconds": 3161
+        }
+      },
+      "runs": 128
+    },
+    "rc5": {
+      "empty_cases": 0,
+      "floor_cases": 0,
+      "mean_deficit_auc": 1456.6241917162552,
+      "reasons": {
+        "controller_choice": {
+          "deficit_fraction": 0.01243023246174986,
+          "mean_headroom": 0.02149003630207807,
+          "seconds": 646
+        },
+        "down_slew": {
+          "deficit_fraction": 0.0,
+          "mean_headroom": 0.0,
+          "seconds": 10
+        },
+        "oxygen_cap": {
+          "deficit_fraction": 6.72856316057464e-05,
+          "mean_headroom": 0.0,
+          "seconds": 1854
+        },
+        "pressure_slowdown": {
+          "deficit_fraction": 5.752619673177749e-05,
+          "mean_headroom": 0.0,
+          "seconds": 20
+        },
+        "stopping_reserve": {
+          "deficit_fraction": 0.9050418247458537,
+          "mean_headroom": 0.0,
+          "seconds": 68339
+        },
+        "unsupported_calibration": {
+          "deficit_fraction": 0.00045279225811458356,
+          "mean_headroom": 0.0,
+          "seconds": 768
+        },
+        "up_slew": {
+          "deficit_fraction": 0.08195033870594473,
+          "mean_headroom": 0.0,
+          "seconds": 5163
+        }
+      },
+      "runs": 128
+    }
+  },
+  "interpretation": "Offline snapshots, never applied; no MPC/PI performance improvement established.",
+  "protocol_sha256": "e8ee625f8f2c47a2d180f3da91dda4d50cda8d1f135f3fe530f12b8a395824b9",
+  "runtime": {
+    "backend": "HiGHS",
+    "numpy": "2.3.5",
+    "python": "3.12.14",
+    "scipy": "1.17.0"
+  },
+  "snapshot_plans": 1024,
+  "snapshots": {
+    "measured_constant": {
+      "accepted": 444,
+      "max_rollout_error": 1.8474111129762605e-13,
+      "median_total_ms": 5.515195498446701,
+      "over_2ms": 444,
+      "p99_total_ms": 8.455193238150969,
+      "plans": 512,
+      "rejected": 68,
+      "statuses": {
+        "invalid_input": 68,
+        "solved": 444
+      }
+    },
+    "protected_constant": {
+      "accepted": 444,
+      "max_rollout_error": 9.508109854769402e-08,
+      "median_total_ms": 5.3426960002980195,
+      "over_2ms": 444,
+      "p99_total_ms": 8.456769139847887,
+      "plans": 512,
+      "rejected": 68,
+      "statuses": {
+        "invalid_input": 68,
+        "solved": 444
+      }
+    }
+  },
+  "version2_ready": false
+}

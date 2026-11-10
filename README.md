@@ -51,6 +51,16 @@ The new harness preserves the established timing and physiology pipeline and is 
 
 ## Current progress
 
+Development updates are published to GitHub and reflected in the portfolio after validation. Stable v2.0 remains a separate release that requires all agreed performance, protection and confirmation gates.
+
+### New development milestone — Delivery limits and a nominal horizon optimizer
+
+The [horizon foundation](docs/HORIZON_FOUNDATION.md) now includes **384 measured-controller runs and 1,024 offline optimizer snapshots** on the same 32 development patients. In this healthy-reference audit, **90.50% of rc.5 deficit occurs during intervals labelled stopping-reserve limited**. An illustrative fast PI nearly matches rc.5 (1456.578 versus 1456.624 AUC), pointing to the shared constraint rather than a large gain-tuning opportunity. These labels are temporal associations, not proof that relaxing reserve would safely recover that delivery.
+
+The nominal LP includes physical pump/volume/pressure states, linear oxygen-deficit AUC, normal command slew, a zero-return braking continuation and an exact discrete stopping tail. HiGHS solves the recorded snapshots; a separately scaled OSQP adapter preserves the objective and independently checks answers in physical units. **888 plans pass and 136 invalid-input snapshots are rejected; none is applied.** Recorded reference timings exceed the illustrative 2 ms target. No MPC performance gain, robust runtime protection or v2.0 qualification is established. [Raw results](results/horizon-foundation/summary.json), frozen source provenance and rejection cases are retained.
+
+Next: distinguish physical reserve from uncertainty cost, validate anchored estimation, then integrate protected feedback and retune PI fairly. Controller version remains rc.5; the ≥10% and protection gates are unchanged, and confirmation stays 0/2.
+
 ### New development milestone — Identifiability before estimation and MPC
 
 The next architectural step now has a reproducible [information audit](docs/IDENTIFIABILITY.md): **128 baseline runs and 3,968 frozen-command plant replays** on the existing 32 development patients, producing 2,048 local sensitivity analyses. Under explicitly healthy absolute references the tested six unknowns are locally full rank; allowing shared unknown level bias leaves one unresolved direction in all 128 cases. A finite shift in initial volume, patient storage and shared sensor offset produces indistinguishable measurements. This identifies an estimator-design limitation, not a controller improvement or a safety guarantee.
