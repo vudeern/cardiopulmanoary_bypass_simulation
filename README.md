@@ -10,7 +10,7 @@ Improve oxygen delivery while protecting reservoir volume when sensing is biased
 
 ## Current released version
 
-### v1.15 — Complete final v1 research snapshot (current)
+### v1.15 — Complete final v1 research snapshot
 
 All work through the applied horizon-MPC pilot and fixed-ceiling conclusion belongs to **v1**, including milestones previously displayed as v2 release candidates. **v1.15.0** replaces the earlier final-v1 release at v1.14.0. [Release and packages](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/releases/tag/v1.15.0) · [V1 conclusion](docs/V1_CONCLUSION.md) · [Complete history](docs/V1_HISTORY.md).
 
@@ -26,9 +26,11 @@ A conditional mathematical bound rules out 10% **when the recorded PI command-ce
 
 No universal MPC impossibility, overall superiority, hardware validation or clinical benefit is established. All measured results and failures remain retained. Version numbers describe the research line, not scientific success.
 
-## Current progress and next goal
+## Current progress: v2.0.0rc1 recovery-aware control
 
-The next development line is **v2: recovery-aware control**. Detect return-flow interruption from measurements, retain independent stopping/floor protection, and restore delivery promptly when measured return recovers. Compare recovery-window deficit, total deficit, recovery time, false alarms, floor exposure and empty requests against equally informed PI.
+The new development line is **v2: recovery-aware control**, version **2.0.0rc1**. Detect return-flow interruption from measurements, retain independent stopping/floor protection, and restore delivery promptly when measured return recovers. Compare recovery-window deficit, total deficit, recovery time, false alarms, floor exposure and empty requests against equally informed PI.
+
+**First v2 pilot completed:** 24 runs on two reused development patients. Interruption and recovery detection latency is 1 second in all four recovery-arm interruption cases, with no false alarms in its eight cases. Recovery-aware fast PI and matched fast PI produce identical commands: **0% added deficit reduction**. All 24 runs have zero observed floor crossings, empty requests and cap violations. [Results, limitations and next design question](docs/V2_RECOVERY.md).
 
 A recovery-specific benefit does not automatically satisfy the original full-run 10% release milestone. The [release evidence policy](data/version2-gates.json) and untouched confirmation cohorts remain separate requirements. Development work and negative results are published to GitHub and the portfolio.
 
@@ -37,8 +39,8 @@ A recovery-specific benefit does not automatically satisfy the original full-run
 ```bash
 python -m pip install -e ".[audit,horizon]"
 python examples/fixed_ceiling_bound.py
-python examples/feedback_study.py
-python examples/validate_feedback.py
+python examples/recovery_v2_study.py
+python examples/validate_recovery_v2.py
 python -m unittest discover -s tests -v
 perfusion-lab run --scenario compound --out results/local-run
 ```
@@ -49,9 +51,8 @@ Frozen protocols and historical result fields keep their original execution iden
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
-| v1.15 (current) | Complete MPC research, applied pilot and conditional fixed-ceiling conclusion | [Final v1 release](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/releases/tag/v1.15.0) |
-| v1.15-dev.4 reference | 126 | 1545.77 | 0/512 | 0/128 |
-| v1.15-dev.3 zero return | 1749.13 | 0/512 | 0/128 | 753.62 |
+| v2.0.0rc1 (development) | Recovery-aware interruption and resumption pilot | [Study](docs/V2_RECOVERY.md) |
+| v1.15 (final v1 release) | Complete MPC research, applied pilot and conditional fixed-ceiling conclusion | [Final v1 release](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/releases/tag/v1.15.0) |
 | v1.15-dev.5 (historical) | Single-anchor startup, calibrated pump hypotheses and a 4,096-run controlled/adaptive development comparison | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
 | v1.15-dev.4 | Finite return-flow credit, explicit abrupt-stop challenges and a 6,144-run fixed development comparison | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/9d79573635bcc1760292516b70d518d7dd55881a) |
 | v1.15-dev.3 | Zero-return braking reserve, explicit calibration fallback and a 2,688-run protection/delivery comparison | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/63c71527ca3760ccdb22235d9945b89cbdfed445) |

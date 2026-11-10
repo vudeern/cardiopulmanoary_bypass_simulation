@@ -1,0 +1,76 @@
+{
+  "confirmation_seeds_executed": [],
+  "groups": {
+    "pi_fast": {
+      "interruption": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "false_alarms": 0,
+        "floor_cases": 0,
+        "mean_recovery_deficit_auc": 159.69398219824086,
+        "mean_total_deficit_auc": 1494.7734599177966,
+        "runs": 4
+      },
+      "normal": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "false_alarms": 0,
+        "floor_cases": 0,
+        "mean_recovery_deficit_auc": 146.72282281859154,
+        "mean_total_deficit_auc": 1414.5170579492135,
+        "runs": 4
+      }
+    },
+    "pi_standard": {
+      "interruption": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "false_alarms": 0,
+        "floor_cases": 0,
+        "mean_recovery_deficit_auc": 160.97555717006793,
+        "mean_total_deficit_auc": 1496.0415564721357,
+        "runs": 4
+      },
+      "normal": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "false_alarms": 0,
+        "floor_cases": 0,
+        "mean_recovery_deficit_auc": 148.41913703010087,
+        "mean_total_deficit_auc": 1416.198128068524,
+        "runs": 4
+      }
+    },
+    "recovery": {
+      "interruption": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "false_alarms": 0,
+        "floor_cases": 0,
+        "mean_recovery_deficit_auc": 159.69398219824086,
+        "mean_total_deficit_auc": 1494.7734599177966,
+        "runs": 4
+      },
+      "normal": {
+        "cap_violations": 0,
+        "changed_action_s": 0,
+        "empty_cases": 0,
+        "false_alarms": 0,
+        "floor_cases": 0,
+        "mean_recovery_deficit_auc": 146.72282281859154,
+        "mean_total_deficit_auc": 1414.5170579492135,
+        "runs": 4
+      }
+    }
+  },
+  "protocol_sha256": "3e796d8734f477b66aded422af36e7c8bd82998ea816af72ee1fef7a772afe52",
+  "recovery_reduction_fraction_vs_fast_pi": 0.0,
+  "runs": 24,
+  "v2_milestone_passed": false,
+  "version_line": "v2"
+}

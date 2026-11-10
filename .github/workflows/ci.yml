@@ -65,3 +65,4 @@ jobs:
       - run: python examples/validate_horizon.py
       - run: python examples/validate_feedback.py
       - run: python examples/fixed_ceiling_bound.py --check
+      - run: python examples/validate_recovery_v2.py

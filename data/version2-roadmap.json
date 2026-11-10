@@ -1,13 +1,13 @@
 {
-  "current_version": "1.15.0",
+  "current_version": "2.0.0rc1",
   "next_stable_version": "2.0.0",
   "final_v1_version": "1.15.0",
   "final_v1_tag": "v1.15.0",
-  "final_v1_commit": null,
+  "final_v1_commit": "c665b2871c99934328ea65b5f3547d9556f0146b",
   "version2_ready": false,
   "qualifying_confirmation_cohorts": 0,
   "evidence_policy": "data/version2-gates.json",
-  "current_progress": "results/v1-closure/fixed-ceiling-bound.json",
+  "current_progress": "results/v2-recovery-pilot/summary.json",
   "next_goal": "Recovery-aware control; all new recovery experiments belong to v2",
   "confirmation_seeds_executed": []
 }
