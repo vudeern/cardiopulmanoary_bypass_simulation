@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 import numpy as np
 from perfusion_research.horizon import formulate,tail_factor,HorizonSolver,validate_plan
+from perfusion_research.horizon_osqp import ScaledOSQPSolver,scaled_problem
 from perfusion_lab.model import Patient
 from perfusion_lab.stress import StressPlant
 
@@ -58,7 +59,7 @@ class HorizonTests(unittest.TestCase):
 
     @unittest.skipUnless(importlib.util.find_spec('osqp'),'OSQP optional extra unavailable locally')
     def test_osqp_matches_independent_lp_and_updates_workspace(self):
-        solver=HorizonSolver('osqp',deadline_s=5.)
+        solver=ScaledOSQPSolver(deadline_s=5.)
         for returns in (1.,1.1):
             p=formulate([1.4,1.,14.],1.,np.full(8,returns),np.full(8,60.),np.full(8,100.))
             reference=HorizonSolver().solve(p);result=solver.solve(p)
@@ -66,3 +67,9 @@ class HorizonTests(unittest.TestCase):
             self.assertAlmostEqual(result['checks']['objective'],reference['checks']['objective'],places=5)
             workspace=solver.workspace
             result=solver.solve(p);self.assertTrue(result['accepted']);self.assertIs(solver.workspace,workspace)
+
+    def test_scaling_preserves_constraints_and_objective_order(self):
+        p=problem();result=HorizonSolver().solve(p);x=np.array(result['vector'])
+        scales,A,lower,upper,cost=scaled_problem(p);z=x/scales
+        self.assertLessEqual(max(np.max(lower-A@z),np.max(A@z-upper)),1e-8)
+        self.assertAlmostEqual(float(cost@z),float(p.cost@x)/max(p.cost*scales),places=10)
