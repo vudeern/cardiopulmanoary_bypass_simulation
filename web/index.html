@@ -22,9 +22,26 @@
 <div class="aggregate"><div><p class="eyebrow">WHOLE EXPERIMENT / SELECTED PATIENT</p><div id="run-metrics" class="run-metrics"></div></div><div><p class="eyebrow" id="cohort-label">ORIGINAL COHORT / 24 VIRTUAL PATIENTS</p><p id="cohort"></p><small id="cohort-note">Difference = selected strategy − reactive. Bootstrap intervals describe the synthetic sampler, not clinical benefit.</small></div></div>
 </section>
 <section class="calculator"><div><p class="eyebrow">02 / A SMALL WHAT-IF</p><h2>Flow is only<br>half the story.</h2><p>At the same flow, anemia changes how much oxygen blood can carry. Try the standard arterial-content equation. This calculator is separate from the replay.</p></div><div class="calc-panel"><label>Hemoglobin <output id="hb-value"></output><input id="hb" type="range" min="5" max="13" step="0.1" value="9"></label><label>Pump flow <output id="flow-value"></output><input id="flow" type="range" min="2" max="7" step="0.1" value="4.5"></label><div class="calc-result"><strong id="calc-do2"></strong><span>mL O₂/min/m²</span></div><small>SaO₂ = 0.98 · PaO₂ = 150 mmHg · BSA = 1.85 m². Fixed hypothetical conditions; no recommended treatment.</small></div></section>
+<!-- v2-robust:start -->
+<section class="failure-section" id="v2-robust" aria-labelledby="v2-robust-heading">
+<p class="eyebrow">V2 CALIBRATION / MODEL BOUNDARY STUDY · DESIGN FREEZE BLOCKED</p>
+<h2 id="v2-robust-heading">Zero return credit.<br>Wrong volume bounds still fail.</h2>
+<p>56 new simulations and eight retained references test unchanged zero-return aggregate/joint controllers across four plants and four calibration regimes. Every case includes repeated return interruptions. The same two development patients are reused; reserved confirmation cohorts remain untouched.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Calibration boundary results"><table><caption>Eight runs per controller/regime from two patients and four plants · full-run deficit AUC in mL O₂/m²</caption><thead><tr><th scope="col">Calibration</th><th scope="col">Aggregate deficit</th><th scope="col">Joint deficit</th><th scope="col">Aggregate floor cases</th><th scope="col">Joint floor cases</th></tr></thead><tbody>
+<tr><th scope="row">Healthy</th><td>1975.7012</td><td>1927.8788</td><td>0/8</td><td>0/8</td></tr>
+<tr><th scope="row">Missing</th><td>2687.0083</td><td>2687.0083</td><td>0/8</td><td>0/8</td></tr>
+<tr><th scope="row">Biased</th><td>1853.9668</td><td>1808.4811</td><td>1/8</td><td>3/8</td></tr>
+<tr><th scope="row">Shared</th><td>1854.2255</td><td>1809.3902</td><td>1/8</td><td>3/8</td></tr>
+</tbody></table></div>
+<p><strong>Neither design qualifies for a freeze.</strong> Joint control crosses the 250 mL floor in 6/32 cases, versus 2/32 for aggregate PI. Worst volumes are 229.96 mL and 237.87 mL. Both have zero empty requests and high-pressure cases. Healthy-calibration deficit improves 2.42%, but biased and shared-corrupted calibration produce failures.</p>
+<p>Post-result diagnostics find supported volume intervals that exclude true volume, including healthy-calibration cases with changed dynamics. Model consistency is not independent integrity evidence. A zero-return stopping check can obey every modeled constraint and still fail when its starting volume bound is wrong.</p>
+<p>Next: separate optimization estimates from a protection envelope with explicit anchor-bias/model-error budgets and a conservative fallback when integrity support is absent. Shared absolute corruption cannot be resolved from two agreeing corrupted channels. All failures and full-precision CSV traces remain public in lossless ZIP archives.</p>
+<div class="links"><a href="https://github.com/vudeern/cardiopulmanoary_bypass_simulation/blob/main/docs/V2_ROBUSTNESS.md">Matrix, failure diagnosis and next controller goal ↗</a><a href="https://github.com/vudeern/cardiopulmanoary_bypass_simulation/blob/main/results/v2-robustness/summary.json">All results ↗</a><a href="https://github.com/vudeern/cardiopulmanoary_bypass_simulation/blob/main/results/v2-robustness/protocol.json">Frozen protocol ↗</a></div>
+</section>
+<!-- v2-robust:end -->
 <!-- v2-zero:start -->
 <section class="failure-section" id="v2-zero" aria-labelledby="v2-zero-heading">
-<p class="eyebrow">V2 ZERO-RETURN STOPPING / DEVELOPMENT COMPARISON</p>
+<p class="eyebrow">V2 ZERO-RETURN STOPPING / PREVIOUS DEVELOPMENT COMPARISON</p>
 <h2 id="v2-zero-heading">Keep the model pairing.<br>Credit no future return.</h2>
 <p>The fixed four-way comparison is complete: 40 new zero-credit simulations plus 40 hashed reference runs, using the same two development patients, pump cases, PI settings and sensing. The new stopping check credits no future inflow and covers the full ramp-to-zero and pump coast-down reserve. Joint accounting retains each model with its own volume bound.</p>
 <div class="table-scroll" tabindex="0" role="region" aria-label="Four-way stopping comparison"><table><caption>20 cases per arm from two reused patients · full-run deficit AUC in mL O₂/m² · credit arms retained from the preceding study</caption><thead><tr><th scope="col">Accounting / return credit</th><th scope="col">Mean deficit</th><th scope="col">Floor cases</th><th scope="col">Worst reservoir</th></tr></thead><tbody>
