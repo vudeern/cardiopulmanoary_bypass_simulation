@@ -1,0 +1,127 @@
+{
+  "assumptions": "The exact 16 PI replay cases, initial pump flow, positive first-order discrete pump dynamics, scripted oxygen content and pointwise command ceilings are held fixed. Ignore reservoir depletion, pressure and slew restrictions to give any controller an optimistic relaxation. Future state-dependent ceilings are NOT covered.",
+  "cases": [
+    {
+      "physiology": "clean",
+      "pi_deficit_auc": 1156.4897647563407,
+      "plant": "nominal",
+      "relaxed_lower_deficit_auc": 1156.1584354754466,
+      "seed": 37000
+    },
+    {
+      "physiology": "clean",
+      "pi_deficit_auc": 1323.9141644235467,
+      "plant": "slow",
+      "relaxed_lower_deficit_auc": 1323.914159387708,
+      "seed": 37000
+    },
+    {
+      "physiology": "combined",
+      "pi_deficit_auc": 1853.5447279648297,
+      "plant": "nominal",
+      "relaxed_lower_deficit_auc": 1853.1404132185514,
+      "seed": 37000
+    },
+    {
+      "physiology": "combined",
+      "pi_deficit_auc": 1926.0884517400216,
+      "plant": "slow",
+      "relaxed_lower_deficit_auc": 1925.9228409356874,
+      "seed": 37000
+    },
+    {
+      "physiology": "clean",
+      "pi_deficit_auc": 747.4540109408974,
+      "plant": "nominal",
+      "relaxed_lower_deficit_auc": 747.0724964724345,
+      "seed": 37007
+    },
+    {
+      "physiology": "clean",
+      "pi_deficit_auc": 1021.1367369584967,
+      "plant": "slow",
+      "relaxed_lower_deficit_auc": 1021.1367312125814,
+      "seed": 37007
+    },
+    {
+      "physiology": "combined",
+      "pi_deficit_auc": 1557.4801526295307,
+      "plant": "nominal",
+      "relaxed_lower_deficit_auc": 1556.994077409566,
+      "seed": 37007
+    },
+    {
+      "physiology": "combined",
+      "pi_deficit_auc": 1648.358781542157,
+      "plant": "slow",
+      "relaxed_lower_deficit_auc": 1648.1676931924978,
+      "seed": 37007
+    },
+    {
+      "physiology": "clean",
+      "pi_deficit_auc": 1516.9453011373544,
+      "plant": "nominal",
+      "relaxed_lower_deficit_auc": 1516.6830658091383,
+      "seed": 37014
+    },
+    {
+      "physiology": "clean",
+      "pi_deficit_auc": 1660.7190014796126,
+      "plant": "slow",
+      "relaxed_lower_deficit_auc": 1660.7189974873845,
+      "seed": 37014
+    },
+    {
+      "physiology": "combined",
+      "pi_deficit_auc": 2047.9815701946034,
+      "plant": "nominal",
+      "relaxed_lower_deficit_auc": 2047.6554292410372,
+      "seed": 37014
+    },
+    {
+      "physiology": "combined",
+      "pi_deficit_auc": 2097.928338759332,
+      "plant": "slow",
+      "relaxed_lower_deficit_auc": 2097.797259885738,
+      "seed": 37014
+    },
+    {
+      "physiology": "clean",
+      "pi_deficit_auc": 707.7175455088982,
+      "plant": "nominal",
+      "relaxed_lower_deficit_auc": 707.317215027361,
+      "seed": 37031
+    },
+    {
+      "physiology": "clean",
+      "pi_deficit_auc": 923.2887481091276,
+      "plant": "slow",
+      "relaxed_lower_deficit_auc": 923.2887424695211,
+      "seed": 37031
+    },
+    {
+      "physiology": "combined",
+      "pi_deficit_auc": 1510.6173294411763,
+      "plant": "nominal",
+      "relaxed_lower_deficit_auc": 1510.10670862431,
+      "seed": 37031
+    },
+    {
+      "physiology": "combined",
+      "pi_deficit_auc": 1596.0780169808033,
+      "plant": "slow",
+      "relaxed_lower_deficit_auc": 1595.8761035618584,
+      "seed": 37031
+    }
+  ],
+  "confirmation_seeds_executed": [],
+  "fixed_ceiling_10_percent_ruled_out": true,
+  "mathematical_argument": "Positive pump dynamics imply by induction that the cap-command sequence upper-bounds requested pump flow for every sequence u[k]<=cap[k]. Empty-reservoir limiting can only reduce delivered flow. Oxygen content is exogenous and positive; therefore the relaxed cap sequence lower-bounds oxygen-deficit AUC for that fixed stream. This covers any algorithm, including MPC, within the fixed-ceiling class.",
+  "maximum_reduction_fraction": 0.00016278824908455558,
+  "mean_pi_deficit_auc": 1455.9839151604206,
+  "numerical_allowance": "Add 1e-9 L/min to each pump recurrence and interval flow upper bound, and 1e-8 indexed oxygen units before computing the deficit lower bound.",
+  "relaxed_lower_deficit_auc": 1455.7468980881763,
+  "scope_warning": "The actual feedback MPC has a different state-dependent cap stream and already improves more than this fixed-PI-stream limit. The bound must not be presented as proof that MPC in general cannot reach 10%.",
+  "universal_mpc_impossibility_proven": false,
+  "version_line": "v1"
+}

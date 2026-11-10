@@ -1,3 +1,4 @@
+from version_display import v1_display
 """Generate the rc.5 four-arm report and labelled diagnostic replays."""
 import argparse
 import hashlib
@@ -103,5 +104,5 @@ if __name__=='__main__':
         updated=html.replace(marker,fragment+'\n'+marker)
     updated=updated.replace('Perfusion Sentinel / v2.0-rc.4','Perfusion Sentinel / v2.0-rc.5')
     svg=plot(s,check=args.check,preview_path=args.preview_path)
-    if args.check:assert updated==html,'Stale startup/model report';print('PASS: rc.5 report and six diagnostic traces match recorded outcomes.')
-    else:path.write_text(updated);(ROOT/'web/startup-models-comparison.svg').write_text(svg)
+    if args.check:assert v1_display(updated)==v1_display(html),'Stale startup/model report';print('PASS: rc.5 report and six diagnostic traces match recorded outcomes.')
+    else:path.write_text(v1_display(updated));(ROOT/'web/startup-models-comparison.svg').write_text(svg)

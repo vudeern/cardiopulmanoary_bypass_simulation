@@ -1,0 +1,20 @@
+{
+  "classification": "User-rebased research history, preserving immutable execution IDs",
+  "current_line": "v1",
+  "current_version": "1.15.0",
+  "final_v1_version": "1.15.0",
+  "final_v1_tag": "v1.15.0",
+  "superseded_release": "v1.14.0",
+  "v1_scope": "All research through the applied MPC pilot and fixed-ceiling conclusion",
+  "v2_scope": "Recovery-aware control experiments after the final v1 snapshot",
+  "historical_display_aliases": {
+    "2.0.0rc1": "v1.15-dev.1",
+    "2.0.0rc2": "v1.15-dev.2",
+    "2.0.0rc3": "v1.15-dev.3",
+    "2.0.0rc4": "v1.15-dev.4",
+    "2.0.0rc5": "v1.15-dev.5"
+  },
+  "provenance_rule": "Frozen protocols, historical source snapshots and execution result version fields retain their original IDs and hashes. They are historical evidence, not current project labels.",
+  "claim_rule": "The tested MPC missed 10%. Only the fixed-recorded-ceiling class has a conditional bound; universal MPC impossibility is not established.",
+  "v2_milestone_passed": false
+}

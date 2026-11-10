@@ -1,6 +1,6 @@
 # Startup support and pump-model braking
 
-The rc.5 experiment separates two reasons a controller may slow the pump:
+The v1.15-dev.5 experiment separates two reasons a controller may slow the pump:
 
 1. It has not yet received enough independent calibration information.
 2. Even with support, its lower volume estimate cannot cover its assumed stopping loss.
@@ -47,7 +47,7 @@ The existing half-return credit lasts 15 seconds, then assumes zero forever.
 
 | Arm | Independent anchors required | Braking hypotheses |
 | --- | ---: | --- |
-| rc.4 reference | 2 | Entire configured grid |
+| v1.15-dev.4 reference | 2 | Entire configured grid |
 | Early support only | 1 | Entire configured grid |
 | Calibrated pump only | 2 | Calibration-consistent set |
 | Both changes | 1 | Calibration-consistent set |
@@ -60,7 +60,7 @@ development patients. They are not independent experiments or confirmation cohor
 Across both stages there are 2,048 primary, 1,536 calibration-failure and 512
 abrupt-stop runs. The same 45-second abrupt drainage stop is retained. Selection
 requires zero reservoir-floor crossings and zero empty requests in both primary
-and abrupt-stop grids, then lowest primary deficit among eligible arms. The rc.4
+and abrupt-stop grids, then lowest primary deficit among eligible arms. The v1.15-dev.4
 reference can win; calibration-failure results never choose the winner.
 
 The 512 archived eligible-PI primary records provide the unchanged project-gate

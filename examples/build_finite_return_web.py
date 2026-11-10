@@ -1,3 +1,4 @@
+from version_display import v1_display
 """Build a result-derived rc.4 report and two labelled diagnostic replays."""
 import argparse
 import hashlib
@@ -93,7 +94,7 @@ if __name__ == '__main__':
     updated = updated.replace('Perfusion Sentinel / v2.0-rc.3', 'Perfusion Sentinel / v2.0-rc.4')
     svg = plot(summary, check=args.check, preview_path=args.preview_path)
     if args.check:
-        assert updated == html, 'Stale finite-return report'
+        assert v1_display(updated) == v1_display(html), 'Stale finite-return report'
         print('PASS: finite-return web report and six diagnostic trace series match results.')
     else:
-        path.write_text(updated); (ROOT/'web/finite-return-comparison.svg').write_text(svg)
+        path.write_text(v1_display(updated)); (ROOT/'web/finite-return-comparison.svg').write_text(svg)

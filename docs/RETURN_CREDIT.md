@@ -1,8 +1,8 @@
 # Finite return-flow credit
 
-The rc.3 controller reserves enough blood to slow the pump even if return flow
+The v1.15-dev.3 controller reserves enough blood to slow the pump even if return flow
 stops immediately. This protects the reservoir in its development grid, but it
-also keeps pump flow very low. The rc.4 experiment changes one assumption: allow
+also keeps pump flow very low. The v1.15-dev.4 experiment changes one assumption: allow
 some return for a short, explicitly declared interval, then assume none.
 
 ## What the controller knows
@@ -56,7 +56,7 @@ and reports infeasibility. It does not override the existing slew limit.
 - A feasible stop must still be available. The controller cannot retroactively
   recover blood already committed to a slow pump's response.
 
-Without independent calibration/model support, the candidate retains rc.3's
+Without independent calibration/model support, the candidate retains v1.15-dev.3's
 maximum-braking fallback. Positive return credit cannot enable recovery in that
 state. This can sacrifice almost all oxygen delivery when calibration is absent.
 
@@ -74,7 +74,7 @@ report no selected candidate. Secondary calibration failures never select the
 winner. Every candidate and failure stays in the logs.
 
 This experiment reuses development data. Both confirmation cohorts remain
-untouched, the existing PI comparator remains frozen, and stable v2.0 requires
+untouched, the existing PI comparator remains frozen, and the v1 MPC milestone requires
 the full project gates and later independent confirmation. Passing the added
 abrupt-stop grid does not turn the finite-return assumption into a safety proof.
 

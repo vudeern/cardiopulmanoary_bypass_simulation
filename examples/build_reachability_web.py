@@ -1,3 +1,4 @@
+from version_display import v1_display
 """Export rc.2 development replays; explicitly label reused selection data."""
 import argparse
 import csv
@@ -85,7 +86,7 @@ def outputs():
     selected_risk=risk['statistics'][selection['candidate']]
     assert str(selected_risk['low_reservoir_cases'])+'/'+str(selected_risk['primary_cases']) in readme
     assert f"{1000*selected_risk['minimum_reservoir_L']:.2f} mL" in readme
-    return values
+    return {k:(v1_display(v) if k.startswith('web/') else v) for k,v in values.items()}
 
 
 if __name__=='__main__':

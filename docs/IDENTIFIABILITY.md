@@ -1,9 +1,9 @@
 # Identifiability before estimator and horizon-MPC development
 
 This development milestone adds an offline information audit to the released
-rc.5 simulator. It changes no controller, plant equation, protection limit,
+v1.15-dev.5 simulator. It changes no controller, plant equation, protection limit,
 actuator authority, release gate or package version. Stable v1 remains v1.14.0;
-stable v2.0 is not qualified. Both reserved confirmation cohorts are untouched.
+the v1 MPC milestone is not qualified. Both reserved confirmation cohorts are untouched.
 
 ## What was executed
 

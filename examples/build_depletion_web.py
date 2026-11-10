@@ -1,3 +1,4 @@
+from version_display import v1_display
 """Generate the rc.3 report and a fixed, post-result worst-case rc.2 replay."""
 import argparse
 from io import StringIO
@@ -79,7 +80,7 @@ if __name__ == '__main__':
     updated = updated.replace('Perfusion Sentinel / v2.0-rc.2', 'Perfusion Sentinel / v2.0-rc.3')
     svg = plot(check=args.check); svg_path = ROOT/'web/depletion-worst-case.svg'
     if args.check:
-        assert updated == html, 'Stale depletion report'
+        assert v1_display(updated) == v1_display(html), 'Stale depletion report'
         print('PASS: depletion web report and diagnostic replay figure match recorded results.')
     else:
-        path.write_text(updated); svg_path.write_text(svg)
+        path.write_text(v1_display(updated)); svg_path.write_text(svg)

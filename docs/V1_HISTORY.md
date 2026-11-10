@@ -1,0 +1,583 @@
+# Reclassified v1 research history
+
+All research below belongs to v1. Frozen execution IDs remain unchanged in raw artifacts. The old final-v1 designation is superseded by v1.15.0; current status is in the README.
+
+# Perfusion Sentinel
+
+A cardiopulmonary bypass simulation and controller research project by Udeern Varanasi.
+
+[Interactive replay](https://vudeern.github.io/perfusion-sentinel/) · [Portfolio](https://vudeern.github.io/projects.html) · [Model](docs/MODEL.md) · [Data dictionary](docs/DATA.md) · [Checks](docs/VALIDATION.md)
+
+## Goal, project and motivation
+
+Perfusion Sentinel investigates whether a controller can maintain oxygen delivery while protecting reservoir volume when measurements are biased, delayed or missing and venous return is limited. Pumping more can improve oxygen delivery, but it can also drain the reservoir faster than blood returns. The motivation is to understand and improve that tradeoff when the controller has imperfect information.
+
+The repository combines a synthetic circuit, simulated sensors, causal state estimation, a PI baseline and a predictive controller, with paired experiments and replayable results. The goal is to demonstrate a reproducible improvement over an equally informed PI comparator within explicit simulation assumptions. The longer-term goal is to reuse the controller interface in a separately tested bench pump/reservoir prototype.
+
+The circuit is adult-like and uncalibrated. The code does not control equipment, recommend patient settings, predict organ injury or reproduce a commercial product. There is no LivaNova affiliation, clinical validation or established overall controller superiority.
+
+## Current released version
+
+**v1.14.0 is a superseded historical snapshot.** [Download the release](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/v1.14.0) for the frozen source ZIP, Python wheel, source distribution, example configuration, reproduction guide, manifest and checksums.
+
+V1 ends with a calibration-constrained pump-model bank and a conditional discrete braking reserve. Under routine-reference bias with healthy independent calibration, it reduced oxygen-deficit AUC by **33.6%** versus the previous hybrid and mean reservoir-volume error from **44.35 to 24.98 mL**. It had zero empty requests in primary testing. **The complete PI comparison still failed:** reservoir-protection requirements were not consistently met, and biased/shared calibration could still cause depletion and empty requests. V1 demonstrates a useful simulation foundation and scoped gains; overall superiority remains unestablished.
+
+**The earlier v1.14.0 snapshot is superseded by final v1.15.0**, pinned to `ace6a9fed2f9084b5fda95e9e1113af7a3d93dca`. The [v1 maintenance branch](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/release/v1) preserves that same commit. The [release page](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/v1.14.0) provides a full frozen source ZIP, Python wheel/sdist, example configuration, reproduction instructions, manifest and checksums. The wheel installs Python modules and the original CLI; full study reproduction uses the source ZIP. Packaging verifies the frozen 398-file snapshot and never rewrites its results. The publication workflow runs only after successful source CI and never moves an existing tag or overwrites a published release. Paper drafts remain excluded.
+
+<details>
+<summary>Detailed v1.14 methods, results and reproduction commands</summary>
+
+### v1.14 — Calibration-constrained model bank
+
+The new causal observer propagates a generic bank of 1, 2, 4, 8 and 12 s pump models using applied commands and measured venous inflow. The last four delivered independent calibrations fit a mass-balance intercept and venous-offset slope. Calibration error allowances, fit residuals, extrapolation weights and model-error growth define an engineering volume interval across retained models. No true reservoir volume, true pump lag or future disturbance enters the controller.
+
+With supported calibration and a quarantined routine channel, the model/calibration path can operate independently of that rejected routine source. If the inline and bank intervals conflict, it widens to their union and disables recovery. Before calibration support exists or after model support is lost, it returns to the established guarded PI path. Shared calibration corruption and changing/unmodelled dynamics can still invalidate the estimate; this is not a calibrated confidence interval or safety proof.
+
+The reserve calculation uses the exact discrete first-order residual tail and discrete command-ramp area across retained pump states. A recovery floor limits extra flow, and the conditional reserve cap cannot be weakened by the recovery blend. Its protection still depends on model/error/inflow assumptions. Matched PI receives the same observer; retuned calibration-only PI, the frozen v1.12 hybrid and a single-model ablation are retained as comparisons.
+
+```bash
+python examples/model_bank_study.py --stage develop
+python examples/model_bank_study.py --stage evaluate
+python examples/validate_model_bank_study.py
+python examples/build_model_bank_web.py
+python examples/check_versions.py
+```
+
+The fresh evaluation improves the **routine-reference-bias group under healthy calibration** relative to the previous hybrid: oxygen-deficit AUC falls from 853.77 to 567.17 mL O₂/m² (33.6%), with paired difference −286.60 (95% interval −320.02 to −251.31). Mean volume error falls from 44.35 to 24.98 mL. Low-reservoir time changes from 0.68 to 0.80 s (upper paired extra exposure 0.26 s), with zero empty requests. In clean-reference cases the oxygen change versus the previous hybrid is inconclusive; outage AUC improves from 588.72 to 564.08. These scoped results do not establish overall superiority.
+
+The full criterion fails. Relative to matched model-bank PI, oxygen deficit improves by roughly 19–20%, but upper paired extra low-reservoir exposure is 1.84 s (clean), 1.39 s (bias) and 1.57 s (outage), beyond the +1 s limit. The retuned calibration-only PI has lower oxygen deficit but depletes much more in final testing (77.27 s mean low-reservoir time and 1.03 s empty requests in primary groups); it remains reported and is not discarded after seeing those failures. The hybrid has no empty requests in any primary run, but clean-reference low-reservoir time is 1.01 s, just over the 1 s milestone.
+
+**V1 MPC target status: not ready.** This is one 16-patient exploratory cohort, not either of the required 32-patient confirmation cohorts. Several comparator/protection checks remain unmet. With missing calibration the new hybrid reproduces the matched PI fallback. With biased or shared-corrupted calibration the model interval can fail and depletion/empty requests remain; a narrow range is not a guarantee of correctness. The detailed milestone checks are in `results/model-bank-study/version2-progress.json`.
+
+The new harness preserves the established timing and physiology pipeline and is tested for exact parity when using the old factories. Previous controller/orchestration files remain unchanged so frozen historical experiments remain reproducible. The study uses 4,096 development runs and 15,360 evaluation runs with fresh patient/noise seeds and pump responses different from development. Scenario families and the synthetic model remain reused. All failures and secondary calibration-corruption regimes remain in the logs; no paper drafts are generated.
+
+</details>
+
+## Current progress
+
+Development updates are published to GitHub and reflected in the portfolio after validation. The v1 MPC milestone remains a separate release that requires all agreed performance, protection and confirmation gates.
+
+### New development milestone — Horizon MPC applied in feedback
+
+The optimizer now **actually controls the simulated pump** behind the same current protection cap as matched PI. A fixed [48-run pilot](docs/FEEDBACK_PILOT.md) on four reused development patients measures **0.1435% lower oxygen deficit than matched point-estimate PI**, well below the 10% target, and about 0.0418% worse than the existing v1.15-dev.5 hybrid. All three arms have zero observed floor crossings and empty requests in this limited healthy-reference grid.
+
+MPC actions are applied on **7,459 control steps**; rejected or unsupported optimization falls back to the same protected PI. Both nominal controllers receive the same guard point-volume estimate while the independent lower estimate determines their shared cap. Full applied trajectories, rejection statuses, settings and [paired results](results/feedback-pilot/summary.json) are public. This candidate does not justify a larger tuning sweep or a superiority claim. The v1 MPC milestone and its gates are unchanged; confirmation remains untouched.
+
+### New development milestone — Delivery limits and a nominal horizon optimizer
+
+The [horizon foundation](docs/HORIZON_FOUNDATION.md) now includes **384 measured-controller runs and 1,024 offline optimizer snapshots** on the same 32 development patients. In this healthy-reference audit, **90.50% of v1.15-dev.5 deficit occurs during intervals labelled stopping-reserve limited**. An illustrative fast PI nearly matches v1.15-dev.5 (1456.578 versus 1456.624 AUC), pointing to the shared constraint rather than a large gain-tuning opportunity. These labels are temporal associations, not proof that relaxing reserve would safely recover that delivery.
+
+The nominal LP includes physical pump/volume/pressure states, linear oxygen-deficit AUC, normal command slew, a zero-return braking continuation and an exact discrete stopping tail. HiGHS solves the recorded snapshots; a separately scaled OSQP adapter preserves the objective and independently checks answers in physical units. **888 plans pass and 136 invalid-input snapshots are rejected; none is applied.** Recorded reference timings exceed the illustrative 2 ms target. No MPC performance gain, robust runtime protection or V1 MPC target qualification is established. [Raw results](results/horizon-foundation/summary.json), frozen source provenance and rejection cases are retained.
+
+Next: distinguish physical reserve from uncertainty cost, validate anchored estimation, then integrate protected feedback and retune PI fairly. Controller version remains v1.15-dev.5; the ≥10% and protection gates are unchanged, and confirmation stays 0/2.
+
+### New development milestone — Identifiability before estimation and MPC
+
+The next architectural step now has a reproducible [information audit](docs/IDENTIFIABILITY.md): **128 baseline runs and 3,968 frozen-command plant replays** on the existing 32 development patients, producing 2,048 local sensitivity analyses. Under explicitly healthy absolute references the tested six unknowns are locally full rank; allowing shared unknown level bias leaves one unresolved direction in all 128 cases. A finite shift in initial volume, patient storage and shared sensor offset produces indistinguishable measurements. This identifies an estimator-design limitation, not a controller improvement or a safety guarantee.
+
+Raw commands, per-case spectra, [protocol](results/identifiability-development/protocol.json), [summary](results/identifiability-development/summary.json) and checksums are public. Reference acquisition/delivery timing and physical pump lag use the actual simulator. These are reused development data and conditional local diagnostics; practical recovery under fresh noisy faults remains to be tested. Next: an independently anchored estimator shared by PI and MPC, followed by full horizon control with stopping reserve. **No controller behavior, package version or release gate changes here.** Current prerelease remains v1.15-dev.5; the v1 MPC milestone remains blocked and confirmation stays 0/2.
+
+```bash
+python examples/identifiability_study.py
+python examples/validate_identifiability.py
+```
+
+### v1.15-dev.5 — Startup support and calibrated pump braking (historical)
+
+The `main` branch is **v1.15-dev.5**. This iteration adds **4,096 simulations on the same 32 development virtual patients**: 2,048 primary, 1,536 calibration-failure and 512 abrupt-stop runs across four mechanism arms. The fixed 2,048-run startup stage informed an explicitly adaptive 2,048-run pump-model follow-up; these reused patients are not independent evidence. Cumulative development runs are **34,944**. Both reserved confirmation cohorts stay untouched; confirmation remains **0/2**.
+
+One independent calibration arrives at 6 s; the next arrives at 126 s. The first stage initializes the same volume/venous-bias set from one delivered anchor, keeping the full ±2 L/min bias prior and all existing error allowances. Startup unsupported time falls from 126 to 6 s, but deficit improves by only **0.009%**. Earlier support does not create a feasible higher-flow command when the volume/braking constraint still binds.
+
+The follow-up uses pump hypotheses still consistent with calibration for the existing 15-second finite-return reserve. It crosses one/two-anchor support with the entire/retained stopping grid, holding measurements, gains, error allowances, recovery settings and actuator limits fixed. It introduces a dependency on retaining an adequately accurate pump response: calibration/model assumptions that discard the real response can defeat protection. All previous controller/runtime/study source files remain unchanged.
+
+| Mechanism arm | Startup unsupported (s) | Mean primary deficit AUC (mL O₂/m²) | Primary floor crossings | Abrupt-stop floor crossings |
+| --- | ---: | ---: | ---: | ---: |
+| v1.15-dev.4 reference | 126 | 1545.77 | 0/512 | 0/128 |
+| One anchor / full grid | 6 | 1545.64 | 0/512 | 0/128 |
+| Two anchors / retained models | 126 | 1456.76 | 0/512 | 0/128 |
+| One anchor / retained models | 6 | 1456.62 | 0/512 | 0/128 |
+
+**The follow-up rule selects `retained_single_anchor`.** Mean primary deficit falls **5.8%**, from **1545.77 to 1456.62**, relative to v1.15-dev.4. It has zero floor crossings and empty requests across 512 primary cases and 128 abrupt-stop challenges. Its worst primary minimum is **494.40 mL**. The fixed archived eligible PI remains at **444.08**.
+
+**The complete development milestone still fails.** Oxygen delivery remains insufficient versus eligible PI; the v1 MPC milestone is not ready.
+
+Selection across both stages requires zero floor crossings and empty requests in primary **and** abrupt-stop grids, then lowest primary deficit among eligible arms. Calibration-failure data do not select the winner. The 512 archived eligible-PI primary records provide the unchanged gate comparison and are not counted as new simulations. A new equally informed comparator review remains required before any design freeze. Patient-paired intervals are exploratory because design and selection reuse development outcomes.
+
+<details>
+<summary>All four-arm calibration-failure outcomes</summary>
+
+Mean deficit per 600-second run; 128 cases per arm/regime. Missing calibration preserves the same maximum-braking fallback across all four arms, including its large delivery cost.
+
+| Calibration | Arm | Deficit AUC (mL O₂/m²) | Floor crossings | Empty requests |
+| --- | --- | ---: | ---: | ---: |
+| missing | v1.15-dev.4 reference | 2706.39 | 0/128 | 0/128 |
+| missing | One anchor / full grid | 2706.39 | 0/128 | 0/128 |
+| missing | Two anchors / retained models | 2706.39 | 0/128 | 0/128 |
+| missing | One anchor / retained models | 2706.39 | 0/128 | 0/128 |
+| biased | v1.15-dev.4 reference | 1364.42 | 0/128 | 0/128 |
+| biased | One anchor / full grid | 1361.36 | 0/128 | 0/128 |
+| biased | Two anchors / retained models | 1273.74 | 0/128 | 0/128 |
+| biased | One anchor / retained models | 1270.68 | 0/128 | 0/128 |
+| shared | v1.15-dev.4 reference | 1364.42 | 0/128 | 0/128 |
+| shared | One anchor / full grid | 1361.36 | 0/128 | 0/128 |
+| shared | Two anchors / retained models | 1273.74 | 0/128 | 0/128 |
+| shared | One anchor / retained models | 1270.68 | 0/128 | 0/128 |
+
+</details>
+
+No true pump lag, true volume or future event schedule enters control. Raw logs include startup/later deficit separately and lower-estimate overstatement against step-start truth for analysis only. Shared absolute calibration bias remains unidentifiable; Gaussian noise is unbounded and omitted dynamics can invalidate the engineering sets. Passing this finite abrupt-stop grid is not a universal protection guarantee or hardware/clinical validation.
+
+[Startup protocol](results/startup-development/protocol.json), [startup results](results/startup-development/summary.json), [adaptive follow-up protocol](results/calibrated-pump-development/protocol.json), [all four-arm results and gates](results/calibrated-pump-development/summary.json), [mechanism explanation](docs/STARTUP_AND_MODELS.md) and [diagnostic figure](web/startup-models-comparison.svg) are public. All **1,024 repeated v1.15-dev.4 reference cases** reproduce their prior metrics. Independent checks recalculate the grids, startup/later partition, paired intervals, selection, gates and missing-calibration parity.
+
+**Next:** investigate the remaining stopping-reserve and delivery tradeoff with explicit actuator/estimator assumptions, then retune an equally informed PI before considering a design freeze. The v1 MPC milestone still needs all project gates and two untouched confirmation cohorts. Physical prototype adaptation remains future work.
+
+### v1.15-dev.4 — Finite return-flow credit (previous)
+
+The previous **v1.15-dev.4** experiment added **6,144 runs on the same 32 development virtual patients**: 3,072 primary, 2,304 calibration-failure and 768 abrupt-stop runs. Cumulative completed development runs are **30,848**. Confirmation remains **0/2** and both reserved cohorts stay untouched.
+
+The new candidate credits **half of a conservative causal return-flow estimate for 15, 30 or 60 seconds**, then assumes zero return forever. It retains v1.15-dev.3's entire configured pump grid and maximum-braking fallback without independent support. The three horizons are fixed before outcome runs; no settings are revised during the sweep. Earlier controller, runtime and study source files remain byte-for-byte unchanged. The opt-in candidate package keeps frozen historical source scopes intact.
+
+| Configuration | Mean primary deficit AUC (mL O₂/m²) | Primary floor crossings | Abrupt-stop floor crossings | Primary worst minimum (mL) |
+| --- | ---: | ---: | ---: | ---: |
+| 15-second credit | 1545.77 | 0/512 | 0/128 | 656.99 |
+| 30-second credit | 1281.77 | 0/512 | 21/128 | 538.91 |
+| 60-second credit | 1196.16 | 0/512 | 56/128 | 537.63 |
+| v1.15-dev.3 zero return | 1749.13 | 0/512 | 0/128 | 753.62 |
+| Previous v1.15-dev.2 | 396.25 | 24/512 | 118/128 | 3.54 |
+| Eligible PI | 444.08 | 28/512 | 123/128 | 108.60 |
+
+**The fixed development rule selects `credit_15`.** It has zero floor crossings and zero empty requests across both primary and abrupt-stop grids. Primary oxygen deficit falls **11.6%** versus the v1.15-dev.3 zero-return reference, from **1749.13 to 1545.77**. Eligible PI remains at **444.08**. These are reused development data, not independent confirmation.
+
+**The complete development milestone still fails.** Oxygen delivery remains insufficient for the v1 MPC milestone.
+
+The added challenge abruptly sets drainage to zero for **45 seconds, t=168–213 s**, in both physiology and plant families. The controller sees current measurements but never the event schedule. Selection requires zero floor-crossing and empty-request cases in primary **and** abrupt-stop testing, then lowest primary mean deficit among qualifying candidates. Shared/biased/missing calibration outcomes never select a winner. The existing independently development-tuned PI remains fixed; revisit an equally informed comparator before freezing a new design.
+
+<details>
+<summary>All finite-credit calibration-failure outcomes</summary>
+
+Mean deficit per 600-second run; each method/regime has 128 cases. The missing-calibration fallback retains maximum permitted braking, with its substantial delivery cost.
+
+| Calibration regime | Candidate | Deficit AUC (mL O₂/m²) | Floor-crossing cases | Empty-request cases |
+| --- | --- | ---: | ---: | ---: |
+| missing | 15-second credit | 2706.39 | 0/128 | 0/128 |
+| missing | 30-second credit | 2706.39 | 0/128 | 0/128 |
+| missing | 60-second credit | 2706.39 | 0/128 | 0/128 |
+| biased | 15-second credit | 1364.42 | 0/128 | 0/128 |
+| biased | 30-second credit | 1121.00 | 0/128 | 0/128 |
+| biased | 60-second credit | 1034.99 | 0/128 | 0/128 |
+| shared | 15-second credit | 1364.42 | 0/128 | 0/128 |
+| shared | 30-second credit | 1121.00 | 0/128 | 0/128 |
+| shared | 60-second credit | 1034.99 | 0/128 | 0/128 |
+
+</details>
+
+The finite-return assumption can be violated, shared absolute calibration bias remains unidentifiable, and omitted pump dynamics can invalidate reserve. Passing the added abrupt-stop grid does not establish universal protection. Initial stopping may already be infeasible. No hardware or clinical validation is claimed.
+
+The analytic reserve is independently tested against step-by-step emergency braking. All **2,688 repeated v1.15-dev.3 reference cases** reproduce their recorded metrics. [Fixed protocol](results/finite-return-development/protocol.json), [all patient logs and summary](results/finite-return-development/summary.json), [reserve explanation](docs/RETURN_CREDIT.md), [implementation](src/perfusion_candidates/finite_return.py) and [diagnostic replays](web/finite-return-comparison.svg) are public. Paired patient-level intervals are exploratory because development data are reused. Historical v1.15-dev.3 replay-figure validation now uses eight-decimal trace digests for platform portability; full-precision raw results and all source/metric checks remain unchanged.
+
+**Next:** reduce the remaining delivery penalty without weakening individual protection, diagnose startup/calibration support and braking conservatism, then retune the equally informed PI before considering a design freeze. The v1 MPC milestone remains blocked on the full evidence policy and two untouched confirmation cohorts.
+
+### v1.15-dev.3 — Conservative depletion protection (previous)
+
+The previous **v1.15-dev.3** iteration added **2,688 runs on the same 32 virtual patients**: 1,536 primary runs and 1,152 missing/biased/shared-calibration runs across the protected candidate, frozen v1.15-dev.2 candidate and previously selected eligible PI. There is no new tuning, comparator selection or confirmation. The two earlier development stages remain intact; cumulative completed development runs are **24,704**.
+
+The new opt-in `DepletionRuntime` assumes **zero future venous return** during braking, retains the **entire configured pump grid** for stopping calculations, and commands maximum permitted deceleration whenever the independent calibration/model set is unsupported or conflicting. The aggressive PI settings and actuator limits stay fixed. Earlier controller/runtime modules remain byte-for-byte unchanged. The new simulation adapter differs only in runtime selection and its function name/docstring; timing, physiology and metrics are unchanged.
+
+| Healthy-calibration primary grid | Protected v1.15-dev.3 | Previous v1.15-dev.2 | Eligible PI |
+| --- | ---: | ---: | ---: |
+| Cases | 512 | 512 | 512 |
+| Mean oxygen-deficit AUC (mL O₂/m²) | 1,749.13 | 396.25 | 444.08 |
+| Cases below 250 mL | 0 | 24 | 28 |
+| Worst minimum reservoir (mL) | 753.62 | 3.54 | 108.60 |
+| Empty-request cases | 0 | 0 | 0 |
+
+**Protection improves on this grid, but oxygen delivery fails badly.** Mean deficit is 294% higher than eligible PI, with an exploratory patient-paired deficit difference of +1,305.05 (95% interval +1,275.18 to +1,334.98). The protection cap acts for an average 556.62 s of each 600-second primary run. It is a conservative reference, not a design ready to freeze for confirmation.
+
+| Calibration failure (128 cases per method/regime) | Protected deficit AUC | Protected floor crossings | Protected worst minimum (mL) |
+| --- | ---: | ---: | ---: |
+| Missing | 2,706.39 | 0 | 753.62 |
+| Biased | 1,583.12 | 0 | 622.15 |
+| Shared corruption | 1,583.12 | 0 | 622.15 |
+
+The protected mode has no empty requests in these secondary tests. These are empirical outcomes in the reused synthetic grid. Unknown shared absolute bias remains unidentifiable, omitted pump dynamics can invalidate reserve, and stopping can already be infeasible at initialization. No universal safety guarantee follows from these results. In missing-calibration cases the explicit braking fallback sacrifices delivery rather than continuing the aggressive PI base.
+
+[Fixed protocol](results/depletion-development/protocol.json), [all 32 patient logs and summary](results/depletion-development/summary.json), [protection implementation](src/perfusion_lab/depletion.py) and [previous worst-case replay figure](web/depletion-worst-case.svg) are public. The repeated 1,024 primary reference runs exactly reproduce published v1.15-dev.2 candidate/PI numerics. A recorded text-retrieval correction removes one trailing newline from imported local sources; Python ASTs, settings and raw results are unchanged, and execution hashes remain reconstructible in [the normalization record](results/depletion-development/retrieval-normalization.json).
+
+```bash
+PYTHONPATH=src python examples/depletion_study.py --stage run
+PYTHONPATH=src python examples/validate_depletion_study.py --replay
+PYTHONPATH=src python examples/build_depletion_web.py --check
+```
+
+After an editable install, `PYTHONPATH=src` is optional; on Windows run the Python commands without that prefix. `--stage run` resumes complete patient files and verifies the frozen protocol before running.
+
+**The v1 MPC milestone remains blocked; confirmation is 0/2.** Next: develop a less restrictive protection design with explicit, testable return-flow assumptions, keeping this zero-return mode as the conservative reference. Retune an equally informed PI on development data before freezing any new design. Hardware readiness and clinical validation remain unestablished.
+
+### v1.15-dev.2 — Calibration sets, joint braking and PI-base development (previous)
+
+The previous **v1.15-dev.2** iteration completes a two-stage experiment on **32 development virtual patients**: 15,360 primary + 3,072 calibration-failure runs in the first stage, followed by 2,048 primary + 1,536 failure runs in an adaptive PI-base follow-up. The total is **22,016 completed development runs across 34 candidate/reference configurations**. These stages reuse the same patients for design and selection; they are not separate confirmation cohorts. Confirmation remains **0/2**.
+
+The code adds a feasible calibration/model set for reservoir volume and venous-sensor offset, plus a joint braking reserve that evaluates the whole discrete emergency-deceleration trajectory and its infinite residual tail. Each change was first isolated against a same-settings control. The first stage did not beat the independently tuned eligible PI on oxygen delivery, so the follow-up held protection settings fixed and tested two PI-base levels with both observers. All settings, candidates and failures are retained.
+
+The selected research configuration is `aggressive_consistent`: calibration-consistent sets, joint braking and the more aggressive PI base. On the predefined healthy-calibration development grid, mean oxygen-deficit AUC is **396.25 versus 444.08** for the development-selected eligible PI (**10.8% lower overall**). The mean below-floor time is **0.81 versus 0.72 s per 600-second run**. The selected configuration has **zero empty requests in its 512 primary cases**. Its lower volume estimate never exceeds truth in those primary cases, but this empirical observation does not guarantee future coverage. The aggregate grid includes two bias families and one each of clean-reference and outage cases.
+
+| Healthy-calibration regime | Selected deficit AUC (mL O₂/m²) | PI deficit AUC (mL O₂/m²) | Reduction | Selected below-floor time (s) | PI below-floor time (s) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Clean reference | 395.92 | 420.75 | 5.9% | 0.83 | 0.98 |
+| Reference bias | 396.55 | 455.13 | 12.9% | 0.80 | 0.59 |
+| Reference outage | 395.96 | 445.29 | 11.1% | 0.82 | 0.71 |
+
+**The full development milestone still fails.** Clean-reference improvement is only **5.9%**, below the required 10%. The other per-regime mean/paired reservoir and pressure gates pass on these development data. Paired bootstrap intervals are exploratory because design, tuning and selection reuse the same 32 patients; neither stage is independent confirmation.
+
+**Mean gates do not guarantee individual protection.** The selected configuration crosses the 250 mL experimental floor in **24/512 primary cases, affecting 5/32 virtual patients**. The longest below-floor exposure is **28 s**, and the minimum reservoir volume is **3.54 mL**. For the eligible PI, the minimum is 108.60 mL; for frozen v1 it is 156.83 mL on this same development grid. Zero empty requests therefore does not imply acceptable worst-case depletion. A post-result [risk audit](results/reachability-base-development/risk-summary.json) and a worst-case replay expose these failures. The reserve is conditional on retained pump dynamics and a future inflow lower estimate; unexpected drainage changes can defeat that assumption.
+
+<details>
+<summary>All mechanism arms, adaptive follow-up settings and calibration failures</summary>
+
+Means per 600-second healthy-calibration primary run. Eligibility uses the predeclared per-regime mean floor-exposure limit and zero primary empty requests. Lower-estimate overstatement means the lower reservoir estimate exceeds actual volume; it is not a confidence-coverage guarantee.
+
+| Configuration | Deficit AUC (mL O₂/m²) | Below floor (s) | Empty requests (s) | Lower estimate above truth (s) | Development-eligible |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Legacy hybrid · common settings | 455.84 | 0.49 | 0.000 | 1.12 | Yes |
+| Calibration sets only | 483.91 | 0.33 | 0.000 | 0.00 | Yes |
+| Joint braking only | 453.49 | 0.49 | 0.000 | 1.12 | Yes |
+| Both changes · original PI base | 479.70 | 0.33 | 0.000 | 0.00 | Yes |
+| Joint braking · matched PI base | 404.29 | 0.61 | 0.000 | 1.12 | Yes |
+| Both changes · matched PI base | 441.76 | 0.57 | 0.000 | 0.00 | Yes |
+| Joint braking · aggressive PI base | 362.56 | 0.81 | 0.023 | 1.25 | No |
+| Both changes · aggressive PI base | 396.25 | 0.81 | 0.000 | 0.00 | Yes |
+| Development-selected eligible PI | 444.08 | 0.72 | 0.000 | 1.32 | Yes |
+| Frozen final v1 hybrid | 441.51 | 0.53 | 0.000 | 1.63 | Yes |
+
+The common-settings arms hold calibration allowance, model-error growth and recovery floor fixed. Frozen v1 uses its original selected settings and is an additional reference. The faster `aggressive_legacy` follow-up produces empty requests and remains reported as ineligible.
+
+For the selected configuration, absent or corrupted independent calibration remains a major failure mode. These secondary results do not determine selection:
+
+| Calibration failure | Mean below-floor time (s) | Mean empty-request time (s) | Mean volume error (mL) |
+| --- | ---: | ---: | ---: |
+| Missing calibration | 78.89 | 0.000 | 185.4 |
+| Biased calibration | 5.56 | 0.031 | 220.0 |
+| Shared calibration | 5.56 | 0.031 | 220.0 |
+
+Missing calibration disables predictive recovery but leaves the aggressive PI base; this fallback is not adequate protection in these tests. Biased/shared-corrupted calibration invalidates the volume range and can cause empty requests. Shared unknown absolute bias remains unidentifiable under the declared information assumptions.
+
+The initial execution rejected signed raw Gaussian level references near an empty reservoir. The [interrupted run and frozen sources](results/reachability-interrupted-rc2/status.json) are preserved. The corrected runtime accepts signed finite raw references while retaining timestamp/finiteness checks; all 5,760 previously completed runs are identical in the full rerun. A recorded [runner correction](results/reachability-development/runner-correction/correction.json) fixes JSON tuple/list comparison without changing parameters, outcome gates or any raw primary result.
+
+</details>
+
+The [first-stage protocol](results/reachability-development/protocol.json), [adaptive follow-up protocol](results/reachability-base-development/protocol.json), [selected settings](results/reachability-base-development/selection.json), [results](results/reachability-base-development/summary.json) and [current v2 progress](results/reachability-base-development/version2-progress.json) are public. Both development-only selection and individual failures limit the claim. The v1 MPC milestone, clinical suitability, scientific novelty and physical prototype readiness remain unestablished.
+
+## Next steps
+
+1. Continue development on the same **32 development virtual patients** to recover oxygen delivery while retaining depletion protection. The v1.15-dev.3 zero-return mode is a conservative reference; develop and test any relaxed inflow assumptions explicitly. Keep the confirmation cohorts untouched while these issues are investigated.
+2. Tune a PI comparator independently using the same measurement channels and actuator limits. Select eligibility and settings on development data.
+3. Freeze the candidate, comparator, source hashes, settings and analysis before confirmation.
+4. Evaluate the same frozen design on **two untouched cohorts of at least 32 patients each**. Pass normal sensing, routine-reference bias and routine-reference outage regimes separately. Retain failures; revised designs need new unseen confirmation cohorts.
+5. Publish stable **v2.0.0 only after all evidence and reproduction gates pass**.
+6. Then develop simulated I/O and a separately tested bench-only pump/reservoir prototype, including bounded memory, measured timing, an independent watchdog and a physical stop path.
+
+### Requirements for the v1 MPC milestone
+
+The active development line is **v2.0 release candidates**. The v1 MPC milestone remains a **project evidence milestone**, not clinical certification or an automatic consequence of adding features. The machine-readable policy is [version2-gates.json](data/version2-gates.json); the latest iteration reports [current progress](results/calibrated-pump-development/summary.json).
+
+- At least **10% lower mean oxygen-deficit AUC** than the strongest development-eligible PI comparator with the same inputs and limits; the paired 95% interval must support improvement. Determine the comparator on development data, not after final results.
+- **Zero empty-reservoir requests** in primary evaluation and mean low-reservoir time **≤1 s per 10-minute run** in each primary regime. Upper paired extra exposure must be ≤1 s low/empty and ≤5 s high pressure.
+- Pass separately for **normal sensing, routine-reference bias and routine-reference outages**, within the declared independent-calibration assumptions.
+- Confirm the frozen design on **two distinct fresh cohorts of at least 32 virtual patients each**, retain all failures, and pass source/artifact checks on both supported Python versions.
+- Publish missing/biased/shared-corruption calibration failures and the fallback behavior. An unidentifiable shared absolute bias is not solved by labelling a release v2.0.
+
+The original evidence policy is retained unchanged for historical hash verification; [version2-roadmap.json](data/version2-roadmap.json) records the new release-candidate numbering and exact remaining phases.
+
+The released v1 evaluation used 16 patients. The current 32-patient development set is used for design and selection and also cannot count as either untouched confirmation cohort. The synthetic parameter distribution and reused circuit model are not a validated clinical population.
+
+## How to use the repository
+
+### Choose a version and install
+
+Use the [v1.14.0 release source ZIP](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/v1.14.0) for frozen v1 reproduction. Use `main` for current v2 development. The wheel installs Python modules and the original CLI; full studies, datasets and viewer assets require the source repository or full source ZIP.
+
+With Python **3.10 or 3.12**, clone the repository and install the free audit dependencies in a virtual environment:
+
+```bash
+git clone https://github.com/vudeern/cardiopulmanoary_bypass_simulation.git
+cd cardiopulmanoary_bypass_simulation
+python -m venv .venv
+# macOS/Linux:
+source .venv/bin/activate
+# Windows PowerShell: .venv\Scripts\Activate.ps1
+python -m pip install -e ".[audit]"
+```
+
+### Run a simulation and check the results
+
+The CLI commands below run the original scenario/policy experiments. The current model-bank controller uses its dedicated study runner (in the v1.14 details above) or the current interface example below.
+
+```bash
+perfusion-lab run --scenario compound --policy sentinel --out /tmp/perfusion-run
+perfusion-lab benchmark --out /tmp/perfusion-benchmark
+python examples/published_patient_replay.py
+python -m unittest discover -s tests
+node tests/web_contract.cjs
+```
+
+Use `perfusion-lab --help` for the existing command interface. Earlier experiments and raw logs remain reproducible. Existing PI/threshold policies are project baselines, not faithful implementations of a commercial or published controller. `web/` replays precomputed Python output; it does not run a second physiology engine.
+
+The public-case input file contains five observations transcribed from [Hunter et al., 2013](https://pmc.ncbi.nlm.nih.gov/articles/PMC4557537/). [Provenance](data/published-case/provenance.json) preserves missing arterial saturation and source attribution. This is an oxygen-equation replay only; no patient reservoir dynamics are fitted or validated.
+
+### Use the current controller interface
+
+This synthetic example uses the development-selected v1.15-dev.5 candidate. Its return-flow, calibration/model-retention assumptions and remaining delivery penalty above apply. The frozen v1 package predates these runtime interfaces.
+
+```python
+from perfusion_candidates.calibrated_pump import CalibratedPumpRuntime
+from perfusion_lab.runtime import MeasurementFrame
+from pathlib import Path
+import json
+from perfusion_lab.sensing import Observation
+
+protocol = json.loads(Path("results/calibrated-pump-development/protocol.json").read_text())
+summary = json.loads(Path("results/calibrated-pump-development/summary.json").read_text())
+method = protocol["methods"][summary["selected_candidate"]]
+runtime = CalibratedPumpRuntime(bsa=1.85, initial_hb=9.0, dt=1.0,
+    controller_options=method["options"], guard_options=method["guard"])
+# Illustrative measured values in the documented units, not patient settings.
+obs = Observation(0.0, 4.44, 0.85, 60.0, 9.0, 0.98, 37.0, 9.0)
+output = runtime.observe(MeasurementFrame(obs, venous_flow=4.44))
+# Simulation acknowledges the requested setpoint. A device adapter must instead
+# acknowledge the actual accepted setpoint and own independent fault handling.
+runtime.acknowledge(observation_time=0.0, applied_command=output.decision.command)
+```
+
+```bash
+python examples/validate_runtime.py --check
+python examples/check_versions.py
+```
+
+### Reproduce the current development experiment
+
+```bash
+python examples/startup_study.py --stage run
+python examples/validate_startup.py --replay
+python examples/calibrated_pump_study.py --stage run
+python examples/validate_calibrated_pump.py --replay
+python examples/build_startup_web.py --check
+```
+
+The preceding v1.15-dev.4 experiment remains reproducible:
+
+```bash
+python examples/finite_return_study.py --stage run
+python examples/validate_finite_return.py --replay
+python examples/build_finite_return_web.py --check
+```
+
+Earlier development stages remain reproducible:
+
+```bash
+python examples/reachability_study.py --stage primary
+python examples/reachability_study.py --stage secondary
+python examples/reachability_study.py --stage replays
+python examples/reachability_base_study.py --stage primary
+python examples/reachability_base_study.py --stage secondary
+python examples/reachability_base_study.py --stage replays
+python examples/build_reachability_risk.py
+python examples/validate_reachability_study.py
+python examples/validate_reachability_base.py
+python examples/build_reachability_web.py --check
+```
+
+Existing source/protocol hashes are checked before a study resumes. Source changes require an explicitly recorded new development iteration; do not overwrite prior failures or reuse confirmation cases for tuning. The browser includes the selected configuration, eligible PI, frozen v1 and a clearly labelled post-result worst-case patient.
+
+### Repository layout
+
+- `src/perfusion_lab/`: plant, sensors, observer and controller code.
+- `tests/`: physics, information, controller and replay contracts.
+- `data/`: source provenance and reference implementation mapping.
+- `results/`: reproducible raw experiment logs and machine summaries.
+- `examples/`: runners, optional engineering plots and artifact checks.
+- `docs/`: model, data dictionary and validation instructions.
+- `web/`: interactive replay and work-in-progress project page.
+
+Paper drafts, abstracts, result write-ups and publication-readiness documents are removed while development continues. Their generators are removed as well. Optional plotting tools write to `results/figures/`, not `docs/`. Historical experiments are development evidence, not clinical validation or final publication claims.
+
+Code is MIT licensed. Source articles and externally published numerical facts retain their own attribution and rights; the software license does not relicense them.
+
+### Version history
+
+<details>
+<summary>All labelled versions and frozen snapshots</summary>
+
+Versions are listed newest first. The current entry follows `main`; earlier entries link to frozen code snapshots. Historical material may differ from the current project.
+
+| Version | Update | Snapshot |
+| --- | --- | --- |
+| v1.15-dev.5 (historical) | Single-anchor startup, calibrated pump hypotheses and a 4,096-run controlled/adaptive development comparison | [Current code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/main) |
+| v1.15-dev.4 | Finite return-flow credit, explicit abrupt-stop challenges and a 6,144-run fixed development comparison | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/9d79573635bcc1760292516b70d518d7dd55881a) |
+| v1.15-dev.3 | Zero-return braking reserve, explicit calibration fallback and a 2,688-run protection/delivery comparison | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/63c71527ca3760ccdb22235d9945b89cbdfed445) |
+| v1.15-dev.2 | Calibration sets, joint braking, adaptive PI-base development and explicit worst-case failures | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/df071764934fbb8bdc2496363a42bf545fc28bc7) |
+| v1.15-dev.1 | Measurement-only controller API, exact v1 parity and final-v1 packaging | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/99d7237a37115cd30ea0c99836fa6515d62c7bb1) |
+| v1.14 | Final v1: calibration-constrained model bank and discrete reserve | [Frozen code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ace6a9fed2f9084b5fda95e9e1113af7a3d93dca) |
+| v1.13 | Slowdown audit and truth-informed physical benchmarks | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cbb683484999ab73a79bf0fc368d682e8878ae7) |
+| v1.12 | Reference screening, quarantine and independent calibration | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/ed16fcf9056d41c2ffd1eca7fe1149515780ccaf) |
+| v1.11 | PI foundation with a selective predictive override | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/fe9c3cbab35d089a0af90ffdc6f9fae7b003ca07) |
+| v1.10 | Reference continuity between level measurements | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/1e84727d9e064d4fca93c8e33f34cf2c98b9e917) |
+| v1.9 | Predictive braking reserve | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/571f14652b7e800b57dac1a854c2a6592bdcd22c) |
+| v1.8 | Verified free SIMC PI reference and matched comparison | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/7cce084e35f6e031e67057be5bc9360cfe513ee1) |
+| v1.7 | Source-traced controller workbench; premature paper files removed | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61ae1677b29fe93422e75c7cec5e0a27335c5f33) |
+| v1.6 | Published-patient oxygen replay with provenance and limitations | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/03983990687231edd2879241c03ccb3aec3af872) |
+| v1.5 | Bias-mechanism analysis and flow-independent baselines | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/52fc56e705cba0c23233e260a042ad65a295f3f4) |
+| v1.4 | Timestamped independent level-reference comparison | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/397f505a84270ed430254e99f778151f8718178c) |
+| v1.3 | Sensor drift, flow errors and unfamiliar plant dynamics | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/20b974392bc05c5ae91b71b400f8c2985a7ecfa1) |
+| v1.2 | Comparison with tuned conservative baselines | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/85a1c5862af79374a5e50c7273039c08c72b81af) |
+| v1.1 | Causal reservoir level-step guard and paired evaluation | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/61b74983f1681e5e80be3a24a6df9707793098fe) |
+| v1.0 | Initial simulation, paired benchmark and failure analysis | [View code](https://github.com/vudeern/cardiopulmanoary_bypass_simulation/tree/31414235c2587595a2f3c0e7e7b60b5a0632eff2) |
+
+</details>
+
+<details>
+<summary>Earlier methods, findings and reproduction notes (v1.8–v1.13)</summary>
+
+### v1.13 — Audit the slowdowns before changing the controller
+
+This is a **post-result diagnostic**, not a new sensor-based controller or fresh performance validation. Every deployed controller source hash is unchanged. The audit reuses the v1.12 patients and scenarios, compares the hybrid and both PI references, forks identical decision states, and runs two diagnostic closed-loop ablations: removing the uncertainty interval and supplying exact current reservoir volume. Unsafe ablation outcomes remain failures.
+
+```bash
+python -m pip install -e ".[audit]"
+python examples/slowdown_audit.py --stage all
+python examples/export_slowdown_witnesses.py
+python examples/validate_slowdown_audit.py
+python examples/build_slowdown_web.py
+```
+
+The declared scope is 640 diagnostic runs over eight cells and 16 previously evaluated patients, including 128 observed hybrid decision audits. A separate 96-cell physical benchmark covers every patient/physiology/plant combination in the prior 10,752-run cohort. Reference faults do not alter those physical inputs. All 96 selected witness command schedules are retained for replay through the unchanged full plant.
+
+**There is demonstrated room within the model, but margins cannot simply be deleted.** Across the eight audit cells, observed hybrid mean oxygen-deficit AUC is 861.16 mL O₂/m². A truth-informed feasible witness reaches 512.15 with no reservoir-floor or empty-request violations; this is about 41% lower, but it uses true state, true parameters and future disturbances. Removing the interval gives AUC 567.56 while increasing low-reservoir time from 11.38 to 94.17 s and introducing empty requests. Exact volume gives 672.60 and 1.74 s, but remains noncompliant in 20 of 128 runs. It is a diagnostic, not a proposed deployable policy.
+
+A sparse LP relaxation gives a numerically checked deficit lower bound of 287.19 under the audit weighting; the 224.96 gap to the feasible witness is unresolved. The LP assumes optimistic maximum drainage at the reservoir floor and relaxed storage, so its commands are never presented as a real controller. The finite-grid witness is feasible, not globally optimal. Both use the same declared slew, pump, reservoir and pressure constraints, with an explicit minimum-reachable initial-pressure allowance.
+
+Of 38,742 observed slowdown decisions, 27,793 (71.7%) have at least one higher-flow first action with improved immediate true oxygen delivery and a verified emergency continuation. These local opportunities use future truth, overlap, and cannot be summed as one achievable improvement or used to delete every slowdown. Failed probes do not prove that a slowdown was physically necessary. The observer's mean interval width is 0.275 L; its lower estimate also exceeds true volume in some fault cases. Better volume estimation and reserve design need testing together.
+
+The first audit output used a continuous residual-flow approximation. It is explicitly superseded in `data/slowdown-audit/tail-correction/`; the final audit was rerun with the exact discrete trapezoidal geometric tail and a regression test for the counterexample. No controller tuning or case selection followed this correction. No paper drafts or prose result documents are generated.
+
+### v1.12 — Screening biased references
+
+The new `screened` reference mode evaluates routine samples **before** either PI or the predictive override uses them. It waits briefly for a same-acquisition independent calibration, tests unpaired samples against calibrated inline history and (after two calibrations) mass balance, quarantines inconsistent routine references, and restores the most recent independent calibration correction. A widening engineering uncertainty range defines the level supplied to both matched controllers. Quarantine and absent/stale calibration prevent upward predictive overrides, including during fade-out.
+
+Independent calibration is an additional **simulated measurement channel**, with noise, delay and explicit failure regimes. It is not truth supplied to the controller, a hardware validation, or a solution from the original sensors alone. A startup bias shared by both channels can still be unidentifiable. The reference sensor can have startup positive/negative bias, a step, a ramp, shared inline drift or a transient spike. Calibration can be healthy, absent, biased or corrupted with the same fault.
+
+```bash
+python examples/integrity_study.py --stage develop
+python examples/integrity_study.py --stage evaluate
+python examples/validate_integrity_study.py
+python examples/build_integrity_web.py
+```
+
+The fresh evaluation shows a **conditional protection gain with a large oxygen cost**. Under healthy independent calibration and nonclean reference-fault profiles, screened hybrid low-reservoir time is 0.58 versus 30.44 s with screening disabled (paired difference −29.85 s, 95% interval −32.32 to −26.48); empty requests fall from 2.51 s to zero. Oxygen-deficit AUC rises from 506.39 to 850.55 mL O₂/m². Calibration-only PI reaches 544.76 with 1.19 s low-reservoir time. The full engineering criterion fails: the extra reservoir exposure versus matched screened PI has an upper interval of 1.28 s, beyond the +1 s margin, and the oxygen cost versus calibration-only PI exceeds the +5 AUC margin.
+
+With healthy calibration, the hybrid rejects 3382/3600 bias-labelled routine samples (93.9%) and 0/3120 healthy-bias samples. These are observed synthetic classifications, not clinical sensitivity/specificity. With missing calibration it rejects all routine samples, healthy and biased. Shared corruption reduces biased-sample rejection to 47/3600 (1.3%) and leaves 27.12 s mean low-reservoir exposure. Biased calibration causes rejection of every healthy-bias routine sample. This work does not solve common-mode bias or establish overall superiority.
+
+Eight guard configurations are compared using both hybrid and matched PI; the chosen guard is common to those controllers. A calibration-only PI receives the same independent measurements and has 16 gain/setpoint candidates. The screening-disabled ablation uses the same hybrid, guard allowances and measurement channels, but accepts routine samples. Its purpose is to isolate screening, not to represent an established clinical device. Missing calibration is retained in development as a stress test; selection is based on good calibration. One earlier development-only run is preserved with exact source snapshots after separating the calibration RNG from the patient-parameter RNG.
+
+The frozen engineering criterion requires less biased-reference reservoir exposure than the screening-disabled arm, plus bounded extra reservoir/pressure exposure and oxygen deficit versus both screened PI and calibration-only PI, under healthy calibration. Biased and missing calibration and shared corruption remain secondary. Rejected bias-labelled samples must always be reported alongside rejected healthy samples; rejecting everything is not evidence of useful detection. The chosen development setting narrowly misses the 1 s mean low-reservoir eligibility target (1.04 s) and is explicitly marked ineligible.
+
+All reference decision logs and comparison outputs are machine-readable under `results/integrity-study/`. No clinical replacement, scientific novelty or guaranteed error bound is established. Paper drafts remain excluded.
+
+### v1.11 — PI with a selective predictive override
+
+The `selective` controller keeps SIMC PI as its foundation. A predictive override requires two delivered reference acquisitions, sufficiently recent information and agreement between the reference-anchored mass balance and corrected inline level. Its weight changes gradually. The PI integral and pump estimate track the **actual applied command**, so fading the override returns to PI without an integral discontinuity. A recovery override cannot add flow at measured pressure ≥85 mmHg; the common pressure slowdown remains 90 mmHg.
+
+The override can either reduce flow for reservoir risk or recover flow toward oxygen demand when a reserve appears available. Separate braking-only and recovery-only arms use the selected parameters with no extra tuning. This is a candidate upgrade within the synthetic circuit, not a demonstrated replacement for a clinical controller. Agreement between imperfect estimates is not a confidence probability: shared bias can fool the gate, and a partially blended override need not satisfy a hard braking bound. Violations remain flagged.
+
+```bash
+python examples/selective_study.py --stage develop
+python examples/selective_study.py --stage evaluate
+python examples/validate_selective_study.py
+python examples/build_selective_web.py
+python examples/selective_capacity.py
+```
+
+The fresh evaluation shows a **scoped gain, not overall superiority**. Under good references and in-range plants, oxygen-deficit AUC falls from 224.13 to 174.37 mL O₂/m² (22.2%); paired difference −49.75, 95% interval −59.49 to −41.50. The protection criterion passes: low-reservoir time is 0.36 versus 0.20 s, both have zero empty requests, and the upper paired differences remain within the predefined +1 s low/empty and +5 s pressure margins. During outages, hybrid and matched PI have AUC 190.30 and 190.20; oxygen improvement fails. Against the fast PI under good references, the oxygen interval crosses zero, so the full joint criterion fails.
+
+The component arms show the recovery path supplies the oxygen gain; braking limits its extra reservoir exposure. Under good references, recovery-only AUC/low-reservoir time is 173.11/1.66 s, hybrid 174.37/0.36 s, and braking-only 225.60/0.00 s. With biased references, the hybrid's mean low-reservoir time is 51.03 versus 9.70 s for matched PI: shared reference error can fool the agreement gate. With no references, all physical metrics match the selected PI exactly. None of these simulations establishes clinical replacement or a universally protective controller.
+
+The matched PI foundation (`tau_c=5`, level target 0.65 L) was selected during development before tuning the override. The final grid gives each family 16 candidates; two preceding complete development grids are preserved in `results/selective-pilot-1/` and `results/selective-pilot-2/` with exact source snapshots. Total architecture exploration is not claimed to have equal budgets. Development uses the same wide synthetic parameter ranges as final evaluation, with disjoint patient/noise seeds. Previously studied scenario families and model assumptions remain reused.
+
+The frozen joint criterion compares the hybrid separately with **both** the development-selected PI and the previous fixed fast PI, in both good-reference and outage groups. Every comparison must pass the reservoir/pressure non-inferiority limits and show less oxygen deficit. Biased/never references and out-of-range lag are retained as secondary groups. Machine-readable logs include the component comparisons and all failed outcomes; there are no paper drafts or prose results documents.
+
+An offline steady-state capacity screen reports when a fixed oxygen target exceeds sustainable model capacity at the declared volume/pressure limits. Stored reservoir volume and pressure transients can bridge short intervals, so this screen is neither a finite-horizon impossibility proof nor a dynamic optimal controller. It never relaxes the controller success criterion.
+
+### v1.10 — Continuity between level references
+
+The `continuity` controller integrates measured venous inflow minus a nominal first-order pump-flow estimate. Delivered level references anchor this balance **at their acquisition time**, so a delayed sample corrects the past before propagation to the present. Consecutive reference volumes fit a venous-sensor offset (clipped to ±2 L/min); the controller does not receive the actual offset, future drainage or true pump lag. A braking reserve uses the command-history actuator interval and the estimated inflow. A linearly growing model-error allowance replaces the old abrupt 180-second loss-of-reference shutdown.
+
+This is a model-dependent engineering estimate. An incorrect pump model or changing venous-sensor bias can accumulate volume error during an outage. A biased reference anchors the estimate incorrectly. Before any reference arrives, the method uses the inline level and explicitly flags that it is unanchored; this fallback is not guaranteed to be protective.
+
+```bash
+python examples/continuity_study.py --stage develop
+python examples/continuity_study.py --stage evaluate
+python examples/validate_continuity_study.py
+python examples/build_continuity_web.py
+```
+
+The fresh evaluation **does not demonstrate the joint goal**. With good references, mean oxygen-deficit AUC is 154.35 versus 137.08 mL O₂/m² for PI, while low-reservoir time is 0.74 versus 30.85 s. The protection criterion passes, but oxygen does not. During outages, AUC is 307.89 versus 122.49 and low-reservoir time 30.93 versus 39.46 s; both the oxygen and protection criteria fail (the paired upper interval for extra empty requests is 1.64 s, beyond the 1 s limit). Relative to v1.9 braking on the same fresh cases, outage AUC improves from 2061.44 to 307.89, but low-reservoir time rises from 2.89 to 30.93 s. The fixed-prior-PI sensitivity also retains higher oxygen deficit for continuity. This version reduces the old shutdown penalty without solving the oxygen/protection tradeoff. A post-evaluation audit (`examples/diagnose_continuity.py`) identifies large volume-estimation errors in selected outage cells: one delivered reference cannot identify a constant venous-flow offset, and integrating it can overestimate the reservoir. Its truth-aligned logs are diagnostic only; no tuning follows the final evaluation.
+
+The final revision gives each family 16 candidates on the same development grid, including reference outages. One earlier development-only grid is retained in `results/continuity-pilot-1/` with source snapshots in `data/continuity-history/`. No final evaluation was run for that attempt. Architecture design is informed by the previous studies; challenge families are reused. Fresh patient and noise seeds test the frozen design, not an independently validated physiological model.
+
+The co-primary test requires reservoir/pressure protection and less oxygen deficit versus the retuned SIMC PI reference **separately in both good-reference and delayed/lost-reference groups**, with in-range plants. Biased references, no references at all and an out-of-range pump lag remain secondary stress tests. The v1.9 braking controller stays as a fixed context arm. A separately specified 2,048-run sensitivity retains the previous fast PI settings (`tau_c=1.5`, level target 0.45 L); it never replaces the frozen primary test. All failures remain in the machine-readable logs under `results/continuity-study/`.
+
+### v1.9 — Predictive braking reserve
+
+The new `braking` controller reserves volume for the pump's response lag and rate-limited slowdown. It tracks an interval of actuator flow from command history, cross-checks measured venous flow against past inline-level changes, and adjusts its level allowance using observed reference-bias trends. These engineering allowances are not calibrated uncertainty bounds or guarantees about future drainage.
+
+The new controller and the general SIMC PI reference share sensors, reference metadata, oxygen-demand caps, pressure slowdown and actuator limits. Sixteen candidates per family are selected only on the current development grid. The earlier forecast stays as a fixed context arm. Settings and source hashes are frozen before evaluating fresh patient seeds and stronger conditions. Missing/bad references and an actuator lag outside the design range remain in the logs.
+
+```bash
+python examples/braking_study.py --stage develop
+python examples/braking_study.py --stage evaluate
+python examples/validate_braking_study.py
+python examples/build_braking_web.py
+```
+
+The 4,608-run fresh evaluation passes the predefined protection criterion but fails the oxygen criterion. In the primary good-reference, in-range group, mean low-reservoir time is 1.11 s for braking versus 7.26 s for PI; both have zero empty requests. Mean oxygen-deficit AUC is 224.48 versus 206.39 mL O₂/m² (8.8% higher). Paired patient-block intervals retain the oxygen penalty. Missing reference measurements trigger large slowdowns: mean AUC 1,830.11 versus 176.75 for PI in that secondary group. The planned joint advantage remains undemonstrated.
+
+Raw outputs are in `results/braking-study/`. Two superseded development-only designs and their exact source snapshots are retained in `results/braking-pilot-1/`, `results/braking-pilot-2/` and `data/braking-history/`. The final revision has equal-sized tuning grids; earlier architecture exploration is not claimed to have an equal total search budget. No final evaluation data were used for those development revisions.
+
+The controller flags infeasible stopping requests and absent/stale level information; it never receives the injected fault magnitude or true future inflow. A constant lag within 1–10 seconds, adequate level/error allowances and an inflow lower estimate that remains valid are conditional assumptions. A past slope alone cannot guarantee future venous return. Clinical protection and scientific novelty are not established by these simulations.
+
+### v1.8 — Verified free SIMC PI reference
+
+The reproducible reference is [Skogestad's SIMC PI method](https://www.mic-journal.no/PDF/2004/MIC-2004-2-2.pdf), with [free author notes and corrections](https://skoge.folk.ntnu.no/publications/2003/tuningPID/README.html). This is an established **general process-control method**, applied here as a reservoir override. It is not a clinical CPB controller or commercial medical device.
+
+The implementation reproduces the published normalized PI settings and five reported frequency-response values. A separate analytic time-domain solution checks the discrete PI implementation and its refinement. The [source mapping](data/simc-reference/source.json) distinguishes the published equations from the shared oxygen/pressure/actuator supervisor added for this application.
+
+Both controllers receive the same sensor/reference pipeline and actuator limits. Each family receives eight development candidates. Selection is frozen before evaluation on wider synthetic patient parameters, new faults, changed pump/drainage dynamics, and delayed or missing references. Patient-block comparisons retain all challenge cells and adverse outcomes. The planned joint advantage is not demonstrated; the model exposes an oxygen/depletion tradeoff. Neither clinical benefit nor scientific priority is established.
+
+```bash
+python -m pip install -e .
+python examples/verify_simc.py
+python examples/simc_benchmark.py
+python examples/analyze_simc.py
+python examples/check_simc_tight.py
+python examples/validate_simc_benchmark.py
+python examples/validate_simc_tight.py
+python examples/build_simc_web.py
+```
+
+Working outputs remain CSV/JSON under `results/simc-verification/` and `results/simc-benchmark/`. The interactive replay offers six prespecified final cases, both methods and the first evaluation seed. It scores at one-second resolution and displays every third sample. The final cohort has 16 paired virtual patients; artificial challenge cells are not clinical event frequencies. Finite candidate grids and boundary-selected settings limit conclusions about optimal tuning. An additional canonical `tau_c = theta` check is explicitly labeled post-result and descriptive. It reuses final cases, retains the original test, and does not select a new setting on those outcomes.
+
+The earlier [Takahashi bypass-controller workbench](data/controller-reference/reproduction.json) remains explicitly incomplete. It is not the verified primary comparator. Its exploratory runner and logs are retained for continuity; they must not be presented as the authors' reproduced controller.
+
+</details>
+
+<details>
+<summary>v1.15-dev.1 interface foundation</summary>
+
+### v1.15-dev.1 — Controller interface and frozen v1 package
+
+This release candidate starts the v2 development line. **Controller behavior is unchanged from v1.14; the performance milestone has not passed.** Exact parity on 24 paired 10-minute runs covers hybrid, matched PI and single-model configurations, including missing, biased and shared calibration. Every trajectory field and metric matches. This reuses old cases and is an interface regression check, not a new confirmation cohort. The check and source hashes are in [runtime parity](results/runtime-parity/summary.json).
+
+`ControllerRuntime` accepts a `MeasurementFrame` containing the current `Observation`, measured venous flow and already-delivered timestamped level samples. It returns a bounded requested setpoint, a validity interval and explicit unsupported/conflict/quarantine/infeasibility statuses. It receives no plant object, true reservoir volume, injected fault labels, future inputs or random seed. The caller must acknowledge the setpoint actually applied before sending another frame; both the observer mass balance and PI tracking use that acknowledgement. Invalid values, future/unmatched samples and missing/duplicate frames are rejected before input state changes. Rejected input produces no new command; a future adapter must implement an independent watchdog and stop path.
+
+The simulation adapter is `perfusion_lab.runtime_simulation.simulate_runtime`. Frozen v1 controller and simulation modules remain intact. The interface is fixed-step Python with histories that grow with run length; timing, bounded memory, device drivers and physical stopping remain future work. It is a foundation for a bench prototype, not equipment-ready software.
+
+</details>

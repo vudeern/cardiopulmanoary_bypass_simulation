@@ -1,5 +1,7 @@
-name: Package frozen v1
+name: Package complete final v1
 on:
+  push:
+    branches: [development/final-v1]
   workflow_run:
     workflows: ['Verify simulation']
     types: [completed]
@@ -8,12 +10,13 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: frozen-v1-release
+  group: complete-final-v1-release
   cancel-in-progress: false
 jobs:
   release:
     if: >-
       github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && github.repository == 'vudeern/cardiopulmanoary_bypass_simulation') ||
       (github.event.workflow_run.conclusion == 'success' &&
        github.event.workflow_run.head_repository.full_name == github.repository)
     runs-on: ubuntu-latest
@@ -21,43 +24,35 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
-          path: tooling
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check whether the frozen release already exists
-        id: existing
+      - id: eligible
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from pathlib import Path
+          import re
+          v=re.search(r'^version\s*=\s*"([^"]+)"',Path('pyproject.toml').read_text(),re.M).group(1)
+          print('eligible='+str(v=='1.15.0').lower())
+          PY
+      - if: steps.eligible.outputs.eligible == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+        run: python examples/await_source_ci.py
+      - if: steps.eligible.outputs.eligible == 'true'
+        run: python -m pip install -e ".[audit,horizon]" setuptools wheel
+      - if: steps.eligible.outputs.eligible == 'true'
         run: |
-          python tooling/examples/publish_v1.py --check >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
-        if: steps.existing.outputs.exists != 'true'
-        with:
-          ref: ace6a9fed2f9084b5fda95e9e1113af7a3d93dca
-          path: frozen-v1
-      - if: steps.existing.outputs.exists != 'true'
-        run: python -m pip install 'setuptools>=68' wheel './frozen-v1[audit]'
-      - name: Verify the frozen source and build assets
-        if: steps.existing.outputs.exists != 'true'
-        run: |
-          cd frozen-v1
-          python -m unittest discover -s tests -v
-          python examples/validate_model_bank_study.py
-          python examples/build_model_bank_web.py --check
-          cd ..
-          python tooling/examples/package_v1.py --source frozen-v1 --out release-assets
-          python -m venv --system-site-packages wheel-test
-          wheel-test/bin/python -m pip install --no-deps --force-reinstall release-assets/*.whl
-          wheel-test/bin/perfusion-lab run --scenario compound --duration 20 --dt 1 --out /tmp/v1-wheel-smoke
-      - name: Publish the immutable v1 tag and release assets
-        id: publish
-        if: steps.existing.outputs.exists != 'true'
+          python examples/check_versions.py
+          python examples/fixed_ceiling_bound.py --check
+          python examples/package_current_v1.py ../release-assets
+          python -m venv --system-site-packages ../wheel-test
+          ../wheel-test/bin/python -m pip install --no-deps --force-reinstall ../release-assets/*.whl
+          ../wheel-test/bin/perfusion-lab run --scenario compound --duration 20 --dt 1 --out /tmp/final-v1-wheel-smoke
+      - if: steps.eligible.outputs.eligible == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: python tooling/examples/publish_v1.py --assets release-assets
-      - name: "Publication error: ${{ steps.publish.outputs.failure }}"
-        if: failure() && steps.publish.outputs.failure != ''
-        run: exit 1
+        run: python examples/publish_current_v1.py ../release-assets

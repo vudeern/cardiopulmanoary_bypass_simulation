@@ -1,9 +1,9 @@
 # Horizon foundation and delivery-limit audit
 
 This milestone adds an offline nominal optimizer and instruments the unchanged
-rc.5 controller. It does not apply optimizer commands, replace the observer,
-change actuator authority or qualify stable v2.0. Stable v1 remains v1.14.0;
-the controller package remains 2.0.0rc5. Both confirmation cohorts are untouched.
+v1.15-dev.5 controller. It does not apply optimizer commands, replace the observer,
+change actuator authority or qualify the v1 MPC milestone. Stable v1 remains v1.14.0;
+the controller package remains 1.15.0. Both confirmation cohorts are untouched.
 
 ## What limits delivery in these development runs?
 
@@ -15,11 +15,11 @@ limited sensing regime, not the complete release qualification grid.
 
 | Controller | Runs | Mean oxygen-deficit AUC | Floor cases | Empty cases | Deficit during reserve-limited intervals |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| rc.5 selected hybrid | 128 | 1456.624 | 0 | 0 | 90.50% |
+| v1.15-dev.5 selected hybrid | 128 | 1456.624 | 0 | 0 | 90.50% |
 | Illustrative PI, tau_c=5 s / level=0.35 L | 128 | 1461.379 | 0 | 0 | 87.07% |
 | Illustrative PI, tau_c=0.2 s / level=0.25 L | 128 | 1456.578 | 0 | 0 | 91.71% |
 
-The fast PI differs from rc.5 by only about 0.003% in mean deficit. These two PI
+The fast PI differs from v1.15-dev.5 by only about 0.003% in mean deficit. These two PI
 settings are illustrative and do not establish the strongest eligible comparator.
 No new 10% target is qualified from this grid.
 
@@ -29,7 +29,7 @@ pressure slowdown, binding stopping reserve, oxygen cap, upward slew, downward
 slew, then controller choice. Four uninstrumented replays reproduce every applied
 command exactly and every metric within 1e-9. The wrapper changes no decision.
 
-For rc.5, 90.50% of deficit occurs during intervals labelled stopping-reserve
+For v1.15-dev.5, 90.50% of deficit occurs during intervals labelled stopping-reserve
 limited, 8.20% during upward-slew intervals, and 1.24% during controller-choice
 intervals. This is a temporal association under a declared label priority, not
 causal attribution. It does not mean removing the reserve would safely recover
@@ -80,7 +80,7 @@ component contains no watchdog, equipment interface or protected control runtime
 
 ## Snapshot results and timing
 
-There are 1,024 offline plans: four observation times on each of 128 rc.5 runs,
+There are 1,024 offline plans: four observation times on each of 128 v1.15-dev.5 runs,
 each with two causal return forecasts. They use the current guard's volume point
 estimate, a generic two-second pump model propagated from known applied commands,
 measured pressure, and current measured Hb/saturation information. True patient

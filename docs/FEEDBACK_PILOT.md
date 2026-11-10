@@ -3,7 +3,7 @@
 The horizon optimizer now controls the simulated pump. This pilot answers whether
 the existing nominal planner improves delivery once its commands are actually
 applied behind the shared protection layer. It is no longer an offline snapshot
-study. The default rc.5 controller and historical experiment sources stay frozen.
+study. The default v1.15-dev.5 controller and historical experiment sources stay frozen.
 
 ## Result
 
@@ -11,10 +11,10 @@ study. The default rc.5 controller and historical experiment sources stay frozen
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Matched PI using guard point volume | 16 | 1455.984 | 0 | 0 | 552.420 mL |
 | Horizon MPC using the same point volume | 16 | 1453.894 | 0 | 0 | 552.420 mL |
-| Existing rc.5 hybrid reference | 16 | 1453.288 | 0 | 0 | 552.441 mL |
+| Existing v1.15-dev.5 hybrid reference | 16 | 1453.288 | 0 | 0 | 552.441 mL |
 
 **MPC reduces deficit by 0.1435% versus matched PI, not the required 10%.** It is
-about 0.0418% worse than the existing rc.5 hybrid reference. This implementation
+about 0.0418% worse than the existing v1.15-dev.5 hybrid reference. This implementation
 does not demonstrate useful controller superiority. There are zero observed
 floor crossings, empty requests, high-pressure seconds or shared-cap violations
 in these 48 runs; that is a scoped observation, not a general protection proof.
@@ -31,7 +31,7 @@ but the effect is tiny and the cohort is reused development data.
 `perfusion_research.feedback.FeedbackRuntime` provides an opt-in simulation
 runtime. Both nominal PI and MPC receive the same calibration-guard point volume,
 Hb estimate, sensors and previous applied commands. Both use the same independent
-lower-volume estimate for the current rc.5 protection calculation. The experiment
+lower-volume estimate for the current v1.15-dev.5 protection calculation. The experiment
 does not give MPC true reservoir volume, true pump lag, true patient resistance
 or compliance, or future event timing.
 
@@ -50,7 +50,7 @@ retained-model and finite-return assumptions.
 
 PI uses tau_c=0.2 s and a 0.25 L nominal reservoir setpoint. It is one declared
 comparison setting, not an exhaustive retuning or newly certified strongest PI.
-The rc.5 reference retains its original lower-volume input and hybrid policy;
+The v1.15-dev.5 reference retains its original lower-volume input and hybrid policy;
 it is an additional before/after reference, not the matched estimator isolation.
 
 ## Fallback and failure outcomes
@@ -94,7 +94,7 @@ information usable by both controllers, or a separately justified physical
 actuator/protection change. The four-patient result cannot establish that all MPC
 architectures fail; it rejects a large-benefit claim for this tested candidate.
 
-Stable v2.0 remains unqualified. The 10% target, protection criteria and two
+The v1 MPC milestone remains unqualified. The 10% target, protection criteria and two
 untouched confirmation cohorts are unchanged. No hardware or clinical validation
 is claimed. Development code and positive and negative findings are published.
 
