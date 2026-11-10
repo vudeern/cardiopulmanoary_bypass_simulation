@@ -43,7 +43,19 @@ jobs:
         run: python examples/await_source_ci.py
       - if: steps.eligible.outputs.eligible == 'true'
         run: python -m pip install -e ".[audit,horizon]" setuptools wheel
-      - if: steps.eligible.outputs.eligible == 'true'
+      - id: existing
+        if: steps.eligible.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh api "repos/$GH_REPO/releases?per_page=100" > /tmp/v1-release-list.json
+          python - <<'PYEXIST' >> "$GITHUB_OUTPUT"
+          import json
+          data=json.load(open('/tmp/v1-release-list.json'))
+          print('exists='+str(any(r['tag_name']=='v1.15.0' for r in data)).lower())
+          PYEXIST
+      - if: steps.eligible.outputs.eligible == 'true' && steps.existing.outputs.exists != 'true'
         run: |
           python examples/check_versions.py
           python examples/fixed_ceiling_bound.py --check
@@ -55,4 +67,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: python examples/publish_current_v1.py ../release-assets
+        run: |
+          if [ "${{ steps.existing.outputs.exists }}" = "true" ]; then
+            python examples/publish_current_v1.py --finalize-existing
+          else
+            python examples/publish_current_v1.py ../release-assets
+          fi
