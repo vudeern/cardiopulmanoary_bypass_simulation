@@ -1,0 +1,256 @@
+{
+  "confirmation_seeds_executed": [],
+  "evaluations": 136,
+  "joint_reduction_fraction": 0.0016637438368479751,
+  "new_by_condition": {
+    "biased": {
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 2820,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 402,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 8,
+        "mean_deficit_auc": 2175.7818744780106,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 8
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 2867,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 408,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 8,
+        "mean_deficit_auc": 2172.348395436031,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 8
+      }
+    },
+    "healthy": {
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 2541,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 338,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 8,
+        "mean_deficit_auc": 2185.185591516859,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 8
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 2790,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 344,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 8,
+        "mean_deficit_auc": 2176.4841498812166,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 8
+      }
+    },
+    "inline_shared": {
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 861,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 81,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 2,
+        "mean_deficit_auc": 1958.3021820731158,
+        "minimum_reservoir_L": 0.6139893050567768,
+        "runs": 2
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 861,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 81,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 2,
+        "mean_deficit_auc": 1958.3021820731158,
+        "minimum_reservoir_L": 0.6139893050567768,
+        "runs": 2
+      }
+    },
+    "missing": {
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 0,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 288,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 8,
+        "mean_deficit_auc": 2687.008250085712,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 8
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 0,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 288,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 8,
+        "mean_deficit_auc": 2687.008250085712,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 8
+      }
+    },
+    "no_contract": {
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 0,
+        "envelope_unavailable_s": 1200,
+        "envelope_uncertified_s": 1200,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 2,
+        "mean_deficit_auc": 2716.162392287527,
+        "minimum_reservoir_L": 0.7900474310704271,
+        "runs": 2
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 0,
+        "envelope_unavailable_s": 1200,
+        "envelope_uncertified_s": 1200,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 2,
+        "mean_deficit_auc": 2716.162392287527,
+        "minimum_reservoir_L": 0.7900474310704271,
+        "runs": 2
+      }
+    },
+    "shared": {
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 2820,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 402,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 8,
+        "mean_deficit_auc": 2176.146123881431,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 8
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 2864,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 408,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 8,
+        "mean_deficit_auc": 2172.9344686974823,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 8
+      }
+    }
+  },
+  "new_simulations": 72,
+  "primary_totals": {
+    "new_envelope_simulation": {
+      "aggregate_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 8181,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 1430,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 32,
+        "mean_deficit_auc": 2306.030459990503,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 32
+      },
+      "joint_zero": {
+        "cap_violations": 0,
+        "certified_margin_violations": 0,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_clipped_s": 8521,
+        "envelope_unavailable_s": 0,
+        "envelope_uncertified_s": 1448,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 32,
+        "mean_deficit_auc": 2302.19381602511,
+        "minimum_reservoir_L": 0.45489499657551996,
+        "runs": 32
+      }
+    },
+    "retained_rc4_reference": {
+      "aggregate_zero": {
+        "empty_cases": 0,
+        "floor_cases": 2,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 2092.725442017446,
+        "minimum_reservoir_L": 0.23787281487947354,
+        "runs": 32
+      },
+      "joint_zero": {
+        "empty_cases": 0,
+        "floor_cases": 6,
+        "high_pressure_cases": 0,
+        "mean_deficit_auc": 2058.1895749778514,
+        "minimum_reservoir_L": 0.2299563302096936,
+        "runs": 32
+      }
+    }
+  },
+  "protocol_sha256": "37da5e58d6e2713c5e56971c8b8a308f2c65e24ca4d28ae41d9b704fb6aa7133",
+  "retained_reference_runs": 64,
+  "v2_milestone_passed": false,
+  "version_line": "v2"
+}

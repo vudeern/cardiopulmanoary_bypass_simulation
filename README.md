@@ -26,17 +26,19 @@ A conditional mathematical bound rules out 10% **when the recorded PI command-ce
 
 No universal MPC impossibility, overall superiority, hardware validation or clinical benefit is established. All measured results and failures remain retained. Version numbers describe the research line, not scientific success.
 
-## Current progress: v2.0.0rc4 calibration/model boundary study
+## Current progress: v2.0.0rc5 independent protection envelope
 
-The new development line is **v2: recovery-aware control**, version **2.0.0rc4**. Detect return-flow interruption from measurements, retain independent stopping/floor protection, and restore delivery promptly when measured return recovers. Compare recovery-window deficit, total deficit, recovery time, false alarms, floor exposure and empty requests against equally informed PI.
+The new development line is **v2: recovery-aware control**, version **2.0.0rc5**. Detect return-flow interruption from measurements, retain independent stopping/floor protection, and restore delivery promptly when measured return recovers. Compare recovery-window deficit, total deficit, recovery time, false alarms, floor exposure and empty requests against equally informed PI.
 
-**Latest boundary study:** 56 new simulations plus eight hashed references cover four plants and four calibration regimes. Joint zero-return control crosses the 250 mL floor in **6/32 cases**, versus **2/32** for aggregate PI. Worst volumes are **229.96 mL** and **237.87 mL**. Healthy-calibration mean deficit falls 2.42%, but bias/shared-corruption failures block both designs from freezing. Observer support sometimes coexists with incorrect volume bounds. [Full results and failure diagnosis](docs/V2_ROBUSTNESS.md).
+**Independent envelope implemented:** both PI arms now share a separate raw-level/anchor error envelope, command-derived pump interval and zero-return stopping cap. The final 64-case matrix has **0/32 floor failures per arm**, versus 2/32 and 6/32 for retained references; eight extra bias/unsupported cases also have zero observed failures. Joint delivery gain versus equally protected PI is only **0.17%**, and the additional protection costs delivery. All 72 final runs start uncertified; no contract means conservative braking without a certificate. [Architecture, both implementation stages, costs and startup blocker](docs/V2_ENVELOPE.md).
+
+**Previous boundary study:** 56 new simulations plus eight hashed references cover four plants and four calibration regimes. Joint zero-return control crosses the 250 mL floor in **6/32 cases**, versus **2/32** for aggregate PI. Worst volumes are **229.96 mL** and **237.87 mL**. Healthy-calibration mean deficit falls 2.42%, but bias/shared-corruption failures block both designs from freezing. Observer support sometimes coexists with incorrect volume bounds. [Full results and failure diagnosis](docs/V2_ROBUSTNESS.md).
 
 **Previous v2 comparison:** 40 new zero-credit runs plus 40 hashed references complete the aggregate/joint × zero/15-second-credit design. Joint accounting lowers deficit by **3.67% versus aggregate accounting under the same zero-return assumption**, with **0/20 floor cases** and a worst volume of **435.68 mL**. The retained joint-credit arm had 8/20 floor cases. Joint zero-credit control still has **8.83% more deficit than the older aggregate credit reference**. It is a limited development gain, not overall superiority or stable-v2 qualification. [Full four-way results](docs/V2_ZERO_RETURN.md).
 
 **Previous v2 experiment:** a 40-run matched-PI study preserves each retained pump model's own volume and stopping calculation instead of combining extrema from different models. Normal-return deficit falls **12.58%**, but the candidate crosses the 250 mL floor in **8/20 runs**, versus **0/20** for aggregate PI. Worst volume is **68.10 mL**. It is **not selected**. [Results, conditional argument and failure replay](docs/V2_JOINT.md).
 
-**Next controller goal:** separate observer consistency from protection integrity, with explicit anchor-bias/model-error budgets and a conservative fallback when integrity support is absent. Compare any new envelope against identically informed PI and retain the measured delivery cost. No design freeze or confirmation run is justified yet.
+**Next controller goal:** add a startup/priming interlock that establishes initial envelope feasibility before ramping flow. Then recover delivery within justified error budgets and retune the matched PI. The ≥10% target and fresh confirmation remain unmet; stable v2 is not ready.
 
 **First v2 pilot completed:** 24 runs on two reused development patients. Interruption and recovery detection latency is 1 second in all four recovery-arm interruption cases, with no false alarms in its eight cases. Recovery-aware fast PI and matched fast PI produce identical commands: **0% added deficit reduction**. All 24 runs have zero observed floor crossings, empty requests and cap violations. [Results, limitations and next design question](docs/V2_RECOVERY.md).
 
@@ -47,8 +49,9 @@ A recovery-specific benefit does not automatically satisfy the original full-run
 ```bash
 python -m pip install -e ".[audit,horizon]"
 python examples/fixed_ceiling_bound.py
-python examples/robust_v2_study.py
-python examples/validate_robust_v2.py
+python examples/envelope_v2_study.py
+python examples/envelope_carry_study.py
+python examples/validate_envelope_v2.py
 python -m unittest discover -s tests -v
 perfusion-lab run --scenario compound --out results/local-run
 ```
@@ -59,6 +62,7 @@ Frozen protocols and historical result fields keep their original execution iden
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
+| v2.0.0rc5 (development; startup/performance blocked) | Independent protection envelope, carried bounds and varying-lag stopping check | [Study](docs/V2_ENVELOPE.md) |
 | v2.0.0rc4 (development; freeze blocked) | Calibration/model boundary study exposes floor failures and incorrect supported bounds | [Study](docs/V2_ROBUSTNESS.md) |
 | v2.0.0rc3 (development) | Zero-return joint cap: 3.67% gain vs matched zero-return aggregate PI; no observed floor failures | [Study](docs/V2_ZERO_RETURN.md) |
 | v2.0.0rc2 (development; candidate rejected) | Joint model cap: normal-return gain, interruption floor failures | [Study](docs/V2_JOINT.md) |
