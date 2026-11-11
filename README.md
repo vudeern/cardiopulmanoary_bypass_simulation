@@ -26,11 +26,13 @@ A conditional mathematical bound rules out 10% **when the recorded PI command-ce
 
 No universal MPC impossibility, overall superiority, hardware validation or clinical benefit is established. All measured results and failures remain retained. Version numbers describe the research line, not scientific success.
 
-## Current progress: v2.0.0rc6 startup admission interlock
+## Current progress: v2.0.0rc7 independent delivery authority
 
-The new development line is **v2: recovery-aware control**, version **2.0.0rc6**. Detect return-flow interruption from measurements, retain independent stopping/floor protection, and restore delivery promptly when measured return recovers. Compare recovery-window deficit, total deficit, recovery time, false alarms, floor exposure and empty requests against equally informed PI.
+The new development line is **v2: recovery-aware control**, version **2.0.0rc7**. Detect return-flow interruption from measurements, retain independent stopping/floor protection, and restore delivery promptly when measured return recovers. Compare recovery-window deficit, total deficit, recovery time, false alarms, floor exposure and empty requests against equally informed PI.
 
-**Startup admission implemented:** the runtime now requires a feasible independent held-zero stopping bound before any first command. Both arms use an explicitly cold, primed simulation fixture and consistent zero-command initialization. Of **80 attempts, 68 complete with certificates from time zero and no observed floor/empty/high-pressure outcomes; 12 are explicitly rejected**, not counted as safe runs. Main-matrix joint deficit improves only **0.21%** versus equally protected PI. [Contract, fixture change, rejections, results and remaining bottleneck](docs/V2_STARTUP.md).
+**Independent delivery authority implemented:** nominal PI requests can now proceed without a legacy fit only when the independent stopping envelope is feasible. In the repeated 80-attempt development matrix, **68 runs complete with certificates from the first frame and no observed floor/empty/high-pressure outcomes; 12 starts remain rejected**. Mean deficit falls **14.05% versus rc6 aggregate PI** (13.87% versus rc6 joint PI), but the two equally informed updated PI arms produce **identical commands: 0% matched-PI gain**. This architecture gain does not satisfy the 10% release milestone. [Results, retained references and limitations](docs/V2_AUTHORITY.md).
+
+**Previous startup admission:** the runtime now requires a feasible independent held-zero stopping bound before any first command. Both arms use an explicitly cold, primed simulation fixture and consistent zero-command initialization. Of **80 attempts, 68 complete with certificates from time zero and no observed floor/empty/high-pressure outcomes; 12 are explicitly rejected**, not counted as safe runs. Main-matrix joint deficit improves only **0.21%** versus equally protected PI. [Contract, fixture change, rejections, results and remaining bottleneck](docs/V2_STARTUP.md).
 
 **Previous envelope implementation:** both PI arms now share a separate raw-level/anchor error envelope, command-derived pump interval and zero-return stopping cap. The final 64-case matrix has **0/32 floor failures per arm**, versus 2/32 and 6/32 for retained references; eight extra bias/unsupported cases also have zero observed failures. Joint delivery gain versus equally protected PI is only **0.17%**, and the additional protection costs delivery. All 72 final runs start uncertified; no contract means conservative braking without a certificate. [Architecture, both implementation stages, costs and startup blocker](docs/V2_ENVELOPE.md).
 
@@ -40,7 +42,7 @@ The new development line is **v2: recovery-aware control**, version **2.0.0rc6**
 
 **Previous v2 experiment:** a 40-run matched-PI study preserves each retained pump model's own volume and stopping calculation instead of combining extrema from different models. Normal-return deficit falls **12.58%**, but the candidate crosses the 250 mL floor in **8/20 runs**, versus **0/20** for aggregate PI. Worst volume is **68.10 mL**. It is **not selected**. [Results, conditional argument and failure replay](docs/V2_JOINT.md).
 
-**Next controller goal:** recover delivery where the independent envelope is valid but legacy nominal-fit gating still commands zero flow. Give PI identical authority, preserve the independent cap, and retune the reference before freezing. The ≥10% target, full primary-regime validation and fresh confirmation remain unmet.
+**Next controller goal:** retune PI with the new independent authority and evaluate the full primary regimes. Then test a causal recovery change against that strongest equally informed reference. The ≥10% matched-PI target, broader evidence and fresh confirmation remain unmet.
 
 **First v2 pilot completed:** 24 runs on two reused development patients. Interruption and recovery detection latency is 1 second in all four recovery-arm interruption cases, with no false alarms in its eight cases. Recovery-aware fast PI and matched fast PI produce identical commands: **0% added deficit reduction**. All 24 runs have zero observed floor crossings, empty requests and cap violations. [Results, limitations and next design question](docs/V2_RECOVERY.md).
 
@@ -51,8 +53,8 @@ A recovery-specific benefit does not automatically satisfy the original full-run
 ```bash
 python -m pip install -e ".[audit,horizon]"
 python examples/fixed_ceiling_bound.py
-python examples/boot_v2_study.py
-python examples/validate_boot_v2.py
+python examples/authority_v2_study.py
+python examples/validate_authority_v2.py
 python -m unittest discover -s tests -v
 perfusion-lab run --scenario compound --out results/local-run
 ```
@@ -63,6 +65,7 @@ Frozen protocols and historical result fields keep their original execution iden
 
 | Version | Update | Snapshot |
 | --- | --- | --- |
+| v2.0.0rc7 (development; performance unqualified) | Remove legacy fit veto behind independent cap; 14.05% gain vs rc6, 0% vs equally informed PI | [Study](docs/V2_AUTHORITY.md) |
 | v2.0.0rc6 (development; performance unqualified) | Startup admission, explicit rejections and certified-from-first-frame cold starts | [Study](docs/V2_STARTUP.md) |
 | v2.0.0rc5 (development; startup/performance blocked) | Independent protection envelope, carried bounds and varying-lag stopping check | [Study](docs/V2_ENVELOPE.md) |
 | v2.0.0rc4 (development; freeze blocked) | Calibration/model boundary study exposes floor failures and incorrect supported bounds | [Study](docs/V2_ROBUSTNESS.md) |
