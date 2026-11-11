@@ -70,3 +70,4 @@ jobs:
       - run: python examples/validate_zero_v2.py
       - run: python examples/validate_robust_v2.py
       - run: python examples/validate_envelope_v2.py
+      - run: python examples/validate_boot_v2.py

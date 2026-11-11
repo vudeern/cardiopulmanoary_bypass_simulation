@@ -1,5 +1,5 @@
 {
-  "current_version": "2.0.0rc5",
+  "current_version": "2.0.0rc6",
   "next_stable_version": "2.0.0",
   "final_v1_version": "1.15.0",
   "final_v1_tag": "v1.15.0",
@@ -7,7 +7,7 @@
   "version2_ready": false,
   "qualifying_confirmation_cohorts": 0,
   "evidence_policy": "data/version2-gates.json",
-  "current_progress": "results/v2-envelope-carry/summary.json",
-  "next_goal": "Add a startup/priming interlock requiring initial independent-envelope feasibility before ramping flow, then recover delivery within justified budgets; 10% target and confirmation remain unmet",
+  "current_progress": "results/v2-boot/summary.json",
+  "next_goal": "Recover delivery by separating legacy nominal-fit gating from the authoritative independent envelope, with identical PI authority and mandatory floor/stopping caps; 10% target and confirmation remain unmet",
   "confirmation_seeds_executed": []
 }

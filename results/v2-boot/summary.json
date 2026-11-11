@@ -1,0 +1,240 @@
+{
+  "attempts": 80,
+  "by_condition": {
+    "biased": {
+      "aggregate_zero": {
+        "attempts": 8,
+        "completed": 8,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2157.8533409328766,
+        "minimum_reservoir_L": 0.6928603190875923,
+        "rejected": 0
+      },
+      "joint_zero": {
+        "attempts": 8,
+        "completed": 8,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2150.532825485512,
+        "minimum_reservoir_L": 0.6928054192711589,
+        "rejected": 0
+      }
+    },
+    "healthy": {
+      "aggregate_zero": {
+        "attempts": 8,
+        "completed": 8,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2162.673783388626,
+        "minimum_reservoir_L": 0.6918176131987673,
+        "rejected": 0
+      },
+      "joint_zero": {
+        "attempts": 8,
+        "completed": 8,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2157.3795829592414,
+        "minimum_reservoir_L": 0.6910120247016117,
+        "rejected": 0
+      }
+    },
+    "hot_start": {
+      "aggregate_zero": {
+        "attempts": 2,
+        "completed": 0,
+        "empty_cases": null,
+        "floor_cases": null,
+        "mean_deficit_auc": null,
+        "minimum_reservoir_L": null,
+        "rejected": 2
+      },
+      "joint_zero": {
+        "attempts": 2,
+        "completed": 0,
+        "empty_cases": null,
+        "floor_cases": null,
+        "mean_deficit_auc": null,
+        "minimum_reservoir_L": null,
+        "rejected": 2
+      }
+    },
+    "inline_shared": {
+      "aggregate_zero": {
+        "attempts": 2,
+        "completed": 2,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2008.5609608088344,
+        "minimum_reservoir_L": 0.6136281391355034,
+        "rejected": 0
+      },
+      "joint_zero": {
+        "attempts": 2,
+        "completed": 2,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2001.3141965853085,
+        "minimum_reservoir_L": 0.6136281376415047,
+        "rejected": 0
+      }
+    },
+    "missing": {
+      "aggregate_zero": {
+        "attempts": 8,
+        "completed": 8,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2800.0,
+        "minimum_reservoir_L": 0.9038462726844301,
+        "rejected": 0
+      },
+      "joint_zero": {
+        "attempts": 8,
+        "completed": 8,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2800.0,
+        "minimum_reservoir_L": 0.9038462726844301,
+        "rejected": 0
+      }
+    },
+    "no_contract": {
+      "aggregate_zero": {
+        "attempts": 2,
+        "completed": 0,
+        "empty_cases": null,
+        "floor_cases": null,
+        "mean_deficit_auc": null,
+        "minimum_reservoir_L": null,
+        "rejected": 2
+      },
+      "joint_zero": {
+        "attempts": 2,
+        "completed": 0,
+        "empty_cases": null,
+        "floor_cases": null,
+        "mean_deficit_auc": null,
+        "minimum_reservoir_L": null,
+        "rejected": 2
+      }
+    },
+    "shared": {
+      "aggregate_zero": {
+        "attempts": 8,
+        "completed": 8,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2157.8533409328766,
+        "minimum_reservoir_L": 0.6928603190875923,
+        "rejected": 0
+      },
+      "joint_zero": {
+        "attempts": 8,
+        "completed": 8,
+        "empty_cases": 0,
+        "envelope_bound_failures_s": 0,
+        "envelope_uncertified_s": 0,
+        "floor_cases": 0,
+        "high_pressure_cases": 0,
+        "initially_uncertified_runs": 0,
+        "mean_deficit_auc": 2150.532825485512,
+        "minimum_reservoir_L": 0.6928054192711589,
+        "rejected": 0
+      }
+    },
+    "unprimed": {
+      "aggregate_zero": {
+        "attempts": 2,
+        "completed": 0,
+        "empty_cases": null,
+        "floor_cases": null,
+        "mean_deficit_auc": null,
+        "minimum_reservoir_L": null,
+        "rejected": 2
+      },
+      "joint_zero": {
+        "attempts": 2,
+        "completed": 0,
+        "empty_cases": null,
+        "floor_cases": null,
+        "mean_deficit_auc": null,
+        "minimum_reservoir_L": null,
+        "rejected": 2
+      }
+    }
+  },
+  "completed": 68,
+  "confirmation_seeds_executed": [],
+  "joint_reduction_fraction": 0.0021485679961893434,
+  "primary": {
+    "aggregate_zero": {
+      "attempts": 32,
+      "completed": 32,
+      "empty_cases": 0,
+      "envelope_bound_failures_s": 0,
+      "envelope_uncertified_s": 0,
+      "floor_cases": 0,
+      "high_pressure_cases": 0,
+      "initially_uncertified_runs": 0,
+      "mean_deficit_auc": 2319.595116313595,
+      "minimum_reservoir_L": 0.6918176131987673,
+      "rejected": 0
+    },
+    "joint_zero": {
+      "attempts": 32,
+      "completed": 32,
+      "empty_cases": 0,
+      "envelope_bound_failures_s": 0,
+      "envelope_uncertified_s": 0,
+      "floor_cases": 0,
+      "high_pressure_cases": 0,
+      "initially_uncertified_runs": 0,
+      "mean_deficit_auc": 2314.6113084825665,
+      "minimum_reservoir_L": 0.6910120247016117,
+      "rejected": 0
+    }
+  },
+  "protocol_sha256": "0b9e15ea0eb50345aec5bad544b6129694d760c1b513ec9f1b4a4d412f897ea3",
+  "rejected": 12,
+  "v2_milestone_passed": false,
+  "version_line": "v2"
+}

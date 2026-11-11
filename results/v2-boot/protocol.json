@@ -1,0 +1,685 @@
+{
+  "admission": "Before issuing any command, require a bounded level source and nonnegative independent held-zero stopping margin. Reject with reason/details and no issued command otherwise. Successful admission permits only normal .15 L/min/s ramp behind unchanged envelope and legacy caps. Above-request acknowledgement is recorded and latches an actuation-contract violation; no equipment stop or scheduler is implemented.",
+  "attempts": 80,
+  "calibrations": [
+    "healthy",
+    "missing",
+    "biased",
+    "shared"
+  ],
+  "confirmation_seeds_executed": [],
+  "dt_s": 1.0,
+  "duration_s": 600.0,
+  "extra_attempts": 16,
+  "extras": {
+    "hot_start": [
+      "healthy",
+      {},
+      "hot"
+    ],
+    "inline_shared": [
+      "shared",
+      {
+        "level_profile": "initial",
+        "reservoir_bias": 0.22
+      },
+      "cold"
+    ],
+    "no_contract": [
+      "missing",
+      {},
+      "cold"
+    ],
+    "unprimed": [
+      "healthy",
+      {},
+      "unprimed"
+    ]
+  },
+  "fairness": "Same cold-start physics, PI settings, measurement channels, flow-read error budget and protection envelope in both arms. Starting state differs from warm rc5; historical warm results are provenance, not a fair delivery-improvement denominator. Explicitly count rejected attempts without assigning them zero deficit or zero floor exposure.",
+  "initialization": "New cold fixture starts actual motor/pressure at zero and reservoir .85 L in both arms. Optimizer command/integrator tracking starts at zero; observer motor point state starts from measured initial flow. Protection motor interval starts at measured flow +/- .10 L/min, using that measurement only at time zero. Hot fixture retains original 2.4*BSA motor flow; unprimed fixture uses .35 L and stopped motor.",
+  "limits": "Two reused development patients. Bounds remain illustrative, not validated hardware error coverage; Gaussian errors are unbounded. Admission does not solve undetectable out-of-contract shared bias, physically prime a circuit or stop an already moving rejected pump.",
+  "methods": {
+    "biased": {
+      "aggregate_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": false,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      },
+      "joint_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": true,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      }
+    },
+    "healthy": {
+      "aggregate_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": false,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      },
+      "joint_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": true,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      }
+    },
+    "hot_start": {
+      "aggregate_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": false,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      },
+      "joint_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": true,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      }
+    },
+    "inline_shared": {
+      "aggregate_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": false,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      },
+      "joint_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": true,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      }
+    },
+    "missing": {
+      "aggregate_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": false,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      },
+      "joint_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": true,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      }
+    },
+    "no_contract": {
+      "aggregate_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": null,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": null,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": false,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      },
+      "joint_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": null,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": null,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": true,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      }
+    },
+    "shared": {
+      "aggregate_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": false,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      },
+      "joint_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": true,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      }
+    },
+    "unprimed": {
+      "aggregate_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": false,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      },
+      "joint_zero": {
+        "engine": "reach",
+        "family": "candidate",
+        "guard": {
+          "audit_tolerance": 0.12,
+          "base_uncertainty": 0.06,
+          "calibration_error": 0.04,
+          "drift_allowance": 0.004,
+          "interval_mode": "consistent",
+          "model_error_flow": 0.03,
+          "startup_minimum_anchors": 1
+        },
+        "kind": "integrity_pi",
+        "options": {
+          "envelope_budget": {
+            "anchor_error_L": 0.3,
+            "initial_flow_error_lpm": 0.1,
+            "inline_error_L": 0.3,
+            "max_anchor_age_s": 240.0,
+            "tau_max_s": 20.0,
+            "tau_min_s": 1.0
+          },
+          "joint_enabled": true,
+          "recovery_floor": 0.45,
+          "reserve_mode": "joint",
+          "return_fraction": 0.5,
+          "return_horizon_s": 0.0,
+          "startup_flow_error_lpm": 0.1,
+          "target_level": 0.25,
+          "tau_c": 0.2
+        }
+      }
+    }
+  },
+  "plants": {
+    "lagged": {
+      "actuator_tau": 5.0,
+      "drainage_tau": 20.0,
+      "venous_nonlinearity": 0.08
+    },
+    "nominal": {},
+    "outside": {
+      "actuator_tau": 20.0
+    },
+    "slow": {
+      "actuator_tau": 6.0
+    }
+  },
+  "primary_attempts": 64,
+  "return_windows_s": [
+    [
+      168.0,
+      213.0
+    ],
+    [
+      228.0,
+      243.0
+    ],
+    [
+      258.0,
+      288.0
+    ]
+  ],
+  "seeds": [
+    37000,
+    37014
+  ],
+  "source_hashes": {
+    "examples/boot_v2_study.py": "65dbda23178c09ea818db9ed4ce8de92d9f9288828770b57d7240b7349287b37",
+    "examples/calibrated_pump_study.py": "f9c8442e0bced358d71fc629cd8be2fc9a621378d64ecb43ef8efa583c684795",
+    "examples/continuity_study.py": "1cf72484f4016b96675d58837c514a60c1de2f07d105d6388dde4257beae8e69",
+    "examples/depletion_study.py": "ab98e70e66e31d047149560b02df718dc0849d3ccde5a7ee35bdb92f7b4bd277",
+    "examples/envelope_carry_study.py": "c21552c8111d402b308f96a846d0b9dbbd1ef5545abf192560be526e00f9d2fd",
+    "examples/envelope_v2_study.py": "7085285124637e073d11fb30d46d3ff1e9e0b8b1e53c2dcbeb14a7a6486c8ee3",
+    "examples/finite_return_study.py": "9ddc2894a3b7968170b2aae773c62f80b0c7931fb6c728516809644aabcbe053",
+    "examples/integrity_study.py": "5b0f51a29eb98ce0cc46b3429d32f7d20f19fe19044503fb70727d18499903cb",
+    "examples/joint_v2_study.py": "4eceec4b9ed21e02ccbb8ba3c123d1b4f85c3be67be5ac1d2668b46d506c3d6b",
+    "examples/recovery_v2_study.py": "2cd232e12df80d2cc2930430e9f721352db0d59569a53459f0de2ae18be109d5",
+    "examples/robust_v2_study.py": "72afe18fd4136f447d12cf8b3587ab59675e02bc234c7cb6a1c09a3f6dd7e687",
+    "examples/simc_benchmark.py": "2322f11ef2dde036fa6ddd51843c29847c79a9f6b2ca1471074996eff66504d6",
+    "examples/startup_study.py": "5b4bc328593619840b2d440f55ce79249cf5df4341179ca84d84c33117352ddd",
+    "examples/zero_v2_study.py": "52c2cfe868c83c671cc382033dd5985e60fa0c695829a5fa9edfc0b7269058f9",
+    "results/depletion-development/summary.json": "8b519289f4116c0c3d155aa4f9c3db755c93f65db749fd140ace02c682456f07",
+    "results/finite-return-development/protocol.json": "0b48a6291f947292729df4e8cd6eaab11428e12e92cd12a094593b210adf1319",
+    "results/finite-return-development/summary.json": "a66585552bc4a441e3aa4e97dd393ed9b295c937d37db3f00e0152d2932d386d",
+    "results/reachability-base-development/selection.json": "d20f81ba0fb1e4198b474c82ca034a291b022e4dfdf5d788455cc3e109460cec",
+    "results/reachability-development/protocol.json": "73444ceb583fd0f4dcede5924445c061024990ef202478942965a1ed75208cc7",
+    "results/startup-development/protocol.json": "fcf4ceb5a9a3c72e5931a3ff773279975cce73ecea77b849a617473a7201d567",
+    "results/startup-development/summary.json": "6841fef5e971f57ec69da0c0fe4d1a899e379c5e9ab593e02276b13225a8952f",
+    "src/perfusion_candidates/__init__.py": "d98692ea115dc561978cca642afff20ad7f091af0f2d08f181ec0c2cdc41db74",
+    "src/perfusion_candidates/calibrated_pump.py": "d997e6c8784748bf05d29970b8430aa0017990d5e207513898177be216132af0",
+    "src/perfusion_candidates/calibrated_pump_simulation.py": "801f3fc84d009d3195a27ea33911dfc5b0c8b09fa66746beb230106345928589",
+    "src/perfusion_candidates/finite_return.py": "9c878e076f2148e545ff7553ebb99c3acd5bc05c0f29fd2cae328c085aad39fb",
+    "src/perfusion_candidates/simulation.py": "3b68232d6a1e4ef23e1243b3d9f9207edf4dee2e3afe6c06b1bf7bb71511538d",
+    "src/perfusion_candidates/startup.py": "a7f82daa4f72a12e1fa7cad7474ef36f0f4ce4c63498129fd10cb66ea048ea5e",
+    "src/perfusion_candidates/startup_simulation.py": "5111140906f2d2374aa46ad4e9e7d0e1ab81619b6dd03170eefa5b6934e5e5a8",
+    "src/perfusion_lab/__init__.py": "5cbe01820931fbbaef78a9ac85c61af071016ae802770275e8b16d6fd3c7ecf5",
+    "src/perfusion_lab/audit.py": "644f7a92877d4c6512dd91427a92170172c792e12508e466ac7ec6c19495f7ce",
+    "src/perfusion_lab/benchmark.py": "955106cd6a605251d766c120911b8f6e237d7d3997a96589f98b9d9ee88cc9fe",
+    "src/perfusion_lab/braking.py": "60759c0cdc7c11477d6ee3e1e309339f84855c89ef594c80e7a67163fa1cfca6",
+    "src/perfusion_lab/cli.py": "1d08c62e3c9c12fcc612458d826966fd6c59854377861a374b6d24db3970c55f",
+    "src/perfusion_lab/continuity.py": "d632c4377e14b78334e6a6efbbad3f10fd2a47adf819663d3f55196c821d612c",
+    "src/perfusion_lab/control.py": "b8a801db453dfa5abbd2ecb6cf1e8e28fdd205727351c0b15e9e866e128dd435",
+    "src/perfusion_lab/decision_audit.py": "c5fb29edbad34cb1ff09ab49c0ca3745e249612def37d676642363cb355e8bb2",
+    "src/perfusion_lab/depletion.py": "7d3f88ca1db505993da90fedd48d3741e1a06aa3deed2920d9d8e5232b2ded38",
+    "src/perfusion_lab/depletion_simulation.py": "ba8e1526224db676d4bf8321eb2258765989cb9e60997927c2e5a59896679057",
+    "src/perfusion_lab/feedback.py": "65341757c9dbdf0718ed03c6d8611f2d21891b64c3c884394b496e2605e7c09a",
+    "src/perfusion_lab/integrity.py": "8ee329d0f62ca27664753946ffb0482ac7bdac99f7b26456168eae90d0389def",
+    "src/perfusion_lab/model.py": "0e86f4f172dd103c484698bbea48597673384e637ffdd05342a8c0489aa82662",
+    "src/perfusion_lab/model_bank.py": "d51787a60b2d566281492b1866aafecdec837f7068889b44fc40f05674e36f64",
+    "src/perfusion_lab/model_simulation.py": "ddcd463993ae28c55fbfbf49bb83309c508ce479106c8240c826ed87d62ed75c",
+    "src/perfusion_lab/patient_replay.py": "c55edabf35167c7bc14b53f1143b45c46acf8a358b72d2b6ba486ccea0319418",
+    "src/perfusion_lab/published_control.py": "85b6e8a00bd693a1fc31139338c5e4e25068c5bc153e49efd8b4107fd2a59c2f",
+    "src/perfusion_lab/reachability.py": "8cd70c4bab130b94394830d8d669c96ed0dd304bb56957321ace6f68ddf8a330",
+    "src/perfusion_lab/reachability_runtime.py": "b742b1dd48744190628bd59a5be281b34b3f160238a82fd1758ae32c2415fced",
+    "src/perfusion_lab/reachability_simulation.py": "fb7d6e300e2cb1a58210b3b1dc5fa973b94250090d3b185cf555c78d7a62f464",
+    "src/perfusion_lab/reference.py": "dc9d314a0e77ee02951fe4f35d851a52cab29bb9751649becdc59c48f4a78a4e",
+    "src/perfusion_lab/runtime.py": "11a7ee879940c8640e348e9910d42228e057a65850445ec24d0bc0352c5a24d0",
+    "src/perfusion_lab/runtime_simulation.py": "308e112580e24c5a9ec3a3e0f2094b358ca2a0c30c15097624243037d9409c7b",
+    "src/perfusion_lab/selective.py": "d01108fcba3d82a49108b5eebc37de9d34f1c81c458ed18e107fe6b0c84d3eff",
+    "src/perfusion_lab/sensing.py": "8fba9eb4ca37e689acc69c3ec487674a8d2c877d78ce25684b69f5d64699563b",
+    "src/perfusion_lab/simc.py": "efa8b877156b2a3b22c07e4aabbeb59e9d51e3207ca5ed6584ecfcffcd615d0b",
+    "src/perfusion_lab/simulation.py": "27d0a7645f273f5afbbf068a1c93b201b58720f59252888365843fe49e5fea20",
+    "src/perfusion_lab/stress.py": "4315e23b7e1eb76252457a5df00ca962de4cc4852eb0164ee1edd9d0b4a460fd",
+    "src/perfusion_research/boot_simulation.py": "b289fe5b597a5f9778def668ec74bc5e06e1f6c1a3cb64422383ff3b483b8da9",
+    "src/perfusion_research/boot_v2.py": "95ccceeb1ee0f8aefaf3cc508f0908b355cec3281caca9946e9768699d81a75b",
+    "src/perfusion_research/bottleneck.py": "d9a2078d014f5fc667e29370be453bbc3ee3a85eb02e82046bca12ca01fa7db8",
+    "src/perfusion_research/envelope_carry_v2.py": "bd6131fa73a2d920bb7367338c59db9077394193c0a3591583e2348d1586a322",
+    "src/perfusion_research/envelope_v2.py": "f95b831787d825de87090add17b9796f85ec60a9619d1a5b468d0e1f0bde5e59",
+    "src/perfusion_research/feedback.py": "c60a5c89409238f558718e37e23285a199ed497eed4af6b4780aad687ece4e98",
+    "src/perfusion_research/horizon.py": "3a8e2f95b666e2fb6ae4b13c58705d59b424d2bcd25f9dadb27f86982b2acdda",
+    "src/perfusion_research/joint_v2.py": "b1919c796364400a412e24c4736c1c9eee24a9a66b98a443a3331156eb61677f",
+    "src/perfusion_research/recovery_v2.py": "2fd051c0d2dcb7f59c09f9074b3900d397a1dc404cab862b8baa5352c961b11d"
+  },
+  "stage": "startup_interlock_development",
+  "v2_milestone_passed": false,
+  "version": "2.0.0rc6",
+  "version_line": "v2",
+  "warm_reference_hashes": {
+    "results/v2-envelope-carry/protocol.json": "124405b19b107197f25aa8e7fe43af658948aec057b26326be72228172c074cb",
+    "results/v2-envelope-carry/runs.json": "f47e51fa6ef4f84aaa12deeed66b5d54d22831fc1b6bb9da1e837a03e325175b",
+    "results/v2-envelope-carry/summary.json": "df890b349e8ced21e2c3fa900e8d54b66e3336b124f5aaf0ef9eca60227eb6bb",
+    "results/v2-envelope-carry/traces-lagged.zip": "e359a36522f544f40955eb5144701c06ff235d5a14f25d43ff0e01504036e671",
+    "results/v2-envelope-carry/traces-nominal.zip": "d8f8bf2d65b9fd35db1717ce949d4f49d333ea34e3b74c911f8283043ef65aac",
+    "results/v2-envelope-carry/traces-outside.zip": "997e5ac34a636feb4aa127a7c0e6f76ebfbec56b909df44e9357429af5ec99d8",
+    "results/v2-envelope-carry/traces-slow.zip": "07419ae02767119098a74f99241e62153713c5f06de71beb1c90e484c0649199"
+  }
+}
